@@ -11,7 +11,7 @@ app.use('/hometask_01/api/videos',videosRouter);
 
 app.delete('/ht_01/api/testing/all-data',(req:Request,res:Response)=>{
 db.splice(0,db.length);
-console.log(db)
+
 res.status(204).send('All data is deleted')
 });
 
