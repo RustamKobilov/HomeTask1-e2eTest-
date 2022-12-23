@@ -173,7 +173,7 @@ videosRouter.delete('/:id',(req:Request,res:Response)=> {
 
     const flagSearchVideo= db.filter(p=> p['id']=== idReq)
     if(flagSearchVideo.length<1){
-        res.status(400).send('Not Found')}
+        res.status(400)}
     const flagNumberVideoInBase=db.splice(db.indexOf(flagSearchVideo),1)
     console.log(db)
     res.status(204)
