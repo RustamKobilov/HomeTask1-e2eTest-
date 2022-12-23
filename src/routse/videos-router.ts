@@ -87,8 +87,8 @@ videosRouter.put('/:id',(req:Request,res:Response)=>{
 
    const flagSearchVideo= db.filter(p=> p['id']=== idReq)
     if(flagSearchVideo.length<1){
-        res.status(400).send({ messages: 'If the inputModel has incorrect values', field:'Видео с таким id не существует'
-    })}
+        res.status(404)
+    }
 
     const updateVideo={
         "id": idReq,
@@ -102,7 +102,7 @@ videosRouter.put('/:id',(req:Request,res:Response)=>{
     };
     const flagNumberVideoInBase=db.splice(db.indexOf(flagSearchVideo),1,updateVideo)
     console.log(db)
-    res.status(204).send('No Content')
+    res.status(204)
 })
 videosRouter.post('/',(req:Request,res:Response)=>{
     //title
@@ -155,7 +155,7 @@ videosRouter.get('/:id',(req:Request,res:Response)=>{
     const idParams=+req.params.id;
     const videoSearchId=db.filter(s=>{return s.id===idParams})
     if(videoSearchId.length===0){
-        res.status(404).send("If video for passed id doesn't exist")
+        res.status(404)
     }
 
     res.status(200).send(videoSearchId)
@@ -176,5 +176,5 @@ videosRouter.delete('/:id',(req:Request,res:Response)=> {
         res.status(400).send('Not Found')}
     const flagNumberVideoInBase=db.splice(db.indexOf(flagSearchVideo),1)
     console.log(db)
-    res.status(204).send('No Content')
+    res.status(204)
 })

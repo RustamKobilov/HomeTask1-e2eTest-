@@ -81,8 +81,7 @@ exports.videosRouter.put('/:id', (req, res) => {
     const publicationDateReq = req.body.publicationDate;
     const flagSearchVideo = exports.db.filter(p => p['id'] === idReq);
     if (flagSearchVideo.length < 1) {
-        res.status(400).send({ messages: 'If the inputModel has incorrect values', field: 'Видео с таким id не существует'
-        });
+        res.status(404);
     }
     const updateVideo = {
         "id": idReq,
@@ -96,7 +95,7 @@ exports.videosRouter.put('/:id', (req, res) => {
     };
     const flagNumberVideoInBase = exports.db.splice(exports.db.indexOf(flagSearchVideo), 1, updateVideo);
     console.log(exports.db);
-    res.status(204).send('No Content');
+    res.status(204);
 });
 exports.videosRouter.post('/', (req, res) => {
     //title
@@ -145,7 +144,7 @@ exports.videosRouter.get('/:id', (req, res) => {
     const idParams = +req.params.id;
     const videoSearchId = exports.db.filter(s => { return s.id === idParams; });
     if (videoSearchId.length === 0) {
-        res.status(404).send("If video for passed id doesn't exist");
+        res.status(404);
     }
     res.status(200).send(videoSearchId);
 });
@@ -163,5 +162,5 @@ exports.videosRouter.delete('/:id', (req, res) => {
     }
     const flagNumberVideoInBase = exports.db.splice(exports.db.indexOf(flagSearchVideo), 1);
     console.log(exports.db);
-    res.status(204).send('No Content');
+    res.status(204);
 });

@@ -13,5 +13,5 @@ exports.app.use(convertJson);
 exports.app.use('/hometask_01/api/videos', videos_router_1.videosRouter);
 exports.app.delete('/ht_01/api/testing/all-data', (req, res) => {
     videos_router_2.db.splice(0, videos_router_2.db.length);
-    res.status(204).send('All data is deleted');
+    res.status(204);
 });
