@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.db = exports.videosRouter = void 0;
 const express_1 = require("express");
-const Model_1 = require("../Model");
 const date_fns_1 = require("date-fns");
 exports.videosRouter = (0, express_1.Router)({});
 exports.db = [{
@@ -28,52 +27,35 @@ exports.db = [{
             "P144"
         ]
     }];
-exports.videosRouter.put('/:id', (req, res) => {
-    //title
-    if (!req.body.title || typeof req.body.title !== 'string' || !req.body.title.trim() || req.body.title.length > 40 || req.body.title.length < 1) {
-        return res.status(400).send({
-            messages: 'title errors', field: 'title'
+const createVideoValidation = (title, author, availableResolutions) => {
+    const errors = [];
+    if (!title || typeof title !== 'string' || title.trim() || title.length > 40 || title.length < 1) {
+        errors.push({
+            message: 'title errors', field: 'title'
         });
     }
     //author
-    if (!req.body.author || typeof req.body.author !== 'string' || !req.body.author.trim() || req.body.author.length > 20 || req.body.author < 1) {
-        return res.status(400).send({
-            messages: 'author errors', field: 'author'
-        });
+    if (!author || typeof author !== 'string' || !author.trim() || author.length > 20 || author.length < 1) {
+        errors.push({ message: 'author errors', field: 'author' });
     }
     //availableResolutions
-    if (req.body.availableResolutions === undefined || req.body.availableResolutions.constructor !== Array) {
-        return res.status(400).send({
-            messages: 'availableResolutions errors', field: 'availableResolutions'
-        });
+    if (!availableResolutions || availableResolutions.constructor !== Array) {
+        errors.push({ message: 'availableResolutions errors', field: 'availableResolutions' });
     }
-    //canBeDownloaded
-    if (req.body.canBeDownloaded === undefined || typeof req.body.canBeDownloaded !== 'boolean') {
-        return res.status(400).send({
-            messages: 'canBeDownloaded errors', field: 'canBeDownloaded'
-        });
+    return errors;
+};
+const updateVideoValidation = (title, author, availableResolutions, canBeDownloaded, minAgeRestriction) => {
+    const errors = createVideoValidation(title, author, availableResolutions);
+    if (!canBeDownloaded || typeof canBeDownloaded !== 'boolean') {
+        errors.push({ message: 'canBeDownloaded errors', field: 'canBeDownloaded' });
     }
     //minAgeRestriction
-    if (req.body.minAgeRestriction === undefined || req.body.minAgeRestriction.length > 18 || req.body.minAgeRestriction.length < 1 || typeof req.body.minAgeRestriction !== "number") {
-        return res.status(400).send({
-            messages: 'minAgeRestriction errors', field: 'minAgeRestriction'
-        });
+    if (!minAgeRestriction || minAgeRestriction > 18 || minAgeRestriction < 1 || typeof minAgeRestriction !== 'number') {
+        errors.push({ message: 'minAgeRestriction errors', field: 'minAgeRestriction' });
     }
-    const resultBodyAvailableResolutions = req.body.availableResolutions;
-    let flagRunEnum = resultBodyAvailableResolutions.filter(function (p) {
-        return Object.values(Model_1.Resolution).includes(p);
-    });
-    if (resultBodyAvailableResolutions.length !== flagRunEnum.length) {
-        return res.status(400).send({
-            messages: 'availableResolutions errors', field: 'availableResolutions'
-        });
-    }
-    //publicationDate
-    if (req.body.publicationDate === undefined || typeof req.body.publicationDate !== 'string') {
-        return res.status(400).send({
-            messages: 'publicationDate errors', field: 'publicationDate'
-        });
-    }
+    return errors;
+};
+exports.videosRouter.put('/:id', (req, res) => {
     const idReq = +req.params.id;
     const titleReq = req.body.title;
     const authorReq = req.body.author;
@@ -81,6 +63,10 @@ exports.videosRouter.put('/:id', (req, res) => {
     const canBeDowloadedReq = req.body.canBeDownloaded;
     const minAgeRestrictionReq = req.body.minAgeRestriction;
     const publicationDateReq = req.body.publicationDate;
+    const errors = updateVideoValidation(titleReq, authorReq, availableResolutionsReq, canBeDowloadedReq, minAgeRestrictionReq);
+    if (errors.length > 0) {
+        return res.status(400).send({ errorsMessages: errors });
+    }
     const video = exports.db.find(v => v.id === idReq);
     if (!video) {
         return res.sendStatus(404);
@@ -95,34 +81,23 @@ exports.videosRouter.put('/:id', (req, res) => {
 });
 exports.videosRouter.post('/', (req, res) => {
     //title
-    if (!req.body.title || typeof req.body.title !== 'string' || !req.body.title.trim() || req.body.title.length > 40 || req.body.title.length < 1) {
-        return res.status(400).send({
-            messages: 'title errors', field: 'title'
-        });
-    }
-    //author
-    if (!req.body.author || typeof req.body.author !== 'string' || !req.body.author.trim() || req.body.author.length > 20 || req.body.author < 1) {
-        return res.status(400).send({
-            messages: 'author errors', field: 'author'
-        });
-    }
-    //availableResolutions
-    if (req.body.availableResolutions === undefined || req.body.availableResolutions.constructor !== Array) {
-        return res.status(400).send({
-            messages: 'availableResolutions errors', field: 'availableResolutions'
-        });
-    }
+    const title = req.body.title;
+    const author = req.body.author;
+    const availableResolutions = req.body.availableResolutions;
+    const errors = createVideoValidation(title, author, availableResolutions);
+    if (errors.length > 0)
+        return res.status(400).send({ errorsMessages: errors });
     // const publicationDate = new Date(+new Date() + 1000 * 60 * 60 * 24).toISOString()
     const dateNow = new Date();
     const newVideo = {
         "id": +dateNow,
-        "title": req.body.title,
-        "author": req.body.author,
+        "title": title,
+        "author": author,
         "canBeDownloaded": false,
         "minAgeRestriction": null,
         "createdAt": dateNow.toISOString(),
         "publicationDate": (0, date_fns_1.addDays)(dateNow, 1).toISOString(),
-        "availableResolutions": req.body.availableResolutions
+        "availableResolutions": availableResolutions
     };
     exports.db.push(newVideo);
     return res.status(201).send(newVideo);
@@ -148,3 +123,50 @@ exports.videosRouter.delete('/:id', (req, res) => {
     exports.db.splice(exports.db.indexOf(flagVideosSerch), 1);
     return res.sendStatus(204);
 });
+// //title
+// if (!req.body.title ||  typeof req.body.title !== 'string'||!req.body.title.trim() || req.body.title.length > 40 || req.body.title.length < 1 ) {
+//     return res.status(400).send({
+//
+//         messages: 'title errors', field: 'title'
+//     })
+// }
+// //author
+// if (!req.body.author ||  typeof req.body.author !== 'string'||!req.body.author.trim() || req.body.author.length > 20 || req.body.author < 1 ) {
+//     return res.status(400).send({
+//         messages: 'author errors', field: 'author'
+//     })
+// }
+// //availableResolutions
+// if (req.body.availableResolutions === undefined || req.body.availableResolutions.constructor !== Array) {
+//     return res.status(400).send({
+//         messages: 'availableResolutions errors', field: 'availableResolutions'
+//     })
+// }
+// //canBeDownloaded
+// if (req.body.canBeDownloaded === undefined || typeof req.body.canBeDownloaded !== 'boolean') {
+//     return res.status(400).send({
+//         messages: 'canBeDownloaded errors', field: 'canBeDownloaded'
+//     })
+// }
+// //minAgeRestriction
+// if (req.body.minAgeRestriction === undefined || req.body.minAgeRestriction.length > 18 || req.body.minAgeRestriction.length < 1 || typeof req.body.minAgeRestriction !== "number") {
+//     return res.status(400).send({
+//         messages: 'minAgeRestriction errors', field: 'minAgeRestriction'
+//     })
+// }
+//
+// const resultBodyAvailableResolutions = req.body.availableResolutions;
+// let flagRunEnum = resultBodyAvailableResolutions.filter(function (p: any) {
+//     return Object.values(Resolution).includes(p)
+// })
+// if (resultBodyAvailableResolutions.length !== flagRunEnum.length) {
+//    return  res.status(400).send({
+//         messages: 'availableResolutions errors', field: 'availableResolutions'
+//     })
+// }
+// //publicationDate
+// if (req.body.publicationDate === undefined || typeof req.body.publicationDate !== 'string') {
+//   return  res.status(400).send({
+//         messages: 'publicationDate errors', field: 'publicationDate'
+//     })
+// }
