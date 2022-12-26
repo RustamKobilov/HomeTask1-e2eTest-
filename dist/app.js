@@ -10,8 +10,8 @@ const videos_router_2 = require("./routse/videos-router");
 exports.app = (0, express_1.default)();
 const convertJson = express_1.default.json();
 exports.app.use(convertJson);
-exports.app.use('/hometask_01/api/videos', videos_router_1.videosRouter);
-exports.app.delete('/ht_01/api/testing/all-data', (req, res) => {
+exports.app.use('/videos', videos_router_1.videosRouter);
+exports.app.delete('/testing/all-data', (req, res) => {
     videos_router_2.db.splice(0, videos_router_2.db.length);
-    res.status(204);
+    res.sendStatus(204);
 });
