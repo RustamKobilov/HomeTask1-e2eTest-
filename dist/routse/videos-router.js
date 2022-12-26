@@ -30,13 +30,13 @@ exports.db = [{
     }];
 exports.videosRouter.put('/:id', (req, res) => {
     //title
-    if (req.body.title === undefined || !req.body.title.trim() || req.body.title > 40 || req.body.title < 1 || typeof req.body.title !== 'string') {
+    if (req.body.title === undefined || !req.body.title.trim() || req.body.title.length > 40 || req.body.title.length < 1 || typeof req.body.title !== 'string') {
         return res.status(400).send({
             messages: 'title errors', field: 'title'
         });
     }
     //author
-    if (req.body.author === undefined || !req.body.author.trim() || req.body.author > 20 || req.body.author < 1 || typeof req.body.author !== 'string') {
+    if (req.body.author === undefined || !req.body.author.trim() || req.body.author.length > 20 || req.body.author.length < 1 || typeof req.body.author !== 'string') {
         return res.status(400).send({
             messages: 'author errors', field: 'author'
         });
@@ -54,7 +54,7 @@ exports.videosRouter.put('/:id', (req, res) => {
         });
     }
     //minAgeRestriction
-    if (req.body.minAgeRestriction === undefined || req.body.minAgeRestriction > 18 || req.body.minAgeRestriction < 1 || typeof req.body.minAgeRestriction !== "number") {
+    if (req.body.minAgeRestriction === undefined || req.body.minAgeRestriction.length > 18 || req.body.minAgeRestriction.length < 1 || typeof req.body.minAgeRestriction !== "number") {
         return res.status(400).send({
             messages: 'minAgeRestriction errors', field: 'minAgeRestriction'
         });
@@ -95,13 +95,13 @@ exports.videosRouter.put('/:id', (req, res) => {
 });
 exports.videosRouter.post('/', (req, res) => {
     //title
-    if (req.body.title === undefined || !req.body.title.trim() || req.body.title > 40 || req.body.title < 1 || typeof req.body.title !== 'string') {
+    if (req.body.title === undefined || !req.body.title.trim() || req.body.title.length > 40 || req.body.title.length < 1 || typeof req.body.title !== 'string') {
         return res.status(400).send({
             messages: 'title errors', field: 'title'
         });
     }
     //author
-    if (req.body.author === undefined || !req.body.author.trim() || req.body.author > 20 || req.body.author < 1 || typeof req.body.author !== 'string') {
+    if (req.body.author === undefined || !req.body.author.trim() || req.body.author.length > 20 || req.body.author < 1 || typeof req.body.author !== 'string') {
         return res.status(400).send({
             messages: 'author errors', field: 'author'
         });
