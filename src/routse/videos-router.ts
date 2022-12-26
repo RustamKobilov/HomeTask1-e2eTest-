@@ -161,8 +161,7 @@ videosRouter.delete('/:id', (req: Request, res: Response) => {
     if (!video) {
         return res.sendStatus(404)
     }
-    //let flagVideosSerch=db.find(v => v.id === video.id);
-    db = db.splice(db.find(v => v.id === video.id),1)
-    console.log(db)
+    let flagVideosSerch=db.find(v => v.id === video.id);
+    db = db.splice(db.indexOf(flagVideosSerch),1)
     return res.sendStatus(204)
 })
