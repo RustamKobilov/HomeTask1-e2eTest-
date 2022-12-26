@@ -145,6 +145,6 @@ exports.videosRouter.delete('/:id', (req, res) => {
         return res.sendStatus(404);
     }
     let flagVideosSerch = exports.db.find(v => v.id === video.id);
-    exports.db = exports.db.splice(exports.db.indexOf(flagVideosSerch), 1);
+    exports.db.splice(exports.db.indexOf(flagVideosSerch), 1);
     return res.sendStatus(204);
 });
