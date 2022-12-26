@@ -128,7 +128,7 @@ videosRouter.post('/', (req: Request, res: Response) => {
         "id": +dateNow,
         "title": req.body.title,
         "author": req.body.author,
-        "canBeDownloaded": true,
+        "canBeDownloaded": false,
         "minAgeRestriction": null,
         "createdAt": dateNow.toISOString(),
         "publicationDate": addDays(dateNow, 1).toISOString(),
