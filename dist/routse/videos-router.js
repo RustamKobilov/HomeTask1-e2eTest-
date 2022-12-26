@@ -32,31 +32,31 @@ exports.videosRouter.put('/:id', (req, res) => {
     //title
     if (req.body.title === undefined || !req.body.title.trim() || req.body.title > 40 || req.body.title < 1 || typeof req.body.title !== 'string') {
         return res.status(400).send({
-            messages: 'title errors', field: 'поле title не корректно'
+            messages: 'title errors', field: 'title'
         });
     }
     //author
     if (req.body.author === undefined || !req.body.author.trim() || req.body.author > 20 || req.body.author < 1 || typeof req.body.author !== 'string') {
         return res.status(400).send({
-            messages: 'author errors', field: 'поле author не корректно'
+            messages: 'author errors', field: 'author'
         });
     }
     //availableResolutions
     if (req.body.availableResolutions === undefined || req.body.availableResolutions.constructor !== Array) {
         return res.status(400).send({
-            messages: 'availableResolutions errors', field: 'поле availableResolutions не корректно'
+            messages: 'availableResolutions errors', field: 'availableResolutions'
         });
     }
     //canBeDownloaded
     if (req.body.canBeDownloaded === undefined || typeof req.body.canBeDownloaded !== 'boolean') {
         return res.status(400).send({
-            messages: 'canBeDownloaded errors', field: 'поле canBeDownloaded не корректно'
+            messages: 'canBeDownloaded errors', field: 'canBeDownloaded'
         });
     }
     //minAgeRestriction
     if (req.body.minAgeRestriction === undefined || req.body.minAgeRestriction > 18 || req.body.minAgeRestriction < 1 || typeof req.body.minAgeRestriction !== "number") {
         return res.status(400).send({
-            messages: 'minAgeRestriction errors', field: 'поле minAgeRestriction не корректно'
+            messages: 'minAgeRestriction errors', field: 'minAgeRestriction'
         });
     }
     const resultBodyAvailableResolutions = req.body.availableResolutions;
@@ -65,13 +65,13 @@ exports.videosRouter.put('/:id', (req, res) => {
     });
     if (resultBodyAvailableResolutions.length !== flagRunEnum.length) {
         return res.status(400).send({
-            messages: 'availableResolutions errors', field: 'поле availableResolutions не корректно'
+            messages: 'availableResolutions errors', field: 'availableResolutions'
         });
     }
     //publicationDate
     if (req.body.publicationDate === undefined || typeof req.body.publicationDate !== 'string') {
         return res.status(400).send({
-            messages: 'publicationDate errors', field: 'поле publicationDate не корректно'
+            messages: 'publicationDate errors', field: 'publicationDate'
         });
     }
     const idReq = +req.params.id;
@@ -97,19 +97,19 @@ exports.videosRouter.post('/', (req, res) => {
     //title
     if (req.body.title === undefined || !req.body.title.trim() || req.body.title > 40 || req.body.title < 1 || typeof req.body.title !== 'string') {
         return res.status(400).send({
-            messages: 'title errors', field: 'поле title не корректно'
+            messages: 'title errors', field: 'title'
         });
     }
     //author
     if (req.body.author === undefined || !req.body.author.trim() || req.body.author > 20 || req.body.author < 1 || typeof req.body.author !== 'string') {
         return res.status(400).send({
-            messages: 'author errors', field: 'поле author не корректно'
+            messages: 'author errors', field: 'author'
         });
     }
     //availableResolutions
     if (req.body.availableResolutions === undefined || req.body.availableResolutions.constructor !== Array) {
         return res.status(400).send({
-            messages: 'availableResolutions errors', field: 'поле availableResolutions не корректно'
+            messages: 'availableResolutions errors', field: 'availableResolutions'
         });
     }
     // const publicationDate = new Date(+new Date() + 1000 * 60 * 60 * 24).toISOString()
