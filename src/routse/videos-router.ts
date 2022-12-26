@@ -48,7 +48,7 @@ const createVideoValidation = (title: string, author: string, availableResolutio
 }
 
 const updateVideoValidation = (title: string, author: string, availableResolutions: string[], canBeDownloaded: boolean,
-                               minAgeRestriction: number) => {
+                               minAgeRestriction: number,publicationDate:string) => {
     const errors = createVideoValidation(title, author, availableResolutions)
 
     if (!canBeDownloaded || typeof canBeDownloaded !== 'boolean') {
@@ -58,10 +58,11 @@ const updateVideoValidation = (title: string, author: string, availableResolutio
     if (!minAgeRestriction || minAgeRestriction > 18 || minAgeRestriction < 1 || typeof minAgeRestriction !== 'number') {
         errors.push({message: 'minAgeRestriction errors', field: 'minAgeRestriction'})
     }
-
+    if (!publicationDate || typeof publicationDate !== 'string') {
+        errors.push({message: 'publicationDate errors', field: 'publicationDate'})
+    }
     return errors
 }
-
 videosRouter.put('/:id', (req: Request, res: Response) => {
 
     const idReq = +req.params.id!;
@@ -71,7 +72,7 @@ videosRouter.put('/:id', (req: Request, res: Response) => {
     const canBeDowloadedReq = req.body.canBeDownloaded!;
     const minAgeRestrictionReq = req.body.minAgeRestriction!;
     const publicationDateReq = req.body.publicationDate!;
-    const errors=updateVideoValidation(titleReq,authorReq,availableResolutionsReq,canBeDowloadedReq,minAgeRestrictionReq)
+    const errors=updateVideoValidation(titleReq,authorReq,availableResolutionsReq,canBeDowloadedReq,minAgeRestrictionReq,publicationDateReq)
     if(errors.length>0){return res.status(400).send({errorsMessages: errors})}
 
     const video = db.find(v => v.id === idReq)
