@@ -32,16 +32,17 @@ export let db: Array<any> = [{
 videosRouter.put('/:id', (req: Request, res: Response) => {
 
     //title
-    if (req.body.title === undefined || !req.body.title.trim() || typeof req.body.title !== 'string'|| req.body.title.length > 40 || req.body.title.length < 1 ) {
+    if (req.body.title === undefined ||  typeof req.body.title !== 'string'||!req.body.title.trim() || req.body.title.length > 40 || req.body.title.length < 1 ) {
         return res.status(400).send({
             messages: 'title errors', field: 'title'
         })
     }
     //author
-    if (req.body.author === undefined || !req.body.author.trim() || typeof req.body.author !== 'string'|| req.body.author.length > 20 || req.body.author < 1 ) {
+    if (req.body.author === undefined ||  typeof req.body.title !== 'string'||!req.body.author.trim() || typeof req.body.author !== 'string'|| req.body.author.length > 20 || req.body.author < 1 ) {
         return res.status(400).send({
             messages: 'author errors', field: 'author'
-        })}
+        })
+    }
     //availableResolutions
     if (req.body.availableResolutions === undefined || req.body.availableResolutions.constructor !== Array) {
         return res.status(400).send({
@@ -101,13 +102,13 @@ videosRouter.put('/:id', (req: Request, res: Response) => {
 })
 videosRouter.post('/', (req: Request, res: Response) => {
     //title
-    if (req.body.title === undefined || !req.body.title.trim() || typeof req.body.title !== 'string'|| req.body.title.length > 40 || req.body.title.length < 1 ) {
+    if (req.body.title === undefined ||  typeof req.body.title !== 'string'||!req.body.title.trim() || req.body.title.length > 40 || req.body.title.length < 1 ) {
         return res.status(400).send({
             messages: 'title errors', field: 'title'
         })
     }
     //author
-    if (req.body.author === undefined || !req.body.author.trim() || typeof req.body.author !== 'string'|| req.body.author.length > 20 || req.body.author < 1 ) {
+    if (req.body.author === undefined ||  typeof req.body.title !== 'string'||!req.body.author.trim() || typeof req.body.author !== 'string'|| req.body.author.length > 20 || req.body.author < 1 ) {
         return res.status(400).send({
             messages: 'author errors', field: 'author'
         })
