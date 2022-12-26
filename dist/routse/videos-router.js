@@ -29,32 +29,18 @@ exports.db = [{
         ]
     }];
 exports.videosRouter.put('/:id', (req, res) => {
-    const notitleReq = req.body.title;
-    const noauthorReq = req.body.author;
     //title
-    if (notitleReq || typeof notitleReq !== 'string' || !notitleReq.trim() || notitleReq.length > 40 || notitleReq.length < 1) {
+    if (!req.body.title || typeof req.body.title !== 'string' || !req.body.title.trim() || req.body.title.length > 40 || req.body.title.length < 1) {
         return res.status(400).send({
             messages: 'title errors', field: 'title'
         });
     }
     //author
-    if (!noauthorReq || typeof noauthorReq !== 'string' || !noauthorReq.trim() || noauthorReq.length > 20 || noauthorReq.length < 1) {
+    if (!req.body.author || typeof req.body.author !== 'string' || !req.body.author.trim() || req.body.author.length > 20 || req.body.author < 1) {
         return res.status(400).send({
             messages: 'author errors', field: 'author'
         });
     }
-    // //title
-    // if (!req.body.title ||  typeof req.body.title !== 'string'||!req.body.title.trim() || req.body.title.length > 40 || req.body.title.length < 1 ) {
-    //     return res.status(400).send({
-    //         messages: 'title errors', field: 'title'
-    //     })
-    // }
-    // //author
-    // if (!req.body.author ||  typeof req.body.title !== 'string'||!req.body.author.trim() || typeof req.body.author !== 'string'|| req.body.author.length > 20 || req.body.author < 1 ) {
-    //     return res.status(400).send({
-    //         messages: 'author errors', field: 'author'
-    //     })
-    // }
     //availableResolutions
     if (req.body.availableResolutions === undefined || req.body.availableResolutions.constructor !== Array) {
         return res.status(400).send({
@@ -108,32 +94,18 @@ exports.videosRouter.put('/:id', (req, res) => {
     return res.sendStatus(204);
 });
 exports.videosRouter.post('/', (req, res) => {
-    const notitleReq = req.body.title;
-    const noauthorReq = req.body.author;
     //title
-    if (notitleReq || typeof notitleReq !== 'string' || !notitleReq.trim() || notitleReq.length > 40 || notitleReq.length < 1) {
+    if (!req.body.title || typeof req.body.title !== 'string' || !req.body.title.trim() || req.body.title.length > 40 || req.body.title.length < 1) {
         return res.status(400).send({
             messages: 'title errors', field: 'title'
         });
     }
     //author
-    if (!noauthorReq || typeof noauthorReq !== 'string' || !noauthorReq.trim() || noauthorReq.length > 20 || noauthorReq.length < 1) {
+    if (!req.body.author || typeof req.body.author !== 'string' || !req.body.author.trim() || req.body.author.length > 20 || req.body.author < 1) {
         return res.status(400).send({
             messages: 'author errors', field: 'author'
         });
     }
-    // //title
-    // if (!req.body.title ||  typeof req.body.title !== 'string'||!req.body.title.trim() || req.body.title.length > 40 || req.body.title.length < 1 ) {
-    //     return res.status(400).send({
-    //         messages: 'title errors', field: 'title'
-    //     })
-    // }
-    // //author
-    // if (!req.body.author ||  typeof req.body.title !== 'string'||!req.body.author.trim() || typeof req.body.author !== 'string'|| req.body.author.length > 20 || req.body.author < 1 ) {
-    //     return res.status(400).send({
-    //         messages: 'author errors', field: 'author'
-    //     })
-    // }
     //availableResolutions
     if (req.body.availableResolutions === undefined || req.body.availableResolutions.constructor !== Array) {
         return res.status(400).send({

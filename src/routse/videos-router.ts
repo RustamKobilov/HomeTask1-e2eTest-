@@ -37,7 +37,7 @@ videosRouter.put('/:id', (req: Request, res: Response) => {
         })
     }
     //author
-    if (!req.body.author ||  typeof req.body.title !== 'string'||!req.body.author.trim() || typeof req.body.author !== 'string'|| req.body.author.length > 20 || req.body.author < 1 ) {
+    if (!req.body.author ||  typeof req.body.author !== 'string'||!req.body.author.trim() || req.body.author.length > 20 || req.body.author < 1 ) {
         return res.status(400).send({
             messages: 'author errors', field: 'author'
         })
@@ -107,7 +107,7 @@ videosRouter.post('/', (req: Request, res: Response) => {
         })
     }
     //author
-    if (!req.body.author ||  typeof req.body.title !== 'string'||!req.body.author.trim() || typeof req.body.author !== 'string'|| req.body.author.length > 20 || req.body.author < 1 ) {
+    if (!req.body.author ||  typeof req.body.author !== 'string'||!req.body.author.trim() || req.body.author.length > 20 || req.body.author < 1 ) {
         return res.status(400).send({
             messages: 'author errors', field: 'author'
         })
