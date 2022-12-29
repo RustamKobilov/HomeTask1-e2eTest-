@@ -29,7 +29,9 @@ exports.db = [{
     }];
 const createVideoValidation = (title, author, availableResolutions) => {
     const errors = [];
-    if (!title || typeof title !== 'string' || title.trim() || title.length > 40 || title.length < 1) {
+    console.log('title: ' + title);
+    console.log('typeof title: ' + typeof title);
+    if (!title || typeof title !== 'string' || !title.trim() || title.length > 40 || title.length < 1) {
         errors.push({
             message: 'title errors', field: 'title'
         });
@@ -47,7 +49,7 @@ const createVideoValidation = (title, author, availableResolutions) => {
 const updateVideoValidation = (title, author, availableResolutions, canBeDownloaded, minAgeRestriction, publicationDate) => {
     //const errors = createVideoValidation(title, author, availableResolutions)
     const errors = [];
-    if (!title || typeof title !== 'string' || title.trim() || title.length > 40 || title.length < 1) {
+    if (!title || typeof title !== 'string' || !title.trim() || title.length > 40 || title.length < 1) {
         errors.push({
             message: 'title errors', field: 'title'
         });

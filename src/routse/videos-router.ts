@@ -31,7 +31,9 @@ export let db: Array<any> = [{
 
 const createVideoValidation = (title: string, author: string, availableResolutions: string[]) => {
     const errors = []
-    if (!title ||  typeof title !== 'string'|| title.trim() || title.length > 40 || title.length < 1 ) {
+    console.log('title: '+title)
+    console.log('typeof title: '+ typeof title)
+    if (!title ||  typeof title !== 'string' || !title.trim() || title.length > 40 || title.length < 1 ) {
         errors.push({
             message: 'title errors', field: 'title'
         })
@@ -52,7 +54,7 @@ const updateVideoValidation = (title: string, author: string, availableResolutio
     //const errors = createVideoValidation(title, author, availableResolutions)
     const errors = [];
 
-    if (!title ||  typeof title !== 'string'|| title.trim() || title.length > 40 || title.length < 1 ) {
+    if (!title ||  typeof title !== 'string'|| !title.trim() || title.length > 40 || title.length < 1 ) {
         errors.push({
             message: 'title errors', field: 'title'
         })
