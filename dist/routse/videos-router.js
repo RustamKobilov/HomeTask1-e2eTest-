@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.db = exports.videosRouter = void 0;
 const express_1 = require("express");
+const Model_1 = require("../Model");
 const date_fns_1 = require("date-fns");
 exports.videosRouter = (0, express_1.Router)({});
 exports.db = [{
@@ -44,6 +45,14 @@ const createVideoValidation = (title, author, availableResolutions) => {
     if (!availableResolutions || availableResolutions.constructor !== Array) {
         errors.push({ message: 'availableResolutions errors', field: 'availableResolutions' });
     }
+    let flagRunEnum = availableResolutions.filter(function (p) {
+        return Object.values(Model_1.Resolution).includes(p);
+    });
+    if (availableResolutions.length !== flagRunEnum.length) {
+        errors.push({
+            messages: 'availableResolutions errors', field: 'availableResolutions'
+        });
+    }
     return errors;
 };
 const updateVideoValidation = (title, author, availableResolutions, canBeDownloaded, minAgeRestriction, publicationDate) => {
@@ -73,6 +82,17 @@ const updateVideoValidation = (title, author, availableResolutions, canBeDownloa
     //publicationDate
     if (!publicationDate || typeof publicationDate !== 'string') {
         errors.push({ message: 'publicationDate errors', field: 'publicationDate' });
+    }
+    if (!availableResolutions || availableResolutions.constructor !== Array) {
+        errors.push({ message: 'availableResolutions errors', field: 'availableResolutions' });
+    }
+    let flagRunEnum = availableResolutions.filter(function (p) {
+        return Object.values(Model_1.Resolution).includes(p);
+    });
+    if (availableResolutions.length !== flagRunEnum.length) {
+        errors.push({
+            messages: 'availableResolutions errors', field: 'availableResolutions'
+        });
     }
     return errors;
 };
