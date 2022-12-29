@@ -49,8 +49,23 @@ const createVideoValidation = (title: string, author: string, availableResolutio
 
 const updateVideoValidation = (title: string, author: string, availableResolutions: string[], canBeDownloaded: boolean,
                                minAgeRestriction: number,publicationDate:string) => {
-    const errors = createVideoValidation(title, author, availableResolutions)
+    //const errors = createVideoValidation(title, author, availableResolutions)
+    const errors = [];
 
+    if (!title ||  typeof title !== 'string'|| title.trim() || title.length > 40 || title.length < 1 ) {
+        errors.push({
+            message: 'title errors', field: 'title'
+        })
+    }
+//author
+    if (!author ||  typeof author !== 'string'||!author.trim() || author.length > 20 || author.length < 1 ) {
+        errors.push({message: 'author errors', field: 'author'})
+    }
+//availableResolutions
+    if (!availableResolutions || availableResolutions.constructor !== Array) {
+        errors.push({message: 'availableResolutions errors', field: 'availableResolutions'})
+    }
+    //canBeDownloaded
     if (!canBeDownloaded || typeof canBeDownloaded !== 'boolean') {
         errors.push({message: 'canBeDownloaded errors', field: 'canBeDownloaded'})
     }
@@ -58,6 +73,7 @@ const updateVideoValidation = (title: string, author: string, availableResolutio
     if (!minAgeRestriction || minAgeRestriction > 18 || minAgeRestriction < 1 || typeof minAgeRestriction !== 'number') {
         errors.push({message: 'minAgeRestriction errors', field: 'minAgeRestriction'})
     }
+    //publicationDate
     if (!publicationDate || typeof publicationDate !== 'string') {
         errors.push({message: 'publicationDate errors', field: 'publicationDate'})
     }
@@ -141,6 +157,8 @@ videosRouter.delete('/:id', (req: Request, res: Response) => {
     return res.sendStatus(204)
 
 })
+
+//где-то title выкидывает лишний.
 
 // //title
 // if (!req.body.title ||  typeof req.body.title !== 'string'||!req.body.title.trim() || req.body.title.length > 40 || req.body.title.length < 1 ) {

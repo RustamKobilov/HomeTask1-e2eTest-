@@ -44,14 +44,33 @@ const createVideoValidation = (title, author, availableResolutions) => {
     }
     return errors;
 };
-const updateVideoValidation = (title, author, availableResolutions, canBeDownloaded, minAgeRestriction) => {
-    const errors = createVideoValidation(title, author, availableResolutions);
+const updateVideoValidation = (title, author, availableResolutions, canBeDownloaded, minAgeRestriction, publicationDate) => {
+    //const errors = createVideoValidation(title, author, availableResolutions)
+    const errors = [];
+    if (!title || typeof title !== 'string' || title.trim() || title.length > 40 || title.length < 1) {
+        errors.push({
+            message: 'title errors', field: 'title'
+        });
+    }
+    //author
+    if (!author || typeof author !== 'string' || !author.trim() || author.length > 20 || author.length < 1) {
+        errors.push({ message: 'author errors', field: 'author' });
+    }
+    //availableResolutions
+    if (!availableResolutions || availableResolutions.constructor !== Array) {
+        errors.push({ message: 'availableResolutions errors', field: 'availableResolutions' });
+    }
+    //canBeDownloaded
     if (!canBeDownloaded || typeof canBeDownloaded !== 'boolean') {
         errors.push({ message: 'canBeDownloaded errors', field: 'canBeDownloaded' });
     }
     //minAgeRestriction
     if (!minAgeRestriction || minAgeRestriction > 18 || minAgeRestriction < 1 || typeof minAgeRestriction !== 'number') {
         errors.push({ message: 'minAgeRestriction errors', field: 'minAgeRestriction' });
+    }
+    //publicationDate
+    if (!publicationDate || typeof publicationDate !== 'string') {
+        errors.push({ message: 'publicationDate errors', field: 'publicationDate' });
     }
     return errors;
 };
@@ -63,7 +82,7 @@ exports.videosRouter.put('/:id', (req, res) => {
     const canBeDowloadedReq = req.body.canBeDownloaded;
     const minAgeRestrictionReq = req.body.minAgeRestriction;
     const publicationDateReq = req.body.publicationDate;
-    const errors = updateVideoValidation(titleReq, authorReq, availableResolutionsReq, canBeDowloadedReq, minAgeRestrictionReq);
+    const errors = updateVideoValidation(titleReq, authorReq, availableResolutionsReq, canBeDowloadedReq, minAgeRestrictionReq, publicationDateReq);
     if (errors.length > 0) {
         return res.status(400).send({ errorsMessages: errors });
     }
@@ -123,6 +142,7 @@ exports.videosRouter.delete('/:id', (req, res) => {
     exports.db.splice(exports.db.indexOf(flagVideosSerch), 1);
     return res.sendStatus(204);
 });
+//где-то title выкидывает лишний.
 // //title
 // if (!req.body.title ||  typeof req.body.title !== 'string'||!req.body.title.trim() || req.body.title.length > 40 || req.body.title.length < 1 ) {
 //     return res.status(400).send({
