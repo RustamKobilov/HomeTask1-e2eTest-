@@ -31,36 +31,45 @@ export let db: Array<any> = [{
 
 const createVideoValidation = (title: string, author: string, availableResolutions: string[]) => {
     const errors = []
-    console.log('title: '+title)
-    console.log('typeof title: '+ typeof title)
-    if (!title ||  typeof title !== 'string' || !title.trim() || title.length > 40 || title.length < 1 ) {
+    console.log('title: ' + title)
+    console.log('typeof title: ' + typeof title)
+    if (!title || typeof title !== 'string' || !title.trim() || title.length > 40 || title.length < 1) {
         errors.push({
             message: 'title errors', field: 'title'
         })
     }
 //author
-    if (!author ||  typeof author !== 'string'||!author.trim() || author.length > 20 || author.length < 1 ) {
+    if (!author || typeof author !== 'string' || !author.trim() || author.length > 20 || author.length < 1) {
         errors.push({message: 'author errors', field: 'author'})
     }
+
 //availableResolutions
     if (!availableResolutions || availableResolutions.constructor !== Array) {
         errors.push({message: 'availableResolutions errors', field: 'availableResolutions'})
     }
-    return errors
-}
 
+    let flagRunEnum = availableResolutions.filter(function (p: any) {
+        return Object.values(Resolution).includes(p)
+    })
+    if (availableResolutions.length !== flagRunEnum.length) {
+        errors.push({
+            messages: 'availableResolutions errors', field: 'availableResolutions'
+        })
+    }
+        return errors
+}
 const updateVideoValidation = (title: string, author: string, availableResolutions: string[], canBeDownloaded: boolean,
                                minAgeRestriction: number,publicationDate:string) => {
     //const errors = createVideoValidation(title, author, availableResolutions)
     const errors = [];
 
-    if (!title ||  typeof title !== 'string'|| !title.trim() || title.length > 40 || title.length < 1 ) {
+    if (!title || typeof title !== 'string' || !title.trim() || title.length > 40 || title.length < 1) {
         errors.push({
             message: 'title errors', field: 'title'
         })
     }
 //author
-    if (!author ||  typeof author !== 'string'||!author.trim() || author.length > 20 || author.length < 1 ) {
+    if (!author || typeof author !== 'string' || !author.trim() || author.length > 20 || author.length < 1) {
         errors.push({message: 'author errors', field: 'author'})
     }
 //availableResolutions
@@ -79,7 +88,19 @@ const updateVideoValidation = (title: string, author: string, availableResolutio
     if (!publicationDate || typeof publicationDate !== 'string') {
         errors.push({message: 'publicationDate errors', field: 'publicationDate'})
     }
-    return errors
+    if (!availableResolutions || availableResolutions.constructor !== Array) {
+        errors.push({message: 'availableResolutions errors', field: 'availableResolutions'})
+    }
+
+    let flagRunEnum = availableResolutions.filter(function (p: any) {
+        return Object.values(Resolution).includes(p)
+    })
+    if (availableResolutions.length !== flagRunEnum.length) {
+        errors.push({
+            messages: 'availableResolutions errors', field: 'availableResolutions'
+        })
+    }
+        return errors
 }
 videosRouter.put('/:id', (req: Request, res: Response) => {
 
