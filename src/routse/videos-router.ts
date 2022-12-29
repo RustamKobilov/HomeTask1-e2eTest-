@@ -82,12 +82,12 @@ const updateVideoValidation = (title: string, author: string, availableResolutio
 videosRouter.put('/:id', (req: Request, res: Response) => {
 
     const idReq = +req.params.id!;
-    const titleReq = req.body.title!;
-    const authorReq = req.body.author!;
-    const availableResolutionsReq = req.body.availableResolutions!;
-    const canBeDowloadedReq = req.body.canBeDownloaded!;
-    const minAgeRestrictionReq = req.body.minAgeRestriction!;
-    const publicationDateReq = req.body.publicationDate!;
+    const titleReq = req.body.title;
+    const authorReq = req.body.author;
+    const availableResolutionsReq = req.body.availableResolutions;
+    const canBeDowloadedReq = req.body.canBeDownloaded;
+    const minAgeRestrictionReq = req.body.minAgeRestriction;
+    const publicationDateReq = req.body.publicationDate;
     const errors=updateVideoValidation(titleReq,authorReq,availableResolutionsReq,canBeDowloadedReq,minAgeRestrictionReq,publicationDateReq)
     if(errors.length>0){return res.status(400).send({errorsMessages: errors})}
 
@@ -106,9 +106,9 @@ videosRouter.put('/:id', (req: Request, res: Response) => {
 })
 videosRouter.post('/', (req: Request, res: Response) => {
     //title
-    const title = req.body.title!
-    const author = req.body.author!
-    const availableResolutions = req.body.availableResolutions!
+    const title = req.body.title
+    const author = req.body.author
+    const availableResolutions = req.body.availableResolutions
     const errors = createVideoValidation(title, author, availableResolutions)
     if (errors.length > 0) return res.status(400).send({errorsMessages: errors})
     // const publicationDate = new Date(+new Date() + 1000 * 60 * 60 * 24).toISOString()
