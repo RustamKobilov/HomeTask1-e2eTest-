@@ -53,7 +53,7 @@ const createVideoValidation = (title: string, author: string, availableResolutio
     })
     if (availableResolutions.length !== flagRunEnum.length) {
         errors.push({
-            messages: 'availableResolutions errors', field: 'availableResolutions'
+            message: 'availableResolutions errors', field: 'availableResolutions'
         })
     }
         return errors
@@ -97,7 +97,7 @@ const updateVideoValidation = (title: string, author: string, availableResolutio
     })
     if (availableResolutions.length !== flagRunEnum.length) {
         errors.push({
-            messages: 'availableResolutions errors', field: 'availableResolutions'
+            message: 'availableResolutions errors', field: 'availableResolutions'
         })
     }
         return errors
