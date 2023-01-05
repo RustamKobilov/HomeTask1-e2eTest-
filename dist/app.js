@@ -7,10 +7,12 @@ exports.app = void 0;
 const express_1 = __importDefault(require("express"));
 const videos_router_1 = require("./routse/videos-router");
 const videos_router_2 = require("./routse/videos-router");
+const blogs_router_1 = require("./routse/blogs-router");
 exports.app = (0, express_1.default)();
 const convertJson = express_1.default.json();
 exports.app.use(convertJson);
 exports.app.use('/videos', videos_router_1.videosRouter);
+exports.app.use('/blogs', blogs_router_1.blogsRouter);
 exports.app.delete('/testing/all-data', (req, res) => {
     videos_router_2.db.splice(0, videos_router_2.db.length);
     res.sendStatus(204);

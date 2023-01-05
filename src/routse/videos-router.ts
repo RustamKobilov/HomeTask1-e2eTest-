@@ -1,8 +1,8 @@
 import {Request, Response, Router} from "express";
 import {app} from "../app";
 import {throws} from "assert";
-import {Resolution} from "../Model";
-import { addDays } from 'date-fns'
+import {Resolution} from "../Models/VideoAllModels";
+import { addDays } from 'date-fns';
 export const videosRouter = Router({})
 
 export let db: Array<any> = [{
@@ -181,52 +181,3 @@ videosRouter.delete('/:id', (req: Request, res: Response) => {
 
 })
 
-//где-то title выкидывает лишний.
-
-// //title
-// if (!req.body.title ||  typeof req.body.title !== 'string'||!req.body.title.trim() || req.body.title.length > 40 || req.body.title.length < 1 ) {
-//     return res.status(400).send({
-//
-//         messages: 'title errors', field: 'title'
-//     })
-// }
-// //author
-// if (!req.body.author ||  typeof req.body.author !== 'string'||!req.body.author.trim() || req.body.author.length > 20 || req.body.author < 1 ) {
-//     return res.status(400).send({
-//         messages: 'author errors', field: 'author'
-//     })
-// }
-// //availableResolutions
-// if (req.body.availableResolutions === undefined || req.body.availableResolutions.constructor !== Array) {
-//     return res.status(400).send({
-//         messages: 'availableResolutions errors', field: 'availableResolutions'
-//     })
-// }
-// //canBeDownloaded
-// if (req.body.canBeDownloaded === undefined || typeof req.body.canBeDownloaded !== 'boolean') {
-//     return res.status(400).send({
-//         messages: 'canBeDownloaded errors', field: 'canBeDownloaded'
-//     })
-// }
-// //minAgeRestriction
-// if (req.body.minAgeRestriction === undefined || req.body.minAgeRestriction.length > 18 || req.body.minAgeRestriction.length < 1 || typeof req.body.minAgeRestriction !== "number") {
-//     return res.status(400).send({
-//         messages: 'minAgeRestriction errors', field: 'minAgeRestriction'
-//     })
-// }
-//
-// const resultBodyAvailableResolutions = req.body.availableResolutions;
-// let flagRunEnum = resultBodyAvailableResolutions.filter(function (p: any) {
-//     return Object.values(Resolution).includes(p)
-// })
-// if (resultBodyAvailableResolutions.length !== flagRunEnum.length) {
-//    return  res.status(400).send({
-//         messages: 'availableResolutions errors', field: 'availableResolutions'
-//     })
-// }
-// //publicationDate
-// if (req.body.publicationDate === undefined || typeof req.body.publicationDate !== 'string') {
-//   return  res.status(400).send({
-//         messages: 'publicationDate errors', field: 'publicationDate'
-//     })
-// }
