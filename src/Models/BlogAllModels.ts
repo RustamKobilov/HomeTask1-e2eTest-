@@ -1,5 +1,5 @@
 import {Request,Response} from "express";
-import {dbBlogs} from "../blog-repository";
+import {dbBlogs} from "../Repository/blog-repository";
 
 
 
