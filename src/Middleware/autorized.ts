@@ -1,25 +1,23 @@
-// import express, {NextFunction, Request, Response} from "express";
-//
-// const base64 = require("base-64");
-//
-// function decodeCredentials(authHeader:any) {
-//     // authHeader: Basic YWRtaW46YWRtaW4=
-//     const encodedCredentials = authHeader
-//         .trim()
-//         .replace(/Basic\s+/i, '');
-//
-//     const decodedCredentials = base64.decode(encodedCredentials);
-//
-//     return decodedCredentials.split(':');
-// }
-//
-// module.exports = function middlewareAutorized(req:Request, res:Response, next:NextFunction) {
-//     const [username, password] = decodeCredentials(req.headers.authorization || '');
-//
-//     if (username === 'admin' && password === 'qwerty') {
-//         return next();
-//     }
-//
-//     res.set('WWW-Authenticate', 'Basic realm="user_pages"');
-//     res.status(401).send('Authentication required.');
-// }
+import {NextFunction, Request, Response} from "express";
+
+
+export const basicAuthMiddleware = (req: Request, res:Response, next: NextFunction) => {
+    const auth = req.headers.authorization;
+    if (!auth) return res.sendStatus(401)
+
+    const authType = auth.split(' ')[0]
+    if(authType !== 'Basic') return res.sendStatus(401)
+
+    const payload = auth.split(' ')[1]
+    if (!payload) return res.sendStatus(401)
+
+    const decodedPayload = Buffer.from(payload, 'base64').toString()
+    if (!decodedPayload) return res.sendStatus(401)
+
+    const login = decodedPayload.split(':')[0]
+    const password = decodedPayload.split(':')[1]
+    if (login !== 'admin' || password !== 'qwerty'){
+        return res.sendStatus(401)
+    }
+    return next();
+}

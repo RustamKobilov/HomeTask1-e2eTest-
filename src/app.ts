@@ -14,7 +14,7 @@ app.use(convertJson);
 
 app.use('/videos', videosRouter);
 app.use('/blogs',blogsRouter);
-app.use('posts',postsRouter);
+app.use('/posts',postsRouter);
 
 
 app.delete('/testing/all-data', (req: Request, res: Response) => {

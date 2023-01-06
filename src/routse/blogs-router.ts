@@ -8,6 +8,7 @@ import {body, ValidationError, validationResult} from "express-validator";
 import {app} from "../app";
 import any = jasmine.any;
 import {db, videosRouter} from "./videos-router";
+import {basicAuthMiddleware} from "../Middleware/autorized";
 
 export const blogsRouter=Router({});
 
@@ -27,9 +28,17 @@ blogsRouter.get('/id',(req:Request,res:Response)=> {
 //,middlewareAutorized()
 //.
 //     matches('[a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*\/?$')
-blogsRouter.post('/',body('name').isString().isLength({min:1,max:15}),
-    body('description').isString().isLength({min:1,max:500}),
-    body('websiteUrl').isString().isLength({min:1,max:100}).matches('[a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*\/?$'),
+
+
+const checkBlogName = body('name').isString().isLength({min:1,max:15})
+const checkBlogDescription = body('description').isString().isLength({min:1,max:500})
+const checkBlogWebsiteUrl = body('websiteUrl').isString().isLength({min:1,max:100}).matches('[a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*\/?$')
+
+const createBlogValidation = [checkBlogName, checkBlogDescription, checkBlogWebsiteUrl]
+
+blogsRouter.post('/',
+    basicAuthMiddleware,
+    createBlogValidation,
     (req:Request,res:Response)=>{
         const errorFormatter = ({ location, msg, param, value, nestedErrors }: ValidationError) => {
             return errorView(param);
