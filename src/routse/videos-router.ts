@@ -1,7 +1,4 @@
 import {Request, Response, Router} from "express";
-import {app} from "../app";
-import {throws} from "assert";
-import {Resolution} from "../Models/VideoAllModels";
 import { addDays } from 'date-fns';
 export const videosRouter = Router({})
 
@@ -29,6 +26,10 @@ export let db: Array<any> = [{
     ]
 }];
 
+enum videoResolution{ P144=' P144',
+P240='P240', P360='P360', P480='P480', P720='P720',
+P1080='P1080', P1440='P1440', P2160=' P2160' }
+
 const createVideoValidation = (title: string, author: string, availableResolutions: string[]) => {
     const errors = []
     console.log('title: ' + title)
@@ -49,7 +50,7 @@ const createVideoValidation = (title: string, author: string, availableResolutio
     }
 
     let flagRunEnum = availableResolutions.filter(function (p: any) {
-        return Object.values(Resolution).includes(p)
+        return Object.values(videoResolution).includes(p)
     })
     if (availableResolutions.length !== flagRunEnum.length) {
         errors.push({
@@ -93,7 +94,7 @@ const updateVideoValidation = (title: string, author: string, availableResolutio
     }
 
     let flagRunEnum = availableResolutions.filter(function (p: any) {
-        return Object.values(Resolution).includes(p)
+        return Object.values(videoResolution).includes(p)
     })
     if (availableResolutions.length !== flagRunEnum.length) {
         errors.push({

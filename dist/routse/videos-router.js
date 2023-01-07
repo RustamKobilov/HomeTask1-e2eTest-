@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.db = exports.videosRouter = void 0;
 const express_1 = require("express");
-const VideoAllModels_1 = require("../Models/VideoAllModels");
 const date_fns_1 = require("date-fns");
 exports.videosRouter = (0, express_1.Router)({});
 exports.db = [{
@@ -28,6 +27,17 @@ exports.db = [{
             "P144"
         ]
     }];
+var videoResolution;
+(function (videoResolution) {
+    videoResolution["P144"] = " P144";
+    videoResolution["P240"] = "P240";
+    videoResolution["P360"] = "P360";
+    videoResolution["P480"] = "P480";
+    videoResolution["P720"] = "P720";
+    videoResolution["P1080"] = "P1080";
+    videoResolution["P1440"] = "P1440";
+    videoResolution["P2160"] = " P2160";
+})(videoResolution || (videoResolution = {}));
 const createVideoValidation = (title, author, availableResolutions) => {
     const errors = [];
     console.log('title: ' + title);
@@ -46,7 +56,7 @@ const createVideoValidation = (title, author, availableResolutions) => {
         errors.push({ message: 'availableResolutions errors', field: 'availableResolutions' });
     }
     let flagRunEnum = availableResolutions.filter(function (p) {
-        return Object.values(VideoAllModels_1.Resolution).includes(p);
+        return Object.values(videoResolution).includes(p);
     });
     if (availableResolutions.length !== flagRunEnum.length) {
         errors.push({
@@ -87,7 +97,7 @@ const updateVideoValidation = (title, author, availableResolutions, canBeDownloa
         errors.push({ message: 'availableResolutions errors', field: 'availableResolutions' });
     }
     let flagRunEnum = availableResolutions.filter(function (p) {
-        return Object.values(VideoAllModels_1.Resolution).includes(p);
+        return Object.values(videoResolution).includes(p);
     });
     if (availableResolutions.length !== flagRunEnum.length) {
         errors.push({

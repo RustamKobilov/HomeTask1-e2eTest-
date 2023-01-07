@@ -1,18 +1,18 @@
 export let dbBlogs : Array<any> =[{
-    "id": "string1",
+    "id": 1,
     "name": "string1",
     "description": "string1",
     "websiteUrl": "string2"
 },{
-    "id": "string3",
+    "id": 2,
     "name": "string3",
     "description": "string3",
     "websiteUrl": "string3"
 }]
 
 export const blogInputModel=(name:string,description:string,websiteUrl:string)=>{
-    const idModelBlog=dbBlogs.length;
-    return {idModelBlog,name,description,websiteUrl}
+    const id=dbBlogs.length+15;
+    return {id,name,description,websiteUrl,}
 }
 export const findBlogOnId=(id:number)=>{
     let blog=dbBlogs.find(s=> s.id===id);

@@ -3,42 +3,25 @@ import {blogInputModel, dbBlogs} from "../Repository/blog-repository";
 import {findBlogOnId} from "../Repository/blog-repository";
 import {errorView} from "../Models/ErrorModel";
 import {body, ValidationError, validationResult} from "express-validator";
-
-
-import {app} from "../app";
-import any = jasmine.any;
-import {db, videosRouter} from "./videos-router";
 import {basicAuthMiddleware} from "../Middleware/autorized";
+import {createBlogValidation, updateBlogValidation} from "../Models/InputValidation";
 
 export const blogsRouter=Router({});
 
-//const middlewareAutorized=require('./auth');
-
+//const errors= [];
 blogsRouter.get('/',(req:Request,res:Response)=>{
-    return res.sendStatus(200).send(dbBlogs)
+    return res.status(200).send(dbBlogs)
 })
 
-blogsRouter.get('/id',(req:Request,res:Response)=> {
+blogsRouter.get('/:id',(req:Request,res:Response)=> {
     const findBlog = findBlogOnId(+req.params.id);
     if(findBlog){
-       return res.sendStatus(200).send(findBlog)
+       return res.status(200).send(findBlog)
     }
     return res.sendStatus(404)
 })
-//,middlewareAutorized()
-//.
-//     matches('[a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*\/?$')
 
-
-const checkBlogName = body('name').isString().isLength({min:1,max:15})
-const checkBlogDescription = body('description').isString().isLength({min:1,max:500})
-const checkBlogWebsiteUrl = body('websiteUrl').isString().isLength({min:1,max:100}).matches('[a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*\/?$')
-
-const createBlogValidation = [checkBlogName, checkBlogDescription, checkBlogWebsiteUrl]
-
-blogsRouter.post('/',
-    basicAuthMiddleware,
-    createBlogValidation,
+blogsRouter.post('/', basicAuthMiddleware, createBlogValidation,
     (req:Request,res:Response)=>{
         const errorFormatter = ({ location, msg, param, value, nestedErrors }: ValidationError) => {
             return errorView(param);
@@ -46,9 +29,11 @@ blogsRouter.post('/',
     const errors = validationResult(req).formatWith(errorFormatter);
 
         if (!errors.isEmpty()) {
-
-            return res.sendStatus(400).json({ errors: errors.array() });
+            //console.log(errors.array())
+            return res.status(400).json(errors.array());
+            //return res.sendStatus(400).json({ errors: errors.array() });
         }
+
 
     const nameNewBlog=req.body.name;
     const descriptionNewBlog=req.body.description;
@@ -56,12 +41,10 @@ blogsRouter.post('/',
 
     const newBlog=blogInputModel(nameNewBlog,descriptionNewBlog,websiteUrlNewBlog)
     dbBlogs.push(newBlog)
-        return res.sendStatus(201).send(newBlog)
+        return res.status(201).send(newBlog)
 
     })
-blogsRouter.put('/id',body('name').isString().isLength({min:1,max:15}),
-    body('description').isString().isLength({min:1,max:500}),
-    body('websiteUrl').isString().isLength({min:1,max:100}).matches('[a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*\/?$'),
+blogsRouter.put('/:id',basicAuthMiddleware,updateBlogValidation,
     (req:Request,res:Response)=>{
 
         const errorFormatter = ({ location, msg, param, value, nestedErrors }: ValidationError) => {
@@ -71,7 +54,7 @@ blogsRouter.put('/id',body('name').isString().isLength({min:1,max:15}),
 
         if (!errors.isEmpty()) {
 
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json(errors.array());
         }
 
         const nameUpdateBlog=req.body.name;
@@ -91,7 +74,8 @@ blogsRouter.put('/id',body('name').isString().isLength({min:1,max:15}),
 
     })
 
-blogsRouter.delete('/:id', (req: Request, res: Response) => {
+blogsRouter.delete('/:id',basicAuthMiddleware,
+    (req: Request, res: Response) => {
 
     const findDeleteBlog = findBlogOnId(+req.params.id);
     if (!findDeleteBlog) {

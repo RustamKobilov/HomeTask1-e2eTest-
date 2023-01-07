@@ -17,9 +17,9 @@ export let dbPosts : Array<any> =[
     "blogName": "string"}]
 
 export const postInputModel=(title:string,shortdescription:string,content:string,blogId:string)=>{
-    const idModelPost=dbBlogs.length;
+    const id=dbBlogs.length+15;
     const blogName='blog name who is?'
-    return {idModelPost,title,shortdescription,content,blogId,blogName}
+    return {id,title,shortdescription,content,blogId,blogName}
 
 }
 

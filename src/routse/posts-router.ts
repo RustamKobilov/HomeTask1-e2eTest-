@@ -3,28 +3,24 @@ import {Request,Response,Router} from "express";
 import {errorView} from "../Models/ErrorModel";
 import {body, ValidationError, validationResult} from "express-validator";
 import {dbPosts, findPostOnId, postInputModel} from "../Repository/posts-repositiry";
-import {findBlogOnId} from "../Repository/blog-repository";
-import {blogsRouter} from "./blogs-router";
-
+import {basicAuthMiddleware} from "../Middleware/autorized";
+import {createPostValidation, updatePostValidation} from "../Models/InputValidation";
 
 export const postsRouter=Router({});
 
 postsRouter.get('/',(req:Request,res:Response)=>{
-    return res.sendStatus(200).send(dbPosts)
+    return res.status(200).send(dbPosts)
 })
 
-postsRouter.get('/id',(req:Request,res:Response)=> {
+postsRouter.get('/:id',(req:Request,res:Response)=> {
     const findPost = findPostOnId(+req.params.id);
     if(findPost){
-        return res.sendStatus(200).send(findPost)
+        return res.status(200).send(findPost)
     }
     return res.sendStatus(404)
 })
 
-postsRouter.post('/',body('title').isString().isLength({min:1,max:30}),
-body('shortDescription').isString().isLength({min:1,max:100}),
-body('content').isString().isLength({min:1,max:1000}),
-body('blogId').isString(),
+postsRouter.post('/',basicAuthMiddleware,createPostValidation,
 (req:Request,res:Response)=>{
 
     const errorFormatter = ({ location, msg, param, value, nestedErrors }: ValidationError) => {
@@ -34,7 +30,7 @@ body('blogId').isString(),
 
     if (!errors.isEmpty()) {
 
-        return res.sendStatus(400).json({ errors: errors.array() });
+        return res.status(400).json( errors.array() );
     }
 
     const titleNewPost=req.body.title;
@@ -48,10 +44,7 @@ body('blogId').isString(),
 
 })
 
-postsRouter.put('/:id',body('title').isString().isLength({min:1,max:30}),
-    body('shortDescription').isString().isLength({min:1,max:100}),
-    body('content').isString().isLength({min:1,max:1000}),
-    body('blogId').isString(),
+postsRouter.put('/:id',basicAuthMiddleware,updatePostValidation,
     (req:Request,res:Response)=>{
 
         const errorFormatter = ({ location, msg, param, value, nestedErrors }: ValidationError) => {
@@ -61,7 +54,7 @@ postsRouter.put('/:id',body('title').isString().isLength({min:1,max:30}),
 
         if (!errors.isEmpty()) {
 
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json(errors.array());
         }
 
         const titleUpdatePost=req.body.title;
@@ -83,9 +76,9 @@ postsRouter.put('/:id',body('title').isString().isLength({min:1,max:30}),
 
     })
 
-postsRouter.delete('/:id',(req: Request, res: Response)=> {
+postsRouter.delete('/:id',basicAuthMiddleware,(req: Request, res: Response)=> {
     const findDeletePost = findPostOnId(+req.params.id);
-    if(findDeletePost){
+    if(!findDeletePost){
         return res.sendStatus(404);
     }
     dbPosts.splice(dbPosts.indexOf(findDeletePost), 1)

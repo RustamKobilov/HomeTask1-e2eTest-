@@ -16,7 +16,7 @@ const convertJson = express_1.default.json();
 exports.app.use(convertJson);
 exports.app.use('/videos', videos_router_1.videosRouter);
 exports.app.use('/blogs', blogs_router_1.blogsRouter);
-exports.app.use('posts', posts_router_1.postsRouter);
+exports.app.use('/posts', posts_router_1.postsRouter);
 exports.app.delete('/testing/all-data', (req, res) => {
     videos_router_2.db.splice(0, videos_router_2.db.length);
     posts_repositiry_1.dbPosts.splice(0, videos_router_2.db.length);
