@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="05/01/23 blogs complete." />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2J2VHcp7Z3dVT9COTzuMKnFwF8t" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/it incubator/lesson2&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;D:/it incubator/hometask1(e2eTest)/node_modules/jest&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\it incubator\\hometask1(e2eTest)\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\it incubator\hometask1(e2eTest)\src\Models" />
+      <recent name="D:\it incubator\hometask1(e2eTest)\dist" />
+      <recent name="D:\it incubator\hometask1(e2eTest)" />
+      <recent name="D:\it incubator\hometask1(e2eTest)\test" />
+      <recent name="D:\it incubator\hometask1(e2eTest)\src\routse" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.watch">
+    <configuration name="/hometask_01/api/videos.shold 404" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/test/api.videos.test.ts" />
+      <test-names>
+        <test-name value="/hometask_01/api/videos" />
+        <test-name value="shold 404" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="/hometask_01/api/videos.should 200" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/test/api.videos.test.ts" />
+      <test-names>
+        <test-name value="/hometask_01/api/videos" />
+        <test-name value="should 200" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="/hometask_01/api/videos.should 404" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/test/api.videos.test.ts" />
+      <test-names>
+        <test-name value="/hometask_01/api/videos" />
+        <test-name value="should 404" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="watch" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="watch" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+        <item itemvalue="npm.watch" />
+        <item itemvalue="Jest./hometask_01/api/videos.should 404" />
+        <item itemvalue="Jest./hometask_01/api/videos.should 200" />
+        <item itemvalue="Jest./hometask_01/api/videos.shold 404" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="" />
+      <created>1671276078403</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1671276078403</updated>
+      <workItem from="1671276079864" duration="76703000" />
+      <workItem from="1671814941172" duration="1442000" />
+      <workItem from="1672071821917" duration="20267000" />
+      <workItem from="1672765554996" duration="32116000" />
+    </task>
+    <task id="LOCAL-00001" summary="23/12/22 end version">
+      <created>1671793189375</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1671793189389</updated>
+    </task>
+    <task id="LOCAL-00002" summary="23/12/22 end version">
+      <created>1671793224048</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1671793224048</updated>
+    </task>
+    <task id="LOCAL-00003" summary="23/12/22 end version">
+      <created>1671795602886</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1671795602886</updated>
+    </task>
+    <task id="LOCAL-00004" summary="23/12/22 end version + vercel">
+      <created>1671798568807</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1671798568807</updated>
+    </task>
+    <task id="LOCAL-00005" summary="23/12/22 end version + vercel">
+      <created>1671799540161</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1671799540161</updated>
+    </task>
+    <task id="LOCAL-00006" summary="23/12/22 end version + vercel">
+      <created>1671800959630</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1671800959630</updated>
+    </task>
+    <task id="LOCAL-00007" summary="23/12/22 end version + vercel">
+      <created>1671802298860</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1671802298860</updated>
+    </task>
+    <task id="LOCAL-00008" summary="23/12/22 end version + vercel">
+      <created>1671809244460</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1671809244480</updated>
+    </task>
+    <task id="LOCAL-00009" summary="23/12/22 end version + vercel">
+      <created>1671814502483</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1671814502488</updated>
+    </task>
+    <task id="LOCAL-00010" summary="23/12/22 end version + vercel">
+      <created>1671815333002</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1671815333002</updated>
+    </task>
+    <task id="LOCAL-00011" summary="23/12/22 end version + vercel">
+      <created>1672073263201</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1672073263201</updated>
+    </task>
+    <task id="LOCAL-00012" summary="23/12/22 end version + vercel">
+      <created>1672074166315</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1672074166315</updated>
+    </task>
+    <task id="LOCAL-00013" summary="23/12/22 end version + vercel">
+      <created>1672074210532</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1672074210532</updated>
+    </task>
+    <task id="LOCAL-00014" summary="23/12/22 end version + vercel">
+      <created>1672074728077</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1672074728077</updated>
+    </task>
+    <task id="LOCAL-00015" summary="23/12/22 end version + vercel">
+      <created>1672075192977</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1672075192977</updated>
+    </task>
+    <task id="LOCAL-00016" summary="23/12/22 end version + vercel">
+      <created>1672075905227</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1672075905227</updated>
+    </task>
+    <task id="LOCAL-00017" summary="23/12/22 end version + vercel">
+      <created>1672077082044</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1672077082044</updated>
+    </task>
+    <task id="LOCAL-00018" summary="23/12/22 end version + vercel">
+      <created>1672079490836</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1672079490836</updated>
+    </task>
+    <task id="LOCAL-00019" summary="23/12/22 end version + vercel">
+      <created>1672080459524</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1672080459524</updated>
+    </task>
+    <task id="LOCAL-00020" summary="23/12/22 end version + vercel">
+      <created>1672080688483</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1672080688483</updated>
+    </task>
+    <task id="LOCAL-00021" summary="23/12/22 end version + vercel">
+      <created>1672081435403</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1672081435403</updated>
+    </task>
+    <task id="LOCAL-00022" summary="23/12/22 end version + vercel">
+      <created>1672081674427</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1672081674427</updated>
+    </task>
+    <task id="LOCAL-00023" summary="23/12/22 end version + vercel">
+      <created>1672082092306</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1672082092306</updated>
+    </task>
+    <task id="LOCAL-00024" summary="23/12/22 end version + vercel">
+      <created>1672082242050</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1672082242050</updated>
+    </task>
+    <task id="LOCAL-00025" summary="23/12/22 end version + vercel">
+      <created>1672082582292</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1672082582292</updated>
+    </task>
+    <task id="LOCAL-00026" summary="23/12/22 end version + vercel">
+      <created>1672086691707</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1672086691707</updated>
+    </task>
+    <task id="LOCAL-00027" summary="23/12/22 end version + vercel">
+      <created>1672087415743</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1672087415743</updated>
+    </task>
+    <task id="LOCAL-00028" summary="23/12/22 end version + vercel">
+      <created>1672335036149</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1672335036149</updated>
+    </task>
+    <task id="LOCAL-00029" summary="23/12/22 end version + vercel">
+      <created>1672335418132</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1672335418132</updated>
+    </task>
+    <task id="LOCAL-00030" summary="23/12/22 end version + vercel">
+      <created>1672336173109</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1672336173109</updated>
+    </task>
+    <task id="LOCAL-00031" summary="23/12/22 end version + vercel">
+      <created>1672338304919</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1672338304919</updated>
+    </task>
+    <task id="LOCAL-00032" summary="29/12/22 end version + vercel(vosk.znak)">
+      <created>1672339228426</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1672339228426</updated>
+    </task>
+    <task id="LOCAL-00033" summary="29/12/22 end version + vercel(vosk.znak)">
+      <created>1672339262414</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1672339262414</updated>
+    </task>
+    <task id="LOCAL-00034" summary="05/01/23 blogs complete.">
+      <created>1672949970212</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1672949970212</updated>
+    </task>
+    <task id="LOCAL-00035" summary="05/01/23 blogs complete.">
+      <created>1673093741762</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1673093741762</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/test/api.videos.test.js" />
+        <option value="$PROJECT_DIR$/test/api.videos.test.js" />
+        <option value="$PROJECT_DIR$/test/api.videos.test.js" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="23/12/22 end version" />
+    <MESSAGE value="23/12/22 end version + vercel" />
+    <MESSAGE value="29/12/22 end version + vercel(vosk.znak)" />
+    <MESSAGE value="05/01/23 blogs complete." />
+    <option name="LAST_COMMIT_MESSAGE" value="05/01/23 blogs complete." />
+  </component>
+</project>
