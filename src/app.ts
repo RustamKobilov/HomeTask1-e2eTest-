@@ -19,8 +19,8 @@ app.use('/posts',postsRouter);
 
 app.delete('/testing/all-data', (req: Request, res: Response) => {
     db.splice(0, db.length);
-    dbPosts.splice(0, db.length);
-    dbBlogs.splice(0, db.length);
+    dbPosts.splice(0, dbPosts.length);
+    dbBlogs.splice(0, dbBlogs.length);
     res.sendStatus(204)
 });
 

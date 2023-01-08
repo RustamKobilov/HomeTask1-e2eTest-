@@ -19,7 +19,7 @@ exports.app.use('/blogs', blogs_router_1.blogsRouter);
 exports.app.use('/posts', posts_router_1.postsRouter);
 exports.app.delete('/testing/all-data', (req, res) => {
     videos_router_2.db.splice(0, videos_router_2.db.length);
-    posts_repositiry_1.dbPosts.splice(0, videos_router_2.db.length);
-    blog_repository_1.dbBlogs.splice(0, videos_router_2.db.length);
+    posts_repositiry_1.dbPosts.splice(0, posts_repositiry_1.dbPosts.length);
+    blog_repository_1.dbBlogs.splice(0, blog_repository_1.dbBlogs.length);
     res.sendStatus(204);
 });
