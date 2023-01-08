@@ -37,11 +37,11 @@ export const errorFormatter = ({location, msg, param, value, nestedErrors}: Vali
 
 export const errorMessagesInputValidation = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
-    const resultErrors = errors.array({onlyFirstError: false});
+    const resultErrors = errors.array({onlyFirstError: true});
     if (resultErrors.length > 0) {
         return res.status(400).send({
-            'errorsMessages': resultErrors.map((error) => {
-                return {'message': error.msg, 'field': error.param}
+            errorsMessages: resultErrors.map((error) => {
+                return {message: error.msg, field: error.param}
             })
         })
     }
