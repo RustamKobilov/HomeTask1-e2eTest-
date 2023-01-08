@@ -1,3 +1,5 @@
+import {randomUUID} from "crypto";
+
 export let dbBlogs : Array<any> =[{
     "id": 1,
     "name": "string1",
@@ -11,7 +13,7 @@ export let dbBlogs : Array<any> =[{
 }]
 
 export const blogInputModel=(name:string,description:string,websiteUrl:string)=>{
-    const id= new Date().toISOString();
+    const id= randomUUID();
     return {id,name,description,websiteUrl,}
 }
 export const findBlogOnId=(id:number)=>{
