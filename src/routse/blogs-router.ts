@@ -51,14 +51,16 @@ blogsRouter.post('/', basicAuthMiddleware, createBlogValidation,
 blogsRouter.put('/:id',basicAuthMiddleware,updateBlogValidation,
     (req:Request,res:Response)=>{
 
-        const errorFormatter = ({ location, msg, param, value, nestedErrors }: ValidationError) => {
-            return errorView(param);
-        };
-        const errors = validationResult(req).formatWith(errorFormatter);
-
+        const errors = validationResult(req).formatWith(errorFormatter)
         if (!errors.isEmpty()) {
 
-            return res.status(400).json(errors.array());
+            const error = (errors.array()).filter((eror, index, self) =>
+                    index === self.findIndex((checkeror) => (
+                        checkeror.message === eror.message && checkeror.field === eror.field
+                    ))
+            )
+
+            return res.status(400).json({errorsMessages: error} );
         }
 
         const nameUpdateBlog=req.body.name;
