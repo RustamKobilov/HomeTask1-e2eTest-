@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="08/01/23 blogs complete.">
-      <change beforePath="$PROJECT_DIR$/src/Repository/blog-repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/blog-repository.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/posts-repositiry.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/posts-repositiry.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/InputValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/InputValidation.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routse/blogs-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/blogs-router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/posts-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/posts-router.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,14 +146,7 @@
       <workItem from="1671276079864" duration="76703000" />
       <workItem from="1671814941172" duration="1442000" />
       <workItem from="1672071821917" duration="20267000" />
-      <workItem from="1672765554996" duration="49229000" />
-    </task>
-    <task id="LOCAL-00004" summary="23/12/22 end version + vercel">
-      <created>1671798568807</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1671798568807</updated>
+      <workItem from="1672765554996" duration="49698000" />
     </task>
     <task id="LOCAL-00005" summary="23/12/22 end version + vercel">
       <created>1671799540161</created>
@@ -492,7 +484,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673188360355</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="08/01/23 blogs complete.">
+      <created>1673189018085</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1673189018085</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
