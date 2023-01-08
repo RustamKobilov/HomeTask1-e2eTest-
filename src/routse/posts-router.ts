@@ -40,7 +40,7 @@ postsRouter.post('/',basicAuthMiddleware,createPostValidation,
 
     const newPost=postInputModel(titleNewPost,shortDescription,content,blogId);
     dbPosts.push(newPost)
-    return res.sendStatus(201).send(newPost)
+    return res.status(201).send(newPost)
 
 })
 
@@ -72,7 +72,7 @@ postsRouter.put('/:id',basicAuthMiddleware,updatePostValidation,
         findUpdatePost.content=contentUpdatePost;
         findUpdatePost.blogId=blogIdUpdatePost;
 
-        return res.sendStatus(200)
+        return res.sendStatus(200);
 
     })
 
