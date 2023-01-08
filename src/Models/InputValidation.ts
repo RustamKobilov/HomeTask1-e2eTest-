@@ -41,7 +41,7 @@ export const errorMessagesInputValidation = (req: Request, res: Response, next: 
     if (resultErrors.length > 0) {
         return res.status(400).send({
             errorsMessages: resultErrors.map((error) => {
-                return {message: error.msg, field: error.value}
+                return {message: error.msg, field: error.param}
             })
         })
     }
