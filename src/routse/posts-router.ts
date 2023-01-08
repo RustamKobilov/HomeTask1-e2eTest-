@@ -4,7 +4,7 @@ import {errorView} from "../Models/ErrorModel";
 import {body, ValidationError, validationResult} from "express-validator";
 import {dbPosts, findPostOnId, postInputModel} from "../Repository/posts-repositiry";
 import {basicAuthMiddleware} from "../Middleware/autorized";
-import {createPostValidation, updatePostValidation} from "../Models/InputValidation";
+import {createPostValidation, errorFormatter, updatePostValidation} from "../Models/InputValidation";
 
 export const postsRouter=Router({});
 
@@ -23,14 +23,18 @@ postsRouter.get('/:id',(req:Request,res:Response)=> {
 postsRouter.post('/',basicAuthMiddleware,createPostValidation,
 (req:Request,res:Response)=>{
 
-    const errorFormatter = ({ location, msg, param, value, nestedErrors }: ValidationError) => {
-        return errorView(param);
-    };
     const errors = validationResult(req).formatWith(errorFormatter);
 
     if (!errors.isEmpty()) {
+        console.log(errors.array())
 
-        return res.status(400).json( errors.array() );
+        const error = (errors.array()).filter((eror, index, self) =>
+                index === self.findIndex((checkeror) => (
+                checkeror.message === eror.message && checkeror.field === eror.field
+                ))
+        )
+
+        return res.status(400).json({errorsMessages: error} );
     }
 
     const titleNewPost=req.body.title;

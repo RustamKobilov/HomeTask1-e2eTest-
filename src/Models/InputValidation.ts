@@ -1,4 +1,5 @@
-import {body} from "express-validator";
+import {body, ValidationError, validationResult} from "express-validator";
+import {errorView} from "./ErrorModel";
 
 
 const checkBlogName = body('name').isString().isLength({min:1,max:15})
@@ -17,3 +18,7 @@ const checkPostContent=body('content').isString().isLength({min:1,max:1000})
 const checkPostBlogid=body('blogId').isString()
 export const createPostValidation =[checkPostTitle,checkPostShortDescription,checkPostContent,checkPostBlogid]
 export const updatePostValidation=[...createPostValidation]
+
+export const errorFormatter = ({ location, msg, param, value, nestedErrors }: ValidationError) => {
+    return errorView(param);
+};

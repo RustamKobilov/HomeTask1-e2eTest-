@@ -4,7 +4,7 @@ import {findBlogOnId} from "../Repository/blog-repository";
 import {errorView} from "../Models/ErrorModel";
 import {body, ValidationError, validationResult} from "express-validator";
 import {basicAuthMiddleware} from "../Middleware/autorized";
-import {createBlogValidation, updateBlogValidation} from "../Models/InputValidation";
+import {createBlogValidation, errorFormatter, updateBlogValidation} from "../Models/InputValidation";
 
 export const blogsRouter=Router({});
 
@@ -23,15 +23,19 @@ blogsRouter.get('/:id',(req:Request,res:Response)=> {
 
 blogsRouter.post('/', basicAuthMiddleware, createBlogValidation,
     (req:Request,res:Response)=>{
-        const errorFormatter = ({ location, msg, param, value, nestedErrors }: ValidationError) => {
-            return errorView(param);
-        };
+
     const errors = validationResult(req).formatWith(errorFormatter);
 
         if (!errors.isEmpty()) {
-            //console.log(errors.array())
-            return res.status(400).json(errors.array());
-            //return res.sendStatus(400).json({ errors: errors.array() });
+            console.log(errors.array())
+
+            const error = (errors.array()).filter((eror, index, self) =>
+                    index === self.findIndex((checkeror) => (
+                        checkeror.message === eror.message && checkeror.field === eror.field
+                    ))
+            )
+
+            return res.status(400).json({errorsMessages: error} );
         }
 
 
