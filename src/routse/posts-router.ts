@@ -76,7 +76,7 @@ postsRouter.put('/:id',basicAuthMiddleware,updatePostValidation,
         findUpdatePost.content=contentUpdatePost;
         findUpdatePost.blogId=blogIdUpdatePost;
 
-        return res.sendStatus(200);
+        return res.sendStatus(204);
 
     })
 

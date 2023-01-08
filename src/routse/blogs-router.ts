@@ -76,7 +76,7 @@ blogsRouter.put('/:id',basicAuthMiddleware,updateBlogValidation,
         findUpdateBlog.description =descriptionUpdateBlog;
         findUpdateBlog.websiteUrlUpdateBlog =websiteUrlUpdateBlog;
 
-        return res.sendStatus(200);
+        return res.sendStatus(204);
 
     })
 

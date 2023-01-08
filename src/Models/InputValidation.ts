@@ -15,8 +15,8 @@ export const updateBlogValidation = [checkBlogName, checkBlogDescription, checkB
 const checkPostTitle=body('title').isString().isLength({min:1,max:30})
 const checkPostShortDescription=body('shortDescription').isString().isLength({min:1,max:100})
 const checkPostContent=body('content').isString().isLength({min:1,max:1000})
-const checkPostBlogid=body('blogId').isLength({ min: 1 }).matches(/[0-9]/)
-
+const checkPostBlogid=body('blogId').isString()
+//.matches(/[0-9]/)
 export const createPostValidation =[checkPostTitle,checkPostShortDescription,checkPostContent,checkPostBlogid]
 export const updatePostValidation=[...createPostValidation]
 
