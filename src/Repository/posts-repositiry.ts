@@ -1,4 +1,5 @@
 import {dbBlogs} from "./blog-repository";
+import {randomUUID} from "crypto";
 
 export let dbPosts : Array<any> =[
 {
@@ -16,10 +17,10 @@ export let dbPosts : Array<any> =[
     "blogId": "string",
     "blogName": "string"}]
 
-export const postInputModel=(title:string,shortdescription:string,content:string,blogId:string)=>{
-    const id=dbBlogs.length+15;
+export const postInputModel=(title:string,shortDescription:string,content:string,blogId:string)=>{
+    const id= randomUUID();
     const blogName='blog name who is?'
-    return {id,title,shortdescription,content,blogId,blogName}
+    return {id,title,shortDescription,content,blogId,blogName}
 
 }
 
