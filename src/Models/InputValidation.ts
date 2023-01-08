@@ -17,7 +17,7 @@ const checkBlogWebsiteUrl = body('websiteUrl').isString().trim().notEmpty().isLe
 export const createBlogValidation = [checkBlogName, checkBlogDescription, checkBlogWebsiteUrl]
 export const updateBlogValidation = [checkBlogName, checkBlogDescription, checkBlogWebsiteUrl]
 
-const checkPostTitle = body('title').isString().isLength({min: 1, max: 30})
+const checkPostTitle = body('title').isString().trim().notEmpty().isLength({min: 1, max: 30})
 const checkPostShortDescription = body('shortDescription').isString().trim().notEmpty().isLength({min: 1, max: 100})
 const checkPostContent = body('content').isString().trim().notEmpty().isLength({min: 1, max: 1000})
 const checkPostBlogid = body('blogId').isString().trim().notEmpty().isLength({min: 1}).custom(value=>{

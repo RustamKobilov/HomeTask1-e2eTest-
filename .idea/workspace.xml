@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="08/01/23 blogs complete.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/InputValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/InputValidation.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -145,14 +144,7 @@
       <workItem from="1671276079864" duration="76703000" />
       <workItem from="1671814941172" duration="1442000" />
       <workItem from="1672071821917" duration="20267000" />
-      <workItem from="1672765554996" duration="53138000" />
-    </task>
-    <task id="LOCAL-00010" summary="23/12/22 end version + vercel">
-      <created>1671815333002</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1671815333002</updated>
+      <workItem from="1672765554996" duration="53280000" />
     </task>
     <task id="LOCAL-00011" summary="23/12/22 end version + vercel">
       <created>1672073263201</created>
@@ -490,7 +482,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673192754287</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="08/01/23 blogs complete.">
+      <created>1673192951730</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1673192951730</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
