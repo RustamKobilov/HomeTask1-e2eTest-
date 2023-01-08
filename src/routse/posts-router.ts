@@ -13,7 +13,7 @@ postsRouter.get('/',(req:Request,res:Response)=>{
 })
 
 postsRouter.get('/:id',(req:Request,res:Response)=> {
-    const findPost = findPostOnId(+req.params.id);
+    const findPost = findPostOnId(req.params.id);
     if(findPost){
         return res.status(200).send(findPost)
     }
@@ -66,7 +66,7 @@ postsRouter.put('/:id',basicAuthMiddleware,updatePostValidation,
         const contentUpdatePost=req.body.content;
         const blogIdUpdatePost=req.body.blogId;
 
-        const findUpdatePost=findPostOnId(+req.params.id);
+        const findUpdatePost=findPostOnId(req.params.id);
         if(!findUpdatePost){
             return res.sendStatus(404);
         }
@@ -81,7 +81,7 @@ postsRouter.put('/:id',basicAuthMiddleware,updatePostValidation,
     })
 
 postsRouter.delete('/:id',basicAuthMiddleware,(req: Request, res: Response)=> {
-    const findDeletePost = findPostOnId(+req.params.id);
+    const findDeletePost = findPostOnId(req.params.id);
     if(!findDeletePost){
         return res.sendStatus(404);
     }

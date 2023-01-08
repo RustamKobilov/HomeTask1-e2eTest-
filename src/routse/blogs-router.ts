@@ -14,7 +14,7 @@ blogsRouter.get('/',(req:Request,res:Response)=>{
 })
 
 blogsRouter.get('/:id',(req:Request,res:Response)=> {
-    const findBlog = findBlogOnId(+req.params.id);
+    const findBlog = findBlogOnId(req.params.id);
     if(findBlog){
        return res.status(200).send(findBlog)
     }
@@ -67,7 +67,7 @@ blogsRouter.put('/:id',basicAuthMiddleware,updateBlogValidation,
         const descriptionUpdateBlog=req.body.description;
         const websiteUrlUpdateBlog=req.body.websiteUrl;
 
-        const findUpdateBlog = findBlogOnId(+req.params.id);
+        const findUpdateBlog = findBlogOnId(req.params.id);
         if(!findUpdateBlog){
             return res.sendStatus(404);
         }
@@ -83,7 +83,7 @@ blogsRouter.put('/:id',basicAuthMiddleware,updateBlogValidation,
 blogsRouter.delete('/:id',basicAuthMiddleware,
     (req: Request, res: Response) => {
 
-    const findDeleteBlog = findBlogOnId(+req.params.id);
+    const findDeleteBlog = findBlogOnId(req.params.id);
     if (!findDeleteBlog) {
         return res.sendStatus(404);
     }

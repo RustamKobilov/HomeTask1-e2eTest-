@@ -16,7 +16,7 @@ export const blogInputModel=(name:string,description:string,websiteUrl:string)=>
     const id= randomUUID();
     return {id,name,description,websiteUrl,}
 }
-export const findBlogOnId=(id:number)=>{
+export const findBlogOnId=(id:string)=>{
     let blog=dbBlogs.find(s=> s.id===id);
     return blog;
 }

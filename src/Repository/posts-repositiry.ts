@@ -23,7 +23,7 @@ export const postInputModel=(title:string,shortdescription:string,content:string
 
 }
 
-export const findPostOnId=(id:number)=>{
+export const findPostOnId=(id:string)=>{
     let post=dbPosts.find(s=> s.id===id);
     return post;
 }
