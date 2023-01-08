@@ -11,7 +11,7 @@ export let dbBlogs : Array<any> =[{
 }]
 
 export const blogInputModel=(name:string,description:string,websiteUrl:string)=>{
-    const id=dbBlogs.length+15;
+    const id= new Date().toISOString();
     return {id,name,description,websiteUrl,}
 }
 export const findBlogOnId=(id:number)=>{
