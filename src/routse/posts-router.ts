@@ -1,15 +1,11 @@
 import {Request,Response,Router} from "express";
 
-import {errorView} from "../Models/ErrorModel";
-import {body, ValidationError, validationResult} from "express-validator";
-import {dbPosts, findPostOnId, postInputModel} from "../Repository/posts-repositiry";
+
 import {basicAuthMiddleware} from "../Middleware/autorized";
-import {
-    createPostValidation,
-    errorFormatter,
-    errorMessagesInputValidation,
-    updatePostValidation
-} from "../Models/InputValidation";
+import {createPostValidation, errorFormatter, errorMessagesInputValidation, updatePostValidation} from "../Models/InputValidation";
+import {randomUUID} from "crypto";
+import {BlogsType, findBlogOnId} from "../RepositoryInDB/blog-repositoryDB";
+import {dbPosts, findBlogName, findPostOnId, PostType, updatePostOnId} from "../RepositoryInDB/posts-repositiryDB";
 
 export const postsRouter=Router({});
 
@@ -17,8 +13,8 @@ postsRouter.get('/',(req:Request,res:Response)=>{
     return res.status(200).send(dbPosts)
 })
 
-postsRouter.get('/:id',(req:Request,res:Response)=> {
-    const findPost = findPostOnId(req.params.id);
+postsRouter.get('/:id',async (req:Request,res:Response)=> {
+    const findPost = await findPostOnId(req.params.id);
     if(findPost){
         return res.status(200).send(findPost)
     }
@@ -26,44 +22,48 @@ postsRouter.get('/:id',(req:Request,res:Response)=> {
 })
 
 postsRouter.post('/',basicAuthMiddleware,createPostValidation,errorMessagesInputValidation,
-(req:Request,res:Response)=>{
+async (req: Request, res: Response) => {
+    const idNewPost = randomUUID();
+    const titleNewPost = req.body.title;
+    const shortDescriptionNewPost = req.body.shortDescription;
+    const contentNewPost = req.body.content;
+    const blogIdForPost = req.body.blogId;
+    const blogNameForPost = await findBlogName(blogIdForPost);
+        const newPost: PostType = {
+            id: idNewPost,
+            title: titleNewPost,
+            shortDescription: shortDescriptionNewPost,
+            content: contentNewPost,
+            blogId: blogIdForPost,
+            blogName: blogNameForPost.name,
+            createdAt: new Date().toISOString()
+        };
 
-    const titleNewPost=req.body.title;
-    const shortDescription=req.body.shortDescription;
-    const content=req.body.content;
-    const blogId=req.body.blogId;
-
-    const newPost=postInputModel(titleNewPost,shortDescription,content,blogId);
-    dbPosts.push(newPost)
-    return res.status(201).send(newPost)
-
+        dbPosts.push(newPost)
+        return res.status(201).send(newPost)
 })
 
 postsRouter.put('/:id',basicAuthMiddleware,updatePostValidation,errorMessagesInputValidation,
     (req:Request,res:Response)=>{
-
+        const idUpdatePost=req.params.id;
         const titleUpdatePost=req.body.title;
         const shortDescriptionUpdatePost=req.body.shortDescription;
         const contentUpdatePost=req.body.content;
         const blogIdUpdatePost=req.body.blogId;
 
-        const findUpdatePost=findPostOnId(req.params.id);
+        const findUpdatePost=updatePostOnId(idUpdatePost,titleUpdatePost,shortDescriptionUpdatePost,
+            contentUpdatePost,blogIdUpdatePost);
         if(!findUpdatePost){
             return res.sendStatus(404);
         }
-
-        findUpdatePost.title=titleUpdatePost;
-        findUpdatePost.shortDescription=shortDescriptionUpdatePost;
-        findUpdatePost.content=contentUpdatePost;
-        findUpdatePost.blogId=blogIdUpdatePost;
 
         return res.sendStatus(204);
 
     })
 
-postsRouter.delete('/:id',basicAuthMiddleware,(req: Request, res: Response)=> {
-    const findDeletePost = findPostOnId(req.params.id);
-    if(!findDeletePost){
+postsRouter.delete('/:id',basicAuthMiddleware,async (req: Request, res: Response) => {
+    const findDeletePost = await findPostOnId(req.params.id);
+    if (!findDeletePost) {
         return res.sendStatus(404);
     }
     dbPosts.splice(dbPosts.indexOf(findDeletePost), 1)

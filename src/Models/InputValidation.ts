@@ -2,8 +2,8 @@ import {body, ValidationError, validationResult} from "express-validator";
 import {errorView} from "./ErrorModel";
 import {NextFunction} from "express";
 import {Request, Response} from "express";
-import {dbBlogs} from "../Repository/blog-repository";
 import {throws} from "assert";
+import {dbBlogs} from "../RepositoryInDB/blog-repositoryDB";
 
 const checkBlogName = body('name').isString().trim().notEmpty().isLength({min: 1, max: 15})
 const checkBlogDescription = body('description').isString().trim().notEmpty().isLength({min: 1, max: 500})
@@ -20,8 +20,8 @@ export const updateBlogValidation = [checkBlogName, checkBlogDescription, checkB
 const checkPostTitle = body('title').isString().trim().notEmpty().isLength({min: 1, max: 30})
 const checkPostShortDescription = body('shortDescription').isString().trim().notEmpty().isLength({min: 1, max: 100})
 const checkPostContent = body('content').isString().trim().notEmpty().isLength({min: 1, max: 1000})
-const checkPostBlogid = body('blogId').isString().trim().notEmpty().isLength({min: 1}).custom(value=>{
-    const blog=dbBlogs.find(blog=>blog.id===value)
+const checkPostBlogid = body('blogId').isString().trim().notEmpty().isLength({min: 1}).custom( async value=>{
+    const blog= await dbBlogs.find(blog=>blog.id===value)
     if(!blog){
         throw new Error('blog not found')
     }
