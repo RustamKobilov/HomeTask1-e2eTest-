@@ -1,8 +1,8 @@
 import {app} from "./app"
 import {randomUUID} from "crypto";
 import {runDB} from "./db";
-//process.env.PORT||
-const port=3003
+//
+const port= process.env.PORT || 3003
 
 const startApp=async ()=> {
     await runDB()
