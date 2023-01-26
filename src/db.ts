@@ -1,3 +1,5 @@
+import * as dotenv from 'dotenv'
+dotenv.config()
 const {MongoClient} =require('mongodb');
 
 const mongoURI=process.env.mongoURI ||'mongodb://127.0.0.1:27017';
