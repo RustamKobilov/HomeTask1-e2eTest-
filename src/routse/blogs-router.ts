@@ -12,6 +12,7 @@ export const blogsRouter=Router({});
 blogsRouter.get('/',async (req:Request,res:Response)=>{
     const result = await client.db('hometask3').collection('Blogs').find({}).toArray()
     return res.status(200).send(result)
+    //cfefe
 })
 
 blogsRouter.get('/:id',async (req:Request,res:Response)=> {
