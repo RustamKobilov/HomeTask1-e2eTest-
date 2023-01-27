@@ -20,14 +20,15 @@ export const updateBlogValidation = [checkBlogName, checkBlogDescription, checkB
 const checkPostTitle = body('title').isString().trim().notEmpty().isLength({min: 1, max: 30})
 const checkPostShortDescription = body('shortDescription').isString().trim().notEmpty().isLength({min: 1, max: 100})
 const checkPostContent = body('content').isString().trim().notEmpty().isLength({min: 1, max: 1000})
-const checkPostBlogid = body('blogId').isString().trim().notEmpty().isLength({min: 1}).custom( async value=>{
-    const blog= await dbBlogs.find(blog=>blog.id===value)
-    if(!blog){
-        throw new Error('blog not found')
-    }
-    return true;
-})
-//.matches(/[0-9]/)
+const checkPostBlogid = body('blogId').isString().trim().notEmpty().isLength({min: 1})
+//custom( async value=>{
+    //const blog= await dbBlogs.find(blog=>blog.id===value)
+   // if(!blog){
+     //   throw new Error('blog not found')
+    //}
+    //return true;
+//})
+
 export const createPostValidation = [checkPostTitle, checkPostShortDescription, checkPostContent, checkPostBlogid]
 export const updatePostValidation = [...createPostValidation]
 

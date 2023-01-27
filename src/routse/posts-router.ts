@@ -1,16 +1,15 @@
 import {Request,Response,Router} from "express";
-
-
 import {basicAuthMiddleware} from "../Middleware/autorized";
 import {createPostValidation, errorFormatter, errorMessagesInputValidation, updatePostValidation} from "../Models/InputValidation";
 import {randomUUID} from "crypto";
 import {BlogsType, findBlogOnId} from "../RepositoryInDB/blog-repositoryDB";
-import {dbPosts, findBlogName, findPostOnId, PostType, updatePostOnId} from "../RepositoryInDB/posts-repositiryDB";
-
+import {findBlogName, findPostOnId, PostType, updatePostOnId} from "../RepositoryInDB/posts-repositiryDB";
+import {client} from "../db";
 export const postsRouter=Router({});
 
-postsRouter.get('/',(req:Request,res:Response)=>{
-    return res.status(200).send(dbPosts)
+postsRouter.get('/',async(req:Request,res:Response)=>{
+    const result=await client.db('hometask3').collection('Posts').find({}).toArray();
+    return res.status(200).send(result)
 })
 
 postsRouter.get('/:id',async (req:Request,res:Response)=> {
@@ -29,6 +28,9 @@ async (req: Request, res: Response) => {
     const contentNewPost = req.body.content;
     const blogIdForPost = req.body.blogId;
     const blogNameForPost = await findBlogName(blogIdForPost);
+    if(!blogNameForPost){
+        return res.sendStatus(404);
+    }
         const newPost: PostType = {
             id: idNewPost,
             title: titleNewPost,
@@ -39,7 +41,7 @@ async (req: Request, res: Response) => {
             createdAt: new Date().toISOString()
         };
 
-        dbPosts.push(newPost)
+        await client.db('hometask3').collection('Posts').insertOne(newPost)
         return res.status(201).send(newPost)
 })
 
@@ -64,8 +66,9 @@ postsRouter.put('/:id',basicAuthMiddleware,updatePostValidation,errorMessagesInp
 postsRouter.delete('/:id',basicAuthMiddleware,async (req: Request, res: Response) => {
     const findDeletePost = await findPostOnId(req.params.id);
     if (!findDeletePost) {
+
         return res.sendStatus(404);
     }
-    dbPosts.splice(dbPosts.indexOf(findDeletePost), 1)
+    await client.db('hometask3').collection('Posts').deleteOne({id:findDeletePost.id})
     return res.sendStatus(204);
 })

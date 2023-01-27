@@ -1,4 +1,5 @@
 import {client} from "../db";
+import {match} from "assert";
 
 export type BlogsType={
     id: string
@@ -25,23 +26,12 @@ export let dbBlogs : Array<BlogsType> =[{
 
 export async function findBlogOnId(id:string):Promise<BlogsType|undefined>{
     let blog= await client.db('hometask3').collection('Blogs').findOne({id:id});
-
-   // let blog=dbBlogs.find(s=> s.id===id);
-    if(blog!=undefined||null) {
-        return blog;
-    }
+    return blog;
 }
 
 export async function updateBlogOnId(id:string,newName:string,newDescription:string,newWebsiteUrl:string):
 Promise<boolean>{
-    let blog=dbBlogs.find(s=> s.id===id);
-    if(blog){
-        blog.name=newName,
-            blog.websiteUrl=newWebsiteUrl,
-            blog.description=newDescription
-    return true
-    }
-    else {
-        return false
-    }
+    let blog=await client.db('hometask').collection('Blogs').
+    UpdateOne({id:id},{set:{name:newName,websiteUrl:newWebsiteUrl,description:newDescription}})
+    return blog.matchedCount ===1
 }

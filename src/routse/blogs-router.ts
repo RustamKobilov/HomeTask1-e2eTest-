@@ -1,6 +1,5 @@
 import {Request,Response,Router} from "express";
 import {basicAuthMiddleware} from "../Middleware/autorized";
-
 import {createBlogValidation, errorFormatter, errorMessagesInputValidation, updateBlogValidation} from "../Models/InputValidation";
 import {dbBlogs,BlogsType, findBlogOnId, updateBlogOnId} from "../RepositoryInDB/blog-repositoryDB";
 import {randomUUID} from "crypto";
@@ -12,7 +11,6 @@ export const blogsRouter=Router({});
 blogsRouter.get('/',async (req:Request,res:Response)=>{
     const result = await client.db('hometask3').collection('Blogs').find({}).toArray()
     return res.status(200).send(result)
-    //cfefe
 })
 
 blogsRouter.get('/:id',async (req:Request,res:Response)=> {
@@ -65,6 +63,5 @@ blogsRouter.delete('/:id',basicAuthMiddleware,
         return res.sendStatus(404);
     }
        await client.db('hometask3').collection('Blogs').deleteOne({id:findDeleteBlog.id})
-    dbBlogs.splice(dbBlogs.indexOf(findDeleteBlog), 1)
     return res.sendStatus(204);
 })
