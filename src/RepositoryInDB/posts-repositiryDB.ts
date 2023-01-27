@@ -43,7 +43,7 @@ export async function updatePostOnId(id:string,newTittle:string, newShortDescrip
     return post.matchedCount===1
 }
 
-export async function findBlogName(nameSearch:string):Promise<BlogsType|undefined>{
-    const blog=await client.db('hometask3').collection('Blogs').findOne({name:nameSearch})
+export async function findBlogName(id:string):Promise<BlogsType|undefined>{
+    const blog=await client.db('hometask3').collection('Blogs').findOne({id:id})
     return blog
 }

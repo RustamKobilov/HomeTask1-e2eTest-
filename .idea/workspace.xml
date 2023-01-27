@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="25/01/23 mongodb new branch.">
+    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="27/01/23 mongodb finished.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/InputValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/InputValidation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/posts-repositiryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/posts-repositiryDB.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/blogs-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/blogs-router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/posts-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/posts-router.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,13 +155,6 @@
       <workItem from="1673205002930" duration="3883000" />
       <workItem from="1673982536767" duration="75481000" />
       <workItem from="1674580719055" duration="13147000" />
-    </task>
-    <task id="LOCAL-00019" summary="23/12/22 end version + vercel">
-      <created>1672080459524</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1672080459524</updated>
     </task>
     <task id="LOCAL-00020" summary="23/12/22 end version + vercel">
       <created>1672080688483</created>
@@ -503,7 +492,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674758858092</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="27/01/23 mongodb finished.">
+      <created>1674856311891</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1674856311891</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -534,6 +530,7 @@
     <MESSAGE value="08/01/23 blogs complete." />
     <MESSAGE value="24/01/23 local mongodb." />
     <MESSAGE value="25/01/23 mongodb new branch." />
-    <option name="LAST_COMMIT_MESSAGE" value="25/01/23 mongodb new branch." />
+    <MESSAGE value="27/01/23 mongodb finished." />
+    <option name="LAST_COMMIT_MESSAGE" value="27/01/23 mongodb finished." />
   </component>
 </project>
