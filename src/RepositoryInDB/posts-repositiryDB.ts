@@ -32,13 +32,13 @@ export let dbPosts : Array<PostType> =[
 
 
 export async function findPostOnId(id:string):Promise<PostType|undefined>{
-    let post=await client.db('hometask').collection('Posts').findOne({id:id});
+    let post=await client.db('hometask3').collection('Posts').findOne({id:id});
     return post;
     }
 
 
 export async function updatePostOnId(id:string,newTittle:string, newShortDescription:string,newContent:string,newBlogId:string):Promise<boolean>{
-    let post=await client.db('hometask').collection('Posts').
+    let post=await client.db('hometask3').collection('Posts').
     UpdateOne({id:id},{set:{title:newTittle,shortDescription:newShortDescription,content:newContent,blogId:newBlogId}});
     return post.matchedCount===1
 }
