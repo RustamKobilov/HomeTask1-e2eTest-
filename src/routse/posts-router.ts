@@ -46,14 +46,14 @@ async (req: Request, res: Response) => {
 })
 
 postsRouter.put('/:id',basicAuthMiddleware,updatePostValidation,errorMessagesInputValidation,
-    (req:Request,res:Response)=>{
+    async (req:Request,res:Response)=>{
         const idUpdatePost=req.params.id;
         const titleUpdatePost=req.body.title;
         const shortDescriptionUpdatePost=req.body.shortDescription;
         const contentUpdatePost=req.body.content;
         const blogIdUpdatePost=req.body.blogId;
 
-        const findUpdatePost=updatePostOnId(idUpdatePost,titleUpdatePost,shortDescriptionUpdatePost,
+        const findUpdatePost=await updatePostOnId(idUpdatePost,titleUpdatePost,shortDescriptionUpdatePost,
             contentUpdatePost,blogIdUpdatePost);
         if(!findUpdatePost){
             return res.sendStatus(404);
