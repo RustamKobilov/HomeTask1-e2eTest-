@@ -11,12 +11,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = require("./app");
 const db_1 = require("./db");
-//process.env.PORT||
-const port = 3003;
+//
+const port = process.env.PORT || 3003;
 const startApp = () => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, db_1.runDB)();
     app_1.app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
         console.log(`Example app listening on port ${port}`);
     }));
 });
-startApp();
+startApp().then(() => console.log('App start success'));
