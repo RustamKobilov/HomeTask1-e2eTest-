@@ -48,8 +48,8 @@ blogsRouter.put('/:id',basicAuthMiddleware,updateBlogValidation,errorMessagesInp
         if(!UpdateBlog){
             return res.sendStatus(404);
         }
-        await client.db('hometask3').collection('Blogs').
-        updateOne({id:idBlog},{$set:{name:nameUpdateBlog,description:descriptionUpdateBlog, websiteUrl:websiteUrlUpdateBlog}})
+        //await client.db('hometask3').collection('Blogs').
+        //updateOne({id:idBlog},{$set:{name:nameUpdateBlog,description:descriptionUpdateBlog, websiteUrl:websiteUrlUpdateBlog}})
 
         return res.sendStatus(204);
 
