@@ -156,13 +156,6 @@
       <workItem from="1673982536767" duration="75481000" />
       <workItem from="1674580719055" duration="13147000" />
     </task>
-    <task id="LOCAL-00026" summary="23/12/22 end version + vercel">
-      <created>1672086691707</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1672086691707</updated>
-    </task>
     <task id="LOCAL-00027" summary="23/12/22 end version + vercel">
       <created>1672087415743</created>
       <option name="number" value="00027" />
@@ -499,7 +492,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674914755941</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="27/01/23 mongodb finished.">
+      <created>1674915373916</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1674915373916</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

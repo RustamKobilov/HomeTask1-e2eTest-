@@ -23,7 +23,7 @@ app.use('/posts',postsRouter);
 
 
 app.delete('/testing/all-data', async (req: Request, res: Response) => {
-    await client.db('hometask3').collection('Post').deleteMany({})
+    await client.db('hometask3').collection('Posts').deleteMany({})
     await client.db('hometask3').collection('Blogs').deleteMany({})
     return res.sendStatus(204);
 });
