@@ -31,6 +31,7 @@ export async function findBlogOnId(id:string):Promise<BlogsType|undefined>{
 
 export async function updateBlogOnId(id:string,newName:string,newDescription:string,newWebsiteUrl:string):
 Promise<boolean>{
-    let blog=await client.db('hometask3').collection('Blogs').updateOne({id:id},{set:{name:newName,websiteUrl:newWebsiteUrl,description:newDescription}})
+    let blog=await client.db('hometask3').collection('Blogs').updateOne({id:id},{$set:{name:newName,websiteUrl:newWebsiteUrl,description:newDescription}})
+    console.log(blog)
     return blog.matchedCount ===1
 }
