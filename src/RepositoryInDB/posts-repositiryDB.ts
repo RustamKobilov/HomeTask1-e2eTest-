@@ -40,6 +40,7 @@ export async function findPostOnId(id:string):Promise<PostType|undefined>{
 export async function updatePostOnId(id:string,newTittle:string, newShortDescription:string,newContent:string,newBlogId:string):Promise<boolean>{
     let post=await client.db('hometask3').collection('Posts').
     UpdateOne({id:id},{$set:{title:newTittle,shortDescription:newShortDescription,content:newContent,blogId:newBlogId}});
+    console.log(post.matchedCount)
     return post.matchedCount===1
 }
 
