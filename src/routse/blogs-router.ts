@@ -9,7 +9,7 @@ export const blogsRouter=Router({});
 
 //const errors= [];
 blogsRouter.get('/',async (req:Request,res:Response)=>{
-    const result = await client.db('hometask3').collection('Blogs').find({},{_id:0}).toArray()
+    const result = await client.db('hometask3').collection('Blogs').find({},{_id:false}).toArray()
     return res.status(200).send(result)
 })
 
