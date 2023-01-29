@@ -44,6 +44,6 @@ export async function updatePostOnId(id:string,newTittle:string, newShortDescrip
 }
 
 export async function findBlogName(id:string):Promise<BlogsType|undefined>{
-    const blog=await client.db('hometask3').collection('Blogs').findOne({id:id})
+    const blog=await client.db('hometask3').collection('Blogs').findOne({id:id},{projection:{_id:0}});
     return blog;
 }
