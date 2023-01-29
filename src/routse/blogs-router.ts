@@ -3,13 +3,13 @@ import {basicAuthMiddleware} from "../Middleware/autorized";
 import {createBlogValidation, errorFormatter, errorMessagesInputValidation, updateBlogValidation} from "../Models/InputValidation";
 import {dbBlogs,BlogsType, findBlogOnId, updateBlogOnId} from "../RepositoryInDB/blog-repositoryDB";
 import {randomUUID} from "crypto";
-import {client} from "../db";
+import {blogsCollection, client} from "../db";
 
 export const blogsRouter=Router({});
 
 //const errors= [];
 blogsRouter.get('/',async (req:Request,res:Response)=>{
-    const result = await client.db('hometask3').collection('Blogs').find({}).project({_id:0}).toArray()
+    const result = await blogsCollection.find({}).project({_id:0}).toArray()
     return res.status(200).send(result)
 })
 
@@ -31,9 +31,10 @@ blogsRouter.post('/', basicAuthMiddleware, createBlogValidation,errorMessagesInp
     const newBlog:BlogsType={
         id:newId,name:nameNewBlog,description:descriptionNewBlog,websiteUrl:websiteUrlNewBlog,createdAt:new Date().toISOString()
     }
-       await client.db('hometask3').collection('Blogs').insertOne(newBlog)
+       await blogsCollection.insertOne(newBlog)
     //dbBlogs.push(newBlog)
-        return res.status(201).send(newBlog)
+        return res.status(201).send({id:newBlog.id,name:newBlog.name,description:newBlog.description,
+            websiteUrl:newBlog.websiteUrl,createdAt:newBlog.createdAt})
 
     })
 blogsRouter.put('/:id',basicAuthMiddleware,updateBlogValidation,errorMessagesInputValidation,
@@ -60,6 +61,6 @@ blogsRouter.delete('/:id',basicAuthMiddleware,
     if (!findDeleteBlog) {
         return res.sendStatus(404);
     }
-       await client.db('hometask3').collection('Blogs').deleteOne({id:findDeleteBlog.id})
+       await blogsCollection.deleteOne({id:findDeleteBlog.id})
     return res.sendStatus(204);
 })

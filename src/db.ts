@@ -5,6 +5,8 @@ const {MongoClient} =require('mongodb');
 const mongoURI=process.env.mongoURI ||'mongodb://127.0.0.1:27017';
 
 export const client = new MongoClient(mongoURI)
+export const blogsCollection = client.db('hometask3').collection('Blogs');
+export const postsCollection = client.db('hometask3').collection('Posts');
 export async function runDB(){
     try{
         await client.connect();

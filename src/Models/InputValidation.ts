@@ -4,7 +4,7 @@ import {NextFunction} from "express";
 import {Request, Response} from "express";
 import {throws} from "assert";
 import {dbBlogs} from "../RepositoryInDB/blog-repositoryDB";
-import {client} from "../db";
+import {blogsCollection, client} from "../db";
 
 const checkBlogName = body('name').isString().trim().notEmpty().isLength({min: 1, max: 15})
 const checkBlogDescription = body('description').isString().trim().notEmpty().isLength({min: 1, max: 500})
@@ -22,7 +22,7 @@ const checkPostTitle = body('title').isString().trim().notEmpty().isLength({min:
 const checkPostShortDescription = body('shortDescription').isString().trim().notEmpty().isLength({min: 1, max: 100})
 const checkPostContent = body('content').isString().trim().notEmpty().isLength({min: 1, max: 1000})
 const checkPostBlogid = body('blogId').isString().trim().notEmpty().isLength({min: 1}).custom( async value=>{
-    const blog=await client.db('hometask3').collection('Blogs').findOne({id:value},{projection:{_id:0}})
+    const blog = await blogsCollection.findOne({id:value},{projection:{_id:0}})
     console.log(blog)
     if(!blog){
        throw new Error('blog not found')

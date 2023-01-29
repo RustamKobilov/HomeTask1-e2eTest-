@@ -4,11 +4,11 @@ import {createPostValidation, errorFormatter, errorMessagesInputValidation, upda
 import {randomUUID} from "crypto";
 import {BlogsType, findBlogOnId} from "../RepositoryInDB/blog-repositoryDB";
 import {findBlogName, findPostOnId, PostType, updatePostOnId} from "../RepositoryInDB/posts-repositiryDB";
-import {client} from "../db";
+import {client, postsCollection} from "../db";
 export const postsRouter=Router({});
 
 postsRouter.get('/',async(req:Request,res:Response)=>{
-    const result=await client.db('hometask3').collection('Posts').find({}).project({_id:0}).toArray();
+    const result=await postsCollection.find({}).project({_id:0}).toArray();
     return res.status(200).send(result)
 })
 
@@ -28,6 +28,7 @@ async (req: Request, res: Response) => {
     const contentNewPost = req.body.content;
     const blogIdForPost = req.body.blogId;
     const blogNameForPost = await findBlogName(blogIdForPost);
+    console.log(blogNameForPost)
     if(!blogNameForPost){
         return res.sendStatus(404);
     }
@@ -41,8 +42,9 @@ async (req: Request, res: Response) => {
             createdAt: new Date().toISOString()
         };
 
-        await client.db('hometask3').collection('Posts').insertOne(newPost)
-        return res.status(201).send(newPost)
+        await postsCollection.insertOne(newPost)
+        return res.status(201).send({id:newPost.id,title:newPost.title,shortDescription:newPost.shortDescription,
+        content:newPost.content,blogId:newPost.blogId,blogName:newPost.blogName,createdAt:newPost.createdAt})
 })
 
 postsRouter.put('/:id',basicAuthMiddleware,updatePostValidation,errorMessagesInputValidation,
@@ -69,6 +71,6 @@ postsRouter.delete('/:id',basicAuthMiddleware,async (req: Request, res: Response
 
         return res.sendStatus(404);
     }
-    await client.db('hometask3').collection('Posts').deleteOne({id:findDeletePost.id})
+    await postsCollection.deleteOne({id:findDeletePost.id})
     return res.sendStatus(204);
 })

@@ -1,6 +1,5 @@
 import {BlogsType, dbBlogs} from "./blog-repositoryDB";
-import {randomUUID} from "crypto";
-import {client} from "../db";
+import {blogsCollection,postsCollection, client} from "../db";
 
 export type PostType={
     id: string
@@ -32,18 +31,18 @@ export let dbPosts : Array<PostType> =[
 
 
 export async function findPostOnId(id:string):Promise<PostType|null>{
-    let post=await client.db('hometask3').collection('Posts').findOne({id:id},{projection:{_id:0}});
+    let post=await postsCollection.findOne({id:id},{projection:{_id:0}});
     return post;
     }
 
 
 export async function updatePostOnId(id:string,newTittle:string, newShortDescription:string,newContent:string,newBlogId:string):Promise<boolean>{
-    let post=await client.db('hometask3').collection('Posts').updateOne({id:id},{$set:{title:newTittle,shortDescription:newShortDescription,content:newContent,blogId:newBlogId}});
+    let post=await postsCollection.updateOne({id:id},{$set:{title:newTittle,shortDescription:newShortDescription,content:newContent,blogId:newBlogId}});
     //console.log(post.matchedCount)
     return post.matchedCount===1
 }
 
-export async function findBlogName(id:string):Promise<BlogsType|undefined>{
-    const blog=await client.db('hometask3').collection('Blogs').findOne({id:id},{projection:{_id:0}});
-    return blog;
+export async function findBlogName(id:string):Promise<BlogsType|null>{
+    return blogsCollection.findOne({id},{projection:{_id:0}});
+
 }
