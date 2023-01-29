@@ -9,7 +9,7 @@ export const blogsRouter=Router({});
 
 //const errors= [];
 blogsRouter.get('/',async (req:Request,res:Response)=>{
-    const result = await client.db('hometask3').collection('Blogs').find({},{_id:0}).toArray()
+    const result = await client.db('hometask3').collection('Blogs').find({}).project({_id:0}).toArray()
     return res.status(200).send(result)
 })
 
@@ -48,8 +48,6 @@ blogsRouter.put('/:id',basicAuthMiddleware,updateBlogValidation,errorMessagesInp
         if(!UpdateBlog){
             return res.sendStatus(404);
         }
-        //await client.db('hometask3').collection('Blogs').
-        //updateOne({id:idBlog},{$set:{name:nameUpdateBlog,description:descriptionUpdateBlog, websiteUrl:websiteUrlUpdateBlog}})
 
         return res.sendStatus(204);
 

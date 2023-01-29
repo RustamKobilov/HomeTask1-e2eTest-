@@ -32,7 +32,7 @@ export let dbPosts : Array<PostType> =[
 
 
 export async function findPostOnId(id:string):Promise<PostType|undefined>{
-    let post=await client.db('hometask3').collection('Posts').findOne({id:id},{_id:0});
+    let post=await client.db('hometask3').collection('Posts').findOne({id:id}).project({_id:0});
     return post;
     }
 
