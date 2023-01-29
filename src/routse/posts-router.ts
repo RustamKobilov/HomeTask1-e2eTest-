@@ -8,7 +8,7 @@ import {client} from "../db";
 export const postsRouter=Router({});
 
 postsRouter.get('/',async(req:Request,res:Response)=>{
-    const result=await client.db('hometask3').collection('Posts').find({},{_id:0}).toArray();
+    const result=await client.db('hometask3').collection('Posts').find({}).project({_id:0}).toArray();
     return res.status(200).send(result)
 })
 
