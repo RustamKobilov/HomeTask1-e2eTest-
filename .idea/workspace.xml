@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="27/01/23 mongodb finished.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/posts-repositiryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/posts-repositiryDB.ts" afterDir="false" />
     </list>
@@ -156,13 +155,6 @@
       <workItem from="1673205002930" duration="3883000" />
       <workItem from="1673982536767" duration="75481000" />
       <workItem from="1674580719055" duration="13147000" />
-    </task>
-    <task id="LOCAL-00038" summary="05/01/23 blogs complete.">
-      <created>1673169253484</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1673169253484</updated>
     </task>
     <task id="LOCAL-00039" summary="05/01/23 blogs complete.">
       <created>1673169698733</created>
@@ -500,7 +492,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674982252319</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="27/01/23 mongodb finished.">
+      <created>1674983172784</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1674983172784</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
