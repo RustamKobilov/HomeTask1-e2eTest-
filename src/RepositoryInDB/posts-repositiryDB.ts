@@ -31,7 +31,7 @@ export let dbPosts : Array<PostType> =[
     }]
 
 
-export async function findPostOnId(id:string):Promise<PostType|undefined>{
+export async function findPostOnId(id:string):Promise<PostType|null>{
     let post=await client.db('hometask3').collection('Posts').find({id:id}).project({_id:0});
     return post;
     }

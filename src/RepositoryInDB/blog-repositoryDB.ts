@@ -24,8 +24,9 @@ export let dbBlogs : Array<BlogsType> =[{
 
 
 
-export async function findBlogOnId(id:string):Promise<BlogsType|undefined>{
-    let blog= await client.db('hometask3').collection('Blogs').find({id:id}).project({_id:0});
+export async function findBlogOnId(id:string):Promise<BlogsType|null>{
+    let blog= await client.db('hometask3').collection('Blogs').findOne({id:id},{projection:{_id:0}});
+    console.log(blog)
     return blog;
 }
 
