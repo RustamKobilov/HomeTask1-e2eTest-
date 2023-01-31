@@ -1,5 +1,5 @@
-import {blogsCollection, client, postsCollection} from "../db";
-import {match} from "assert";
+import {blogsCollection} from "../db";
+import {randomUUID} from "crypto";
 
 export type BlogsType={
     id: string
@@ -22,13 +22,25 @@ export let dbBlogs : Array<BlogsType> =[{
     createdAt: 'string12323233'
 }]
 
-
+export async function getAllBlog():Promise<BlogsType>{
+    const blogs=await blogsCollection.find({}).project({_id:0}).toArray()
+    return blogs
+}
 
 export async function findBlogOnId(id:string):Promise<BlogsType|null>{
     let blog= await blogsCollection.findOne({id:id},{projection:{_id:0}});
     console.log(blog)
     return blog;
 }
+
+export async function createBlog(nameNewBlog:string,descriptionNewBlog:string,websiteUrlNewBlog:string){
+    const newId=randomUUID();
+    const newBlog:BlogsType={
+        id:newId,name:nameNewBlog,description:descriptionNewBlog,websiteUrl:websiteUrlNewBlog,createdAt:new Date().toISOString()
+    }
+    return newBlog;
+}
+
 
 export async function updateBlogOnId(id:string,newName:string,newDescription:string,newWebsiteUrl:string):
 Promise<boolean>{

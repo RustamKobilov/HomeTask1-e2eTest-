@@ -1,7 +1,14 @@
 import {Request,Response,Router} from "express";
 import {basicAuthMiddleware} from "../Middleware/autorized";
 import {createBlogValidation, errorFormatter, errorMessagesInputValidation, updateBlogValidation} from "../Models/InputValidation";
-import {dbBlogs,BlogsType, findBlogOnId, updateBlogOnId} from "../RepositoryInDB/blog-repositoryDB";
+import {
+    dbBlogs,
+    BlogsType,
+    findBlogOnId,
+    updateBlogOnId,
+    getAllBlog,
+    createBlog
+} from "../RepositoryInDB/blog-repositoryDB";
 import {randomUUID} from "crypto";
 import {blogsCollection, client} from "../db";
 
@@ -9,8 +16,8 @@ export const blogsRouter=Router({});
 
 //const errors= [];
 blogsRouter.get('/',async (req:Request,res:Response)=>{
-    const result = await blogsCollection.find({}).project({_id:0}).toArray()
-    return res.status(200).send(result)
+    const resultAllBlogs=await getAllBlog;
+    return res.status(200).send(resultAllBlogs())
 })
 
 blogsRouter.get('/:id',async (req:Request,res:Response)=> {
@@ -23,18 +30,15 @@ blogsRouter.get('/:id',async (req:Request,res:Response)=> {
 
 blogsRouter.post('/', basicAuthMiddleware, createBlogValidation,errorMessagesInputValidation,
     async (req:Request,res:Response)=>{
-    const newId= randomUUID();
+
     const nameNewBlog=req.body.name;
     const descriptionNewBlog=req.body.description;
     const websiteUrlNewBlog=req.body.websiteUrl;
+    const resultCreatBlog=await createBlog(nameNewBlog,descriptionNewBlog,websiteUrlNewBlog)
 
-    const newBlog:BlogsType={
-        id:newId,name:nameNewBlog,description:descriptionNewBlog,websiteUrl:websiteUrlNewBlog,createdAt:new Date().toISOString()
-    }
-       await blogsCollection.insertOne(newBlog)
-    //dbBlogs.push(newBlog)
-        return res.status(201).send({id:newBlog.id,name:newBlog.name,description:newBlog.description,
-            websiteUrl:newBlog.websiteUrl,createdAt:newBlog.createdAt})
+        await blogsCollection.insertOne(resultCreatBlog);
+        return res.status(201).send({id:resultCreatBlog.id,name:resultCreatBlog.name,description:resultCreatBlog.description,
+            websiteUrl:resultCreatBlog.websiteUrl,createdAt:resultCreatBlog.createdAt})
 
     })
 blogsRouter.put('/:id',basicAuthMiddleware,updateBlogValidation,errorMessagesInputValidation,

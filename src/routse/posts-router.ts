@@ -1,15 +1,21 @@
 import {Request,Response,Router} from "express";
 import {basicAuthMiddleware} from "../Middleware/autorized";
-import {createPostValidation, errorFormatter, errorMessagesInputValidation, updatePostValidation} from "../Models/InputValidation";
+import {createPostValidation, errorMessagesInputValidation, updatePostValidation} from "../Models/InputValidation";
 import {randomUUID} from "crypto";
-import {BlogsType, findBlogOnId} from "../RepositoryInDB/blog-repositoryDB";
-import {findBlogName, findPostOnId, PostType, updatePostOnId} from "../RepositoryInDB/posts-repositiryDB";
-import {client, postsCollection} from "../db";
+import {
+    createPost,
+    findBlogName,
+    findPostOnId,
+    getAllPosts,
+    PostType,
+    updatePostOnId
+} from "../RepositoryInDB/posts-repositiryDB";
+import {postsCollection} from "../db";
 export const postsRouter=Router({});
 
 postsRouter.get('/',async(req:Request,res:Response)=>{
-    const result=await postsCollection.find({}).project({_id:0}).toArray();
-    return res.status(200).send(result)
+    const resultAllPosts=getAllPosts();
+    return res.status(200).send(resultAllPosts)
 })
 
 postsRouter.get('/:id',async (req:Request,res:Response)=> {
@@ -22,29 +28,23 @@ postsRouter.get('/:id',async (req:Request,res:Response)=> {
 
 postsRouter.post('/',basicAuthMiddleware,createPostValidation,errorMessagesInputValidation,
 async (req: Request, res: Response) => {
-    const idNewPost = randomUUID();
     const titleNewPost = req.body.title;
     const shortDescriptionNewPost = req.body.shortDescription;
     const contentNewPost = req.body.content;
     const blogIdForPost = req.body.blogId;
+
     const blogNameForPost = await findBlogName(blogIdForPost);
     console.log(blogNameForPost)
     if(!blogNameForPost){
         return res.sendStatus(404);
     }
-        const newPost: PostType = {
-            id: idNewPost,
-            title: titleNewPost,
-            shortDescription: shortDescriptionNewPost,
-            content: contentNewPost,
-            blogId: blogIdForPost,
-            blogName: blogNameForPost.name,
-            createdAt: new Date().toISOString()
-        };
+    const resultCreatePost=await createPost(titleNewPost,shortDescriptionNewPost,
+        contentNewPost,blogIdForPost,blogNameForPost.name)
 
-        await postsCollection.insertOne(newPost)
-        return res.status(201).send({id:newPost.id,title:newPost.title,shortDescription:newPost.shortDescription,
-        content:newPost.content,blogId:newPost.blogId,blogName:newPost.blogName,createdAt:newPost.createdAt})
+       await postsCollection.insertOne(resultCreatePost);
+        return res.status(201).send({id:resultCreatePost.id,title:resultCreatePost.title,
+            shortDescription:resultCreatePost.shortDescription, content:resultCreatePost.content,
+            blogId:resultCreatePost.blogId,blogName:resultCreatePost.blogName,createdAt:resultCreatePost.createdAt})
 })
 
 postsRouter.put('/:id',basicAuthMiddleware,updatePostValidation,errorMessagesInputValidation,

@@ -1,5 +1,6 @@
 import {BlogsType, dbBlogs} from "./blog-repositoryDB";
 import {blogsCollection,postsCollection, client} from "../db";
+import {randomUUID} from "crypto";
 
 export type PostType={
     id: string
@@ -29,7 +30,26 @@ export let dbPosts : Array<PostType> =[
         "createdAt":"string111"
     }]
 
+export async function getAllPosts():Promise<PostType>{
+    const Posts=await postsCollection.find({}).project({_id:0}).toArray();
+    return Posts;
+}
+export async function createPost(titleNewPost:string,shortDescriptionNewPost:string,contentNewPost:string,
+                                 blogIdForPost:string,blogNameForPost:string):Promise<PostType>{
+    const idNewPost = randomUUID();
 
+    const newPost: PostType = {
+        id: idNewPost,
+        title: titleNewPost,
+        shortDescription: shortDescriptionNewPost,
+        content: contentNewPost,
+        blogId: blogIdForPost,
+        blogName: blogNameForPost,
+        createdAt: new Date().toISOString()
+    };
+
+    return newPost;
+}
 export async function findPostOnId(id:string):Promise<PostType|null>{
     let post=await postsCollection.findOne({id:id},{projection:{_id:0}});
     return post;
