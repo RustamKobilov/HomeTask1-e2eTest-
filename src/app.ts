@@ -2,14 +2,10 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 import express, {Request, Response} from "express";
 import {videosRouter} from "./routse/videos-router";
-import {db} from "./routse/videos-router";
 import {blogsRouter} from "./routse/blogs-router";
 import {postsRouter} from "./routse/posts-router";
-import {dbPosts} from "./RepositoryInDB/posts-repositiryDB";
-import {dbBlogs} from "./RepositoryInDB/blog-repositoryDB";
 import {client} from "./db";
-//import {dbPosts} from "./RepositoryInMemory/posts-repositiry";
-//import {dbBlogs} from "./RepositoryInMemory/blog-repository";
+
 
 export const app = express();
 

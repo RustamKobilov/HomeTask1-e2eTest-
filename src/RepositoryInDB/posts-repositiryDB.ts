@@ -1,6 +1,8 @@
-import {BlogsType, dbBlogs} from "./blog-repositoryDB";
-import {blogsCollection,postsCollection, client} from "../db";
+import {BlogsType} from "./blog-repositoryDB";
+import {blogsCollection, postsCollection} from "../db";
 import {randomUUID} from "crypto";
+import {skipPageMath, valueSortDirection} from "./jointRepository";
+import {PaginationTypeInputParamsBlogs, PaginationTypeInputParamsPostsForBlogs} from "../routse/blogs-router";
 
 export type PostType={
     id: string
@@ -10,6 +12,15 @@ export type PostType={
         blogId: string
         blogName: string
     createdAt:string
+}
+
+export type inputPostsType={
+
+    pagesCount: number
+    page: number
+    pageSize: number
+    totalCount: number
+    items: any
 }
 export let dbPosts : Array<PostType> =[
 {
@@ -30,9 +41,17 @@ export let dbPosts : Array<PostType> =[
         "createdAt":"string111"
     }]
 
-export async function getAllPosts():Promise<PostType>{
-    const Posts=await postsCollection.find({}).project({_id:0}).toArray();
-    return Posts;
+export async function getAllPosts(paginationPosts: PaginationTypeInputParamsPostsForBlogs):Promise<inputPostsType>{
+
+    const skipPage=skipPageMath(paginationPosts.pageNumber,paginationPosts.pageSize)
+    const pagesCountBlog=await postsCollection.countDocuments({});
+    let totalCountBlog=0;
+
+    const posts=await postsCollection.find({}).sort({[paginationPosts.sortBy]:
+            valueSortDirection(paginationPosts.sortDirection)}).skip(skipPage).limit(paginationPosts.pageSize).project({_id:0}).toArray();
+
+    return {pagesCount: pagesCountBlog, page: paginationPosts.pageNumber, pageSize: paginationPosts.pageSize,
+        totalCount: totalCountBlog, items: posts};
 }
 export async function createPost(titleNewPost:string,shortDescriptionNewPost:string,contentNewPost:string,
                                  blogIdForPost:string,blogNameForPost:string):Promise<PostType>{
@@ -64,5 +83,25 @@ export async function updatePostOnId(id:string,newTittle:string, newShortDescrip
 
 export async function findBlogName(id:string):Promise<BlogsType|null>{
     return blogsCollection.findOne({id},{projection:{_id:0}});
+
+}
+
+export async function createPostOnId(titleNewPost:string,shortDescriptionNewPost:string,contentNewPost:string,blogIdForPost:string):
+    Promise<PostType|boolean>{
+
+    const blogNameForPost = await findBlogName(blogIdForPost);
+    console.log(blogNameForPost)
+    if(!blogNameForPost){
+        return false;
+    }
+    const resultCreatePost=await createPost(titleNewPost,shortDescriptionNewPost,
+        contentNewPost,blogIdForPost,blogNameForPost.name)
+
+    await postsCollection.insertOne(resultCreatePost);
+
+
+return ({id:resultCreatePost.id,title:resultCreatePost.title,
+    shortDescription:resultCreatePost.shortDescription, content:resultCreatePost.content,
+    blogId:resultCreatePost.blogId,blogName:resultCreatePost.blogName,createdAt:resultCreatePost.createdAt})
 
 }

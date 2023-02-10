@@ -43,8 +43,6 @@ const videos_router_1 = require("./routse/videos-router");
 const blogs_router_1 = require("./routse/blogs-router");
 const posts_router_1 = require("./routse/posts-router");
 const db_1 = require("./db");
-//import {dbPosts} from "./RepositoryInMemory/posts-repositiry";
-//import {dbBlogs} from "./RepositoryInMemory/blog-repository";
 exports.app = (0, express_1.default)();
 const convertJson = express_1.default.json();
 exports.app.use(convertJson);

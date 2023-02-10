@@ -5,11 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="27/01/23 mongodb finished.">
+      <change afterPath="$PROJECT_DIR$/src/RepositoryInDB/jointRepository.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/InputValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/InputValidation.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/posts-repositiryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/posts-repositiryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/db.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/db.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routse/blogs-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/blogs-router.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routse/posts-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/posts-router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/apiTest.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/apiTest.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/apiTest.test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +43,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2J2VHcp7Z3dVT9COTzuMKnFwF8t" />
   <component name="ProjectLevelVcsManager">
@@ -65,11 +78,11 @@
       <recent name="D:\it incubator\hometask1(e2eTest)\src\RepositoryInDB" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\it incubator\hometask1(e2eTest)\src" />
+      <recent name="D:\it incubator\hometask1(e2eTest)" />
       <recent name="D:\it incubator\hometask1(e2eTest)\dist" />
       <recent name="D:\it incubator\hometask1(e2eTest)\src\Models" />
-      <recent name="D:\it incubator\hometask1(e2eTest)" />
       <recent name="D:\it incubator\hometask1(e2eTest)\test" />
-      <recent name="D:\it incubator\hometask1(e2eTest)\src\routse" />
     </key>
   </component>
   <component name="RunManager" selected="npm.dev">
@@ -158,13 +171,8 @@
       <workItem from="1673205002930" duration="3883000" />
       <workItem from="1673982536767" duration="75481000" />
       <workItem from="1674580719055" duration="13147000" />
-    </task>
-    <task id="LOCAL-00046" summary="08/01/23 blogs complete.">
-      <created>1673185743745</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1673185743745</updated>
+      <workItem from="1675601488154" duration="37535000" />
+      <workItem from="1675963750433" duration="7426000" />
     </task>
     <task id="LOCAL-00047" summary="08/01/23 blogs complete.">
       <created>1673185941309</created>
@@ -502,7 +510,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674991268586</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="27/01/23 mongodb finished.">
+      <created>1675190303421</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1675190303421</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

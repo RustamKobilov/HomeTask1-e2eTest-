@@ -1,17 +1,20 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
-const {MongoClient} =require('mongodb');
+import {MongoClient} from 'mongodb'
+import {BlogsType} from "./RepositoryInDB/blog-repositoryDB";
+import {PostType} from "./RepositoryInDB/posts-repositiryDB";
 
-const mongoURI=process.env.mongoURI ||'mongodb://127.0.0.1:27017';
+const mongoURI= process.env.MONGO_URI_CLUSTER ||'mongodb://127.0.0.1:27017';
 
 export const client = new MongoClient(mongoURI)
-export const blogsCollection = client.db('hometask3').collection('Blogs');
-export const postsCollection = client.db('hometask3').collection('Posts');
+const db = client.db('hometask3')
+export const blogsCollection = db.collection<BlogsType>('Blogs');
+export const postsCollection =  db.collection<PostType>('Posts');
 export async function runDB(){
     try{
         await client.connect();
-        await client.db('hometask3').command({ping:1})
-    console.log('Connect successful')
+        await db.command({ping:1})
+        console.log('Connect successful')
     }
     catch (e) {
         console.log(e)
