@@ -5,7 +5,7 @@ import {
     createPostValidation,
     errorMessagesInputValidation,
     getBlogsValidation,
-    getPostForBlogsValidation,
+    getPostForBlogsValidation, postPostForBlogsValidation,
     updateBlogValidation
 } from "../Models/InputValidation";
 import {
@@ -54,7 +54,7 @@ blogsRouter.post('/', basicAuthMiddleware, createBlogValidation, errorMessagesIn
             description: resultCreatBlog.description,
             websiteUrl: resultCreatBlog.websiteUrl,
             createdAt: resultCreatBlog.createdAt,
-            isMemberShip: resultCreatBlog.isMemberShip
+            isMemberShip: resultCreatBlog.isMembership
         })
 
     })
@@ -69,7 +69,7 @@ blogsRouter.get('/:id/posts', getPostForBlogsValidation, errorMessagesInputValid
     return res.status(200).send(getAllPostsForBLog);
 
 })
-blogsRouter.post('/:id/posts', basicAuthMiddleware, getPostForBlogsValidation, errorMessagesInputValidation, async (req: Request, res: Response) => {
+blogsRouter.post('/:id/posts', basicAuthMiddleware, postPostForBlogsValidation, errorMessagesInputValidation, async (req: Request, res: Response) => {
     const blogId = req.params.id;
     const titleNewPost = req.body.title;
     const shortDescriptionNewPost = req.body.shortDescription;

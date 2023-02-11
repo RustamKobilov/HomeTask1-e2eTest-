@@ -10,7 +10,7 @@ export type BlogsType = {
     description: string
     websiteUrl: string
     createdAt: string
-    isMemberShip: boolean
+    isMembership: boolean
 }
 
 export type PaginationTypeInputParamsBlogs = {
@@ -53,7 +53,7 @@ export async function createBlog(nameNewBlog: string, descriptionNewBlog: string
         description: descriptionNewBlog,
         websiteUrl: websiteUrlNewBlog,
         createdAt: new Date().toISOString(),
-        isMemberShip: false
+        isMembership: false
     }
     return newBlog;
 }
