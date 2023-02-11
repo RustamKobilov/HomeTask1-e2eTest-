@@ -93,7 +93,6 @@ blogsRouter.get('/:id', async (req: Request, res: Response) => {
     return res.sendStatus(404)
 })
 
-
 blogsRouter.put('/:id', basicAuthMiddleware, updateBlogValidation, errorMessagesInputValidation,
     async (req: Request, res: Response) => {
 
