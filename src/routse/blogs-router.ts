@@ -23,11 +23,11 @@ export const blogsRouter = Router({});
 
 const getPaginationValuesBlogs = (query: any): PaginationTypeInputParamsBlogs => {
     return {
-        searchNameTerm : query.searchNameTerm,
-        pageNumber : +query.pageNumber,
-        pageSize : +query.pageSize,
-        sortBy : query.sortBy,
-        sortDirection : query.sortDirection
+        searchNameTerm: query.searchNameTerm,
+        pageNumber: +query.pageNumber,
+        pageSize: +query.pageSize,
+        sortBy: query.sortBy,
+        sortDirection: query.sortDirection
     }
 }
 
@@ -61,7 +61,7 @@ blogsRouter.post('/', basicAuthMiddleware, createBlogValidation, errorMessagesIn
 
 blogsRouter.get('/:id/posts', getPostForBlogsValidation, errorMessagesInputValidation, async (req: Request, res: Response) => {
     const blogId = req.params.id;
-    const paginationResult=getPaginationValuesPosts(req.query)
+    const paginationResult = getPaginationValuesPosts(req.query)
 
 
     const getAllPostsForBLog = await getAllPostsForBlogInBase(paginationResult, blogId)
@@ -69,13 +69,13 @@ blogsRouter.get('/:id/posts', getPostForBlogsValidation, errorMessagesInputValid
     return res.status(200).send(getAllPostsForBLog);
 
 })
-blogsRouter.post('/:id/posts', basicAuthMiddleware,getPostForBlogsValidation, errorMessagesInputValidation, async (req: Request, res: Response) => {
+blogsRouter.post('/:id/posts', basicAuthMiddleware, getPostForBlogsValidation, errorMessagesInputValidation, async (req: Request, res: Response) => {
     const blogId = req.params.id;
     const titleNewPost = req.body.title;
     const shortDescriptionNewPost = req.body.shortDescription;
     const contentNewPost = req.body.content;
 
-    const resultCreatePost =await createPostOnId(titleNewPost,shortDescriptionNewPost,contentNewPost,blogId)
+    const resultCreatePost = await createPostOnId(titleNewPost, shortDescriptionNewPost, contentNewPost, blogId)
 
     if (!resultCreatePost) {
         return res.sendStatus(404);
