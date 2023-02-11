@@ -48,7 +48,8 @@ const checkSearchNameTerm = query('searchNameTerm').default(null).isString()
 export const createPostValidation = [checkPostTitle, checkPostShortDescription, checkPostContent, checkPostBlogId]
 export const updatePostValidation = [...createPostValidation]
 
-export const getPostForBlogsValidation = [checkPostForBlogIdParams, checkPageNumber, checkPageSize, checkSortBy, checkSortDirection]
+export const getPostForBlogsValidation = [checkPostForBlogIdParams, checkPageNumber, checkPageSize, checkSortBy, checkSortDirection,
+    checkPostTitle, checkPostShortDescription, checkPostContent]
 export const getBlogsValidation = [checkSearchNameTerm, checkPageNumber, checkPageSize, checkSortBy, checkSortDirection]
 
 export const getPostValidation = [checkPageNumber, checkPageSize, checkSortBy, checkSortDirection]
