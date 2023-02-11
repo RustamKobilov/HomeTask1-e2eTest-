@@ -1,8 +1,7 @@
 import {BlogsType} from "./blog-repositoryDB";
 import {blogsCollection, postsCollection} from "../db";
 import {randomUUID} from "crypto";
-import {skipPageMath, valueSortDirection} from "./jointRepository";
-import {PaginationTypeInputParamsBlogs, PaginationTypeInputParamsPostsForBlogs} from "../routse/blogs-router";
+import {countPageMath, skipPageMath, valueSortDirection} from "./jointRepository";
 
 export type PostType={
     id: string
@@ -14,13 +13,13 @@ export type PostType={
     createdAt:string
 }
 
-export type inputPostsType={
+export type inputPostsType<T>={
 
     pagesCount: number
     page: number
     pageSize: number
     totalCount: number
-    items: any
+    items: T[]
 }
 export let dbPosts : Array<PostType> =[
 {
@@ -41,17 +40,25 @@ export let dbPosts : Array<PostType> =[
         "createdAt":"string111"
     }]
 
-export async function getAllPosts(paginationPosts: PaginationTypeInputParamsPostsForBlogs):Promise<inputPostsType>{
+export type PaginationTypeInputPosts = {
+    pageNumber : number
+    pageSize : number
+    sortBy : string
+    sortDirection: string
+}
+
+
+export async function getAllPosts(paginationPosts: PaginationTypeInputPosts):Promise<inputPostsType<PostType>>{
 
     const skipPage=skipPageMath(paginationPosts.pageNumber,paginationPosts.pageSize)
     const pagesCountBlog=await postsCollection.countDocuments({});
-    let totalCountBlog=0;
+    const countPage = countPageMath(pagesCountBlog,paginationPosts.pageSize)
 
     const posts=await postsCollection.find({}).sort({[paginationPosts.sortBy]:
-            valueSortDirection(paginationPosts.sortDirection)}).skip(skipPage).limit(paginationPosts.pageSize).project({_id:0}).toArray();
+            valueSortDirection(paginationPosts.sortDirection)}).skip(skipPage).limit(paginationPosts.pageSize).project<PostType>({_id:0}).toArray();
 
-    return {pagesCount: pagesCountBlog, page: paginationPosts.pageNumber, pageSize: paginationPosts.pageSize,
-        totalCount: totalCountBlog, items: posts};
+    return {pagesCount: countPage, page: paginationPosts.pageNumber, pageSize: paginationPosts.pageSize,
+        totalCount: pagesCountBlog, items: posts};
 }
 export async function createPost(titleNewPost:string,shortDescriptionNewPost:string,contentNewPost:string,
                                  blogIdForPost:string,blogNameForPost:string):Promise<PostType>{

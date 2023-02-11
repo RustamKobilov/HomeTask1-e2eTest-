@@ -1,4 +1,5 @@
 import {PostType} from "./posts-repositiryDB";
+import {BlogsType} from "./blog-repositoryDB";
 
 export function valueSortDirection(value:string){
     return value=='desc'?-1:1
@@ -13,7 +14,10 @@ export function countPageMath(countPage:number,pageSize:number){
     return Math.ceil(countPage/pageSize)
 }
 
-export function valueSortBy(sortBy:string) {
-    return sortBy
+export type ReturnDistributedDate<T>={
+    pagesCount: number
+    page: number
+    pageSize: number
+    totalCount: number
+    items: T[]
 }
-

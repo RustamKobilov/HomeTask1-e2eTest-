@@ -1,9 +1,8 @@
 import {blogsCollection, postsCollection} from "../db";
 import {randomUUID} from "crypto";
 import {Filter} from "mongodb";
-import {inputPostsType, PostType} from "./posts-repositiryDB";
-import {countPageMath, skipPageMath, valueSortDirection} from "./jointRepository";
-import {PaginationTypeInputParamsBlogs} from "../routse/blogs-router";
+import {inputPostsType, PaginationTypeInputPosts, PostType} from "./posts-repositiryDB";
+import {countPageMath, ReturnDistributedDate, skipPageMath, valueSortDirection} from "./jointRepository";
 
 export type BlogsType={
     id: string
@@ -14,24 +13,17 @@ export type BlogsType={
     isMemberShip:boolean
 }
 
-export type OutputBlogsType={
-    pagesCount: number
-    page: number
-    pageSize: number
-    totalCount: number
-    items: BlogsType[]
+export type PaginationTypeInputParamsBlogs = {
+    searchNameTerm : string | null
+    pageNumber : number
+    pageSize : number
+    sortBy : string
+    sortDirection: string
 }
-const output: OutputBlogsType<BlogsType> = {
-    pagesCount: 1,
-    totalCount:1,
-    page: 1,
-    pageSize: 1,
-    items: []
-}
-//как типизировать items в блог?если он документ дает
+
 
 export async function getAllBlog(paginationBlogs: PaginationTypeInputParamsBlogs):
-    Promise<OutputBlogsType>{
+    Promise<ReturnDistributedDate<BlogsType>>{
 console.log(paginationBlogs)
     const totalCountBlog = paginationBlogs.searchNameTerm!=null?
         await blogsCollection.countDocuments({name: {$regex: paginationBlogs.searchNameTerm, $options: "$i"}}):
@@ -43,11 +35,10 @@ console.log(paginationBlogs)
 
         const pagesCountBlog=countPageMath(totalCountBlog,paginationBlogs.pageSize)
         const skipPage=skipPageMath(paginationBlogs.pageNumber,paginationBlogs.pageSize)
-    //console.log(skipPage)
+
         const blogs = await filterFindBlog.sort({[paginationBlogs.sortBy]:valueSortDirection(paginationBlogs.sortDirection)}).skip(skipPage).
         limit(paginationBlogs.pageSize).project<BlogsType>({_id: 0}).toArray()
-    //
-        console.log(blogs)
+
         return { pagesCount: pagesCountBlog, page: paginationBlogs.pageNumber, pageSize: paginationBlogs.pageSize,
             totalCount: totalCountBlog, items: blogs}
     }
@@ -62,26 +53,21 @@ export async function createBlog(nameNewBlog:string,descriptionNewBlog:string,we
     return newBlog;
 }
 
-export async function getAllPostsForBlogInBase(pageNumber:number,pageSize:number,sortBy:string,sortDirection:string,blogId:string):
-    Promise<inputPostsType> {
+export async function getAllPostsForBlogInBase(paginationPosts: PaginationTypeInputPosts,blogId:string):
+    Promise<inputPostsType<PostType>>{
     const filter: Filter<PostType> = {blogId: blogId}
-    //console.log(countPostsForBlog)
     const countPostsForBlog = await postsCollection.countDocuments(filter)
+    console.log(paginationPosts)
 
-    const skipPage = skipPageMath(pageNumber,pageSize);
-    const countPage = countPageMath(countPostsForBlog,pageSize)//количество страниц получаемое
+    const skipPage = skipPageMath(paginationPosts.pageNumber,paginationPosts.pageSize);
+    const countPage = countPageMath(countPostsForBlog,paginationPosts.pageSize)
 
-    let sortPostsForBlogs = await postsCollection.find(filter).sort({[sortBy]: valueSortDirection(sortDirection)}).
-    skip(skipPage).limit(pageSize).project({_id: 0}).toArray()
+    let sortPostsForBlogs = await postsCollection.find(filter).sort({[paginationPosts.sortBy]: valueSortDirection(paginationPosts.sortDirection)}).
+    skip(skipPage).limit(paginationPosts.pageSize).project<PostType>({_id: 0}).toArray()
 
-    console.log(sortPostsForBlogs)
-    return {
-        pagesCount: countPage,
-        page: pageNumber,
-        pageSize: pageSize,
-        totalCount: countPostsForBlog,
-        items: sortPostsForBlogs
-    }
+    //console.log(sortPostsForBlogs)
+    return {pagesCount: countPage, page: paginationPosts.pageNumber, pageSize: paginationPosts.pageSize, totalCount: countPostsForBlog,
+        items: sortPostsForBlogs}
 }
 
 export async function findBlogOnId(id:string):Promise<BlogsType|null>{
@@ -89,8 +75,6 @@ export async function findBlogOnId(id:string):Promise<BlogsType|null>{
     console.log(blog)
     return blog;
 }
-
-
 
 export async function updateBlogOnId(id:string,newName:string,newDescription:string,newWebsiteUrl:string):
 Promise<boolean>{

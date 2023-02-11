@@ -13,45 +13,24 @@ import {
     updateBlogOnId,
     getAllBlog,
     createBlog,
-    getAllPostsForBlogInBase
+    getAllPostsForBlogInBase, PaginationTypeInputParamsBlogs
 } from "../RepositoryInDB/blog-repositoryDB";
 import {blogsCollection} from "../db";
 import {createPostOnId} from "../RepositoryInDB/posts-repositiryDB";
+import {getPaginationValuesPosts} from "./posts-router";
 
 export const blogsRouter = Router({});
 
-export type PaginationTypeInputParamsBlogs = {
-    searchNameTerm : string | null
-        pageNumber : number
-        pageSize : number
-        sortBy : string
-        sortDirection: string
-}
 const getPaginationValuesBlogs = (query: any): PaginationTypeInputParamsBlogs => {
     return {
         searchNameTerm : query.searchNameTerm,
-        pageNumber : query.pageNumber,
-        pageSize : query.pageSize,
+        pageNumber : +query.pageNumber,
+        pageSize : +query.pageSize,
         sortBy : query.sortBy,
         sortDirection : query.sortDirection
     }
 }
 
-export type PaginationTypeInputParamsPostsForBlogs = {
-    pageNumber : number
-    pageSize : number
-    sortBy : string
-    sortDirection: string
-}
-
-const getPaginationValuesPostForBlogs= (query: any): PaginationTypeInputParamsPostsForBlogs => {
-    return {
-        pageNumber: query.pageNumber,
-        pageSize: query.pageSize,
-        sortBy: query.sortBy,
-        sortDirection: query.sortDirection
-    }
-}
 
 blogsRouter.get('/', getBlogsValidation, async (req: Request, res: Response) => {
     const paginationResult = getPaginationValuesBlogs(req.query)
@@ -82,26 +61,22 @@ blogsRouter.post('/', basicAuthMiddleware, createBlogValidation, errorMessagesIn
 
 blogsRouter.get('/:id/posts', getPostForBlogsValidation, errorMessagesInputValidation, async (req: Request, res: Response) => {
     const blogId = req.params.id;
-    console.log('id: '+req.params.id);//valid id
-    console.log('blogId:  '+ blogId); //undefined
-    const paginationResult=getPaginationValuesPostForBlogs(req.query)
+    const paginationResult=getPaginationValuesPosts(req.query)
 
 
-    const getAllPostsForBLog = await getAllPostsForBlogInBase(paginationResult.pageNumber, paginationResult.pageSize,
-       paginationResult.sortBy, paginationResult.sortDirection, blogId)
+    const getAllPostsForBLog = await getAllPostsForBlogInBase(paginationResult, blogId)
 
     return res.status(200).send(getAllPostsForBLog);
 
 })
-
-blogsRouter.post('/:id/posts', basicAuthMiddleware, createPostValidation, errorMessagesInputValidation, async (req: Request, res: Response) => {
+blogsRouter.post('/:id/posts', basicAuthMiddleware,getPostForBlogsValidation, errorMessagesInputValidation, async (req: Request, res: Response) => {
+    const blogId = req.params.id;
     const titleNewPost = req.body.title;
     const shortDescriptionNewPost = req.body.shortDescription;
     const contentNewPost = req.body.content;
-    const blogIdForPost = req.params.blogId;
 
-    const resultCreatePost = await createPostOnId(titleNewPost, shortDescriptionNewPost,
-        contentNewPost, blogIdForPost)
+    const resultCreatePost =await createPostOnId(titleNewPost,shortDescriptionNewPost,contentNewPost,blogId)
+
     if (!resultCreatePost) {
         return res.sendStatus(404);
     }

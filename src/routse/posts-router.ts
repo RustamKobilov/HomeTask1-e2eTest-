@@ -2,13 +2,20 @@ import {Request,Response,Router} from "express";
 import {basicAuthMiddleware} from "../Middleware/autorized";
 import {createPostValidation, errorMessagesInputValidation, getPostValidation, updatePostValidation} from "../Models/InputValidation";
 import {randomUUID} from "crypto";
-import {createPost, createPostOnId, findBlogName, findPostOnId, getAllPosts, PostType, updatePostOnId} from "../RepositoryInDB/posts-repositiryDB";
+import {
+    createPost,
+    createPostOnId,
+    findBlogName,
+    findPostOnId,
+    getAllPosts,
+    PaginationTypeInputPosts,
+    PostType,
+    updatePostOnId
+} from "../RepositoryInDB/posts-repositiryDB";
 import {postsCollection} from "../db";
-import {PaginationTypeInputParamsPostsForBlogs} from "./blogs-router";
 export const postsRouter=Router({});
 
-
-const getPaginationValuesPost= (query: any): PaginationTypeInputParamsPostsForBlogs => {
+export const getPaginationValuesPosts= (query: any): PaginationTypeInputPosts => {
     return {
         pageNumber: query.pageNumber,
         pageSize: query.pageSize,
@@ -18,7 +25,7 @@ const getPaginationValuesPost= (query: any): PaginationTypeInputParamsPostsForBl
 }
 
     postsRouter.get('/', getPostValidation, async (req: Request, res: Response) => {
-        const paginationResultPosts = getPaginationValuesPost(req.query)
+        const paginationResultPosts = getPaginationValuesPosts(req.query)
         const resultAllPosts = await getAllPosts(paginationResultPosts);
         return res.status(200).send(resultAllPosts)
     })
@@ -32,6 +39,7 @@ const getPaginationValuesPost= (query: any): PaginationTypeInputParamsPostsForBl
 
             const resultCreatePost = await createPostOnId(titleNewPost, shortDescriptionNewPost,
                 contentNewPost, blogIdForPost)
+
             if (!resultCreatePost) {
                 return res.sendStatus(404);
             }
