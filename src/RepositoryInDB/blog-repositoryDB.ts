@@ -69,7 +69,6 @@ export async function getAllPostsForBlogInBase(paginationPosts: PaginationTypeIn
 
     let sortPostsForBlogs = await postsCollection.find(filter).sort({[paginationPosts.sortBy]: valueSortDirection(paginationPosts.sortDirection)}).skip(skipPage).limit(paginationPosts.pageSize).project<PostType>({_id: 0}).toArray()
 
-    //console.log(sortPostsForBlogs)
     return {
         pagesCount: countPage,
         page: paginationPosts.pageNumber,
