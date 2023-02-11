@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="11/02/23 finish hometask4.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/posts-repositiryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/posts-repositiryDB.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,21 +159,7 @@
       <workItem from="1673982536767" duration="75481000" />
       <workItem from="1674580719055" duration="13147000" />
       <workItem from="1675601488154" duration="37535000" />
-      <workItem from="1675963750433" duration="14034000" />
-    </task>
-    <task id="LOCAL-00050" summary="08/01/23 blogs complete.">
-      <created>1673186556250</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1673186556288</updated>
-    </task>
-    <task id="LOCAL-00051" summary="08/01/23 blogs complete.">
-      <created>1673187998469</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1673187998469</updated>
+      <workItem from="1675963750433" duration="15239000" />
     </task>
     <task id="LOCAL-00052" summary="08/01/23 blogs complete.">
       <created>1673188360355</created>
@@ -504,7 +490,21 @@
       <option name="project" value="LOCAL" />
       <updated>1676112057687</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <task id="LOCAL-00099" summary="11/02/23 finish hometask4.">
+      <created>1676112425706</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1676112425706</updated>
+    </task>
+    <task id="LOCAL-00100" summary="11/02/23 finish hometask4.">
+      <created>1676113024268</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1676113024269</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

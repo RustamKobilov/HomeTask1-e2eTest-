@@ -120,7 +120,6 @@ export async function createPostOnId(titleNewPost: string, shortDescriptionNewPo
 
     await postsCollection.insertOne(resultCreatePost);
 
-
     return ({
         id: resultCreatePost.id, title: resultCreatePost.title,
         shortDescription: resultCreatePost.shortDescription, content: resultCreatePost.content,
