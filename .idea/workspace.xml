@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="11/02/23 finish hometask4.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/posts-repositiryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/posts-repositiryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,24 +42,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/it incubator/hometask1(e2eTest)/src/RepositoryInDB&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs.jest.jest_package&quot;: &quot;D:/it incubator/hometask1(e2eTest)/node_modules/jest&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\it incubator\\hometask1(e2eTest)\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/it incubator/exam/ed-back-02-exam",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "D:/it incubator/hometask1(e2eTest)/node_modules/jest",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "ts.external.directory.path": "D:\\it incubator\\hometask1(e2eTest)\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\it incubator\hometask1(e2eTest)\src\RepositoryInDB" />
@@ -159,14 +159,7 @@
       <workItem from="1673982536767" duration="75481000" />
       <workItem from="1674580719055" duration="13147000" />
       <workItem from="1675601488154" duration="37535000" />
-      <workItem from="1675963750433" duration="15239000" />
-    </task>
-    <task id="LOCAL-00052" summary="08/01/23 blogs complete.">
-      <created>1673188360355</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1673188360355</updated>
+      <workItem from="1675963750433" duration="21621000" />
     </task>
     <task id="LOCAL-00053" summary="08/01/23 blogs complete.">
       <created>1673189018085</created>
@@ -504,7 +497,14 @@
       <option name="project" value="LOCAL" />
       <updated>1676113024269</updated>
     </task>
-    <option name="localTasksCounter" value="101" />
+    <task id="LOCAL-00101" summary="11/02/23 finish hometask4.">
+      <created>1676113643922</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1676113643922</updated>
+    </task>
+    <option name="localTasksCounter" value="102" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

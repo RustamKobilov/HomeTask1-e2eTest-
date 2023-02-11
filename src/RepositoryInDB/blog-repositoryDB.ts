@@ -53,7 +53,7 @@ export async function createBlog(nameNewBlog: string, descriptionNewBlog: string
         description: descriptionNewBlog,
         websiteUrl: websiteUrlNewBlog,
         createdAt: new Date().toISOString(),
-        isMemberShip: true
+        isMemberShip: false
     }
     return newBlog;
 }
