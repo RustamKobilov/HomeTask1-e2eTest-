@@ -63,6 +63,11 @@ blogsRouter.get('/:id/posts', getPostForBlogsValidation, errorMessagesInputValid
     const blogId = req.params.id;
     const paginationResult = getPaginationValuesPosts(req.query)
 
+    const searchBlog=await findBlogOnId(blogId)
+    console.log(searchBlog)
+    if (searchBlog==null) {
+        return res.sendStatus(404);
+    }
 
     const getAllPostsForBLog = await getAllPostsForBlogInBase(paginationResult, blogId)
 

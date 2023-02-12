@@ -60,6 +60,7 @@ export async function createBlog(nameNewBlog: string, descriptionNewBlog: string
 
 export async function getAllPostsForBlogInBase(paginationPosts: PaginationTypeInputPosts, blogId: string):
     Promise<inputPostsType<PostType>> {
+
     const filter: Filter<PostType> = {blogId: blogId}
     const countPostsForBlog = await postsCollection.countDocuments(filter)
     console.log(paginationPosts)
