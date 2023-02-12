@@ -23,8 +23,8 @@ export const postsRouter = Router({});
 
 export const getPaginationValuesPosts = (query: any): PaginationTypeInputPosts => {
     return {
-        pageNumber: query.pageNumber,
-        pageSize: query.pageSize,
+        pageNumber: +query.pageNumber,
+        pageSize: +query.pageSize,
         sortBy: query.sortBy,
         sortDirection: query.sortDirection
     }
