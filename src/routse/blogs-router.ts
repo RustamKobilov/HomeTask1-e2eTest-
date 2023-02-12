@@ -54,7 +54,7 @@ blogsRouter.post('/', basicAuthMiddleware, createBlogValidation, errorMessagesIn
             description: resultCreatBlog.description,
             websiteUrl: resultCreatBlog.websiteUrl,
             createdAt: resultCreatBlog.createdAt,
-            isMemberShip: resultCreatBlog.isMembership
+            isMembership: resultCreatBlog.isMembership
         })
 
     })
