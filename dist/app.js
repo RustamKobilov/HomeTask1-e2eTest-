@@ -43,12 +43,14 @@ const videos_router_1 = require("./routse/videos-router");
 const blogs_router_1 = require("./routse/blogs-router");
 const posts_router_1 = require("./routse/posts-router");
 const db_1 = require("./db");
+const user_router_1 = require("./routse/user-router");
 exports.app = (0, express_1.default)();
 const convertJson = express_1.default.json();
 exports.app.use(convertJson);
 exports.app.use('/videos', videos_router_1.videosRouter);
 exports.app.use('/blogs', blogs_router_1.blogsRouter);
 exports.app.use('/posts', posts_router_1.postsRouter);
+exports.app.use('/users', user_router_1.usersRouter);
 exports.app.delete('/testing/all-data', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     yield db_1.client.db('hometask3').collection('Posts').deleteMany({});
     yield db_1.client.db('hometask3').collection('Blogs').deleteMany({});

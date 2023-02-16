@@ -1,7 +1,7 @@
 import {blogsCollection, postsCollection} from "../db";
 import {randomUUID} from "crypto";
 import {Filter} from "mongodb";
-import {inputPostsType, PaginationTypeInputPosts, PostType} from "./posts-repositiryDB";
+import {inputSortDataBaseType, PaginationTypeInputPosts, PostType} from "./posts-repositiryDB";
 import {countPageMath, ReturnDistributedDate, skipPageMath, valueSortDirection} from "./jointRepository";
 
 export type BlogsType = {
@@ -59,7 +59,7 @@ export async function createBlog(nameNewBlog: string, descriptionNewBlog: string
 }
 
 export async function getAllPostsForBlogInBase(paginationPosts: PaginationTypeInputPosts, blogId: string):
-    Promise<inputPostsType<PostType>> {
+    Promise<inputSortDataBaseType<PostType>> {
 
     const filter: Filter<PostType> = {blogId: blogId}
     const countPostsForBlog = await postsCollection.countDocuments(filter)

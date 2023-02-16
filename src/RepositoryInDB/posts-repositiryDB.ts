@@ -13,7 +13,7 @@ export type PostType = {
     createdAt: string
 }
 
-export type inputPostsType<T> = {
+export type inputSortDataBaseType<T> = {
 
     pagesCount: number
     page: number
@@ -49,7 +49,7 @@ export type PaginationTypeInputPosts = {
 }
 
 
-export async function getAllPosts(paginationPosts: PaginationTypeInputPosts): Promise<inputPostsType<PostType>> {
+export async function getAllPosts(paginationPosts: PaginationTypeInputPosts): Promise<inputSortDataBaseType<PostType>> {
 
     const skipPage = skipPageMath(paginationPosts.pageNumber, paginationPosts.pageSize)
     const pagesCountBlog = await postsCollection.countDocuments({});
