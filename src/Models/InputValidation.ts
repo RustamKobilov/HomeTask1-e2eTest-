@@ -42,7 +42,7 @@ const checkPostBlogId = body('blogId').isString().trim().notEmpty().isLength({mi
     return true;
 })
 const checkUserLogin =body('login').isString().trim().notEmpty().isLength({min:3,max:10})
-const checkUserPassword=body('password').isString().trim().notEmpty().isLength({min:20,max:6})
+const checkUserPassword=body('password').isString().trim().notEmpty().isLength({min:6,max:20})
 const checkUserEmail=body('email').isString().trim().notEmpty().matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
 
 //validation default
