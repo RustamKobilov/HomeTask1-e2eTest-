@@ -95,7 +95,7 @@ export async function findBlogName(id: string): Promise<BlogsType | null> {
 }
 
 export async function createPostOnId(resultCreatePost:PostType):
-    Promise<PostType | boolean> {
+    Promise<PostType> {
 
     await postsCollection.insertOne(resultCreatePost);
 

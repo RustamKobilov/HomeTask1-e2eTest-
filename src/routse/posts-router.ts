@@ -48,7 +48,7 @@ postsRouter.get('/', getPostValidation, async (req: Request, res: Response) => {
 postsRouter.post('/', basicAuthMiddleware, createPostValidation, errorMessagesInputValidation,
     async (req: Request, res: Response) => {
         const resultPagination=getPaginationPostValueForPost(req.body)
-        const resultCreatePost = await postsService.createPostOnId(resultPagination,req.body.id)
+        const resultCreatePost = await postsService.createPostOnId(resultPagination,req.body.blogId)
 
         if (!resultCreatePost) {
             return res.sendStatus(404);

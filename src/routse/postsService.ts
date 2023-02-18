@@ -1,5 +1,10 @@
 import {randomUUID} from "crypto";
-import {findBlogName, PaginationTypeInputPostValueForPost, PostType} from "../RepositoryInDB/posts-repositiryDB";
+import {
+    createPostOnId,
+    findBlogName,
+    PaginationTypeInputPostValueForPost,
+    PostType
+} from "../RepositoryInDB/posts-repositiryDB";
 
 export const postsService={
     async createPost(titleNewPost: string, shortDescriptionNewPost: string, contentNewPost: string,
@@ -15,8 +20,9 @@ export const postsService={
             blogName: blogNameForPost,
             createdAt: new Date().toISOString()
         };
+        const addNewPost=await createPostOnId(newPost)
 
-        return newPost;
+        return addNewPost;
     },
     async createPostOnId(pagination:PaginationTypeInputPostValueForPost,blogId:string):Promise<PostType|boolean> {
         const blogNameForPost = await findBlogName(blogId);

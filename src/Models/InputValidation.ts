@@ -65,6 +65,6 @@ export const postPostForBlogsValidation=[checkPageNumber, checkPageSize, checkSo
 export const getBlogsValidation = [checkSearchNameTerm, checkPageNumber, checkPageSize, checkSortBy, checkSortDirection]
 export const getPostValidation = [checkPageNumber, checkPageSize, checkSortBy, checkSortDirection]
 export const getUsersValidation = [checkPageNumber, checkPageSize, checkSortBy, checkSortDirection,checkSearchLoginTerm,checkSearchEmailTerm]
-export const postUsersValidation=[checkUserLogin,checkUserPassword,checkUserEmail]
+export const postUsersValidation=[checkUserLogin,checkUserPassword,checkUserEmail,errorMessagesInputValidation]
 export const loginUserValidation=[checkInputLogin,checkInputPassword, errorMessagesInputValidation]
 
