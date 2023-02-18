@@ -25,7 +25,7 @@ export type PaginationTypeInputParamsBlogs = {
 export async function getAllBlog(paginationBlogs: PaginationTypeInputParamsBlogs):
     Promise<ReturnDistributedDate<BlogsType>> {
     console.log(paginationBlogs)
-    //TODO если упало - поменять
+
     const filter: Filter<BlogsType> = {name: {$regex: paginationBlogs.searchNameTerm ?? '', $options: "$i"}}
 
     const totalCountBlog =  await blogsCollection.countDocuments(filter)
