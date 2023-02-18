@@ -38,15 +38,8 @@ export type PaginationTypeAddNewUser = {
 
 export async function getAllUsers(paginationUser: PaginationTypeInputUser): Promise<inputSortDataBaseType<UserType>> {
 
-//     const searchLoginTerm = paginationUser.searchLoginTerm != null ? {
-//     login: {$regex: paginationUser.searchLoginTerm, $options: "$i"}} : {}
-// const searchEmailTerm = paginationUser.searchEmailTerm != null ? {
-//     email: {$regex: paginationUser.searchEmailTerm, $options: "$i"}} : {}
-//
-//     const totalCountUser =
-//         await usersCollection.countDocuments({$and: [searchLoginTerm, searchEmailTerm]})
     const filter= [{login: {$regex: paginationUser.searchLoginTerm??'', $options: "$i"}}, {email:{$regex: paginationUser.searchEmailTerm??'', $options: "$i"}}]
-    const totalCountUser = await usersCollection.countDocuments({$and: [filter]})
+    const totalCountUser = await usersCollection.countDocuments({$and: filter})
     const paginationFromHelperForUsers=helper.getPaginationFunctionSkipSortTotal(paginationUser.pageNumber,
         paginationUser.pageSize,totalCountUser)
 
@@ -113,3 +106,10 @@ export async function searchDateVerificationUserLoginAndEmail(passwordInput: str
     return true;
 }
 
+//     const searchLoginTerm = paginationUser.searchLoginTerm != null ? {
+//     login: {$regex: paginationUser.searchLoginTerm, $options: "$i"}} : {}
+// const searchEmailTerm = paginationUser.searchEmailTerm != null ? {
+//     email: {$regex: paginationUser.searchEmailTerm, $options: "$i"}} : {}
+//
+//     const totalCountUser =
+//         await usersCollection.countDocuments({$and: [searchLoginTerm, searchEmailTerm]})
