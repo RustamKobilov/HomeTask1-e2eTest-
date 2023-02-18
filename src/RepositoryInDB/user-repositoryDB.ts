@@ -38,8 +38,10 @@ export type PaginationTypeAddNewUser = {
 
 export async function getAllUsers(paginationUser: PaginationTypeInputUser): Promise<inputSortDataBaseType<UserType>> {
 
-    const searchLoginTerm = {login: {$regex: paginationUser.searchLoginTerm??{}, $options: "$i"}}
-    const searchEmailTerm = {email: {$regex: paginationUser.searchEmailTerm??{}, $options: "$i"}}
+    const searchLoginTerm = paginationUser.searchLoginTerm != null ? {
+    login: {$regex: paginationUser.searchLoginTerm, $options: "$i"}} : {}
+const searchEmailTerm = paginationUser.searchEmailTerm != null ? {
+    email: {$regex: paginationUser.searchEmailTerm, $options: "$i"}} : {}
 
     const totalCountUser =
         await usersCollection.countDocuments({$and: [searchLoginTerm, searchEmailTerm]})
@@ -110,10 +112,3 @@ export async function searchDateVerificationUserLoginAndEmail(passwordInput: str
     return true;
 }
 
-// const searchLoginTerm = paginationUser.searchLoginTerm != null ? {
-//     login: {$regex: paginationUser.searchLoginTerm, $options: "$i"}} : {}
-// const searchEmailTerm = paginationUser.searchEmailTerm != null ? {
-//     email: {$regex: paginationUser.searchEmailTerm, $options: "$i"}} : {}
-//
-// const totalCountUser =
-//     await usersCollection.countDocuments({$and: [searchLoginTerm, searchEmailTerm]})
