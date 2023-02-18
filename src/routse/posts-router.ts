@@ -8,16 +8,18 @@ import {
 } from "../Models/InputValidation";
 import {randomUUID} from "crypto";
 import {
-    createPost,
     createPostOnId,
     findBlogName,
     findPostOnId,
     getAllPosts,
-    PaginationTypeInputPosts,
+    PaginationTypeInputPosts, PaginationTypeInputPostValueForPost,
     PostType,
     updatePostOnId
 } from "../RepositoryInDB/posts-repositiryDB";
 import {postsCollection} from "../db";
+import {postsService} from "./postsService";
+import {param} from "express-validator";
+import any = jasmine.any;
 
 export const postsRouter = Router({});
 
@@ -26,9 +28,17 @@ export const getPaginationValuesPosts = (query: any): PaginationTypeInputPosts =
         pageNumber: +query.pageNumber,
         pageSize: +query.pageSize,
         sortBy: query.sortBy,
-        sortDirection: query.sortDirection
+        sortDirection: query.sortDirection === 'desc' ? -1 : 1
     }
 }
+export const getPaginationPostValueForPost=(query:any):PaginationTypeInputPostValueForPost=> {
+    return {
+        titlePost: query.title,
+        shortDescriptionPost: query.shortDescription,
+        contentPost: query.content
+    }
+}
+
 postsRouter.get('/', getPostValidation, async (req: Request, res: Response) => {
     const paginationResultPosts = getPaginationValuesPosts(req.query)
     const resultAllPosts = await getAllPosts(paginationResultPosts);
@@ -37,13 +47,8 @@ postsRouter.get('/', getPostValidation, async (req: Request, res: Response) => {
 
 postsRouter.post('/', basicAuthMiddleware, createPostValidation, errorMessagesInputValidation,
     async (req: Request, res: Response) => {
-        const titleNewPost = req.body.title;
-        const shortDescriptionNewPost = req.body.shortDescription;
-        const contentNewPost = req.body.content;
-        const blogIdForPost = req.body.blogId;
-
-        const resultCreatePost = await createPostOnId(titleNewPost, shortDescriptionNewPost,
-            contentNewPost, blogIdForPost)
+        const resultPagination=getPaginationPostValueForPost(req.body)
+        const resultCreatePost = await postsService.createPostOnId(resultPagination,req.body.id)
 
         if (!resultCreatePost) {
             return res.sendStatus(404);
@@ -64,13 +69,8 @@ postsRouter.get('/:id', async (req: Request, res: Response) => {
 postsRouter.put('/:id', basicAuthMiddleware, updatePostValidation, errorMessagesInputValidation,
     async (req: Request, res: Response) => {
         const idUpdatePost = req.params.id;
-        const titleUpdatePost = req.body.title;
-        const shortDescriptionUpdatePost = req.body.shortDescription;
-        const contentUpdatePost = req.body.content;
-        const blogIdUpdatePost = req.body.blogId;
-
-        const findUpdatePost = await updatePostOnId(idUpdatePost, titleUpdatePost, shortDescriptionUpdatePost,
-            contentUpdatePost, blogIdUpdatePost);
+        const paginationValues=getPaginationPostValueForPost(req.body)
+        const findUpdatePost = await updatePostOnId(idUpdatePost,paginationValues,req.body.blogId);
         if (!findUpdatePost) {
             return res.sendStatus(404);
         }

@@ -5,6 +5,20 @@ import {Request, Response} from "express";
 import {throws} from "assert";
 import {blogsCollection} from "../db";
 
+export const errorMessagesInputValidation = (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    const resultErrors = errors.array({onlyFirstError: true});
+    if (resultErrors.length > 0) {
+        return res.status(400).send({
+            errorsMessages: resultErrors.map((error) => {
+                return {message: error.msg, field: error.param}
+            })
+        })
+    }
+    return next();
+}
+
+
 const checkBlogName = body('name').isString().trim().notEmpty().isLength({min: 1, max: 15})
 const checkBlogDescription = body('description').isString().trim().notEmpty().isLength({min: 1, max: 500})
 const checkBlogWebsiteUrl = body('websiteUrl').isString().trim().notEmpty().isLength({
@@ -41,6 +55,9 @@ const checkSearchNameTerm = query('searchNameTerm').default(null).isString()
 const checkSearchLoginTerm =query('searchLoginTerm').default(null).isString()
 const checkSearchEmailTerm = query('searchEmailTerm').default(null).isString()
 
+const checkInputLogin=body('loginOrEmail').exists().isString().trim().notEmpty()
+const checkInputPassword=body('password').exists().isString().trim().notEmpty()
+
 export const createPostValidation = [checkPostTitle, checkPostShortDescription, checkPostContent, checkPostBlogId]
 export const updatePostValidation = [...createPostValidation]
 export const getPostForBlogsValidation = [checkPageNumber, checkPageSize, checkSortBy, checkSortDirection]
@@ -49,15 +66,5 @@ export const getBlogsValidation = [checkSearchNameTerm, checkPageNumber, checkPa
 export const getPostValidation = [checkPageNumber, checkPageSize, checkSortBy, checkSortDirection]
 export const getUsersValidation = [checkPageNumber, checkPageSize, checkSortBy, checkSortDirection,checkSearchLoginTerm,checkSearchEmailTerm]
 export const postUsersValidation=[checkUserLogin,checkUserPassword,checkUserEmail]
-export const errorMessagesInputValidation = (req: Request, res: Response, next: NextFunction) => {
-    const errors = validationResult(req);
-    const resultErrors = errors.array({onlyFirstError: true});
-    if (resultErrors.length > 0) {
-        return res.status(400).send({
-            errorsMessages: resultErrors.map((error) => {
-                return {message: error.msg, field: error.param}
-            })
-        })
-    }
-    return next();
-}
+export const loginUserValidation=[checkInputLogin,checkInputPassword, errorMessagesInputValidation]
+

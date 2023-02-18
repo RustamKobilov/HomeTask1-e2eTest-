@@ -4,18 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="11/02/23 finish hometask4.">
-      <change afterPath="$PROJECT_DIR$/src/RepositoryInDB/user-repositoryDB.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routse/user-router.ts" afterDir="false" />
+    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="16/02/23 hometask5.">
+      <change afterPath="$PROJECT_DIR$/src/domain/authService.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routse/authRouter.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routse/blogsService.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routse/postsService.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/InputValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/InputValidation.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/jointRepository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/helper.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/posts-repositiryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/posts-repositiryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/user-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/user-repositoryDB.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/db.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/blogs-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/blogs-router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/posts-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/posts-router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/user-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/user-router.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,14 +173,7 @@
       <workItem from="1674580719055" duration="13147000" />
       <workItem from="1675601488154" duration="37535000" />
       <workItem from="1675963750433" duration="27275000" />
-      <workItem from="1676224148921" duration="22474000" />
-    </task>
-    <task id="LOCAL-00059" summary="08/01/23 blogs complete.">
-      <created>1673192951730</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1673192951730</updated>
+      <workItem from="1676224148921" duration="55330000" />
     </task>
     <task id="LOCAL-00060" summary="08/01/23 blogs complete.">
       <created>1673193081271</created>
@@ -514,7 +511,14 @@
       <option name="project" value="LOCAL" />
       <updated>1676195180750</updated>
     </task>
-    <option name="localTasksCounter" value="108" />
+    <task id="LOCAL-00108" summary="16/02/23 hometask5.">
+      <created>1676565387552</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1676565387584</updated>
+    </task>
+    <option name="localTasksCounter" value="109" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -542,6 +546,7 @@
     <MESSAGE value="25/01/23 mongodb new branch." />
     <MESSAGE value="27/01/23 mongodb finished." />
     <MESSAGE value="11/02/23 finish hometask4." />
-    <option name="LAST_COMMIT_MESSAGE" value="11/02/23 finish hometask4." />
+    <MESSAGE value="16/02/23 hometask5." />
+    <option name="LAST_COMMIT_MESSAGE" value="16/02/23 hometask5." />
   </component>
 </project>

@@ -1,8 +1,8 @@
 import {blogsCollection, postsCollection} from "../db";
 import {randomUUID} from "crypto";
-import {Filter} from "mongodb";
+import {Filter, SortDirection} from "mongodb";
 import {inputSortDataBaseType, PaginationTypeInputPosts, PostType} from "./posts-repositiryDB";
-import {countPageMath, ReturnDistributedDate, skipPageMath, valueSortDirection} from "./jointRepository";
+import {helper, ReturnDistributedDate} from "./helper";
 
 export type BlogsType = {
     id: string
@@ -14,64 +14,48 @@ export type BlogsType = {
 }
 
 export type PaginationTypeInputParamsBlogs = {
-    searchNameTerm: string | null
+    searchNameTerm: string|null
     pageNumber: number
     pageSize: number
     sortBy: string
-    sortDirection: string
+    sortDirection: 1 | -1
 }
 
 
 export async function getAllBlog(paginationBlogs: PaginationTypeInputParamsBlogs):
     Promise<ReturnDistributedDate<BlogsType>> {
     console.log(paginationBlogs)
-    const totalCountBlog = paginationBlogs.searchNameTerm != null ?
-        await blogsCollection.countDocuments({name: {$regex: paginationBlogs.searchNameTerm, $options: "$i"}}) :
-        await blogsCollection.countDocuments({})
+    //TODO если упало - поменять
+    const filter: Filter<BlogsType> = {name: {$regex: paginationBlogs.searchNameTerm ?? '', $options: "$i"}}
 
-    const filterFindBlog = paginationBlogs.searchNameTerm != null ?
-        blogsCollection.find({name: {$regex: paginationBlogs.searchNameTerm, $options: "$i"}}) :
-        blogsCollection.find({})
+    const totalCountBlog =  await blogsCollection.countDocuments(filter)
 
-    const pagesCountBlog = countPageMath(totalCountBlog, paginationBlogs.pageSize)
-    const skipPage = skipPageMath(paginationBlogs.pageNumber, paginationBlogs.pageSize)
+    const filterFindBlog = await blogsCollection.find(filter)
 
-    const blogs = await filterFindBlog.sort({[paginationBlogs.sortBy]: valueSortDirection(paginationBlogs.sortDirection)}).skip(skipPage).limit(paginationBlogs.pageSize).project<BlogsType>({_id: 0}).toArray()
+    const paginationFromHelperForBlogs=helper.getPaginationFunctionSkipSortTotal(paginationBlogs.pageNumber,paginationBlogs.pageSize, totalCountBlog)
+
+    const blogs = await filterFindBlog.sort({[paginationBlogs.sortBy]: paginationBlogs.sortDirection}).skip(paginationFromHelperForBlogs.skipPage).limit(paginationBlogs.pageSize).project<BlogsType>({_id: 0}).toArray()
 
     return {
-        pagesCount: pagesCountBlog, page: paginationBlogs.pageNumber, pageSize: paginationBlogs.pageSize,
+        pagesCount: paginationFromHelperForBlogs.totalCount, page: paginationBlogs.pageNumber, pageSize: paginationBlogs.pageSize,
         totalCount: totalCountBlog, items: blogs
     }
 }
 
 
-export async function createBlog(nameNewBlog: string, descriptionNewBlog: string, websiteUrlNewBlog: string): Promise<BlogsType> {
-    const newId = randomUUID();
-    const newBlog: BlogsType = {
-        id: newId,
-        name: nameNewBlog,
-        description: descriptionNewBlog,
-        websiteUrl: websiteUrlNewBlog,
-        createdAt: new Date().toISOString(),
-        isMembership: false
-    }
-    return newBlog;
-}
-
 export async function getAllPostsForBlogInBase(paginationPosts: PaginationTypeInputPosts, blogId: string):
     Promise<inputSortDataBaseType<PostType>> {
 
+
     const filter: Filter<PostType> = {blogId: blogId}
     const countPostsForBlog = await postsCollection.countDocuments(filter)
-    console.log(paginationPosts)
+    const paginationFromHelperForPosts=helper.getPaginationFunctionSkipSortTotal(paginationPosts.pageNumber,paginationPosts.pageSize, countPostsForBlog)
 
-    const skipPage = skipPageMath(paginationPosts.pageNumber, paginationPosts.pageSize);
-    const countPage = countPageMath(countPostsForBlog, paginationPosts.pageSize)
-
-    let sortPostsForBlogs = await postsCollection.find(filter).sort({[paginationPosts.sortBy]: valueSortDirection(paginationPosts.sortDirection)}).skip(skipPage).limit(paginationPosts.pageSize).project<PostType>({_id: 0}).toArray()
+    let sortPostsForBlogs = await postsCollection.find(filter).sort({[paginationPosts.sortBy]: paginationPosts.sortDirection}).
+    skip(paginationFromHelperForPosts.skipPage).limit(paginationPosts.pageSize).project<PostType>({_id: 0}).toArray()
 
     return {
-        pagesCount: countPage,
+        pagesCount: paginationFromHelperForPosts.totalCount,
         page: paginationPosts.pageNumber,
         pageSize: paginationPosts.pageSize,
         totalCount: countPostsForBlog,
