@@ -75,9 +75,9 @@ blogsRouter.get('/:id/posts', getPostForBlogsValidation, errorMessagesInputValid
 })
 blogsRouter.post('/:id/posts', basicAuthMiddleware, postPostForBlogsValidation, errorMessagesInputValidation, async (req: Request, res: Response) => {
     const blogId = req.params.id;
-    const paginationResult=getPaginationPostValueForPost(req.query)
+    const paginationResult=getPaginationPostValueForPost(req.body)
     const resultCreatePost = await postsService.createPostOnId(paginationResult,blogId)
-
+    console.log(resultCreatePost)
     if (!resultCreatePost) {
         return res.sendStatus(404);
     }
