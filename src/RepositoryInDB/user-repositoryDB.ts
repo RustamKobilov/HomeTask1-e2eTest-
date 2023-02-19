@@ -43,13 +43,13 @@ const searchEmailTerm = paginationUser.searchEmailTerm != null ? {
     email: {$regex: paginationUser.searchEmailTerm, $options: "$i"}} : {}
 
     const totalCountUser =
-        await usersCollection.countDocuments({$and: [searchLoginTerm, searchEmailTerm]})
+        await usersCollection.countDocuments({$or: [searchLoginTerm, searchEmailTerm]})
 
 
     const paginationFromHelperForUsers=helper.getPaginationFunctionSkipSortTotal(paginationUser.pageNumber,
         paginationUser.pageSize,totalCountUser)
 
-    const sortUser = await usersCollection.find({$and: [searchLoginTerm,searchEmailTerm]}).
+    const sortUser = await usersCollection.find({$or: [searchLoginTerm,searchEmailTerm]}).
     sort({[paginationUser.sortBy]: paginationUser.sortDirection}).skip(paginationFromHelperForUsers.skipPage).
     limit(paginationUser.pageSize).project<UserType>({
         _id: 0,
