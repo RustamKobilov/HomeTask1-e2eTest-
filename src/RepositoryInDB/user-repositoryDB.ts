@@ -100,18 +100,6 @@ export const userRepository = {
 }
 
 
-export async function searchDateVerificationUserLoginAndEmail(passwordInput: string, loginInput: string): Promise<boolean> {
-    const resultSearch = await usersCollection.findOne({$or: [{login: loginInput}, {email: loginInput}]})
-    if (resultSearch == null) {
-        return false
-    }
-    const hashPasswordInput = await hashPassword(passwordInput, resultSearch.salt)
-    if (hashPasswordInput != resultSearch.hash) {
-        return false
-    }
-    return true;
-}
-
 //     const searchLoginTerm = paginationUser.searchLoginTerm != null ? {
 //     login: {$regex: paginationUser.searchLoginTerm, $options: "$i"}} : {}
 // const searchEmailTerm = paginationUser.searchEmailTerm != null ? {
