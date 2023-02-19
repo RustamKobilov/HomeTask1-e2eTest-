@@ -56,6 +56,6 @@ exports.app.use('/auth', authRouter_1.authRouter);
 exports.app.delete('/testing/all-data', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     yield db_1.client.db('hometask3').collection('Posts').deleteMany({});
     yield db_1.client.db('hometask3').collection('Blogs').deleteMany({});
-    yield db_1.client.db('hometask').collection('Users').deleteMany({});
+    yield db_1.client.db('hometask3').collection('Users').deleteMany({});
     return res.sendStatus(204);
 }));

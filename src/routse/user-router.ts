@@ -35,8 +35,8 @@ const getPaginationValuesAddNewUser = (body:any):PaginationTypeAddNewUser=>{
 }
 }
 
-usersRouter.get('/',basicAuthMiddleware,getUsersValidation,async (req:Request,res:Response)=>{
-    const paginationResult =getPaginationValuesUser(req.query)
+usersRouter.get('/',basicAuthMiddleware, getUsersValidation,async (req:Request,res:Response)=>{
+    const paginationResult = getPaginationValuesUser(req.query)
     const resultAllUsers= await getAllUsers(paginationResult)
     return res.status(200).send(resultAllUsers)
 })
