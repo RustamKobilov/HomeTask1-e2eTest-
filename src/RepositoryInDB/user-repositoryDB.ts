@@ -37,13 +37,19 @@ export type PaginationTypeAddNewUser = {
 }
 
 export async function getAllUsers(paginationUser: PaginationTypeInputUser): Promise<inputSortDataBaseType<UserType>> {
+    const searchLoginTerm = paginationUser.searchLoginTerm != null ? {
+    login: {$regex: paginationUser.searchLoginTerm, $options: "$i"}} : {}
+const searchEmailTerm = paginationUser.searchEmailTerm != null ? {
+    email: {$regex: paginationUser.searchEmailTerm, $options: "$i"}} : {}
 
-    const filter= [{login: {$regex: paginationUser.searchLoginTerm??'', $options: "$i"}}, {email:{$regex: paginationUser.searchEmailTerm??'', $options: "$i"}}]
-    const totalCountUser = await usersCollection.countDocuments({$and: filter})
+    const totalCountUser =
+        await usersCollection.countDocuments({$and: [searchLoginTerm, searchEmailTerm]})
+
+
     const paginationFromHelperForUsers=helper.getPaginationFunctionSkipSortTotal(paginationUser.pageNumber,
         paginationUser.pageSize,totalCountUser)
 
-    const sortUser = await usersCollection.find({$and: [filter]}).
+    const sortUser = await usersCollection.find({$and: [searchLoginTerm,searchEmailTerm]}).
     sort({[paginationUser.sortBy]: paginationUser.sortDirection}).skip(paginationFromHelperForUsers.skipPage).
     limit(paginationUser.pageSize).project<UserType>({
         _id: 0,
