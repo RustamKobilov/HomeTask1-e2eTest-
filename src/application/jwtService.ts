@@ -9,4 +9,12 @@ export const jwtService={
         const token =jwt.sign({userId:user.id},JWT_Service,{expiresIn:'1h'})
         return token
     }
+    async checkToken(token:string){
+        try{
+        const resultVerify:any =jwt.verify(token,JWT_Service)
+            return new ObjectId(resultVerify.userId)
+}
+catch (erors) {
+    return null
+}
 }
