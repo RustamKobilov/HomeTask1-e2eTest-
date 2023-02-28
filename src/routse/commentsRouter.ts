@@ -12,7 +12,7 @@ export const commentsRouter=Router({})
 
 const getPaginationCommentById=(params:any):InputCommentByIdType=>{
     return {
-        id:params.id,
+        id:params.id
     }
 }
 
@@ -23,12 +23,20 @@ return {
 }
 }
 
+const getPaginationDeleteCommentById=(params:any):InputCommentByIdType=>{
+    return {
+        id:params.commentId
+    }
+}
+
 commentsRouter.get('/:id',async (req:Request,res:Response)=>{
     const pagination=getPaginationCommentById(req.params)
+    console.log(pagination.id)
     const resultSearch=getCommentOnId(pagination.id)
     if(!resultSearch){
         return res.sendStatus(404)
     }
+    console.log(resultSearch)
     return res.status(200).send(resultSearch)
 })
 
@@ -43,7 +51,7 @@ commentsRouter.put('/:commentId',postCommentForPostValidation,async (res:Respons
 })
 ////401 and 403 not execute
 commentsRouter.delete('/:commentId',async (req:Request,res:Response)=>{
-    const pagination=getPaginationCommentById(req.params)
+    const pagination=getPaginationDeleteCommentById(req.params)
     const resultSearch=getCommentOnId(pagination.id)
     if(!resultSearch){
         return res.sendStatus(404)
