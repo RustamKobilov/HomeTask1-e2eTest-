@@ -58,7 +58,7 @@ export async function createCommentByPost(comment:CommentType):Promise<OutputCom
         createdAt: comment.createdAt})
 }
 export async function getCommentOnId(id:string):Promise<CommentType|null>{
-    const result=await commentsCollection.findOne({id:id},{projection: {_id: 0}})
+    const result=await commentsCollection.findOne({id: id}, {projection: {_id: 0}});
     return result
 }
 
