@@ -1,14 +1,24 @@
 import {jwtService} from "../application/jwtService";
-import {authService} from "../domain/authService";
+import {Request,Response,NextFunction} from "express";
+import {findUserById} from "../RepositoryInDB/user-repositoryDB";
 
-export const authMiddleware =(req:Request,res:Response,next: NextFunction)=>{
-    const auth = req.headers.authorization;
-    if (!auth) return res.sendStatus(401)
+export const authMiddleware =async (req: Request, res: Response, next: NextFunction) => {
+    const inputToken = req.headers.authorization;
+    if (!inputToken) return res.sendStatus(401)
 
-    const token=auth.split('')[1]
+    const token = inputToken.split(' ')[1]
 
-    const userId=await jwtService.checkToken(token)
-    if(userId){
-        req.user =await jwtService.
+    const resultSearchUserIdbyToken = await jwtService.checkToken(token)
+    console.log(resultSearchUserIdbyToken)
+    if (resultSearchUserIdbyToken) {
+        const user=await findUserById(resultSearchUserIdbyToken)
+        console.log(user)
+        if (user) {
+            req.user = user
+            next()
+            return;
+        }
     }
+    console.log('tyttt')
+    return res.sendStatus(401)
 }

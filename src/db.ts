@@ -4,6 +4,7 @@ import {MongoClient} from 'mongodb'
 import {BlogsType} from "./RepositoryInDB/blog-repositoryDB";
 import {PostType} from "./RepositoryInDB/posts-repositiryDB";
 import {UserType} from "./RepositoryInDB/user-repositoryDB";
+import {CommentType} from "./RepositoryInDB/commentator-repositoryDB";
 
 const mongoURI= process.env.MONGO_URI_CLUSTER ||'mongodb://127.0.0.1:27017';
 
@@ -12,6 +13,7 @@ const db = client.db('hometask3')
 export const blogsCollection = db.collection<BlogsType>('Blogs');
 export const postsCollection =  db.collection<PostType>('Posts');
 export const usersCollection = db.collection<UserType>('Users');
+export const commentsCollection = db.collection<CommentType>('Comments');
 export async function runDB(){
     try{
         await client.connect();

@@ -7,6 +7,7 @@ import {postsRouter} from "./routse/posts-router";
 import {client} from "./db";
 import {usersRouter} from "./routse/user-router";
 import {authRouter} from "./routse/authRouter";
+import {commentsRouter} from "./routse/commentsRouter";
 
 
 export const app = express();
@@ -18,14 +19,16 @@ app.use(convertJson);
 app.use('/videos', videosRouter);
 app.use('/blogs',blogsRouter);
 app.use('/posts',postsRouter);
-app.use('/users',usersRouter)
-app.use('/auth',authRouter)
+app.use('/users',usersRouter);
+app.use('/auth',authRouter);
+app.use('/comments',commentsRouter);
 
 
 app.delete('/testing/all-data', async (req: Request, res: Response) => {
     await client.db('hometask3').collection('Posts').deleteMany({})
     await client.db('hometask3').collection('Blogs').deleteMany({})
     await client.db('hometask3').collection('Users').deleteMany({})
+    await client.db('hometask3').collection('Comments').deleteMany({})
     return res.sendStatus(204);
 });
 

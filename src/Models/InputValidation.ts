@@ -58,6 +58,8 @@ const checkSearchEmailTerm = query('searchEmailTerm').default(null).isString()
 const checkInputLogin=body('loginOrEmail').exists().isString().trim().notEmpty()
 const checkInputPassword=body('password').exists().isString().trim().notEmpty()
 
+const checkInputContent=body('content').exists().isString().notEmpty().isLength({min:20,max:300})
+
 export const createPostValidation = [checkPostTitle, checkPostShortDescription, checkPostContent, checkPostBlogId]
 export const updatePostValidation = [...createPostValidation]
 export const getPostForBlogsValidation = [checkPageNumber, checkPageSize, checkSortBy, checkSortDirection]
@@ -68,3 +70,5 @@ export const getUsersValidation = [checkPageNumber, checkPageSize, checkSortBy, 
 export const postUsersValidation=[checkUserLogin,checkUserPassword,checkUserEmail,errorMessagesInputValidation]
 export const loginUserValidation=[checkInputLogin,checkInputPassword, errorMessagesInputValidation]
 
+export const postCommentForPostValidation=[checkInputContent,errorMessagesInputValidation]
+export const getCommentsForPostValidation = [checkPageNumber, checkPageSize, checkSortBy, checkSortDirection]

@@ -1,25 +1,29 @@
 import {Request, Response, Router} from "express";
 import {basicAuthMiddleware} from "../Middleware/autorized";
 import {
+    postCommentForPostValidation,
     createPostValidation,
     errorMessagesInputValidation,
     getPostValidation,
-    updatePostValidation
+    updatePostValidation, getCommentsForPostValidation
 } from "../Models/InputValidation";
 import {randomUUID} from "crypto";
 import {
     createPostOnId,
     findBlogName,
     findPostOnId,
-    getAllPosts,
-    PaginationTypeInputPosts, PaginationTypeInputPostValueForPost,
+    getAllPosts, PaginationTypeGetInputCommentByPost,
+    PaginationTypeInputPosts, PaginationTypeInputPostValueForPost, PaginationTypePostInputCommentByPost,
     PostType,
     updatePostOnId
 } from "../RepositoryInDB/posts-repositiryDB";
 import {postsCollection} from "../db";
 import {postsService} from "./postsService";
-import {param} from "express-validator";
+import {body, param} from "express-validator";
 import any = jasmine.any;
+import {getPaginationUpdateComment} from "./commentsRouter";
+import {authMiddleware} from "../Middleware/authMiddleware";
+import {getAllCommentForPostInBase, getCommentOnId} from "../RepositoryInDB/commentator-repositoryDB";
 
 export const postsRouter = Router({});
 
@@ -38,6 +42,24 @@ export const getPaginationPostValueForPost=(query:any):PaginationTypeInputPostVa
         contentPost: query.content
     }
 }
+
+export const getPaginationGetCommentForPost=(query:any,params:any):PaginationTypePostInputCommentByPost=>{
+    return {
+        idPost:params.postId,
+        pageNumber: +query.pageNumber,
+        pageSize: +query.pageSize,
+        sortBy: query.sortBy,
+        sortDirection: query.sortDirection === 'desc' ? -1 : 1
+    }
+}
+
+export const getPaginationPostCommentForPost=(params:any, body:any):PaginationTypeGetInputCommentByPost=>{
+    return {
+        idPost: params.postId,
+        content: body.content
+    }
+    }
+
 
 postsRouter.get('/', getPostValidation, async (req: Request, res: Response) => {
     const paginationResultPosts = getPaginationValuesPosts(req.query)
@@ -88,3 +110,27 @@ postsRouter.delete('/:id', basicAuthMiddleware, async (req: Request, res: Respon
     await postsCollection.deleteOne({id: findDeletePost.id})
     return res.sendStatus(204);
 })
+
+
+postsRouter.get('/:postId/comments', getCommentsForPostValidation,async (req: Request, res: Response) => {
+    const pagination=getPaginationGetCommentForPost(req.query,req.params)
+    const resultSearchPost=await findPostOnId(pagination.idPost)
+    if(!resultSearchPost){
+        return res.sendStatus(404)
+    }
+    const resultAllCommentsByPosts = await getAllCommentForPostInBase(pagination);
+    return res.status(200).send(resultAllCommentsByPosts)
+})
+postsRouter.post('/:postId/comments', authMiddleware,postCommentForPostValidation,async (req: Request, res: Response) => {
+    const pagination=getPaginationPostCommentForPost(req.params,req.body)
+    const user=req.user!
+
+    const resultSearchPost=await findPostOnId(pagination.idPost)
+    if(!resultSearchPost){
+        return res.sendStatus(404)
+    }
+    const addCommentByPost=await postsService.createCommentOnId(pagination,user)
+    return res.status(200).send(addCommentByPost)
+
+})
+

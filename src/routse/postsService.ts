@@ -1,10 +1,12 @@
 import {randomUUID} from "crypto";
 import {
     createPostOnId,
-    findBlogName,
+    findBlogName, PaginationTypeGetInputCommentByPost,
     PaginationTypeInputPostValueForPost,
     PostType
 } from "../RepositoryInDB/posts-repositiryDB";
+import {UserType} from "../RepositoryInDB/user-repositoryDB";
+import {CommentatorInfo, createCommentByPost, CommentType} from "../RepositoryInDB/commentator-repositoryDB";
 
 export const postsService={
     async createPost(titleNewPost: string, shortDescriptionNewPost: string, contentNewPost: string,
@@ -33,6 +35,21 @@ export const postsService={
         const resultCreatePost = await postsService.createPost(pagination.titlePost, pagination.shortDescriptionPost,
             pagination.contentPost, blogId, blogNameForPost.name)
     return resultCreatePost
-    }
+    },
+    async createCommentOnId(pagination:PaginationTypeGetInputCommentByPost, user:UserType){
+        const idNewComment = randomUUID();
 
+        const newComment: CommentType = {
+            postId:pagination.idPost,
+            id: idNewComment,
+            content: pagination.content,
+            commentatorInfo:<CommentatorInfo>{
+              userId:user.id,
+              userLogin:user.login
+            },
+            createdAt: new Date().toISOString()
+        };
+        const addNewComment=await createCommentByPost(newComment)
+        return addNewComment
+    }
 }

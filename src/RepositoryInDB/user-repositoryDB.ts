@@ -3,6 +3,7 @@ import {randomUUID} from "crypto";
 import {blogsCollection, usersCollection} from "../db";
 import {helper} from "./helper";
 import {inputSortDataBaseType, PostType} from "./posts-repositiryDB";
+import {ObjectId} from "mongodb";
 
 export type UserType = {
     id: string
@@ -92,11 +93,15 @@ export async function findUserById(id: string): Promise<UserType | null> {
     return resultFindUser
 }
 
+// export async function findUserByIdToken(id:ObjectId):Promise<UserType|null>{
+//     const resultFindUser = await usersCollection.findOne({id: id}, {projection: {_id: 0}})
+//     return resultFindUser
+// }
+
 export const userRepository = {
     async findUserByLoginOrEmail(loginOrEmail: string): Promise<UserType | null> {
         return usersCollection.findOne({$or: [{login: loginOrEmail}, {email: loginOrEmail}]}, {projection: {_id: 0}})
-    },
-
+    }
 }
 
 

@@ -1,8 +1,9 @@
 import {BlogsType} from "./blog-repositoryDB";
-import {blogsCollection, postsCollection} from "../db";
+import {blogsCollection, commentsCollection, postsCollection} from "../db";
 import {randomUUID} from "crypto";
 import { helper} from "./helper";
 import {postsService} from "../routse/postsService";
+import {CommentatorInfo, OutputCommentOutputType, CommentType} from "./commentator-repositoryDB";
 
 export type PostType = {
     id: string
@@ -55,6 +56,18 @@ export type PaginationTypeInputPostValueForPost={
     contentPost: string
 }
 
+export type PaginationTypeGetInputCommentByPost ={
+    idPost:string,
+    content:string
+}
+
+export type PaginationTypePostInputCommentByPost={
+    idPost:string,
+    pageNumber: number
+    pageSize: number
+    sortBy: string
+    sortDirection: 1|-1
+}
 export async function getAllPosts(paginationPosts: PaginationTypeInputPosts): Promise<inputSortDataBaseType<PostType>> {
 
     const pagesCountBlog = await postsCollection.countDocuments({});
@@ -85,7 +98,7 @@ export async function updatePostOnId(id: string, pagination:PaginationTypeInputP
             blogId: blogId
         }
     });
-    //console.log(post.matchedCount)
+
     return post.matchedCount === 1
 }
 
@@ -106,3 +119,4 @@ export async function createPostOnId(resultCreatePost:PostType):
     })
 
 }
+
