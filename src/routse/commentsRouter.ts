@@ -33,6 +33,7 @@ commentsRouter.get('/:id',async (req:Request,res:Response)=>{
     const pagination=getPaginationCommentById(req.params)
     console.log(pagination.id)
     const resultSearch=getCommentOnId(pagination.id)
+    console.log(resultSearch)
     if(!resultSearch){
         return res.sendStatus(404)
     }
