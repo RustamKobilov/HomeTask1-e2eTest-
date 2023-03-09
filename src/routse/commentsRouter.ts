@@ -19,7 +19,7 @@ const getPaginationCommentById=(params:any):InputCommentByIdType=>{
 
 export const getPaginationUpdateComment=(params:any,body:any):UpdateCommentType=>{
 return {
-    id:params.commentId,
+    id:params.id,
     content:body.content
 }
 }
@@ -47,6 +47,7 @@ commentsRouter.put('/:id',authMiddleware,postCommentForPostValidation,async (req
 
     const pagination=getPaginationUpdateComment(req.params,req.body)
     const resultCommentUpdate=updateComment(pagination.id,pagination.content)
+    console.log(resultCommentUpdate)
     if(!resultCommentUpdate){
         return res.sendStatus(404)
     }
