@@ -31,7 +31,6 @@ const getPaginationValuesAddNewUser = (body:any):PaginationTypeAddNewUser=>{
         login:body.login,
             password:body.password,
             email:body.email
-
 }
 }
 

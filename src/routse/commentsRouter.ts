@@ -31,18 +31,19 @@ const getPaginationDeleteCommentById=(params:any):InputCommentByIdType=>{
 
 commentsRouter.get('/:id',async (req:Request,res:Response)=>{
     const pagination=getPaginationCommentById(req.params)
-    console.log(pagination.id)
-    const resultSearch=getCommentOnId(pagination.id)
-    console.log(resultSearch)
+    const resultSearch=await getCommentOnId(pagination.id)
+
     if(!resultSearch){
         return res.sendStatus(404)
     }
-    console.log(resultSearch)
+
     return res.status(200).send(resultSearch)
 })
 
 //401 and 403 not execute
-commentsRouter.put('/:commentId',postCommentForPostValidation,async (res:Response, req:Request)=>{
+commentsRouter.put('/:id',postCommentForPostValidation,async (req:Request,res:Response)=>{
+    console.log(req.params.id)
+
     const pagination=getPaginationUpdateComment(req.params,req.body)
     const resultCommentUpdate=updateComment(pagination.id,pagination.content)
     if(!resultCommentUpdate){

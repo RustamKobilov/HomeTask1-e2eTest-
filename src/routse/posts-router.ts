@@ -7,21 +7,16 @@ import {
     getPostValidation,
     updatePostValidation, getCommentsForPostValidation
 } from "../Models/InputValidation";
-import {randomUUID} from "crypto";
+
 import {
-    createPostOnId,
-    findBlogName,
     findPostOnId,
     getAllPosts, PaginationTypeGetInputCommentByPost,
-    PaginationTypeInputPosts, PaginationTypeInputPostValueForPost, PaginationTypePostInputCommentByPost,
-    PostType,
+    PaginationTypeInputPosts, PaginationTypeInputPostValueForPost,
+    PaginationTypePostInputCommentByPost,
     updatePostOnId
 } from "../RepositoryInDB/posts-repositiryDB";
 import {postsCollection} from "../db";
 import {postsService} from "./postsService";
-import {body, param} from "express-validator";
-import any = jasmine.any;
-import {getPaginationUpdateComment} from "./commentsRouter";
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {getAllCommentForPostInBase, getCommentOnId} from "../RepositoryInDB/commentator-repositoryDB";
 
