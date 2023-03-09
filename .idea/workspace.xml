@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="28/02/23 hometask5.">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_02_2023_20_53_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_02_2023_20_53__Changes_.xml" beforeDir="false" />
+    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="09/03/23 test.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/commentator-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/commentator-repositoryDB.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routse/commentsRouter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/commentsRouter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/posts-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/posts-router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/user-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/user-router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/apiTest.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/apiTest.test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +72,7 @@
       <recent name="D:\it incubator\hometask1(e2eTest)\dist" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.Blogs output model checking sortBy.blog checking SortBy">
+  <component name="RunManager" selected="npm.dev">
     <configuration name="Blogs output model checking sortBy" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -132,26 +126,23 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="/Post" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
       <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
       <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
-      <test-names>
-        <test-name value="/Post" />
-      </test-names>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.dev" />
         <item itemvalue="Jest.Blogs output model checking sortBy.blog checking SortBy" />
         <item itemvalue="Jest.Blogs output model checking sortBy" />
         <item itemvalue="Jest./Blogs output model checking" />
         <item itemvalue="Jest.POST output model inputSortDataBaseType" />
-        <item itemvalue="Jest./Post" />
       </list>
     </recent_temporary>
   </component>
@@ -175,13 +166,6 @@
       <workItem from="1676224148921" duration="73089000" />
       <workItem from="1676911176146" duration="4657000" />
       <workItem from="1676920320701" duration="2775000" />
-    </task>
-    <task id="LOCAL-00082" summary="27/01/23 mongodb finished.">
-      <created>1674929077686</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1674929077686</updated>
     </task>
     <task id="LOCAL-00083" summary="27/01/23 mongodb finished.">
       <created>1674930282771</created>
@@ -519,7 +503,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677614025779</updated>
     </task>
-    <option name="localTasksCounter" value="131" />
+    <task id="LOCAL-00131" summary="09/03/23 test.">
+      <created>1678376929373</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1678376929405</updated>
+    </task>
+    <option name="localTasksCounter" value="132" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -550,6 +541,8 @@
     <MESSAGE value="16/02/23 hometask5." />
     <MESSAGE value="18/02/23 hometask5." />
     <MESSAGE value="28/02/23 hometask5." />
-    <option name="LAST_COMMIT_MESSAGE" value="28/02/23 hometask5." />
+    <MESSAGE value="09/03/23 hometask5." />
+    <MESSAGE value="09/03/23 test." />
+    <option name="LAST_COMMIT_MESSAGE" value="09/03/23 test." />
   </component>
 </project>

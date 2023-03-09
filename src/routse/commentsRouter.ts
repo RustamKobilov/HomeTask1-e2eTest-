@@ -7,6 +7,7 @@ import {
 } from "../RepositoryInDB/commentator-repositoryDB";
 import {postCommentForPostValidation} from "../Models/InputValidation";
 import {blogsCollection, commentsCollection} from "../db";
+import {authMiddleware} from "../Middleware/authMiddleware";
 
 export const commentsRouter=Router({})
 
@@ -41,7 +42,7 @@ commentsRouter.get('/:id',async (req:Request,res:Response)=>{
 })
 
 //401 and 403 not execute
-commentsRouter.put('/:id',postCommentForPostValidation,async (req:Request,res:Response)=>{
+commentsRouter.put('/:id',authMiddleware,postCommentForPostValidation,async (req:Request,res:Response)=>{
     console.log(req.params.id)
 
     const pagination=getPaginationUpdateComment(req.params,req.body)
@@ -52,7 +53,7 @@ commentsRouter.put('/:id',postCommentForPostValidation,async (req:Request,res:Re
     return res.sendStatus(201)
 })
 ////401 and 403 not execute
-commentsRouter.delete('/:commentId',async (req:Request,res:Response)=>{
+commentsRouter.delete('/:commentId',authMiddleware,async (req:Request,res:Response)=>{
     const pagination=getPaginationDeleteCommentById(req.params)
     const resultSearch=getCommentOnId(pagination.id)
     if(!resultSearch){
