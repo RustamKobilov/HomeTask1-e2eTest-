@@ -50,7 +50,7 @@ commentsRouter.put('/:id',authMiddleware,postCommentForPostValidation,async (req
     if(!resultCommentUpdate){
         return res.sendStatus(404)
     }
-    return res.sendStatus(201)
+    return res.sendStatus(204)
 })
 ////401 and 403 not execute
 commentsRouter.delete('/:commentId',authMiddleware,async (req:Request,res:Response)=>{
