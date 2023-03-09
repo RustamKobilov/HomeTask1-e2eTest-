@@ -8,6 +8,7 @@ import {
 import {postCommentForPostValidation} from "../Models/InputValidation";
 import {blogsCollection, commentsCollection} from "../db";
 import {authMiddleware} from "../Middleware/authMiddleware";
+import {createSecureServer} from "http2";
 
 export const commentsRouter=Router({})
 
@@ -57,6 +58,7 @@ commentsRouter.put('/:id',authMiddleware,postCommentForPostValidation,async (req
 commentsRouter.delete('/:commentId',authMiddleware,async (req:Request,res:Response)=>{
     const pagination=getPaginationDeleteCommentById(req.params)
     const resultSearch=getCommentOnId(pagination.id)
+    console.log(resultSearch)
     if(!resultSearch){
         return res.sendStatus(404)
     }
