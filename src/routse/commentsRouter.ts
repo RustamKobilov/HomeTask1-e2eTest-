@@ -47,7 +47,7 @@ commentsRouter.put('/:id',authMiddleware,postCommentForPostValidation,async (req
     console.log(req.params.id)
 
     const pagination=getPaginationUpdateComment(req.params,req.body)
-    const resultCommentUpdate=updateComment(pagination.id,pagination.content)
+    const resultCommentUpdate=await updateComment(pagination.id,pagination.content)
     console.log(resultCommentUpdate)
     if(!resultCommentUpdate){
         return res.sendStatus(404)
@@ -57,7 +57,7 @@ commentsRouter.put('/:id',authMiddleware,postCommentForPostValidation,async (req
 ////401 and 403 not execute
 commentsRouter.delete('/:commentId',authMiddleware,async (req:Request,res:Response)=>{
     const pagination=getPaginationDeleteCommentById(req.params)
-    const resultSearch=getCommentOnId(pagination.id)
+    const resultSearch=await getCommentOnId(pagination.id)
     console.log(resultSearch)
     if(!resultSearch){
         return res.sendStatus(404)
