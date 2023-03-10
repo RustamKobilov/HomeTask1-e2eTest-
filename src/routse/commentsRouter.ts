@@ -44,7 +44,7 @@ commentsRouter.get('/:id',async (req:Request,res:Response)=>{
     return res.status(200).send(resultSearch)
 })
 
-//401 and 403 not execute
+
 commentsRouter.put('/:id',authMiddleware,authCommentUser,postCommentForPostValidation,async (req:Request,res:Response)=>{
 
     const pagination=getPaginationUpdateComment(req.params,req.body)
@@ -58,8 +58,8 @@ commentsRouter.put('/:id',authMiddleware,authCommentUser,postCommentForPostValid
     }
     return res.sendStatus(204)
 })
-////401 and 403 not execute
-commentsRouter.delete('/:commentId',authMiddleware,async (req:Request,res:Response)=>{
+
+commentsRouter.delete('/:commentId',authMiddleware,authCommentUser,async (req:Request,res:Response)=>{
     const pagination=getPaginationDeleteCommentById(req.params)
     const resultSearch=await getCommentOnId(pagination.id)
     if(!resultSearch){
@@ -69,4 +69,3 @@ commentsRouter.delete('/:commentId',authMiddleware,async (req:Request,res:Respon
     return res.sendStatus(204);
 })
 
-//в каждом методе if который требует все комменты,если с ревеста к
