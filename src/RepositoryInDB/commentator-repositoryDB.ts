@@ -32,13 +32,13 @@ export type UpdateCommentType ={
 }
 
 export async function getAllCommentForPostInBase(pagination:PaginationTypePostInputCommentByPost):
-    Promise<inputSortDataBaseType<CommentType>>{
+    Promise<inputSortDataBaseType<OutputCommentOutputType>>{
     const filter: Filter<CommentType> = {postId: pagination.idPost}
     const countCommentsForPost = await commentsCollection.countDocuments(filter)
     const paginationFromHelperForComments=helper.getPaginationFunctionSkipSortTotal(pagination.pageNumber,pagination.pageSize, countCommentsForPost)
 
     let sortCommentsForPosts = await commentsCollection.find(filter).sort({[pagination.sortBy]: pagination.sortDirection}).
-    skip(paginationFromHelperForComments.skipPage).limit(pagination.pageSize).project<CommentType>({_id: 0}).toArray()
+    skip(paginationFromHelperForComments.skipPage).limit(pagination.pageSize).project<OutputCommentOutputType>({_id: 0}).toArray()
 
     return {
         pagesCount: paginationFromHelperForComments.totalCount,

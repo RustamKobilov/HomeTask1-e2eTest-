@@ -125,7 +125,7 @@ postsRouter.post('/:postId/comments', authMiddleware,postCommentForPostValidatio
         return res.sendStatus(404)
     }
     const addCommentByPost=await postsService.createCommentOnId(pagination,user)
-    return res.status(200).send(addCommentByPost)
+    return res.status(201).send(addCommentByPost)
 
 })
 
