@@ -29,7 +29,7 @@ return {
 
 const getPaginationDeleteCommentById=(params:any):InputCommentByIdType=>{
     return {
-        id:params.commentId
+        id:params.id
     }
 }
 
@@ -59,7 +59,7 @@ commentsRouter.put('/:id',authMiddleware,authCommentUser,postCommentForPostValid
     return res.sendStatus(204)
 })
 
-commentsRouter.delete('/:commentId',authMiddleware,authCommentUser,async (req:Request,res:Response)=>{
+commentsRouter.delete('/:id',authMiddleware,authCommentUser,async (req:Request,res:Response)=>{
     const pagination=getPaginationDeleteCommentById(req.params)
     const resultSearch=await getCommentOnId(pagination.id)
     if(!resultSearch){
