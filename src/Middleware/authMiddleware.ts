@@ -19,6 +19,6 @@ export const authMiddleware =async (req: Request, res: Response, next: NextFunct
             return;
         }
     }
-    console.log('tyttt')
+
     return res.sendStatus(401)
 }

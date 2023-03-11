@@ -38,7 +38,7 @@ export async function getAllCommentForPostInBase(pagination:PaginationTypePostIn
     const paginationFromHelperForComments=helper.getPaginationFunctionSkipSortTotal(pagination.pageNumber,pagination.pageSize, countCommentsForPost)
 
     let sortCommentsForPosts = await commentsCollection.find(filter).sort({[pagination.sortBy]: pagination.sortDirection}).
-    skip(paginationFromHelperForComments.skipPage).limit(pagination.pageSize).project<OutputCommentOutputType>({_id: 0}).toArray()
+    skip(paginationFromHelperForComments.skipPage).limit(pagination.pageSize).project<OutputCommentOutputType>({_id: 0,postId:0}).toArray()
 
     return {
         pagesCount: paginationFromHelperForComments.totalCount,
