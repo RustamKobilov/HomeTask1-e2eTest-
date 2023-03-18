@@ -60,7 +60,7 @@ authRouter.post('/registration-email-resending',postRegistrationEmailResending,a
     const inputEmail=req.body.email
     const resultSearchEmail=await authService.checkEmail(inputEmail)
     if(!resultSearchEmail){
-        return  'проверка сделана в валидаторе'
+        return res.sendStatus(400)
     }
     try {
         await emailAdapters.gmailAdapter(inputEmail, resultSearchEmail.userConfirmationInfo.code)

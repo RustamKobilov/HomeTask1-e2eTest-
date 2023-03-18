@@ -58,6 +58,17 @@ const checkUserEmail=body('email').isString().trim().notEmpty().matches(/^[\w-\.
     throw new Error('email busy')
 })
 
+const checkUserEmailAndConformation=body('email').isString().trim().matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/).custom(async value => {
+    const user = await authService.checkEmail(value)
+    if (!user) {
+        throw new Error('email busy')
+    }
+    if(user.userConfirmationInfo.userConformation==true){
+        throw new Error('email confirmed')
+    }
+    return true
+})
+
 //validation default
 
 const checkPageNumber = query('pageNumber').default(1).isInt({min: 1})
@@ -94,5 +105,5 @@ export const loginUserValidation=[checkInputLogin,checkInputPassword, errorMessa
 export const postCommentForPostValidation=[checkInputContent,errorMessagesInputValidation]
 export const getCommentsForPostValidation = [checkPageNumber, checkPageSize, checkSortBy, checkSortDirection]
 
-export const postRegistrationEmailResending=[checkUserEmail,errorMessagesInputValidation]
+export const postRegistrationEmailResending=[checkUserEmailAndConformation,errorMessagesInputValidation]
 export const postRegistrConfirm=[checkInputCode,errorMessagesInputValidation]
