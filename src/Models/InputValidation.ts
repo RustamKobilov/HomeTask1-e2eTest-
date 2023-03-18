@@ -47,7 +47,7 @@ const checkUserLogin =body('login').isString().trim().notEmpty().isLength({min:3
     if (!login) {
         return true;
     }
-    throw new Error('email busy')
+    throw new Error('login busy')
 })
 const checkUserPassword=body('password').isString().trim().notEmpty().isLength({min:6,max:20})
 const checkUserEmail=body('email').isString().trim().notEmpty().matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/).custom(async value => {
