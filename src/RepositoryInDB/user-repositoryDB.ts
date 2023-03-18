@@ -13,6 +13,11 @@ export type UserType = {
     createdAt: string
     salt: string
     hash: string
+    userConfirmationInfo:{
+        userConformation:boolean
+        code:string,
+        expirationCode:string
+    }
 }
 
 export type outputUserType = {
@@ -72,6 +77,11 @@ export async function createUser(paginationAddUser: PaginationTypeAddNewUser): P
     const salt = await bcrypt.genSalt(8)
     const hashResult = await hashPassword(paginationAddUser.password, salt)
 
+    const date0=new Date()
+    const date02=date0.getHours()
+    date0.setHours(date02+1)
+    const dateExpiration=new Date(date0).toISOString()
+
     return {
         id: randomUUID(),
         login: paginationAddUser.login,
@@ -79,7 +89,12 @@ export async function createUser(paginationAddUser: PaginationTypeAddNewUser): P
         email: paginationAddUser.email,
         createdAt: new Date().toISOString(),
         salt: salt,
-        hash: hashResult
+        hash: hashResult,
+        userConfirmationInfo:{
+            userConformation:false,
+            code:randomUUID(),
+            expirationCode:dateExpiration
+        }
     }
 }
 
@@ -93,17 +108,31 @@ export async function findUserById(id: string): Promise<UserType | null> {
     return resultFindUser
 }
 
-// export async function findUserByIdToken(id:ObjectId):Promise<UserType|null>{
-//     const resultFindUser = await usersCollection.findOne({id: id}, {projection: {_id: 0}})
-//     return resultFindUser
-// }
-
 export const userRepository = {
     async findUserByLoginOrEmail(loginOrEmail: string): Promise<UserType | null> {
         return usersCollection.findOne({$or: [{login: loginOrEmail}, {email: loginOrEmail}]}, {projection: {_id: 0}})
+    },
+    async findUserByCode(code:string):Promise<UserType|null>{
+        console.log(code)
+        return usersCollection.findOne({'userConfirmationInfo.code':code}, {projection: {_id: 0}})
+    },
+    async updateUserConformation(id: string):
+        Promise<boolean> {
+        let user = await usersCollection.updateOne({id: id}, {
+            $set: {
+                'userConfirmationInfo.userConformation': true,
+
+            }
+        })
+
+        return user.matchedCount === 1
+    },
+    async findUserByEmail(email:string):Promise<UserType|null>{
+
+        return usersCollection.findOne({email:email}, {projection: {_id: 0}})
     }
 }
-
+//({userConfirmationInfo:{code:code}}
 
 //     const searchLoginTerm = paginationUser.searchLoginTerm != null ? {
 //     login: {$regex: paginationUser.searchLoginTerm, $options: "$i"}} : {}

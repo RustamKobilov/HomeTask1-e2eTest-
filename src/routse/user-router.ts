@@ -14,6 +14,7 @@ import {basicAuthMiddleware} from "../Middleware/autorized";
 import {body} from "express-validator";
 import {getUsersValidation, postUsersValidation} from "../Models/InputValidation";
 import {findBlogOnId} from "../RepositoryInDB/blog-repositoryDB";
+import {setDate} from "date-fns";
 
 const getPaginationValuesUser = (query:any): PaginationTypeInputUser=>{
    return {
@@ -26,7 +27,7 @@ const getPaginationValuesUser = (query:any): PaginationTypeInputUser=>{
    }
 }
 
-const getPaginationValuesAddNewUser = (body:any):PaginationTypeAddNewUser=>{
+export const getPaginationValuesAddNewUser = (body:any):PaginationTypeAddNewUser=>{
     return{
         login:body.login,
             password:body.password,
@@ -37,12 +38,14 @@ const getPaginationValuesAddNewUser = (body:any):PaginationTypeAddNewUser=>{
 usersRouter.get('/',basicAuthMiddleware, getUsersValidation,async (req:Request,res:Response)=>{
     const paginationResult = getPaginationValuesUser(req.query)
     const resultAllUsers= await getAllUsers(paginationResult)
+
     return res.status(200).send(resultAllUsers)
 })
 
 usersRouter.post('/',basicAuthMiddleware,postUsersValidation,async (req:Request,res:Response)=>{
     const paginationResult =getPaginationValuesAddNewUser(req.body)
     const resultNewUsers= await createUser(paginationResult)
+    resultNewUsers.userConfirmationInfo.userConformation=true
     await usersCollection.insertOne(resultNewUsers)
     return res.status(201).send({id:resultNewUsers.id,login:resultNewUsers.login,email:resultNewUsers.email,createdAt:resultNewUsers.createdAt})
 })

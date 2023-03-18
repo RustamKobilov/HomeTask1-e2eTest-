@@ -60,6 +60,8 @@ const checkInputPassword=body('password').exists().isString().trim().notEmpty()
 
 const checkInputContent=body('content').exists().isString().notEmpty().isLength({min:20,max:300})
 
+const checkInputCode=body('code').exists().isString().notEmpty()
+
 export const createPostValidation = [checkPostTitle, checkPostShortDescription, checkPostContent, checkPostBlogId]
 export const updatePostValidation = [...createPostValidation]
 export const getPostForBlogsValidation = [checkPageNumber, checkPageSize, checkSortBy, checkSortDirection]
@@ -72,3 +74,6 @@ export const loginUserValidation=[checkInputLogin,checkInputPassword, errorMessa
 
 export const postCommentForPostValidation=[checkInputContent,errorMessagesInputValidation]
 export const getCommentsForPostValidation = [checkPageNumber, checkPageSize, checkSortBy, checkSortDirection]
+
+export const postRegistrationEmailResending=[checkUserEmail,errorMessagesInputValidation]
+export const postRegistrConfirm=[checkInputCode,errorMessagesInputValidation]
