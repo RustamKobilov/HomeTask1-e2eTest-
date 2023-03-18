@@ -53,7 +53,7 @@ authRouter.post('/registration',postUsersValidation,async (req:Request,res:Respo
 
 authRouter.post('/registration-confirmation',postRegistrConfirm,async (req:Request,res:Response)=> {
 
-    return res.sendStatus(201)
+    return res.sendStatus(204)
 })
 
 authRouter.post('/registration-email-resending',postRegistrationEmailResending,async (req:Request,res:Response)=> {
