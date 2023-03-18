@@ -33,6 +33,13 @@ export const authService = {
             return false
         }
         return resultSearchEmail
+    },
+    async checkLogin(login:string):Promise<false|UserType>{
+        const resultSearchLogin=await userRepository.findUserByLogin(login)
+        if(!resultSearchLogin){
+            return false
+        }
+        return resultSearchLogin
     }
 
 }

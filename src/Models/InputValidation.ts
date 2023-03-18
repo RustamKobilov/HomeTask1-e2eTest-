@@ -42,7 +42,13 @@ const checkPostBlogId = body('blogId').isString().trim().notEmpty().isLength({mi
     }
     return true;
 })
-const checkUserLogin =body('login').isString().trim().notEmpty().isLength({min:3,max:10}).matches(/^[a-zA-Z0-9_-]*$/)
+const checkUserLogin =body('login').isString().trim().notEmpty().isLength({min:3,max:10}).matches(/^[a-zA-Z0-9_-]*$/).custom(async value => {
+    const login = await authService.checkLogin(value)
+    if (!login) {
+        return true;
+    }
+    throw new Error('email busy')
+})
 const checkUserPassword=body('password').isString().trim().notEmpty().isLength({min:6,max:20})
 const checkUserEmail=body('email').isString().trim().notEmpty().matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/).custom(async value => {
     const email = await authService.checkEmail(value)

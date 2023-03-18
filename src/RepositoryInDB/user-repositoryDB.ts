@@ -130,6 +130,10 @@ export const userRepository = {
     async findUserByEmail(email:string):Promise<UserType|null>{
 
         return usersCollection.findOne({email:email}, {projection: {_id: 0}})
+    },
+    async findUserByLogin(login:string):Promise<UserType|null>{
+
+        return usersCollection.findOne({login:login}, {projection: {_id: 0}})
     }
 }
 //({userConfirmationInfo:{code:code}}
