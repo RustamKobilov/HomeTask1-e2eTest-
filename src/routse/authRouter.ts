@@ -10,7 +10,7 @@ import {authService} from "../domain/authService";
 import {jwtService} from "../application/jwtService";
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {emailAdapters} from "../adapters/email-adapters";
-import {createUser, findUserById} from "../RepositoryInDB/user-repositoryDB";
+import {createUser, findUserById, userRepository} from "../RepositoryInDB/user-repositoryDB";
 import {usersCollection} from "../db";
 import {getPaginationValuesAddNewUser} from "./user-router";
 
@@ -62,8 +62,12 @@ authRouter.post('/registration-email-resending',postRegistrationEmailResending,a
     if(!resultSearchEmail){
         return res.sendStatus(400)
     }
+    const refreshUserConfirmationCode=await authService.updateConfirmationCodeRepeat(resultSearchEmail.id)
+    if(!refreshUserConfirmationCode){
+        return res.sendStatus(400)
+    }
     try {
-        await emailAdapters.gmailAdapter(inputEmail, resultSearchEmail.userConfirmationInfo.code)
+        await emailAdapters.gmailAdapter(inputEmail, refreshUserConfirmationCode)
     }
     catch (error) {
         console.error('email send out')

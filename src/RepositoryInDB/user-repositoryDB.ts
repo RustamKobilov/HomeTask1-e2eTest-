@@ -134,6 +134,17 @@ export const userRepository = {
     async findUserByLogin(login:string):Promise<UserType|null>{
 
         return usersCollection.findOne({login:login}, {projection: {_id: 0}})
+    },
+    async updateUserConformationCode(id: string,code:string):
+        Promise<boolean> {
+        let user = await usersCollection.updateOne({id: id}, {
+            $set: {
+                'userConfirmationInfo.code': code,
+
+            }
+        })
+
+        return user.matchedCount === 1
     }
 }
 //({userConfirmationInfo:{code:code}}

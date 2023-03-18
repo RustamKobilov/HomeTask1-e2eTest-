@@ -2,6 +2,7 @@ import {findUserById, userRepository, UserType} from "../RepositoryInDB/user-rep
 import bcrypt from "bcrypt";
 import {jwtService} from "../application/jwtService";
 import {blogsCollection} from "../db";
+import {randomUUID} from "crypto";
 
 export const authService = {
     async login(loginOrEmail: string, password: string): Promise<false|UserType> {
@@ -40,6 +41,13 @@ export const authService = {
             return false
         }
         return resultSearchLogin
+    },
+    async updateConfirmationCodeRepeat(id:string):Promise<string|false>{
+        const newCode=randomUUID()
+        const resultUpdateCode=await userRepository.updateUserConformationCode(id,newCode)
+        if(!resultUpdateCode){
+            return false
+        }
+        return newCode
     }
-
 }
