@@ -60,7 +60,7 @@ authRouter.post('/registration-confirmation',postRegistrConfirm,async (req:Reque
             "errorsMessages": [
                 {
                     "message": "code invalid",
-                    "field": "code invalid"
+                    "field": "code"
                 }
             ]
         })
@@ -76,7 +76,7 @@ authRouter.post('/registration-email-resending',postRegistrationEmailResending,a
             "errorsMessages": [
                 {
                     "message": "email invalid",
-                    "field": "email invalid"
+                    "field": "email"
                 }
             ]
         })
@@ -91,7 +91,7 @@ authRouter.post('/registration-email-resending',postRegistrationEmailResending,a
             "errorsMessages": [
                 {
                     "message": "email invalid",
-                    "field": "email invalid"
+                    "field": "email"
                 }
             ]
         })
