@@ -53,18 +53,6 @@ authRouter.post('/registration',postUsersValidation,async (req:Request,res:Respo
 
 authRouter.post('/registration-confirmation',postRegistrConfirm,async (req:Request,res:Response)=> {
 
-    const inputCode=req.body.code
-    const resultConfirmCOde=await authService.checkConfirmationCode(inputCode)
-    if(!resultConfirmCOde){
-        return res.status(400).send({
-            "errorsMessages": [
-                {
-                    "message": "code invalid",
-                    "field": "code"
-                }
-            ]
-        })
-    }
     return res.sendStatus(201)
 })
 
@@ -72,16 +60,8 @@ authRouter.post('/registration-email-resending',postRegistrationEmailResending,a
     const inputEmail=req.body.email
     const resultSearchEmail=await authService.checkEmail(inputEmail)
     if(!resultSearchEmail){
-        return res.status(400).send({
-            "errorsMessages": [
-                {
-                    "message": "email invalid",
-                    "field": "email"
-                }
-            ]
-        })
+        return  'проверка сделана в валидаторе'
     }
-
     try {
         await emailAdapters.gmailAdapter(inputEmail, resultSearchEmail.userConfirmationInfo.code)
     }

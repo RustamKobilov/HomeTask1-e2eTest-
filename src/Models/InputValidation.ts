@@ -4,6 +4,7 @@ import {NextFunction} from "express";
 import {Request, Response} from "express";
 import {throws} from "assert";
 import {blogsCollection} from "../db";
+import {authService} from "../domain/authService";
 
 export const errorMessagesInputValidation = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
@@ -43,7 +44,13 @@ const checkPostBlogId = body('blogId').isString().trim().notEmpty().isLength({mi
 })
 const checkUserLogin =body('login').isString().trim().notEmpty().isLength({min:3,max:10}).matches(/^[a-zA-Z0-9_-]*$/)
 const checkUserPassword=body('password').isString().trim().notEmpty().isLength({min:6,max:20})
-const checkUserEmail=body('email').isString().trim().notEmpty().matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
+const checkUserEmail=body('email').isString().trim().notEmpty().matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/).custom(async value => {
+    const email = await authService.checkEmail(value)
+    if (!email) {
+        return true;
+    }
+    throw new Error('email busy')
+})
 
 //validation default
 
@@ -60,7 +67,13 @@ const checkInputPassword=body('password').exists().isString().trim().notEmpty()
 
 const checkInputContent=body('content').exists().isString().notEmpty().isLength({min:20,max:300})
 
-const checkInputCode=body('code').exists().isString().notEmpty()
+const checkInputCode=body('code').exists().isString().notEmpty().custom(async value=>{
+    const resultConfirmCOde=await authService.checkConfirmationCode(value)
+    if(!resultConfirmCOde){
+        throw new Error('code invalid')
+    }
+    return true
+})
 
 export const createPostValidation = [checkPostTitle, checkPostShortDescription, checkPostContent, checkPostBlogId]
 export const updatePostValidation = [...createPostValidation]
