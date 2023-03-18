@@ -18,7 +18,7 @@ export const authService = {
         if(!resultSearchCodeInUser){
             return false
         }
-        if(!resultSearchCodeInUser.userConfirmationInfo.userConformation==true){return false}
+        // if(!resultSearchCodeInUser.userConfirmationInfo.userConformation==true){return false}
         const dateNow=new Date(new Date().getTime())
         const dateCode=new Date(new Date(resultSearchCodeInUser.userConfirmationInfo.expirationCode).getTime())
 
