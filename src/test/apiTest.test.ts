@@ -2,6 +2,8 @@ import request from "supertest";
 import {app} from "../app";
 import {BlogsType} from "../RepositoryInDB/blog-repositoryDB";
 import {PostType} from "../RepositoryInDB/posts-repositiryDB";
+import {UserType} from "../RepositoryInDB/user-repositoryDB";
+import any = jasmine.any;
 
 
 const BasicAuthorized={
@@ -233,7 +235,7 @@ describe('/Post CRUD',()=>{
 
 })
 
-describe('/Blogs output model checking', () => {
+describe('Output model checking(byBlogs)', () => {
     beforeEach(async () => {
         await request(app).delete('/testing/all-data')
     });
@@ -285,7 +287,6 @@ describe('/Blogs output model checking', () => {
     })
 
     it('blog checking query params searchNameTerm', async () => {
-        //количество проверяемых обьектов в function creatManyBlog => if(searchName).
 
         const checkBlogAdd = 20;
         const checkPageSize = 10;
@@ -353,8 +354,117 @@ describe('/Blogs output model checking sortBy', () => {
 
         })
 
+    })
+
+describe('user add',()=> {
+    beforeAll(async () => {
+        await request(app).delete('/testing/all-data')
+    })
+
+    const userForChecking = {
+        login: 'taft2',
+        password: '1234223',
+        email: 'tryUser@ram.by'
+    }
+
+    let CreateUser: any = null;
+
+    it('user POST ADMIN checking create user', async () => {
+
+        const CreateUserResponse = await request(app).post('/users/').set(BasicAuthorized.authorization, BasicAuthorized.password).send(userForChecking).expect(201)
+        CreateUser = CreateUserResponse.body;
+        CreateUser.userConfirmationInfo = {
+            userConformation: true,
+            code: expect.any(String),
+            expirationCode: expect.any(String)
+        }
+        CreateUser.hash = expect.any(String)
+        CreateUser.password = expect.any(String)
+        CreateUser.salt = expect.any(String)
+
+        const resultBlog: UserType = {
+            id: expect.any(String),
+            login: userForChecking.login,
+            password: userForChecking.password,
+            email: userForChecking.email,
+            salt: expect.any(String),
+            hash: expect.any(String),
+            createdAt: expect.any(String),
+            userConfirmationInfo: {
+                userConformation: true,
+                code: expect.any(String),
+                expirationCode: expect.any(String)
+            }
+        }
+
+        expect(CreateUser).toEqual(resultBlog)
+    })
+
+    it('users get all,add one', async () => {
+        const resultGetRequest = await request(app).get('/users/').set(BasicAuthorized.authorization, BasicAuthorized.password).expect(200)
+
+        expect(resultGetRequest.body).toEqual({
+            pagesCount: 1,
+            page: 1,
+            pageSize: 10,
+            totalCount: 1,
+            items: [{
+                id: CreateUser.id,
+                login: CreateUser.login,
+                email: CreateUser.email,
+                createdAt: CreateUser.createdAt,
+                userConfirmationInfo: CreateUser.userConfirmationInfo
+            }]
+        })
+    })
+
+    it('users DELETE by Id', async () => {
+        await request(app).delete('/users/' + CreateUser.id).set(BasicAuthorized.authorization, BasicAuthorized.password).expect(204)
+
+        const resultGetRequest = await request(app).get('/users/').set(BasicAuthorized.authorization, BasicAuthorized.password).expect(200)
+
+        expect(resultGetRequest.body).toEqual({
+            pagesCount: 0,
+            page: 1,
+            pageSize: 10,
+            totalCount: 0,
+            items: []
+        })
 
     })
+
+
+    it('users add two', async () => {
+
+    await request(app).delete('/testing/all-data')
+
+
+        const userForChecking1 = {
+            login: 'taft1',
+            password: '1234223',
+            email: 'tryUser1@ram.by'
+        }
+        const userForChecking2 = {
+            login: 'taft2',
+            password: '1234223',
+            email: 'tryUser2@ram.by'
+        }
+
+        const CreateUserResponse = await request(app).post('/users/').set(BasicAuthorized.authorization, BasicAuthorized.password).send(userForChecking1).expect(201)
+        const CreateUserResponse2 = await request(app).post('/users/').set(BasicAuthorized.authorization, BasicAuthorized.password).send(userForChecking2).expect(201)
+
+        const resultGetRequest = await request(app).get('/users/').set(BasicAuthorized.authorization, BasicAuthorized.password).expect(200)
+
+        expect(resultGetRequest.body).toEqual({
+            pagesCount: 1,
+            page: 1,
+            pageSize: 10,
+            totalCount: 2,
+            items:expect.anything()
+        })
+    })
+
+})
 
 
 
