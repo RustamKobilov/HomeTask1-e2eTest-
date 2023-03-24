@@ -4,6 +4,7 @@ import {BlogsType} from "../RepositoryInDB/blog-repositoryDB";
 import {PostType} from "../RepositoryInDB/posts-repositiryDB";
 import {UserType} from "../RepositoryInDB/user-repositoryDB";
 import any = jasmine.any;
+import {header} from "express-validator";
 
 
 const BasicAuthorized={
@@ -23,7 +24,7 @@ describe('/Blogs CRUD', () => {
 
 
     let CreateBlog: any = null;
-    it('blog POST checking create blog', async () => {
+    it('blog POST checking create blog true', async () => {
 
         const CreateBlogResponse = await request(app).post('/blogs/').set(BasicAuthorized.authorization, BasicAuthorized.password).
         send(blogCheck).expect(201)
@@ -41,7 +42,7 @@ describe('/Blogs CRUD', () => {
         expect(CreateBlog).toEqual(resultBlog)
     })
 
-    it('blog VALIDATION POST checking the fields', async () => {
+    it('blog VALIDATION POST checking the fields true', async () => {
 
             const blogCheckNameFalse = {
                 check: 'false',
@@ -71,12 +72,12 @@ describe('/Blogs CRUD', () => {
 
 })
 
-    it('blog GET by Id checking return blog by id',async ()=>{
+    it('blog GET by Id checking return blog by id true',async ()=>{
         const resultGetRequest=await request(app).get('/blogs/'+CreateBlog.id).expect(200)
         expect(CreateBlog).toEqual(resultGetRequest.body)
     })
 
-    it('blog UPDATE checking update blog', async () => {
+    it('blog UPDATE checking update blog true', async () => {
 
         const blogUpdate = {
             name: 'stringUpdate',
@@ -105,7 +106,7 @@ describe('/Blogs CRUD', () => {
         })
     })
 
-    it('blog DELETE by Id',async ()=>{
+    it('blog DELETE by Id true',async ()=>{
             await request(app).delete('/blogs/'+CreateBlog.id).
             set(BasicAuthorized.authorization, BasicAuthorized.password).expect(204)
 
@@ -134,7 +135,7 @@ describe('/Post CRUD',()=>{
     let CreateBlog: any = null;
     let CreatePost:any=null;
 
-    it('blog POST checking create blog', async () => {
+    it('blog POST checking create blog true', async () => {
 
         const CreateBlogResponse = await request(app).post('/blogs/').
         set(BasicAuthorized.authorization, BasicAuthorized.password).send(blogCheck).expect(201)
@@ -152,7 +153,7 @@ describe('/Post CRUD',()=>{
         expect(CreateBlog).toEqual(resultBlog)
     })
 
-    it('post POST checking create post', async ()=>{
+    it('post POST checking create post true', async ()=>{
         const postCheck={
             title: 'one title',
             shortDescription: "one shortDescription",
@@ -179,12 +180,12 @@ describe('/Post CRUD',()=>{
 
     })
 
-    it('post GET by Id checking return post by id',async ()=>{
+    it('post GET by Id checking return post by id true',async ()=>{
         const resultGetRequest=await request(app).get('/posts/'+CreatePost.id).expect(200)
         expect(CreatePost).toEqual(resultGetRequest.body)
     })
 
-    it('post UPDATE checking update post',async ()=>{
+    it('post UPDATE checking update post true',async ()=>{
         const postCheck2={
             title: 'update title',
             shortDescription: "update shortDescription",
@@ -217,7 +218,7 @@ describe('/Post CRUD',()=>{
         })
     })
 
-    it('post DELETE by Id',async ()=>{
+    it('post DELETE by Id true',async ()=>{
       await request(app).delete('/posts/'+CreatePost.id).
       set(BasicAuthorized.authorization, BasicAuthorized.password).expect(204)
 
@@ -235,7 +236,7 @@ describe('/Post CRUD',()=>{
 
 })
 
-describe('Output model checking(byBlogs)', () => {
+describe('Output model checking(byBlogs) true', () => {
     beforeEach(async () => {
         await request(app).delete('/testing/all-data')
     });
@@ -255,7 +256,7 @@ describe('Output model checking(byBlogs)', () => {
     }
 
 
-    it('blog checking pagesCount and totalCount', async () => {
+    it('blog checking pagesCount and totalCount true', async () => {
         const checkBlogAdd = 5;
         await creatManyBlog(checkBlogAdd)
 
@@ -270,7 +271,7 @@ describe('Output model checking(byBlogs)', () => {
         })
     })
 
-    it('blog checking query params pageSize', async () => {
+    it('blog checking query params pageSize true', async () => {
         const checkBlogAdd = 20;
         const checkPageSize = 4;
         await creatManyBlog(checkBlogAdd)
@@ -286,7 +287,7 @@ describe('Output model checking(byBlogs)', () => {
         })
     })
 
-    it('blog checking query params searchNameTerm', async () => {
+    it('blog checking query params searchNameTerm true', async () => {
 
         const checkBlogAdd = 20;
         const checkPageSize = 10;
@@ -310,7 +311,7 @@ describe('Output model checking(byBlogs)', () => {
 })
 
 //не работает тест sortBy и sort direction
-describe('/Blogs output model checking sortBy', () => {
+describe('/Blogs output model checking sortBy true', () => {
         beforeEach(async () => {
             await request(app).delete('/testing/all-data')
         });
@@ -357,9 +358,11 @@ describe('/Blogs output model checking sortBy', () => {
     })
 
 describe('user add',()=> {
+    jest.setTimeout(2 * 60* 1000)
     beforeAll(async () => {
         await request(app).delete('/testing/all-data')
     })
+
 
     const userForChecking = {
         login: 'taft2',
@@ -369,7 +372,8 @@ describe('user add',()=> {
 
     let CreateUser: any = null;
 
-    it('user POST ADMIN checking create user', async () => {
+    it('user POST ADMIN checking create user true', async () => {
+
 
         const CreateUserResponse = await request(app).post('/users/').set(BasicAuthorized.authorization, BasicAuthorized.password).send(userForChecking).expect(201)
         CreateUser = CreateUserResponse.body;
@@ -400,7 +404,7 @@ describe('user add',()=> {
         expect(CreateUser).toEqual(resultBlog)
     })
 
-    it('users get all,add one', async () => {
+    it('users get all,add one true', async () => {
         const resultGetRequest = await request(app).get('/users/').set(BasicAuthorized.authorization, BasicAuthorized.password).expect(200)
 
         expect(resultGetRequest.body).toEqual({
@@ -434,7 +438,7 @@ describe('user add',()=> {
     })
 
 
-    it('users add two', async () => {
+    it('users add two true', async () => {
 
     await request(app).delete('/testing/all-data')
 
@@ -466,6 +470,91 @@ describe('user add',()=> {
 
 })
 
+describe('auth/registration test', ()=> {
+
+    beforeAll(async () => {
+        await request(app).delete('/testing/all-data')
+    })
+
+    it('regestration validation login false',async ()=>{
+
+        const userForCheckingValidation = {
+            login: 'userValidation1',
+            password: '123422223',
+            email: 'tryValidation1@ram.by'
+        }
+
+        userForCheckingValidation.login='gf'
+        const AuthUserResponseFalseLoginMin = await request(app).post('/auth/registration').send(userForCheckingValidation).expect(400)
+        userForCheckingValidation.login='ddfwerrfddee'
+        const AuthUserResponseFalseLoginMax = await request(app).post('/auth/registration').send(userForCheckingValidation).expect(400)
+        let userForCheckingValidationFalseType={
+            login: 1,
+            password: '123422223',
+            email: 'tryValidation1@ram.by'
+        }
+        const AuthUserResponseFalseType = await request(app).post('/auth/registration').send(userForCheckingValidationFalseType).expect(400)
+        const { password, ...userForCheckingValidationEmptyLogin}=userForCheckingValidationFalseType
+        const AuthUserResponseEmptyLogin = await request(app).post('/auth/registration').send(userForCheckingValidationEmptyLogin).expect(400)
+
+    })
+
+    it('regestration validation password false',async ()=>{
+
+        const userForCheckingValidation = {
+            login: 'userValidation1',
+            password: '56653',
+            email: 'tryValidation1@ram.by'
+        }
+
+
+        const AuthUserResponseFalsePasswordMin= await request(app).post('/auth/registration').send(userForCheckingValidation).expect(400)
+        userForCheckingValidation.password='55636363456463346454'
+        const AuthUserResponseFalsePasswordMax = await request(app).post('/auth/registration').send(userForCheckingValidation).expect(400)
+        let userForCheckingValidationFalseType={
+            login: 'fgrrghrh',
+            password: 1,
+            email: 'tryValidation1@ram.by'
+        }
+        const AuthUserResponseFalseType = await request(app).post('/auth/registration').send(userForCheckingValidationFalseType).expect(400)
+        const { password, ...userForCheckingValidationEmptyPassword}=userForCheckingValidationFalseType
+        const AuthUserResponseEmptyLogin = await request(app).post('/auth/registration').send(userForCheckingValidationEmptyPassword).expect(400)
+
+    })
+
+    //why?pattern
+
+    it('checking repeated body auth user false',async ()=> {
+
+        const userForChecking1 = {
+            login: 'user1',
+            password: '123422223',
+            email: 'tryUser1@ram.by'
+        }
+        const userForChecking1Copylogin = {
+            login: 'user1',
+            password: '12342222345',
+            email: 'tryUserCopy1@ram.by'
+        }
+        const userForChecking2CopyEmail = {
+            login: 'userCopy2',
+            password: '123444444',
+            email: 'tryUser1@ram.by'
+        }
+
+        const AuthUserResponse = await request(app).post('/auth/registration').send(userForChecking1).expect(204)
+
+        const AuthUserResponseFalseLogin = await request(app).post('/auth/registration').send(userForChecking1Copylogin).expect(400)
+
+        const AuthUserResponseFalseEmail = await request(app).post('/auth/registration').send(userForChecking2CopyEmail).expect(400)
+
+    })
+
+
+
+
+})
+
 describe('token realize', ()=>{
 
     beforeAll(async () => {
@@ -484,7 +573,7 @@ describe('token realize', ()=>{
 
 
 
-    it('give token',async ()=>{
+    it('give token(create admin) and auth with token true',async ()=>{
 
         const CreateUserResponse = await request(app).post('/users/').set(BasicAuthorized.authorization, BasicAuthorized.password).send(userForChecking1).expect(201)
 
@@ -492,14 +581,38 @@ describe('token realize', ()=>{
 
         expect(AuthUserResponse.body.accessToken).toEqual(expect.any(String))
 
-        const AuthUserMeResponse=await request(app).get('/auth/me').set({Authorization:'bearer '+AuthUserResponse.body.accessToken})
+        const AuthUserMeResponse=await request(app).get('/auth/me').set({Authorization:'bearer '+AuthUserResponse.body.accessToken}).
+        expect(200)
+
         expect(AuthUserMeResponse.body).toEqual({
             login:userForChecking1.login,
             email:userForChecking1.email,
-            userId:expect.anything()})
+            userId:CreateUserResponse.body.id
+        })
+    })
+})
+
+describe('auth/registration-confirmation test', ()=> {
+
+    beforeAll(async () => {
+        await request(app).delete('/testing/all-data')
+    })
+
+    it('regestration validation code false',async ()=> {
+
+        const checkCode = {
+            code:null
+        }
+
+        const AuthUserResponseFalseCodeType = await request(app).post('/auth/registration-confirmation').send(checkCode).expect(400)
+
+        const {code,...checkEmptyCode}=checkCode
+        const AuthUserResponseFalseEmptyCode = await request(app).post('/auth/registration-confirmation').send(checkCode).expect(400)
 
 
     })
+
+
 })
 
 
@@ -507,3 +620,19 @@ describe('token realize', ()=>{
 
 
 
+
+
+// const createUsers = async (count: number) => {
+//     const users = []
+//     for(let i = 0; i < count; i++){
+//         const userInputData = {
+//             login: `login${i}`,
+//             email: `email${i}@gmail.com`,
+//             password: `password${i}`,
+//         }
+//         const response = await request(app).post('/users').auth('admin', 'qwerty').send(userInputData)
+//         users.push({...userInputData, ...response.body})
+//     }
+//     return users
+// }\const users = await createUsers(10)
+//         console.log(users)
