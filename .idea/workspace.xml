@@ -4,9 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="18/03/23 email send.">
+    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="18/02/23 hometask5.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Middleware/authMiddleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Middleware/authMiddleware.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/InputValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/InputValidation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/db.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/db.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/authService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/authService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/authRouter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/authRouter.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/apiTest.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/apiTest.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,33 +51,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.jest.jest_package": "D:/it incubator/hometask1(e2eTest)/node_modules/jest",
-    "nodejs_package_manager_path": "yarn",
-    "ts.external.directory.path": "D:\\it incubator\\hometask1(e2eTest)\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;D:/Inst/HomeTask1-e2eTest-/node_modules/jest&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\Inst\\HomeTask1-e2eTest-\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\it incubator\hometask1(e2eTest)\src\RepositoryInDB" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Inst\HomeTask1-e2eTest-" />
+      <recent name="D:\Inst\HomeTask1-e2eTest-\src" />
       <recent name="D:\it incubator\hometask1(e2eTest)\src\application" />
       <recent name="D:\it incubator\hometask1(e2eTest)\src\application " />
       <recent name="D:\it incubator\hometask1(e2eTest)\src" />
-      <recent name="D:\it incubator\hometask1(e2eTest)" />
-      <recent name="D:\it incubator\hometask1(e2eTest)\dist" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.user add.users add two">
-    <configuration name="user add" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Jest.auth/registration-confirmation test">
+    <configuration name="Auth test" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
@@ -77,11 +86,37 @@
       <scope-kind value="SUITE" />
       <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
       <test-names>
-        <test-name value="user add" />
+        <test-name value="Auth test" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="user add.users add two" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="auth/registration-confirmation test" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
+      <test-names>
+        <test-name value="auth/registration-confirmation test" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="token realize" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
+      <test-names>
+        <test-name value="token realize" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="user add.user POST ADMIN checking create user" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
@@ -91,7 +126,7 @@
       <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
       <test-names>
         <test-name value="user add" />
-        <test-name value="users add two" />
+        <test-name value="user POST ADMIN checking create user" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -105,33 +140,13 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="start" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
-    <configuration name="watch" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="watch" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Jest.user add.users add two" />
-        <item itemvalue="Jest.user add" />
+        <item itemvalue="Jest.auth/registration-confirmation test" />
+        <item itemvalue="Jest.Auth test" />
+        <item itemvalue="Jest.token realize" />
         <item itemvalue="npm.dev" />
-        <item itemvalue="npm.watch" />
-        <item itemvalue="npm.start" />
+        <item itemvalue="Jest.user add.user POST ADMIN checking create user" />
       </list>
     </recent_temporary>
   </component>
@@ -156,6 +171,9 @@
       <workItem from="1676911176146" duration="4657000" />
       <workItem from="1676920320701" duration="2775000" />
       <workItem from="1678993986508" duration="39209000" />
+      <workItem from="1679420325600" duration="2720000" />
+      <workItem from="1679498886507" duration="7369000" />
+      <workItem from="1679670302193" duration="11061000" />
     </task>
     <task id="LOCAL-00111" summary="18/02/23 hometask5.">
       <created>1676741850296</created>
@@ -505,6 +523,9 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
