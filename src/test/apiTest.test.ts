@@ -466,6 +466,42 @@ describe('user add',()=> {
 
 })
 
+describe('token realize', ()=>{
+
+    beforeAll(async () => {
+        await request(app).delete('/testing/all-data')
+    })
+
+    const userForChecking1 = {
+        login: 'token1',
+        password: '1234222223',
+        email: 'tryToken1@ram.by'
+    }
+    const userAuthForChecking1={
+        loginOrEmail:userForChecking1.login,
+        password:userForChecking1.password
+    }
+
+
+
+    it('give token',async ()=>{
+
+        const CreateUserResponse = await request(app).post('/users/').set(BasicAuthorized.authorization, BasicAuthorized.password).send(userForChecking1).expect(201)
+
+        const AuthUserResponse = await request(app).post('/auth/login').send(userAuthForChecking1).expect(200)
+
+        expect(AuthUserResponse.body.accessToken).toEqual(expect.any(String))
+
+        const AuthUserMeResponse=await request(app).get('/auth/me').set({Authorization:'bearer '+AuthUserResponse.body.accessToken})
+        expect(AuthUserMeResponse.body).toEqual({
+            login:userForChecking1.login,
+            email:userForChecking1.email,
+            userId:expect.anything()})
+
+
+    })
+})
+
 
 
 
