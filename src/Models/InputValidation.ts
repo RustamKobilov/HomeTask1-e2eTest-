@@ -57,7 +57,7 @@ const checkUserEmail=body('email').isString().trim().notEmpty().matches(/^[\w-\.
     throw new Error('email busy')
 })
 
-const checkUserEmailAndConformation=body('email').isString().trim().matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/).custom(async value => {
+const checkUserEmailAndConformation=body('email').isString().trim().matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/).custom(async (value,{req}) => {
     const user = await authService.checkEmail(value)
     if (!user) {
         throw new Error('email busy')
@@ -65,6 +65,7 @@ const checkUserEmailAndConformation=body('email').isString().trim().matches(/^[\
     if(user.userConfirmationInfo.userConformation==true){
         throw new Error('email confirmed')
     }
+    req.user=user
     return true
 })
 

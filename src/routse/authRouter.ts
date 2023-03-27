@@ -94,17 +94,16 @@ authRouter.post('/registration-confirmation',postRegistrConfirm,async (req:Reque
 })
 
 authRouter.post('/registration-email-resending',postRegistrationEmailResending,async (req:Request,res:Response)=> {
-    const inputEmail=req.body.email
-    const resultSearchEmail=await authService.checkEmail(inputEmail)
-    if(!resultSearchEmail){
-        return res.sendStatus(400)
+    const user=req.user
+    if(!user){
+         return res.sendStatus(400)
     }
-    const refreshUserConfirmationCode=await authService.updateConfirmationCodeRepeat(resultSearchEmail.id)
+    const refreshUserConfirmationCode=await authService.updateConfirmationCodeRepeat(user.id)
     if(!refreshUserConfirmationCode){
         return res.sendStatus(400)
     }
     try {
-        await emailAdapters.gmailAdapter(inputEmail, refreshUserConfirmationCode)
+        await emailAdapters.gmailAdapter(user.email, refreshUserConfirmationCode)
     }
     catch (error) {
         console.error('email send out')
