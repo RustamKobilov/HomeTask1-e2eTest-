@@ -1,9 +1,8 @@
-import {body, param, query, ValidationError, validationResult} from "express-validator";
-import {errorView} from "./ErrorModel";
+import {body, cookie, param, query, ValidationError, validationResult} from "express-validator";
 import {NextFunction} from "express";
 import {Request, Response} from "express";
 import {throws} from "assert";
-import {blogsCollection} from "../db";
+import {blogsCollection, tokensCollection} from "../db";
 import {authService} from "../domain/authService";
 
 export const errorMessagesInputValidation = (req: Request, res: Response, next: NextFunction) => {
@@ -91,6 +90,7 @@ const checkInputCode=body('code').exists().isString().notEmpty().custom(async va
     }
     return true
 })
+
 
 export const createPostValidation = [checkPostTitle, checkPostShortDescription, checkPostContent, checkPostBlogId]
 export const updatePostValidation = [...createPostValidation]

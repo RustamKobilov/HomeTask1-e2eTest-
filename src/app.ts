@@ -8,6 +8,7 @@ import {client} from "./db";
 import {usersRouter} from "./routse/user-router";
 import {authRouter} from "./routse/authRouter";
 import {commentsRouter} from "./routse/commentsRouter";
+import cookieParser from "cookie-parser";
 
 
 export const app = express();
@@ -15,7 +16,7 @@ export const app = express();
 
 const convertJson = express.json();
 app.use(convertJson);
-
+app.use(cookieParser())
 app.use('/videos', videosRouter);
 app.use('/blogs',blogsRouter);
 app.use('/posts',postsRouter);
@@ -29,6 +30,8 @@ app.delete('/testing/all-data', async (req: Request, res: Response) => {
     await client.db('hometask3').collection('Blogs').deleteMany({})
     await client.db('hometask3').collection('Users').deleteMany({})
     await client.db('hometask3').collection('Comments').deleteMany({})
+
+
     return res.sendStatus(204);
 });
 

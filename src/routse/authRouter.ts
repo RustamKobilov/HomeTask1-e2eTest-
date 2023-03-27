@@ -4,15 +4,16 @@ import {
     errorMessagesInputValidation,
     loginUserValidation, postRegistrationEmailResending,
     postRegistrConfirm,
-    postUsersValidation
+    postUsersValidation,
 } from "../Models/InputValidation";
 import {authService} from "../domain/authService";
 import {jwtService} from "../application/jwtService";
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {emailAdapters} from "../adapters/email-adapters";
 import {createUser, findUserById, userRepository} from "../RepositoryInDB/user-repositoryDB";
-import {usersCollection} from "../db";
+import {tokensCollection, usersCollection} from "../db";
 import {getPaginationValuesAddNewUser} from "./user-router";
+import {authRefreshToken} from "../Middleware/authRefreshToken";
 
 export const authRouter=Router({})
 
@@ -23,12 +24,48 @@ authRouter.post('/login', loginUserValidation,async (req:Request, res:Response)=
     if (!user) {
         return res.sendStatus(401);
     }
-    const token=await jwtService.createTokenJWT(user)
+    const accessToken=await jwtService.createTokenJWT(user.id,'access')
+    const refreshToken=await jwtService.createTokenJWT(user.id,'refresh')
+
+    await tokensCollection.insertOne({
+        id:user.id,
+        refreshToken:refreshToken
+    })
+
     const returnToken={
-        accessToken: token
+        accessToken: accessToken
     }
-    return res.status(200).send(returnToken);
+    return res.status(200).cookie('refreshToken',refreshToken,
+        {httpOnly:true,expires:new Date(Date.now() +20000)}).send(returnToken);
 })
+
+authRouter.post('/logout',authRefreshToken,async (req:Request, res:Response)=> {
+        const refreshToken=req.body.refreshToken
+        await jwtService.deleteTokenRealize(refreshToken)
+
+    return res.sendStatus(204)
+})
+
+authRouter.post('/refresh-token',authMiddleware,authRefreshToken,async (req:Request, res:Response)=>{
+    const inputRefreshToken=req.cookies.refreshToken
+
+    const userIdByOldRefreshToken=await jwtService.verifyToken(inputRefreshToken)
+    if(!userIdByOldRefreshToken){
+        return res.sendStatus(401)
+    }
+    const accessToken=await jwtService.createTokenJWT(userIdByOldRefreshToken,'access')
+    const refreshToken=await jwtService.createTokenJWT(userIdByOldRefreshToken,'refresh')
+
+    await jwtService.refreshTokenRealize(userIdByOldRefreshToken,refreshToken)
+
+    const returnToken={
+        accessToken: accessToken
+    }
+    return res.status(200).cookie('refreshToken',refreshToken,
+        {httpOnly:true,expires:new Date(Date.now() +20000)}).send(returnToken);
+
+})
+
 
 authRouter.get('/me',authMiddleware,async (req:Request,res:Response)=>{
     return res.send({email:req.user!.email,login:req.user!.login,userId:req.user!.id})

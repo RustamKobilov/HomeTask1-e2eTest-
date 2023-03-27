@@ -8,7 +8,7 @@ export const authMiddleware =async (req: Request, res: Response, next: NextFunct
 
     const token = inputToken.split(' ')[1]
 
-    const resultSearchUserIdbyToken = await jwtService.checkToken(token)
+    const resultSearchUserIdbyToken = await jwtService.verifyToken(token)
     console.log(resultSearchUserIdbyToken)
     if (resultSearchUserIdbyToken) {
         const user=await findUserById(resultSearchUserIdbyToken)
