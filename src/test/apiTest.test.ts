@@ -5,6 +5,7 @@ import {PostType} from "../RepositoryInDB/posts-repositiryDB";
 import {UserType} from "../RepositoryInDB/user-repositoryDB";
 import any = jasmine.any;
 import {header} from "express-validator";
+import {authRouter} from "../routse/authRouter";
 
 
 const BasicAuthorized={
@@ -296,9 +297,9 @@ describe('Output model checking(byBlogs) true', () => {
         const resultGetRequest = await request(app).get('/blogs/?searchNameTerm=' + searchNameTerm).expect(200)
         const checkPagesCount = Math.ceil(checkBlogAdd / checkPageSize)
 
-        console.log(resultGetRequest.body)
+
         const resultGetRequest2 = await request(app).get('/blogs/').expect(200)
-        console.log(resultGetRequest2.body)
+
         expect(resultGetRequest.body).toEqual({
             pagesCount: 1,
             page: 1,
@@ -334,7 +335,7 @@ describe('/Blogs output model checking sortBy true', () => {
 
             const resultGetRequest = await request(app).get('/blogs/?sortBy=' + chekingValueSortBy).expect(200)
 
-            console.log(resultGetRequest.body)
+
             expect(resultGetRequest.body).toEqual({
                 pagesCount: 1,
                 page: 1,
@@ -555,7 +556,7 @@ describe('auth/registration test', ()=> {
 
 })
 
-describe('token realize', ()=>{
+describe('auth login token realize', ()=>{
 
     beforeAll(async () => {
         await request(app).delete('/testing/all-data')
@@ -572,6 +573,8 @@ describe('token realize', ()=>{
     }
 
 
+    let accessToken:any=null;
+    let refreshToken:any=null;
 
     it('give token(create admin) and auth with token true',async ()=>{
 
@@ -581,7 +584,19 @@ describe('token realize', ()=>{
 
         expect(AuthUserResponse.body.accessToken).toEqual(expect.any(String))
 
-        const AuthUserMeResponse=await request(app).get('/auth/me').set({Authorization:'bearer '+AuthUserResponse.body.accessToken}).
+        ///refreshToken
+        const cookies = AuthUserResponse.headers['set-cookie']
+        const filterCookies=cookies.filter(function(val:string){return val.split('=')[0]=='refreshToken'}).
+            map(function (val:string){return val.split('=')[1]})
+
+        expect(filterCookies[0]).toEqual(expect.any(String))
+        ///
+        refreshToken=filterCookies[0]
+        accessToken=AuthUserResponse.body.accessToken
+        ///
+
+
+        const AuthUserMeResponse=await request(app).get('/auth/me').set({Authorization:'bearer '+accessToken}).
         expect(200)
 
         expect(AuthUserMeResponse.body).toEqual({
@@ -590,6 +605,13 @@ describe('token realize', ()=>{
             userId:CreateUserResponse.body.id
         })
     })
+
+    // it('refresh-token return 2 token,old token delete',async ()=>{
+    //
+    //     const AuthUserMeResponse=await request(app).post('/auth/refresh-token').set({Authorization:'bearer '+accessToken}).
+    //     expect(200)
+    //
+    // })
 })
 
 describe('auth/registration-confirmation test', ()=> {
@@ -614,8 +636,6 @@ describe('auth/registration-confirmation test', ()=> {
 
 
 })
-
-
 
 
 

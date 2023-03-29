@@ -4,18 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="18/02/23 hometask5.">
+    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="gi">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Middleware/authMiddleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Middleware/authMiddleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/InputValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/InputValidation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/db.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/authService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/authService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/authRouter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/authRouter.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/apiTest.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/apiTest.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="hometaskSprint2dz2token" />
+        <entry key="$PROJECT_DIR$" value="hometaskSprint2dz4" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -51,19 +42,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs.jest.jest_package&quot;: &quot;D:/Inst/HomeTask1-e2eTest-/node_modules/jest&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\Inst\\HomeTask1-e2eTest-\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "D:/it incubator/hometask1(e2eTest)/node_modules/jest",
+    "nodejs_package_manager_path": "yarn",
+    "ts.external.directory.path": "D:\\it incubator\\hometask1(e2eTest)\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\it incubator\hometask1(e2eTest)\src\RepositoryInDB" />
@@ -76,7 +67,7 @@
       <recent name="D:\it incubator\hometask1(e2eTest)\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.auth/registration-confirmation test">
+  <component name="RunManager" selected="Jest.auth login token realize">
     <configuration name="Auth test" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -87,6 +78,19 @@
       <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
       <test-names>
         <test-name value="Auth test" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="auth login token realize" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
+      <test-names>
+        <test-name value="auth login token realize" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -116,20 +120,6 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="user add.user POST ADMIN checking create user" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
-      <test-names>
-        <test-name value="user add" />
-        <test-name value="user POST ADMIN checking create user" />
-      </test-names>
-      <method v="2" />
-    </configuration>
     <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -142,11 +132,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.auth login token realize" />
+        <item itemvalue="Jest.token realize" />
         <item itemvalue="Jest.auth/registration-confirmation test" />
         <item itemvalue="Jest.Auth test" />
-        <item itemvalue="Jest.token realize" />
         <item itemvalue="npm.dev" />
-        <item itemvalue="Jest.user add.user POST ADMIN checking create user" />
       </list>
     </recent_temporary>
   </component>
@@ -174,13 +164,6 @@
       <workItem from="1679420325600" duration="2720000" />
       <workItem from="1679498886507" duration="7369000" />
       <workItem from="1679670302193" duration="11061000" />
-    </task>
-    <task id="LOCAL-00111" summary="18/02/23 hometask5.">
-      <created>1676741850296</created>
-      <option name="number" value="00111" />
-      <option name="presentableId" value="LOCAL-00111" />
-      <option name="project" value="LOCAL" />
-      <updated>1676741850296</updated>
     </task>
     <task id="LOCAL-00112" summary="18/02/23 hometask5.">
       <created>1676742647406</created>
@@ -518,7 +501,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679148762700</updated>
     </task>
-    <option name="localTasksCounter" value="160" />
+    <task id="LOCAL-00160" summary="gi">
+      <created>1679945773048</created>
+      <option name="number" value="00160" />
+      <option name="presentableId" value="LOCAL-00160" />
+      <option name="project" value="LOCAL" />
+      <updated>1679945773048</updated>
+    </task>
+    <option name="localTasksCounter" value="161" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -532,7 +522,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/hometaskSprint2dz4RefreshTiken" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -556,6 +558,7 @@
     <MESSAGE value="09/03/23 test." />
     <MESSAGE value="11/03/23 fix code." />
     <MESSAGE value="18/03/23 email send." />
-    <option name="LAST_COMMIT_MESSAGE" value="18/03/23 email send." />
+    <MESSAGE value="gi" />
+    <option name="LAST_COMMIT_MESSAGE" value="gi" />
   </component>
 </project>
