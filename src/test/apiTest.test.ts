@@ -596,22 +596,30 @@ describe('auth login token realize', ()=>{
         ///
 
 
-        const AuthUserMeResponse=await request(app).get('/auth/me').set({Authorization:'bearer '+accessToken}).
+        const AuthMeUserResponse=await request(app).get('/auth/me').set({Authorization:'bearer '+accessToken}).
         expect(200)
 
-        expect(AuthUserMeResponse.body).toEqual({
+        expect(AuthMeUserResponse.body).toEqual({
             login:userForChecking1.login,
             email:userForChecking1.email,
             userId:CreateUserResponse.body.id
         })
     })
+    it('refresh-token return 2 token,old token delete',async ()=>{
 
-    // it('refresh-token return 2 token,old token delete',async ()=>{
-    //
-    //     const AuthUserMeResponse=await request(app).post('/auth/refresh-token').set({Authorization:'bearer '+accessToken}).
-    //     expect(200)
-    //
-    // })
+
+        const AuthUserRefreshTokensResponse=await request(app).post('/auth/refresh-token').set({Authorization:'bearer '+accessToken}).set('Cookie', ['refreshToken='+refreshToken])
+        expect(200)
+        expect(AuthUserRefreshTokensResponse.body.accessToken).not.toEqual(accessToken)
+        expect(AuthUserRefreshTokensResponse.body.accessToken).toEqual(expect.any(String))
+
+        const cookies = AuthUserRefreshTokensResponse.headers['set-cookie'].filter(function(val:string){return val.split('=')[0]=='refreshToken'}).
+        map(function (val:string){return val.split('=')[1]})[0]
+
+        expect(cookies).not.toEqual(refreshToken)
+        expect(cookies).toEqual(expect.any(String))
+
+    })
 })
 
 describe('auth/registration-confirmation test', ()=> {
