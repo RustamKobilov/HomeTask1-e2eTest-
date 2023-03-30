@@ -649,18 +649,3 @@ describe('auth/registration-confirmation test', ()=> {
 
 
 
-
-// const createUsers = async (count: number) => {
-//     const users = []
-//     for(let i = 0; i < count; i++){
-//         const userInputData = {
-//             login: `login${i}`,
-//             email: `email${i}@gmail.com`,
-//             password: `password${i}`,
-//         }
-//         const response = await request(app).post('/users').auth('admin', 'qwerty').send(userInputData)
-//         users.push({...userInputData, ...response.body})
-//     }
-//     return users
-// }\const users = await createUsers(10)
-//         console.log(users)

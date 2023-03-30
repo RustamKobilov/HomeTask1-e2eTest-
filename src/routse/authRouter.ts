@@ -35,8 +35,8 @@ authRouter.post('/login', loginUserValidation,async (req:Request, res:Response)=
     const returnToken={
         accessToken: accessToken
     }
-    return res.status(200).cookie('refreshToken',refreshToken,
-        {httpOnly:true,expires:new Date(Date.now() +20000)}).send(returnToken);
+    return res.cookie('refreshToken',refreshToken,
+        {httpOnly:true,expires:new Date(Date.now() +20000)}).send(returnToken).status(200);
 })
 
 authRouter.post('/logout',authRefreshToken,async (req:Request, res:Response)=> {
