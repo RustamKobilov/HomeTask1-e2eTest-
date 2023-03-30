@@ -46,7 +46,7 @@ authRouter.post('/logout',authRefreshToken,async (req:Request, res:Response)=> {
     return res.sendStatus(204)
 })
 
-authRouter.post('/refresh-token',authMiddleware,authRefreshToken,async (req:Request, res:Response)=>{
+authRouter.post('/refresh-token',authRefreshToken,async (req:Request, res:Response)=>{
     const inputRefreshToken=req.cookies.refreshToken
 
     const userIdByOldRefreshToken=await jwtService.verifyToken(inputRefreshToken)
@@ -61,8 +61,8 @@ authRouter.post('/refresh-token',authMiddleware,authRefreshToken,async (req:Requ
     const returnToken={
         accessToken: accessToken
     }
-    return res.status(200).cookie('refreshToken',refreshToken,
-        {httpOnly:true,expires:new Date(Date.now() +20000)}).send(returnToken);
+    return res.cookie('refreshToken',refreshToken,
+        {httpOnly:true,expires:new Date(Date.now() +20000)}).send(returnToken).status(200);
 
 })
 
