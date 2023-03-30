@@ -3,7 +3,7 @@ import {jwtService} from "../application/jwtService";
 
 export const authRefreshToken =async (req: Request, res: Response, next: NextFunction) => {
     const refreshToken=req.cookies.refreshToken
-    console.log(refreshToken)
+    console.log(refreshToken+'middleware')
     const resultVerifyToken=await jwtService.verifyToken(refreshToken)
     if(!resultVerifyToken){
         return res.sendStatus(401)

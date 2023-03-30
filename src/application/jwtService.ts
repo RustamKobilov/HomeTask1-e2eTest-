@@ -10,11 +10,14 @@ export type RefreshToken={
     id:string,
     refreshToken:string
 }
-
+export enum tokenTypeEnum {
+    access = 'access',
+    refresh = 'refresh'
+}
 export const jwtService= {
-    async createTokenJWT(userId: string,tokenType:string) {
+    async createTokenJWT(userId: string,tokenType: tokenTypeEnum) {
             let token = jwt.sign({userId: userId}, settings.JWT_Service, {expiresIn: '10s'})
-        if(tokenType=='access'){
+        if(tokenType == tokenTypeEnum.access){
             token=jwt.sign({userId: userId}, settings.JWT_Service, {expiresIn: '20s'})
         }
         return token

@@ -7,7 +7,7 @@ import {
     postUsersValidation,
 } from "../Models/InputValidation";
 import {authService} from "../domain/authService";
-import {jwtService} from "../application/jwtService";
+import {jwtService, tokenTypeEnum} from "../application/jwtService";
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {emailAdapters} from "../adapters/email-adapters";
 import {createUser, findUserById, userRepository} from "../RepositoryInDB/user-repositoryDB";
@@ -24,8 +24,8 @@ authRouter.post('/login', loginUserValidation,async (req:Request, res:Response)=
     if (!user) {
         return res.sendStatus(401);
     }
-    const accessToken=await jwtService.createTokenJWT(user.id,'access')
-    const refreshToken=await jwtService.createTokenJWT(user.id,'refresh')
+    const accessToken=await jwtService.createTokenJWT(user.id, tokenTypeEnum.access)
+    const refreshToken=await jwtService.createTokenJWT(user.id, tokenTypeEnum.refresh)
 
     await tokensCollection.insertOne({
         id:user.id,
@@ -35,8 +35,9 @@ authRouter.post('/login', loginUserValidation,async (req:Request, res:Response)=
     const returnToken={
         accessToken: accessToken
     }
-    return res.cookie('refreshToken',refreshToken,
-        {httpOnly:true,expires:new Date(Date.now() +20000), secure: true} ).status(200).send(returnToken);
+    res.cookie('refreshToken',refreshToken,
+        {httpOnly:true,/*expires:new Date(Date.now() +20000)*/ secure: true} )
+    return res.status(200).send(returnToken);
 })
 
 authRouter.post('/logout',authRefreshToken,async (req:Request, res:Response)=> {
@@ -53,8 +54,8 @@ authRouter.post('/refresh-token',authRefreshToken,async (req:Request, res:Respon
     if(!userIdByOldRefreshToken){
         return res.sendStatus(401)
     }
-    const accessToken=await jwtService.createTokenJWT(userIdByOldRefreshToken,'access')
-    const refreshToken=await jwtService.createTokenJWT(userIdByOldRefreshToken,'refresh')
+    const accessToken=await jwtService.createTokenJWT(userIdByOldRefreshToken,tokenTypeEnum.access)
+    const refreshToken=await jwtService.createTokenJWT(userIdByOldRefreshToken,tokenTypeEnum.refresh)
 
     await jwtService.refreshTokenRealize(userIdByOldRefreshToken,refreshToken)
 
@@ -62,8 +63,7 @@ authRouter.post('/refresh-token',authRefreshToken,async (req:Request, res:Respon
         accessToken: accessToken
     }
     return res.cookie('refreshToken',refreshToken,
-        {httpOnly:true,expires:new Date(Date.now() +20000)}).status(200).send(returnToken);
-
+        {httpOnly:true,/*expires:new Date(Date.now() +20000)*/ secure: true}).status(200).send(returnToken);
 })
 
 
