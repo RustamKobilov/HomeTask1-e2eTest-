@@ -586,6 +586,7 @@ describe('auth login token realize', ()=>{
 
         ///refreshToken
         const cookies = AuthUserResponse.headers['set-cookie']
+        console.log(cookies)
         const filterCookies=cookies.filter(function(val:string){return val.split('=')[0]=='refreshToken'}).
             map(function (val:string){return val.split('=')[1]})
 
