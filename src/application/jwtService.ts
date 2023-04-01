@@ -39,6 +39,17 @@ export const jwtService= {
         }
         return true
     },
+    async createTokenByUserIdInBase(userId: string,refreshToken:string) {
+        const resultCheckToken=await tokensCollection.findOne({id:userId})
+        if(!resultCheckToken){
+            await tokensCollection.insertOne({
+                id:userId,
+                refreshToken:refreshToken
+            })
+        } else {
+          await  this.refreshTokenRealize(userId,refreshToken)
+        }
+    },
     async refreshTokenRealize(id:string,refreshToken:string){
 
         const tokenUpdate=await tokensCollection.updateOne({id:id},{

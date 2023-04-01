@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="api test 01.04.23">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/jwtService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/jwtService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/authRouter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/authRouter.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,21 +162,7 @@
       <workItem from="1679420325600" duration="2720000" />
       <workItem from="1679498886507" duration="7369000" />
       <workItem from="1679670302193" duration="11061000" />
-      <workItem from="1680340080334" duration="18866000" />
-    </task>
-    <task id="LOCAL-00135" summary="09/03/23 test.">
-      <created>1678383729385</created>
-      <option name="number" value="00135" />
-      <option name="presentableId" value="LOCAL-00135" />
-      <option name="project" value="LOCAL" />
-      <updated>1678383729385</updated>
-    </task>
-    <task id="LOCAL-00136" summary="09/03/23 test.">
-      <created>1678384303951</created>
-      <option name="number" value="00136" />
-      <option name="presentableId" value="LOCAL-00136" />
-      <option name="project" value="LOCAL" />
-      <updated>1678384303951</updated>
+      <workItem from="1680340080334" duration="20115000" />
     </task>
     <task id="LOCAL-00137" summary="09/03/23 test.">
       <created>1678479811324</created>
@@ -505,7 +493,21 @@
       <option name="project" value="LOCAL" />
       <updated>1680364251934</updated>
     </task>
-    <option name="localTasksCounter" value="184" />
+    <task id="LOCAL-00184" summary="api test 01.04.23">
+      <created>1680364710028</created>
+      <option name="number" value="00184" />
+      <option name="presentableId" value="LOCAL-00184" />
+      <option name="project" value="LOCAL" />
+      <updated>1680364710028</updated>
+    </task>
+    <task id="LOCAL-00185" summary="api test 01.04.23">
+      <created>1680364892105</created>
+      <option name="number" value="00185" />
+      <option name="presentableId" value="LOCAL-00185" />
+      <option name="project" value="LOCAL" />
+      <updated>1680364892105</updated>
+    </task>
+    <option name="localTasksCounter" value="186" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

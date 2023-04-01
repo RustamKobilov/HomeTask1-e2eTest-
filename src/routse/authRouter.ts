@@ -26,11 +26,7 @@ authRouter.post('/login', loginUserValidation,async (req:Request, res:Response)=
     const accessToken=await jwtService.createTokenJWT(user.id, tokenTypeEnum.access)
     const refreshToken=await jwtService.createTokenJWT(user.id, tokenTypeEnum.refresh)
 
-    await tokensCollection.insertOne({
-        id:user.id,
-        refreshToken:refreshToken
-    })
-
+    await jwtService.createTokenByUserIdInBase(user.id,refreshToken)
     const returnToken={
         accessToken: accessToken,
     }
