@@ -15,7 +15,7 @@ export const app = express();
 
 
 const convertJson = express.json();
-app.set('trust proxy',true)
+//app.set('trust proxy',true)
 app.use(convertJson);
 app.use(cookieParser())
 app.use('/videos', videosRouter);
