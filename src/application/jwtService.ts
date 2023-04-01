@@ -18,7 +18,7 @@ export const jwtService= {
     async createTokenJWT(userId: string,tokenType: tokenTypeEnum) {
             let token = jwt.sign({userId: userId}, settings.JWT_Service, {expiresIn: '10s'})
         if(tokenType == tokenTypeEnum.refresh){
-            token=jwt.sign({userId: userId}, settings.JWT_Service, {expiresIn: '50s'})
+            token=jwt.sign({userId: userId}, settings.JWT_Service, {expiresIn: '20s'})
         }
         return token
 
