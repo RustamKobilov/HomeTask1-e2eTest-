@@ -1,5 +1,4 @@
 import {Request, Response, Router} from "express";
-import nodemailer from 'nodemailer'
 import {
     errorMessagesInputValidation,
     loginUserValidation, postRegistrationEmailResending,
@@ -53,7 +52,7 @@ authRouter.post('/refresh-token',authRefreshToken,async (req:Request, res:Respon
 
     const userIdByOldRefreshToken=await jwtService.verifyToken(inputRefreshToken)
     if(!userIdByOldRefreshToken){
-        return res.sendStatus(401)
+        return res.status(401).send('controller')
     }
     const accessToken=await jwtService.createTokenJWT(userIdByOldRefreshToken,tokenTypeEnum.access)
     const refreshToken=await jwtService.createTokenJWT(userIdByOldRefreshToken,tokenTypeEnum.refresh)
