@@ -41,7 +41,7 @@ authRouter.post('/login', loginUserValidation,async (req:Request, res:Response)=
 })
 
 authRouter.post('/logout',authRefreshToken,async (req:Request, res:Response)=> {
-        const refreshToken=req.body.refreshToken
+        const refreshToken=req.cookies.refreshToken
         await jwtService.deleteTokenRealize(refreshToken)
 
     return res.sendStatus(204)
