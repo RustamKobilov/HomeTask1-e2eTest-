@@ -48,7 +48,7 @@ authRouter.post('/logout',authRefreshToken,async (req:Request, res:Response)=> {
     return res.sendStatus(204)
 })
 
-authRouter.post('/refresh-token',authMiddleware,authRefreshToken,async (req:Request, res:Response)=>{
+authRouter.post('/refresh-token',authRefreshToken,async (req:Request, res:Response)=>{
     const inputRefreshToken=req.cookies.refreshToken
 
     const userIdByOldRefreshToken=await jwtService.verifyToken(inputRefreshToken)
