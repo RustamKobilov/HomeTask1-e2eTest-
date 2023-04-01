@@ -49,7 +49,7 @@ const commentsRouter_1 = require("./routse/commentsRouter");
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 exports.app = (0, express_1.default)();
 const convertJson = express_1.default.json();
-exports.app.set('trust proxy', true);
+//app.set('trust proxy',true)
 exports.app.use(convertJson);
 exports.app.use((0, cookie_parser_1.default)());
 exports.app.use('/videos', videos_router_1.videosRouter);
