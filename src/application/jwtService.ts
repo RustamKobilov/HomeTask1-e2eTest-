@@ -43,7 +43,7 @@ export const jwtService= {
 
         const tokenUpdate=await tokensCollection.updateOne({id:id},{
             $set: {
-                token: refreshToken
+                refreshToken: refreshToken
             }
         })
         return tokenUpdate.matchedCount === 1
