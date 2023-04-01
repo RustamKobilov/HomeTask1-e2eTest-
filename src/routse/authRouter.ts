@@ -64,7 +64,7 @@ authRouter.post('/refresh-token',authRefreshToken,async (req:Request, res:Respon
         accessToken: accessToken
     }
     return res.cookie('refreshToken',refreshToken,
-        {httpOnly:true,/*expires:new Date(Date.now() +20000)*/ secure: true}).status(200).send(returnToken);
+        {httpOnly:true,expires:new Date(Date.now() +20000), secure: true}).status(200).send(returnToken);
 })
 
 
