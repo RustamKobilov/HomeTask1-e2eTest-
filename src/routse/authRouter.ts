@@ -37,7 +37,7 @@ authRouter.post('/login', loginUserValidation,async (req:Request, res:Response)=
     }
     // {httpOnly:true,/*expires:new Date(Date.now() +20000)*/ secure: true}
     return res.status(200)
-        .cookie('refreshToken',refreshToken,{httpOnly:true,expires:new Date(Date.now() +20000) ,secure: true})
+        .cookie('refreshToken',refreshToken,{sameSite:"none",expires:new Date(Date.now() +20000) ,secure: true})
         .send(returnToken);
 })
 
