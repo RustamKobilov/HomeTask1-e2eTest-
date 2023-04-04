@@ -6,6 +6,9 @@ import {UserType} from "../RepositoryInDB/user-repositoryDB";
 import any = jasmine.any;
 import {header} from "express-validator";
 import {authRouter} from "../routse/authRouter";
+import {tokensCollection} from "../db";
+import {jwtService} from "../application/jwtService";
+import {throws} from "assert";
 
 
 const BasicAuthorized={
@@ -295,7 +298,6 @@ describe('Output model checking(byBlogs) true', () => {
         const searchNameTerm = 'searchName'
         await creatManyBlog(checkBlogAdd, searchNameTerm)
         const resultGetRequest = await request(app).get('/blogs/?searchNameTerm=' + searchNameTerm).expect(200)
-        const checkPagesCount = Math.ceil(checkBlogAdd / checkPageSize)
 
 
         const resultGetRequest2 = await request(app).get('/blogs/').expect(200)
@@ -307,6 +309,44 @@ describe('Output model checking(byBlogs) true', () => {
             totalCount: 1,
             items: expect.anything()
         })
+    })
+    it('sortBy checking query params true',async ()=>{
+        const blogCheckSortByName = {
+            name: 'check Sort',
+            description: 'checking description',
+            websiteUrl: 'https://api-swagger.it-incubator.ru/che'
+        }
+        const blogCheckSortByDescription = {
+                name: 'check SortBy',
+                description: 'check description',
+                websiteUrl: 'https://api-swagger.it-incubator.ru/check'
+            }
+        const blogCheckSortByWebsiteUrl= {
+            name: 'checking SortBy',
+            description: 'che description',
+            websiteUrl: 'https://api-swagger.it-incubator.ru/check'
+        }
+
+
+        const CreateBlogResponseName = await request(app).post('/blogs/').set(BasicAuthorized.authorization, BasicAuthorized.password).send(blogCheckSortByName).expect(201)
+        const CreateBlogResponseDescription = await request(app).post('/blogs/').set(BasicAuthorized.authorization, BasicAuthorized.password).send(blogCheckSortByDescription).expect(201)
+        const CreateBlogResponseWebsiteUrl = await request(app).post('/blogs/').set(BasicAuthorized.authorization, BasicAuthorized.password).send(blogCheckSortByWebsiteUrl).expect(201)
+
+
+        const resultGetRequestDefault = await request(app).get('/blogs').expect(200)
+        expect(resultGetRequestDefault.body.items[0].name).toEqual(blogCheckSortByWebsiteUrl.name)
+        expect(resultGetRequestDefault.body.items[1].name).toEqual(blogCheckSortByDescription.name)
+        expect(resultGetRequestDefault.body.items[2].name).toEqual(blogCheckSortByName.name)
+
+        const resultGetRequestNameAsc = await request(app).get('/blogs?sortBy=' + 'name&sortDirection=asc').expect(200)
+        expect(resultGetRequestNameAsc.body.items[0].name).toEqual(blogCheckSortByName.name)
+        expect(resultGetRequestNameAsc.body.items[1].name).toEqual(blogCheckSortByDescription.name)
+        expect(resultGetRequestNameAsc.body.items[2].name).toEqual(blogCheckSortByWebsiteUrl.name)
+
+        const resultGetRequestNameDesc = await request(app).get('/blogs?sortBy=' + 'name&sortDirection=desc').expect(200)
+        expect(resultGetRequestNameDesc.body.items[0].name).toEqual(blogCheckSortByWebsiteUrl.name)
+        expect(resultGetRequestNameDesc.body.items[1].name).toEqual(blogCheckSortByDescription.name)
+        expect(resultGetRequestNameDesc.body.items[2].name).toEqual(blogCheckSortByName.name)
     })
 
 })
@@ -477,7 +517,7 @@ describe('auth/registration test', ()=> {
         await request(app).delete('/testing/all-data')
     })
 
-    it('regestration validation login false',async ()=>{
+    it('registration validation login false',async ()=>{
 
         const userForCheckingValidation = {
             login: 'userValidation1',
@@ -500,7 +540,7 @@ describe('auth/registration test', ()=> {
 
     })
 
-    it('regestration validation password false',async ()=>{
+    it('registration validation password false',async ()=>{
 
         const userForCheckingValidation = {
             login: 'userValidation1',
@@ -522,8 +562,6 @@ describe('auth/registration test', ()=> {
         const AuthUserResponseEmptyLogin = await request(app).post('/auth/registration').send(userForCheckingValidationEmptyPassword).expect(400)
 
     })
-
-    //why?pattern
 
     it('checking repeated body auth user false',async ()=> {
 
@@ -551,9 +589,6 @@ describe('auth/registration test', ()=> {
 
     })
 
-
-
-
 })
 
 describe('auth login token realize', ()=>{
@@ -572,9 +607,9 @@ describe('auth login token realize', ()=>{
         password:userForChecking1.password
     }
 
-
     let accessToken:any=null;
     let refreshToken:any=null;
+    let userId:any=null;
 
     it('give token(create admin) and auth with token true',async ()=>{
 
@@ -592,6 +627,7 @@ describe('auth login token realize', ()=>{
 
         expect(filterCookies[0]).toEqual(expect.any(String))
         ///
+        userId=CreateUserResponse.body.id
         refreshToken=filterCookies[0]
         accessToken=AuthUserResponse.body.accessToken
         ///
@@ -609,16 +645,33 @@ describe('auth login token realize', ()=>{
     it('refresh-token return 2 token,old token delete',async ()=>{
 
 
-        const AuthUserRefreshTokensResponse=await request(app).post('/auth/refresh-token').set({Authorization:'bearer '+accessToken}).set('Cookie', ['refreshToken='+refreshToken])
-        expect(200)
+        const AuthUserRefreshTokensResponse=await request(app).post('/auth/refresh-token')
+            .set({Authorization:'bearer '+accessToken})
+            .set('Cookie', ['refreshToken='+refreshToken]).expect(200)
         expect(AuthUserRefreshTokensResponse.body.accessToken).not.toEqual(accessToken)
         expect(AuthUserRefreshTokensResponse.body.accessToken).toEqual(expect.any(String))
 
-        const cookies = AuthUserRefreshTokensResponse.headers['set-cookie'].filter(function(val:string){return val.split('=')[0]=='refreshToken'}).
-        map(function (val:string){return val.split('=')[1]})[0]
+        const newRefreshToken = AuthUserRefreshTokensResponse.headers['set-cookie']
+            .filter(function(val:string){return val.split('=')[0]=='refreshToken'})
+            .map(function (val:string){return val.split('=')[1]})[0]
+        expect(newRefreshToken).not.toEqual(refreshToken)
+        expect(newRefreshToken).toEqual(expect.any(String))
 
-        expect(cookies).not.toEqual(refreshToken)
-        expect(cookies).toEqual(expect.any(String))
+        const countUserToken=await tokensCollection.countDocuments({id:userId})
+        expect(countUserToken).toEqual(1)//check many token
+
+        refreshToken=newRefreshToken
+        accessToken=AuthUserRefreshTokensResponse.body.accessToken
+
+    })
+    it('logout',async ()=>{
+        const LogoutUserRefreshTokensBadResponse=await request(app).post('/auth/logout')
+            .expect(401)
+        const LogoutUserRefreshTokensResponse=await request(app).post('/auth/logout')
+            .set('Cookie', ['refreshToken='+refreshToken]).expect(204)
+
+        const countUserToken=await tokensCollection.countDocuments({id:userId})
+        expect(countUserToken).toEqual(0)
 
     })
 })
@@ -629,7 +682,7 @@ describe('auth/registration-confirmation test', ()=> {
         await request(app).delete('/testing/all-data')
     })
 
-    it('regestration validation code false',async ()=> {
+    it('registration validation code false',async ()=> {
 
         const checkCode = {
             code:null
@@ -638,11 +691,11 @@ describe('auth/registration-confirmation test', ()=> {
         const AuthUserResponseFalseCodeType = await request(app).post('/auth/registration-confirmation').send(checkCode).expect(400)
 
         const {code,...checkEmptyCode}=checkCode
-        const AuthUserResponseFalseEmptyCode = await request(app).post('/auth/registration-confirmation').send(checkCode).expect(400)
-
+        const AuthUserResponseFalseEmptyCode = await request(app).post('/auth/registration-confirmation').send(checkEmptyCode).expect(400)
+        const checkFalseCode={code:'fakecode'}
+        const AuthUserResponseFalseCode = await request(app).post('/auth/registration-confirmation').send(checkFalseCode).expect(400)
 
     })
-
 
 })
 

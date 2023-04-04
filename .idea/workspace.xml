@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="api test 01.04.23">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/jwtService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/jwtService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/authRouter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/authRouter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/apiTest.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/apiTest.test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +67,21 @@
       <recent name="D:\it incubator\hometask1(e2eTest)\src" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.watch">
+  <component name="RunManager" selected="Jest.Output model checking(byBlogs) true.sortBy checking query params true">
+    <configuration name="Output model checking(byBlogs) true.sortBy checking query params true" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
+      <test-names>
+        <test-name value="Output model checking(byBlogs) true" />
+        <test-name value="sortBy checking query params true" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <configuration name="auth login token realize" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -79,6 +92,19 @@
       <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
       <test-names>
         <test-name value="auth login token realize" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="auth/registration test" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
+      <test-names>
+        <test-name value="auth/registration test" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -95,19 +121,6 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="token realize" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
-      <test-names>
-        <test-name value="token realize" />
-      </test-names>
-      <method v="2" />
-    </configuration>
     <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -118,23 +131,13 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="watch" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="watch" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.dev" />
-        <item itemvalue="npm.watch" />
-        <item itemvalue="Jest.auth login token realize" />
-        <item itemvalue="Jest.token realize" />
+        <item itemvalue="Jest.Output model checking(byBlogs) true.sortBy checking query params true" />
         <item itemvalue="Jest.auth/registration-confirmation test" />
+        <item itemvalue="Jest.auth/registration test" />
+        <item itemvalue="Jest.auth login token realize" />
+        <item itemvalue="npm.dev" />
       </list>
     </recent_temporary>
   </component>
@@ -162,14 +165,7 @@
       <workItem from="1679420325600" duration="2720000" />
       <workItem from="1679498886507" duration="7369000" />
       <workItem from="1679670302193" duration="11061000" />
-      <workItem from="1680340080334" duration="20115000" />
-    </task>
-    <task id="LOCAL-00137" summary="09/03/23 test.">
-      <created>1678479811324</created>
-      <option name="number" value="00137" />
-      <option name="presentableId" value="LOCAL-00137" />
-      <option name="project" value="LOCAL" />
-      <updated>1678479811324</updated>
+      <workItem from="1680340080334" duration="34342000" />
     </task>
     <task id="LOCAL-00138" summary="09/03/23 test.">
       <created>1678480768284</created>
@@ -507,7 +503,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680364892105</updated>
     </task>
-    <option name="localTasksCounter" value="186" />
+    <task id="LOCAL-00186" summary="api test 01.04.23">
+      <created>1680365968050</created>
+      <option name="number" value="00186" />
+      <option name="presentableId" value="LOCAL-00186" />
+      <option name="project" value="LOCAL" />
+      <updated>1680365968050</updated>
+    </task>
+    <option name="localTasksCounter" value="187" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
