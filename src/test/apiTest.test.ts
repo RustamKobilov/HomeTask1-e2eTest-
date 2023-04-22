@@ -6,7 +6,7 @@ import {UserType} from "../RepositoryInDB/user-repositoryDB";
 import any = jasmine.any;
 import {header} from "express-validator";
 import {authRouter} from "../routse/authRouter";
-import {tokensCollection} from "../db";
+import {sessionsTypeCollection} from "../db";
 import {jwtService} from "../application/jwtService";
 import {throws} from "assert";
 
@@ -657,7 +657,7 @@ describe('auth login token realize', ()=>{
         expect(newRefreshToken).not.toEqual(refreshToken)
         expect(newRefreshToken).toEqual(expect.any(String))
 
-        const countUserToken=await tokensCollection.countDocuments({id:userId})
+        const countUserToken=await sessionsTypeCollection.countDocuments({id:userId})
         expect(countUserToken).toEqual(1)//check many token
 
         refreshToken=newRefreshToken
@@ -670,7 +670,7 @@ describe('auth login token realize', ()=>{
         const LogoutUserRefreshTokensResponse=await request(app).post('/auth/logout')
             .set('Cookie', ['refreshToken='+refreshToken]).expect(204)
 
-        const countUserToken=await tokensCollection.countDocuments({id:userId})
+        const countUserToken=await sessionsTypeCollection.countDocuments({id:userId})
         expect(countUserToken).toEqual(0)
 
     })

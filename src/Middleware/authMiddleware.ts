@@ -12,7 +12,6 @@ export const authMiddleware =async (req: Request, res: Response, next: NextFunct
     console.log(resultSearchUserIdbyToken)
     if (resultSearchUserIdbyToken) {
         const user=await findUserById(resultSearchUserIdbyToken)
-        //res.header('it-incubator','hucker')
         console.log(user)
         if (user) {
             req.user = user

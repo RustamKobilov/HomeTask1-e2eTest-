@@ -4,9 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="api test 01.04.23">
+    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="api test 04.04.23">
+      <change afterPath="$PROJECT_DIR$/src/Middleware/authAttemptLimit.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/RepositoryInDB/attempt-repository.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routse/securityDevices-route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Middleware/authMiddleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Middleware/authMiddleware.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Middleware/authRefreshToken.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Middleware/authRefreshToken.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/InputValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/InputValidation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/jwtService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/jwtService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/db.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/db.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/authRouter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/authRouter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/feedBackRouter.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/apiTest.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/apiTest.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +36,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="hometaskSprint2dz4" />
+        <entry key="$PROJECT_DIR$" value="hometaskSprint2dz4RefreshTiken" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -45,6 +58,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/it incubator/hometask1(e2eTest)&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -67,7 +81,7 @@
       <recent name="D:\it incubator\hometask1(e2eTest)\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.Output model checking(byBlogs) true.sortBy checking query params true">
+  <component name="RunManager" selected="npm.dev">
     <configuration name="Output model checking(byBlogs) true.sortBy checking query params true" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -79,19 +93,6 @@
       <test-names>
         <test-name value="Output model checking(byBlogs) true" />
         <test-name value="sortBy checking query params true" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="auth login token realize" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
-      <test-names>
-        <test-name value="auth login token realize" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -131,13 +132,23 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="watch" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="watch" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.dev" />
+        <item itemvalue="npm.watch" />
         <item itemvalue="Jest.Output model checking(byBlogs) true.sortBy checking query params true" />
         <item itemvalue="Jest.auth/registration-confirmation test" />
         <item itemvalue="Jest.auth/registration test" />
-        <item itemvalue="Jest.auth login token realize" />
-        <item itemvalue="npm.dev" />
       </list>
     </recent_temporary>
   </component>
@@ -165,14 +176,9 @@
       <workItem from="1679420325600" duration="2720000" />
       <workItem from="1679498886507" duration="7369000" />
       <workItem from="1679670302193" duration="11061000" />
-      <workItem from="1680340080334" duration="34342000" />
-    </task>
-    <task id="LOCAL-00138" summary="09/03/23 test.">
-      <created>1678480768284</created>
-      <option name="number" value="00138" />
-      <option name="presentableId" value="LOCAL-00138" />
-      <option name="project" value="LOCAL" />
-      <updated>1678480768284</updated>
+      <workItem from="1680340080334" duration="37903000" />
+      <workItem from="1681320297073" duration="2395000" />
+      <workItem from="1681402312018" duration="71563000" />
     </task>
     <task id="LOCAL-00139" summary="09/03/23 test.">
       <created>1678524806155</created>
@@ -510,7 +516,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680365968050</updated>
     </task>
-    <option name="localTasksCounter" value="187" />
+    <task id="LOCAL-00187" summary="api test 04.04.23">
+      <created>1680632803688</created>
+      <option name="number" value="00187" />
+      <option name="presentableId" value="LOCAL-00187" />
+      <option name="project" value="LOCAL" />
+      <updated>1680632803720</updated>
+    </task>
+    <option name="localTasksCounter" value="188" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -563,6 +576,7 @@
     <MESSAGE value="gi" />
     <MESSAGE value="api test 30.03.23" />
     <MESSAGE value="api test 01.04.23" />
-    <option name="LAST_COMMIT_MESSAGE" value="api test 01.04.23" />
+    <MESSAGE value="api test 04.04.23" />
+    <option name="LAST_COMMIT_MESSAGE" value="api test 04.04.23" />
   </component>
 </project>

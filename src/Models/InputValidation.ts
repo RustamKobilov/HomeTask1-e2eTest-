@@ -2,7 +2,7 @@ import {body, cookie, param, query, ValidationError, validationResult} from "exp
 import {NextFunction} from "express";
 import {Request, Response} from "express";
 import {throws} from "assert";
-import {blogsCollection, tokensCollection} from "../db";
+import {blogsCollection, sessionsTypeCollection} from "../db";
 import {authService} from "../domain/authService";
 
 export const errorMessagesInputValidation = (req: Request, res: Response, next: NextFunction) => {

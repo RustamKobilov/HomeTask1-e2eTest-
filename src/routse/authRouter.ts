@@ -1,65 +1,102 @@
 import {Request, Response, Router} from "express";
 import {
-    errorMessagesInputValidation,
     loginUserValidation, postRegistrationEmailResending,
     postRegistrConfirm,
     postUsersValidation,
 } from "../Models/InputValidation";
 import {authService} from "../domain/authService";
-import {jwtService, tokenTypeEnum} from "../application/jwtService";
+import {jwtService} from "../application/jwtService";
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {emailAdapters} from "../adapters/email-adapters";
 import {createUser, findUserById, userRepository} from "../RepositoryInDB/user-repositoryDB";
-import {tokensCollection, usersCollection} from "../db";
+import {securityAttemptsEndpoints, usersCollection} from "../db";
 import {getPaginationValuesAddNewUser} from "./user-router";
 import {authRefreshToken} from "../Middleware/authRefreshToken";
+import {randomUUID} from "crypto";
+import {PaginationTypeInputParamsBlogs} from "../RepositoryInDB/blog-repositoryDB";
+import {getPaginationValuesInputUserInformation} from "./securityDevices-route";
+import {authAttemptLimit} from "../Middleware/authAttemptLimit";
 
 export const authRouter=Router({})
 
+
 //authMiddleware,
-authRouter.post('/login', loginUserValidation,async (req:Request, res:Response)=>{
+authRouter.post('/login', authAttemptLimit,loginUserValidation, async (req:Request, res:Response)=>{
     const {loginOrEmail, password} = req.body
     const user = await authService.login(loginOrEmail, password)
     if (!user) {
         return res.sendStatus(401);
     }
-    const accessToken=await jwtService.createTokenJWT(user.id, tokenTypeEnum.access)
-    const refreshToken=await jwtService.createTokenJWT(user.id, tokenTypeEnum.refresh)
+    if(!req.headers['user-agent']){
+        req.headers['user-agent']='default'
+    }
+    const ipAddressInput=req.ip
+    console.log('addressInput '+ipAddressInput)
+    if(!ipAddressInput){
+        return res.status(404).send('not found ipAddress')
+    }
 
-    await jwtService.createTokenByUserIdInBase(user.id,refreshToken)
+    const paginationUserInformation=getPaginationValuesInputUserInformation(ipAddressInput,req.headers['user-agent'])
+    const accessToken=await jwtService.createAccessTokenJWT(user.id)
+    const deviceId=randomUUID()
+    const refreshToken=await jwtService.createRefreshToken(user.id, deviceId)
+    const lastActiveDate = await jwtService.getLastActiveDateFromRefreshToken(refreshToken)
+    console.log(lastActiveDate)
+    const diesAtDate = await jwtService.getDiesAtDate(refreshToken)
+    console.log(diesAtDate)
+    await jwtService.createTokenByUserIdInBase(user.id,paginationUserInformation,deviceId,lastActiveDate,diesAtDate)
     const returnToken={
         accessToken: accessToken,
     }
 
+    // /httpOnly:true,,secure: true
     return res.status(200)
-        .cookie('refreshToken',refreshToken,{httpOnly:true,expires:new Date(Date.now() +20000) ,secure: true})
+        .cookie('refreshToken',refreshToken,{expires:new Date(Date.now() +50000)})
         .send(returnToken);
 })
 
 authRouter.post('/logout',authRefreshToken,async (req:Request, res:Response)=> {
         const refreshToken=req.cookies.refreshToken
-        await jwtService.deleteTokenRealize(refreshToken)
+    const userIdByOldRefreshToken=await jwtService.verifyToken(refreshToken)
 
+    if(!userIdByOldRefreshToken){
+        return res.status(401).send('controller logout')
+    }
+
+     const deleteDeviceUser=await jwtService.deleteTokenRealize(userIdByOldRefreshToken.userId,userIdByOldRefreshToken.deviceId)
+    if(deleteDeviceUser){
+        return res.status(404).send('delete not successful')
+    }
     return res.sendStatus(204)
 })
 
-authRouter.post('/refresh-token',authRefreshToken,async (req:Request, res:Response)=>{
+authRouter.post('/refresh-token',authAttemptLimit,authRefreshToken,async (req:Request, res:Response)=>{
     const inputRefreshToken=req.cookies.refreshToken
-
     const userIdByOldRefreshToken=await jwtService.verifyToken(inputRefreshToken)
+
     if(!userIdByOldRefreshToken){
         return res.status(401).send('controller')
     }
-    const accessToken=await jwtService.createTokenJWT(userIdByOldRefreshToken,tokenTypeEnum.access)
-    const refreshToken=await jwtService.createTokenJWT(userIdByOldRefreshToken,tokenTypeEnum.refresh)
 
-    await jwtService.refreshTokenRealize(userIdByOldRefreshToken,refreshToken)
-
+    const accessToken=await jwtService.createAccessTokenJWT(userIdByOldRefreshToken.userId)
+    const refreshToken=await jwtService.createRefreshToken(userIdByOldRefreshToken.userId,userIdByOldRefreshToken.deviceId)
+    const lastActiveDate = await jwtService.getLastActiveDateFromRefreshToken(refreshToken)
+    console.log(lastActiveDate)
+    const diesAtDate = await jwtService.getDiesAtDate(refreshToken)
+    console.log(diesAtDate)
+    const refreshTokenUpdate=await jwtService
+        .refreshTokenInBase(userIdByOldRefreshToken.userId,userIdByOldRefreshToken.deviceId,lastActiveDate,diesAtDate)
+    if(!refreshTokenUpdate){
+        return res.send('no update RefreshToken')
+    }
+    console.log(refreshToken)
     const returnToken={
         accessToken: accessToken
+
+        //httpOnly:true,, secure: true
     }
     return res.cookie('refreshToken',refreshToken,
-        {httpOnly:true,expires:new Date(Date.now() +20000), secure: true}).status(200).send(returnToken);
+        {expires:new Date(Date.now() +50000)}).status(200).send(returnToken);
 })
 
 
@@ -67,7 +104,7 @@ authRouter.get('/me',authMiddleware,async (req:Request,res:Response)=>{
     return res.send({email:req.user!.email,login:req.user!.login,userId:req.user!.id})
 })
 
-authRouter.post('/registration',postUsersValidation,async (req:Request,res:Response)=>{
+authRouter.post('/registration',authAttemptLimit,postUsersValidation,async (req:Request,res:Response)=>{
 
     const paginationResult =getPaginationValuesAddNewUser(req.body)
     const resultNewUsers= await createUser(paginationResult)
@@ -84,12 +121,12 @@ authRouter.post('/registration',postUsersValidation,async (req:Request,res:Respo
     return res.sendStatus(204)
 })
 
-authRouter.post('/registration-confirmation',postRegistrConfirm,async (req:Request,res:Response)=> {
+authRouter.post('/registration-confirmation',authAttemptLimit,postRegistrConfirm,async (req:Request,res:Response)=> {
 
     return res.sendStatus(204)
 })
 
-authRouter.post('/registration-email-resending',postRegistrationEmailResending,async (req:Request,res:Response)=> {
+authRouter.post('/registration-email-resending',authAttemptLimit,postRegistrationEmailResending,async (req:Request,res:Response)=> {
     const user=req.user
     if(!user){
          return res.sendStatus(400)
@@ -115,3 +152,4 @@ authRouter.post('/registration-email-resending',postRegistrationEmailResending,a
 
     return res.sendStatus(204)
 })
+
