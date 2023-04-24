@@ -20,7 +20,7 @@ export type ActiveSessionsType ={
 
 export const jwtService= {
     async createAccessTokenJWT(userId: string) {
-            let accessToken = jwt.sign({userId: userId}, settings.JWT_Service, {expiresIn: '10s'})
+            let accessToken = jwt.sign({userId: userId}, settings.JWT_Service, {expiresIn: '30s'})
         return accessToken
     },
     async createRefreshToken(userId: string,deviceId:string){

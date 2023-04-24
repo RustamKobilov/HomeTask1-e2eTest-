@@ -4,22 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="api test 04.04.23">
-      <change afterPath="$PROJECT_DIR$/src/Middleware/authAttemptLimit.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/RepositoryInDB/attempt-repository.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routse/securityDevices-route.ts" afterDir="false" />
+    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="work 22.04.23">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Middleware/authMiddleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Middleware/authMiddleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Middleware/authRefreshToken.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Middleware/authRefreshToken.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/InputValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/InputValidation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/jwtService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/jwtService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/db.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routse/authRouter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/authRouter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/feedBackRouter.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/securityDevices-route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/securityDevices-route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/apiTest.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/apiTest.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,8 +72,34 @@
       <recent name="D:\it incubator\hometask1(e2eTest)\src" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.dev">
-    <configuration name="Output model checking(byBlogs) true.sortBy checking query params true" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Jest.Session and device for User /SecurityDevices">
+    <configuration name="Session and device for User /SecurityDevices" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
+      <test-names>
+        <test-name value="Session and device for User /SecurityDevices" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="auth login token realize" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
+      <test-names>
+        <test-name value="auth login token realize" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="auth login token realize.give token(create admin) and auth with token true" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
@@ -91,8 +108,8 @@
       <scope-kind value="TEST" />
       <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
       <test-names>
-        <test-name value="Output model checking(byBlogs) true" />
-        <test-name value="sortBy checking query params true" />
+        <test-name value="auth login token realize" />
+        <test-name value="give token(create admin) and auth with token true" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -109,19 +126,6 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="auth/registration-confirmation test" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
-      <test-names>
-        <test-name value="auth/registration-confirmation test" />
-      </test-names>
-      <method v="2" />
-    </configuration>
     <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -132,22 +136,12 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="watch" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="watch" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.Session and device for User /SecurityDevices" />
         <item itemvalue="npm.dev" />
-        <item itemvalue="npm.watch" />
-        <item itemvalue="Jest.Output model checking(byBlogs) true.sortBy checking query params true" />
-        <item itemvalue="Jest.auth/registration-confirmation test" />
+        <item itemvalue="Jest.auth login token realize" />
+        <item itemvalue="Jest.auth login token realize.give token(create admin) and auth with token true" />
         <item itemvalue="Jest.auth/registration test" />
       </list>
     </recent_temporary>
@@ -178,14 +172,7 @@
       <workItem from="1679670302193" duration="11061000" />
       <workItem from="1680340080334" duration="37903000" />
       <workItem from="1681320297073" duration="2395000" />
-      <workItem from="1681402312018" duration="71563000" />
-    </task>
-    <task id="LOCAL-00139" summary="09/03/23 test.">
-      <created>1678524806155</created>
-      <option name="number" value="00139" />
-      <option name="presentableId" value="LOCAL-00139" />
-      <option name="project" value="LOCAL" />
-      <updated>1678524806155</updated>
+      <workItem from="1681402312018" duration="92987000" />
     </task>
     <task id="LOCAL-00140" summary="11/03/23 fix code.">
       <created>1678525323249</created>
@@ -523,7 +510,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680632803720</updated>
     </task>
-    <option name="localTasksCounter" value="188" />
+    <task id="LOCAL-00188" summary="work 22.04.23">
+      <created>1682186085367</created>
+      <option name="number" value="00188" />
+      <option name="presentableId" value="LOCAL-00188" />
+      <option name="project" value="LOCAL" />
+      <updated>1682186085368</updated>
+    </task>
+    <option name="localTasksCounter" value="189" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -577,6 +571,7 @@
     <MESSAGE value="api test 30.03.23" />
     <MESSAGE value="api test 01.04.23" />
     <MESSAGE value="api test 04.04.23" />
-    <option name="LAST_COMMIT_MESSAGE" value="api test 04.04.23" />
+    <MESSAGE value="work 22.04.23" />
+    <option name="LAST_COMMIT_MESSAGE" value="work 22.04.23" />
   </component>
 </project>

@@ -64,7 +64,7 @@ authRouter.post('/logout',authRefreshToken,async (req:Request, res:Response)=> {
     }
 
      const deleteDeviceUser=await jwtService.deleteTokenRealize(userIdByOldRefreshToken.userId,userIdByOldRefreshToken.deviceId)
-    if(deleteDeviceUser){
+    if(!deleteDeviceUser){
         return res.status(404).send('delete not successful')
     }
     return res.sendStatus(204)

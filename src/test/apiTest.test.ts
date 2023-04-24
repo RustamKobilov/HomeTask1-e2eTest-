@@ -351,7 +351,6 @@ describe('Output model checking(byBlogs) true', () => {
 
 })
 
-//не работает тест sortBy и sort direction
 describe('/Blogs output model checking sortBy true', () => {
         beforeEach(async () => {
             await request(app).delete('/testing/all-data')
@@ -398,8 +397,7 @@ describe('/Blogs output model checking sortBy true', () => {
 
     })
 
-describe('user add',()=> {
-    jest.setTimeout(2 * 60* 1000)
+describe('user add', ()=> {
     beforeAll(async () => {
         await request(app).delete('/testing/all-data')
     })
@@ -511,7 +509,7 @@ describe('user add',()=> {
 
 })
 
-describe('auth/registration test', ()=> {
+describe('auth/registration test',  ()=> {
 
     beforeAll(async () => {
         await request(app).delete('/testing/all-data')
@@ -609,7 +607,9 @@ describe('auth login token realize', ()=>{
 
     let accessToken:any=null;
     let refreshToken:any=null;
+    let refreshTokenCookies:any=null;
     let userId:any=null;
+    let deviceId:any=null;
 
     it('give token(create admin) and auth with token true',async ()=>{
 
@@ -622,19 +622,17 @@ describe('auth login token realize', ()=>{
         ///refreshToken
         const cookies = AuthUserResponse.headers['set-cookie']
         console.log(cookies)
-        const filterCookies=cookies.filter(function(val:string){return val.split('=')[0]=='refreshToken'}).
-            map(function (val:string){return val.split('=')[1]})
+        refreshTokenCookies=cookies.filter(function(val:string){return val.split('=')[0]=='refreshToken'})
+        console.log('refresh token cookies ' + refreshTokenCookies)
+        refreshToken= refreshTokenCookies.map(function (val:string){return val.split('=')[1]}).map(function(val:string){return val.split(';')[0]})[0]
 
-        expect(filterCookies[0]).toEqual(expect.any(String))
+        expect(refreshToken).toEqual(expect.any(String))
         ///
         userId=CreateUserResponse.body.id
-        refreshToken=filterCookies[0]
         accessToken=AuthUserResponse.body.accessToken
         ///
 
-
-        const AuthMeUserResponse=await request(app).get('/auth/me').set({Authorization:'bearer '+accessToken}).
-        expect(200)
+        const AuthMeUserResponse=await request(app).get('/auth/me').set({Authorization:'bearer '+accessToken}).expect(200)
 
         expect(AuthMeUserResponse.body).toEqual({
             login:userForChecking1.login,
@@ -642,41 +640,48 @@ describe('auth login token realize', ()=>{
             userId:CreateUserResponse.body.id
         })
     })
-    it('refresh-token return 2 token,old token delete',async ()=>{
-
+    it('refresh-token return 2 token(access,refresh),old token delete',async ()=>{
 
         const AuthUserRefreshTokensResponse=await request(app).post('/auth/refresh-token')
             .set({Authorization:'bearer '+accessToken})
-            .set('Cookie', ['refreshToken='+refreshToken]).expect(200)
-        expect(AuthUserRefreshTokensResponse.body.accessToken).not.toEqual(accessToken)
+            .set('Cookie', [refreshTokenCookies]).expect(200)
+        expect(AuthUserRefreshTokensResponse.body.accessToken).not.toEqual(accessToken) //access token не старый
         expect(AuthUserRefreshTokensResponse.body.accessToken).toEqual(expect.any(String))
 
-        const newRefreshToken = AuthUserRefreshTokensResponse.headers['set-cookie']
-            .filter(function(val:string){return val.split('=')[0]=='refreshToken'})
-            .map(function (val:string){return val.split('=')[1]})[0]
-        expect(newRefreshToken).not.toEqual(refreshToken)
+        const cookies = AuthUserRefreshTokensResponse.headers['set-cookie']
+        const newRefreshTokenCookies=cookies.filter(function(val:string){return val.split('=')[0]=='refreshToken'})
+        const newRefreshToken= newRefreshTokenCookies.map(function (val:string){return val.split('=')[1]}).map(function(val:string){return val.split(';')[0]})[0]
+
+        expect(newRefreshToken).not.toEqual(refreshToken)//refresh token не старый
         expect(newRefreshToken).toEqual(expect.any(String))
 
-        const countUserToken=await sessionsTypeCollection.countDocuments({id:userId})
+        console.log('new refresh token ' + newRefreshToken)
+        console.log('OldRefreshToken ' + refreshToken)
+
+
+        const lastActiveDate=await jwtService.getLastActiveDateFromRefreshToken(newRefreshToken)
+        const verifyToken=await jwtService.verifyToken(newRefreshToken)
+        deviceId=verifyToken.deviceId
+        const countUserToken=await sessionsTypeCollection.countDocuments({userId:userId,deviceId:deviceId})
         expect(countUserToken).toEqual(1)//check many token
 
         refreshToken=newRefreshToken
         accessToken=AuthUserRefreshTokensResponse.body.accessToken
-
+        refreshTokenCookies=newRefreshTokenCookies
     })
     it('logout',async ()=>{
         const LogoutUserRefreshTokensBadResponse=await request(app).post('/auth/logout')
             .expect(401)
         const LogoutUserRefreshTokensResponse=await request(app).post('/auth/logout')
-            .set('Cookie', ['refreshToken='+refreshToken]).expect(204)
+            .set('Cookie', [refreshTokenCookies]).expect(204)
 
-        const countUserToken=await sessionsTypeCollection.countDocuments({id:userId})
+        const countUserToken=await sessionsTypeCollection.countDocuments({id:userId,deviceId:deviceId})
         expect(countUserToken).toEqual(0)
 
     })
 })
 
-describe('auth/registration-confirmation test', ()=> {
+describe('auth/registration-confirmation test',  ()=> {
 
     beforeAll(async () => {
         await request(app).delete('/testing/all-data')
@@ -698,6 +703,67 @@ describe('auth/registration-confirmation test', ()=> {
     })
 
 })
+
+describe('Session and device for User /SecurityDevices', ()=> {
+
+    beforeAll(async () => {
+        await request(app).delete('/testing/all-data')
+    })
+
+    const userForChecking1 = {
+        login: 'token1',
+        password: '1234222223',
+        email: 'tryToken1@ram.by'
+    }
+    const userAuthForChecking1={
+        loginOrEmail:userForChecking1.login,
+        password:userForChecking1.password
+    }
+
+    let accessToken:any=null;
+    let refreshToken:any=null;
+    let refreshTokenCookies:any=null;
+    let userId:any=null;
+    let deviceId:any=null;
+    let deviceName='TestDevice1'
+
+    it('ffffvf',async ()=>{
+        const CreateUserResponse = await request(app).post('/users/').set(BasicAuthorized.authorization, BasicAuthorized.password).send(userForChecking1).expect(201)
+
+        const AuthUserResponse = await request(app).post('/auth/login').set('User-Agent',deviceName).send(userAuthForChecking1).expect(200)
+
+        expect(AuthUserResponse.body.accessToken).toEqual(expect.any(String))
+
+        ///refreshToken
+        const cookies = AuthUserResponse.headers['set-cookie']
+        console.log(cookies)
+        refreshTokenCookies=cookies.filter(function(val:string){return val.split('=')[0]=='refreshToken'})
+        console.log('refresh token cookies ' + refreshTokenCookies)
+        refreshToken= refreshTokenCookies.map(function (val:string){return val.split('=')[1]}).map(function(val:string){return val.split(';')[0]})[0]
+
+        expect(refreshToken).toEqual(expect.any(String))
+        ///
+        userId=CreateUserResponse.body.id
+        accessToken=AuthUserResponse.body.accessToken
+        ///
+
+        const securityDeviceResponse=await request(app).get('/security/devices')
+            .set('Cookie', [refreshTokenCookies])
+            .expect(200)
+
+        expect(securityDeviceResponse.body).toEqual([{
+            ip: expect.any(String),
+            title: deviceName,
+            lastActiveDate: expect.any(String),
+            deviceId: expect.any(String)
+        }])
+        console.log(securityDeviceResponse.body)
+
+        //['user-agent']
+
+    })
+})
+
 
 
 
