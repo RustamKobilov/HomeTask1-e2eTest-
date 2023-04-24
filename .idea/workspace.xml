@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="work 22.04.23">
+    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="tests 24.04.23">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Middleware/authMiddleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Middleware/authMiddleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/jwtService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/jwtService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/authRouter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/authRouter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/securityDevices-route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/securityDevices-route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/apiTest.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/apiTest.test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -172,14 +168,7 @@
       <workItem from="1679670302193" duration="11061000" />
       <workItem from="1680340080334" duration="37903000" />
       <workItem from="1681320297073" duration="2395000" />
-      <workItem from="1681402312018" duration="92987000" />
-    </task>
-    <task id="LOCAL-00140" summary="11/03/23 fix code.">
-      <created>1678525323249</created>
-      <option name="number" value="00140" />
-      <option name="presentableId" value="LOCAL-00140" />
-      <option name="project" value="LOCAL" />
-      <updated>1678525323249</updated>
+      <workItem from="1681402312018" duration="96676000" />
     </task>
     <task id="LOCAL-00141" summary="11/03/23 fix code.">
       <created>1678525774125</created>
@@ -517,7 +506,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682186085368</updated>
     </task>
-    <option name="localTasksCounter" value="189" />
+    <task id="LOCAL-00189" summary="tests 24.04.23">
+      <created>1682350679910</created>
+      <option name="number" value="00189" />
+      <option name="presentableId" value="LOCAL-00189" />
+      <option name="project" value="LOCAL" />
+      <updated>1682350679975</updated>
+    </task>
+    <option name="localTasksCounter" value="190" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -572,6 +568,7 @@
     <MESSAGE value="api test 01.04.23" />
     <MESSAGE value="api test 04.04.23" />
     <MESSAGE value="work 22.04.23" />
-    <option name="LAST_COMMIT_MESSAGE" value="work 22.04.23" />
+    <MESSAGE value="tests 24.04.23" />
+    <option name="LAST_COMMIT_MESSAGE" value="tests 24.04.23" />
   </component>
 </project>
