@@ -28,8 +28,11 @@ export type SecurityOfAttemptsType ={
 
 
 securityRouter.get('/devices',authRefreshToken, async (req: Request, res: Response) => {
+    const inputRefreshToken = req.cookies.refreshToken
+    const userIdByAndDeviceIdRefreshToken = await jwtService.verifyToken(inputRefreshToken)
+
     const allCollection = await sessionsTypeCollection
-        .find({}, {projection: {_id: 0, title: '$deviceName',ip:1,lastActiveDate:1,deviceId:1}}).toArray()
+        .find({userId:userIdByAndDeviceIdRefreshToken.userId}, {projection: {_id: 0, title: '$deviceName',ip:1,lastActiveDate:1,deviceId:1}}).toArray()
 
     return res.send(allCollection).status(200)
 })
