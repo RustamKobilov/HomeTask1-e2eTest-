@@ -59,15 +59,15 @@ export const jwtService= {
                 userId:userId
             })
         } else {
-          await  this.updateTokenInBase(userId,paginationUserInformation.deviceName,deviceId,lastActiveDate,diesAtDate)
+          await  this.updateTokenInBase(userId,paginationUserInformation.deviceName,lastActiveDate,diesAtDate)
         }
     },
-    async updateTokenInBase(userId:string, deviceName:string, deviceId:string, lastActiveDate:string, diesAtDate:string){
+    async updateTokenInBase(userId:string, deviceName:string,  lastActiveDate:string, diesAtDate:string){
 
         const tokenUpdate=await sessionsTypeCollection.
         updateOne({userId:userId,deviceName:deviceName},{
             $set: {
-                deviceId:deviceId,
+               // deviceId:deviceId,
                 lastActiveDate:lastActiveDate,
                 diesAtDate:diesAtDate
             }
