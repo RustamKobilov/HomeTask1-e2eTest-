@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="tests 24.04.23">
+    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="refactor 26.04.23">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/apiTest.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/apiTest.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/jwtService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/jwtService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/authRouter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/authRouter.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,21 +169,7 @@
       <workItem from="1679670302193" duration="11061000" />
       <workItem from="1680340080334" duration="37903000" />
       <workItem from="1681320297073" duration="2395000" />
-      <workItem from="1681402312018" duration="115961000" />
-    </task>
-    <task id="LOCAL-00142" summary="11/03/23 fix code.">
-      <created>1678527194063</created>
-      <option name="number" value="00142" />
-      <option name="presentableId" value="LOCAL-00142" />
-      <option name="project" value="LOCAL" />
-      <updated>1678527194063</updated>
-    </task>
-    <task id="LOCAL-00143" summary="11/03/23 fix code.">
-      <created>1678527891437</created>
-      <option name="number" value="00143" />
-      <option name="presentableId" value="LOCAL-00143" />
-      <option name="project" value="LOCAL" />
-      <updated>1678527891437</updated>
+      <workItem from="1681402312018" duration="117781000" />
     </task>
     <task id="LOCAL-00144" summary="11/03/23 fix code.">
       <created>1678528687779</created>
@@ -513,7 +500,21 @@
       <option name="project" value="LOCAL" />
       <updated>1682369534112</updated>
     </task>
-    <option name="localTasksCounter" value="191" />
+    <task id="LOCAL-00191" summary="tests 26.04.23">
+      <created>1682516867743</created>
+      <option name="number" value="00191" />
+      <option name="presentableId" value="LOCAL-00191" />
+      <option name="project" value="LOCAL" />
+      <updated>1682516867764</updated>
+    </task>
+    <task id="LOCAL-00192" summary="refactor 26.04.23">
+      <created>1682518405532</created>
+      <option name="number" value="00192" />
+      <option name="presentableId" value="LOCAL-00192" />
+      <option name="project" value="LOCAL" />
+      <updated>1682518405532</updated>
+    </task>
+    <option name="localTasksCounter" value="193" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -569,6 +570,8 @@
     <MESSAGE value="api test 04.04.23" />
     <MESSAGE value="work 22.04.23" />
     <MESSAGE value="tests 24.04.23" />
-    <option name="LAST_COMMIT_MESSAGE" value="tests 24.04.23" />
+    <MESSAGE value="tests 26.04.23" />
+    <MESSAGE value="refactor 26.04.23" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor 26.04.23" />
   </component>
 </project>

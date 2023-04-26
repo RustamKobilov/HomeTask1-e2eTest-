@@ -16,6 +16,7 @@ import {randomUUID} from "crypto";
 import {PaginationTypeInputParamsBlogs} from "../RepositoryInDB/blog-repositoryDB";
 import {getPaginationValuesInputUserInformation} from "./securityDevices-route";
 import {authAttemptLimit} from "../Middleware/authAttemptLimit";
+import * as http from "http";
 
 export const authRouter=Router({})
 
@@ -51,7 +52,8 @@ authRouter.post('/login', authAttemptLimit,loginUserValidation, async (req:Reque
 
     // /httpOnly:true,,secure: true
     return res.status(200)
-        .cookie('refreshToken',refreshToken,{expires:new Date(Date.now() +50000)})
+        .cookie('refreshToken',refreshToken,
+            {expires:new Date(Date.now() +20000),httpOnly:true,secure: true})
         .send(returnToken);
 })
 
@@ -96,7 +98,8 @@ authRouter.post('/refresh-token',authAttemptLimit,authRefreshToken,async (req:Re
         //httpOnly:true,, secure: true
     }
     return res.cookie('refreshToken',refreshToken,
-        {expires:new Date(Date.now() +50000)}).status(200).send(returnToken);
+        {expires:new Date(Date.now() +20000),httpOnly:true,secure: true})
+        .status(200).send(returnToken);
 })
 
 
