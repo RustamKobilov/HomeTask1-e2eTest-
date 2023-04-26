@@ -11,7 +11,7 @@ export const attemptRepository={
     },
     async getCountAttemptIpForEndPoint(attempt:SecurityOfAttemptsType):Promise<number>{
        const getAttempt= await securityAttemptsEndpoints
-            .countDocuments({endPointName:attempt.endPointName, ip:attempt.ip,dateAttempt:{$gte:attempt.dateAttempt}})
+            .countDocuments({endPointName:attempt.endPointName, ip:attempt.ip,dateAttempt:{$gt:attempt.dateAttempt}})
     return getAttempt
     }
 }
