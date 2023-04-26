@@ -44,12 +44,22 @@ export const jwtService= {
         }
         return true
     },
-    async createTokenByUserIdInBase(userId: string,paginationUserInformation:UserInformationType,deviceId:string,lastActiveDate:string,diesAtDate:string) {
+    async checkTokenInBaseByName(userId: string,deviceName:string):Promise<string|false>{
+        const resultCheckToken = await sessionsTypeCollection.findOne({userId: userId, deviceName: deviceName})
+        if (!resultCheckToken) {
+            return false
+        }
+        return resultCheckToken.deviceId
+    },
+    async createTokenByUserIdInBase(userId: string,
+                                    paginationUserInformation:UserInformationType,
+                                    deviceId:string, lastActiveDate:string,diesAtDate:string) {
 
-        console.log('userId ' + userId, ' deviceId ' +deviceId+ ' lastActiveDate ' + lastActiveDate)
-        const resultCheckToken=await sessionsTypeCollection
-            .findOne({userId:userId,deviceName:paginationUserInformation.deviceName})
-        if(!resultCheckToken){
+        // const resultCheckToken=await sessionsTypeCollection
+        //     .findOne({userId:userId,deviceName:paginationUserInformation.deviceName})
+        // if(!resultCheckToken){
+
+
             await sessionsTypeCollection.insertOne({
                 lastActiveDate:lastActiveDate,
                 diesAtDate:diesAtDate,
@@ -58,11 +68,11 @@ export const jwtService= {
                 ip:paginationUserInformation.ipAddress,
                 userId:userId
             })
-        } else {
-          await  this.updateTokenInBase(userId,paginationUserInformation.deviceName,lastActiveDate,diesAtDate)
-        }
+        // } else {
+        //
+        // }
     },
-    async updateTokenInBase(userId:string, deviceName:string,  lastActiveDate:string, diesAtDate:string){
+    async updateTokenInBase(userId:string, deviceName:string, lastActiveDate:string, diesAtDate:string){
 
         const tokenUpdate=await sessionsTypeCollection.
         updateOne({userId:userId,deviceName:deviceName},{

@@ -36,16 +36,23 @@ authRouter.post('/login', authAttemptLimit,loginUserValidation, async (req:Reque
     if(!ipAddressInput){
         return res.status(404).send('not found ipAddress')
     }
-
+    let refreshToken=null;
     const paginationUserInformation=getPaginationValuesInputUserInformation(ipAddressInput,req.headers['user-agent'])
     const accessToken=await jwtService.createAccessTokenJWT(user.id)
-    const deviceId=randomUUID()
-    const refreshToken=await jwtService.createRefreshToken(user.id, deviceId)
-    const lastActiveDate = await jwtService.getLastActiveDateFromRefreshToken(refreshToken)
-    console.log(lastActiveDate)
-    const diesAtDate = await jwtService.getDiesAtDate(refreshToken)
-    console.log(diesAtDate)
-    await jwtService.createTokenByUserIdInBase(user.id,paginationUserInformation,deviceId,lastActiveDate,diesAtDate)
+    const checkTokenInBaseByName = await jwtService.checkTokenInBaseByName(user.id,paginationUserInformation.deviceName)
+    if(!checkTokenInBaseByName){
+        const deviceId=randomUUID()
+        refreshToken=await jwtService.createRefreshToken(user.id, deviceId)
+        const lastActiveDate = await jwtService.getLastActiveDateFromRefreshToken(refreshToken)
+        const diesAtDate = await jwtService.getDiesAtDate(refreshToken)
+        await jwtService.createTokenByUserIdInBase(user.id,paginationUserInformation,deviceId,lastActiveDate,diesAtDate)
+    }
+    else {
+        refreshToken = await jwtService.createRefreshToken(user.id, checkTokenInBaseByName)
+        const lastActiveDate = await jwtService.getLastActiveDateFromRefreshToken(refreshToken)
+        const diesAtDate = await jwtService.getDiesAtDate(refreshToken)
+        await jwtService.updateTokenInBase(user.id, paginationUserInformation.deviceName, lastActiveDate, diesAtDate)
+    }
     const returnToken={
         accessToken: accessToken,
     }
