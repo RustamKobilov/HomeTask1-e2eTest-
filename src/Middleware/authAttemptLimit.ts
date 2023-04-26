@@ -13,7 +13,7 @@ export const authAttemptLimit=async (req: Request, res: Response, next: NextFunc
     await attemptRepository.createAttempt(attemptIpForEndpoint)
     const limit:number=5
     const resultCheckAttempt=await attemptRepository.getCountAttemptIpForEndPoint({endPointName:url, ip:ip, dateAttempt:new Date().toISOString()})
-    if(resultCheckAttempt>=limit){
+    if(resultCheckAttempt>limit){
         return res.status(429).send('ne nado tak chasto')
     }
 
