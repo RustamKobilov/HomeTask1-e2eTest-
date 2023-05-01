@@ -1,16 +1,15 @@
 import {SecurityOfAttemptsType} from "../routse/securityDevices-route";
-import {inspect} from "util";
-import {securityAttemptsEndpoints} from "../db";
-import {CountDocumentsOptions} from "mongodb";
+import {AttemptModel} from "../shemaAndModel";
+
 
 export const attemptRepository={
     async createAttempt(attempt:SecurityOfAttemptsType){
-        await securityAttemptsEndpoints
-            .insertOne({endPointName:attempt.endPointName, ip:attempt.ip, dateAttempt:attempt.dateAttempt})
+        await AttemptModel
+            .insertMany({endPointName:attempt.endPointName, ip:attempt.ip, dateAttempt:attempt.dateAttempt})
         return
     },
     async getCountAttemptIpForEndPoint(attempt:SecurityOfAttemptsType):Promise<number>{
-       const getAttempt= await securityAttemptsEndpoints
+       const getAttempt= await AttemptModel
             .countDocuments({endPointName:attempt.endPointName, ip:attempt.ip,dateAttempt:{$gte:attempt.dateAttempt}})
     return getAttempt
     }

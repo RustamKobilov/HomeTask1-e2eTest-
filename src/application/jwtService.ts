@@ -1,12 +1,10 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
-import {UserType} from "../RepositoryInDB/user-repositoryDB";
+
 import jwt from 'jsonwebtoken'
-import {ObjectId} from "mongodb";
 import {settings} from "../settings";
-import {sessionsTypeCollection} from "../db";
-import {randomUUID} from "crypto";
 import {UserInformationType} from "../routse/securityDevices-route";
+import {DeviceModel} from "../shemaAndModel";
 
 
 export type ActiveSessionsType ={
@@ -14,8 +12,8 @@ export type ActiveSessionsType ={
     lastActiveDate:string,
     diesAtDate:string,
     deviceId:string,
-    deviceName:string,
-    ip:string,
+    title:string,
+    ip:string
 }
 
 export const jwtService= {
@@ -38,14 +36,14 @@ export const jwtService= {
         }
     },
     async checkTokenInBase(userId: string,deviceId:string,lastActiveDate:string){
-        const resultCheckToken=await sessionsTypeCollection.findOne({userId:userId,deviceId:deviceId,lastActiveDate:lastActiveDate})
+        const resultCheckToken=await DeviceModel.findOne({userId:userId,deviceId:deviceId,lastActiveDate:lastActiveDate})
         if(!resultCheckToken){
             return false
         }
         return true
     },
-    async checkTokenInBaseByName(userId: string,deviceName:string):Promise<string|false>{
-        const resultCheckToken = await sessionsTypeCollection.findOne({userId: userId, deviceName: deviceName})
+    async checkTokenInBaseByName(userId: string, title:string):Promise<string|false>{
+        const resultCheckToken = await DeviceModel.findOne({userId: userId, title: title})
         if (!resultCheckToken) {
             return false
         }
@@ -55,29 +53,22 @@ export const jwtService= {
                                     paginationUserInformation:UserInformationType,
                                     deviceId:string, lastActiveDate:string,diesAtDate:string) {
 
-        // const resultCheckToken=await sessionsTypeCollection
-        //     .findOne({userId:userId,deviceName:paginationUserInformation.deviceName})
-        // if(!resultCheckToken){
 
-
-            await sessionsTypeCollection.insertOne({
+            await DeviceModel.insertMany({
                 lastActiveDate:lastActiveDate,
                 diesAtDate:diesAtDate,
                 deviceId:deviceId,
-                deviceName:paginationUserInformation.deviceName,
+                title:paginationUserInformation.title,
                 ip:paginationUserInformation.ipAddress,
                 userId:userId
             })
-        // } else {
-        //
-        // }
-    },
-    async updateTokenInBase(userId:string, deviceName:string, lastActiveDate:string, diesAtDate:string){
 
-        const tokenUpdate=await sessionsTypeCollection.
-        updateOne({userId:userId,deviceName:deviceName},{
+    },
+    async updateTokenInBase(userId:string, title:string, lastActiveDate:string, diesAtDate:string){
+
+        const tokenUpdate=await DeviceModel.
+        updateOne({userId:userId,title: title },{
             $set: {
-               // deviceId:deviceId,
                 lastActiveDate:lastActiveDate,
                 diesAtDate:diesAtDate
             }
@@ -85,7 +76,7 @@ export const jwtService= {
         return tokenUpdate.matchedCount === 1
     },
     async refreshTokenInBase(userId:string, deviceId:string, lastActiveDate:string, diesAtDate:string){
-        const tokenUpdate=await sessionsTypeCollection.
+        const tokenUpdate=await DeviceModel.
         updateOne({userId:userId,deviceId:deviceId},{
             $set: {
                 lastActiveDate:lastActiveDate,
@@ -95,7 +86,7 @@ export const jwtService= {
         return tokenUpdate.matchedCount === 1
     },
     async deleteTokenRealize(userId:string,deviceId:string){
-        const deleteToken=await sessionsTypeCollection.deleteOne({userId:userId,deviceId:deviceId})
+        const deleteToken=await DeviceModel.deleteOne({userId:userId,deviceId:deviceId})
         if(!deleteToken){
             return false
         }

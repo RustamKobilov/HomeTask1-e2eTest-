@@ -4,8 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="refactor 26.04.23">
+    <list default="true" id="efca8f2c-cf58-4b7b-abe7-c4ff0a3c8910" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/shemaAndModel.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Middleware/authAttemptLimit.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Middleware/authAttemptLimit.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/InputValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/InputValidation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/attempt-repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/attempt-repository.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/commentator-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/commentator-repositoryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/posts-repositiryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/posts-repositiryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/user-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/user-repositoryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/jwtService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/jwtService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/db.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/db.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/authService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/authService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/authRouter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/authRouter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/blogs-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/blogs-router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/commentsRouter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/commentsRouter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/posts-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/posts-router.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routse/securityDevices-route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/securityDevices-route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/user-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/user-router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/apiTest.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/apiTest.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +43,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="hometaskSprint2dz4RefreshTiken" />
+        <entry key="$PROJECT_DIR$" value="hometaskSprint3dz1SecurityDevices" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -67,7 +88,7 @@
       <recent name="D:\it incubator\hometask1(e2eTest)\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.auth/registration-confirmation test">
+  <component name="RunManager" selected="npm.dev">
     <configuration name="Session and device for User /SecurityDevices" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -134,10 +155,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="npm.dev" />
-        <item itemvalue="Jest.auth/registration-confirmation test" />
         <item itemvalue="Jest.Session and device for User /SecurityDevices" />
-        <item itemvalue="Jest.auth login token realize" />
         <item itemvalue="Jest.auth login token realize.give token(create admin) and auth with token true" />
+        <item itemvalue="Jest.auth login token realize" />
+        <item itemvalue="Jest.auth/registration-confirmation test" />
       </list>
     </recent_temporary>
   </component>

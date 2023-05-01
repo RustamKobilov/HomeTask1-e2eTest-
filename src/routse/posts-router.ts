@@ -15,10 +15,10 @@ import {
     PaginationTypePostInputCommentByPost,
     updatePostOnId
 } from "../RepositoryInDB/posts-repositiryDB";
-import {postsCollection} from "../db";
 import {postsService} from "./postsService";
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {getAllCommentForPostInBase, getCommentOnId} from "../RepositoryInDB/commentator-repositoryDB";
+import {PostModel} from "../shemaAndModel";
 
 export const postsRouter = Router({});
 
@@ -102,7 +102,7 @@ postsRouter.delete('/:id', basicAuthMiddleware, async (req: Request, res: Respon
 
         return res.sendStatus(404);
     }
-    await postsCollection.deleteOne({id: findDeletePost.id})
+    await PostModel.deleteOne({id: findDeletePost.id})
     return res.sendStatus(204);
 })
 

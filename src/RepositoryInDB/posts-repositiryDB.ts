@@ -1,9 +1,8 @@
 import {BlogsType} from "./blog-repositoryDB";
-import {blogsCollection, commentsCollection, postsCollection} from "../db";
 import {randomUUID} from "crypto";
 import { helper} from "./helper";
-import {postsService} from "../routse/postsService";
 import {CommentatorInfo, OutputCommentOutputType, CommentType} from "./commentator-repositoryDB";
+import {BlogModel, PostModel} from "../shemaAndModel";
 
 export type PostType = {
     id: string
@@ -23,25 +22,6 @@ export type inputSortDataBaseType<T> = {
     totalCount: number
     items: T[]
 }
-export let dbPosts: Array<PostType> = [
-    {
-        "id": '2',
-        "title": "string",
-        "shortDescription": "string",
-        "content": "string",
-        "blogId": "string",
-        "blogName": "string",
-        "createdAt": "string"
-    },
-    {
-        "id": '3',
-        "title": "string",
-        "shortDescription": "string",
-        "content": "string",
-        "blogId": "string",
-        "blogName": "string",
-        "createdAt": "string111"
-    }]
 
 export type PaginationTypeInputPosts = {
     pageNumber: number
@@ -70,12 +50,12 @@ export type PaginationTypePostInputCommentByPost={
 }
 export async function getAllPosts(paginationPosts: PaginationTypeInputPosts): Promise<inputSortDataBaseType<PostType>> {
 
-    const pagesCountBlog = await postsCollection.countDocuments({});
+    const pagesCountBlog = await PostModel.countDocuments({});
 
     const paginationFromHelperForPosts=helper.getPaginationFunctionSkipSortTotal(paginationPosts.pageNumber,paginationPosts.pageSize, pagesCountBlog)
 
-    const posts = await postsCollection.find({}).sort({[paginationPosts.sortBy]: paginationPosts.sortDirection}).
-    skip(paginationFromHelperForPosts.skipPage).limit(paginationPosts.pageSize).project<PostType>({_id: 0}).toArray();
+    const posts = await PostModel.find({},{_id: 0, __v: 0}).sort({[paginationPosts.sortBy]: paginationPosts.sortDirection}).
+    skip(paginationFromHelperForPosts.skipPage).limit(paginationPosts.pageSize).lean()
 
     return {
         pagesCount: paginationFromHelperForPosts.totalCount, page: paginationPosts.pageNumber, pageSize: paginationPosts.pageSize,
@@ -84,13 +64,13 @@ export async function getAllPosts(paginationPosts: PaginationTypeInputPosts): Pr
 }
 
 export async function findPostOnId(id: string): Promise<PostType | null> {
-    let post = await postsCollection.findOne({id: id}, {projection: {_id: 0}});
+    let post = await PostModel.findOne({id: id},{_id: 0, __v: 0});
     return post;
 }
 
 
 export async function updatePostOnId(id: string, pagination:PaginationTypeInputPostValueForPost,blogId:string): Promise<boolean> {
-    let post = await postsCollection.updateOne({id: id}, {
+    let post = await PostModel.updateOne({id: id}, {
         $set: {
             title: pagination.titlePost,
             shortDescription: pagination.shortDescriptionPost,
@@ -103,14 +83,14 @@ export async function updatePostOnId(id: string, pagination:PaginationTypeInputP
 }
 
 export async function findBlogName(id: string): Promise<BlogsType | null> {
-    return blogsCollection.findOne({id}, {projection: {_id: 0}});
+    return BlogModel.findOne({id:id},{_id: 0, __v: 0});
 
 }
 
 export async function createPostOnId(resultCreatePost:PostType):
     Promise<PostType> {
 
-    await postsCollection.insertOne(resultCreatePost);
+    await PostModel.insertMany(resultCreatePost);
 
     return ({
         id: resultCreatePost.id, title: resultCreatePost.title,

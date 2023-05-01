@@ -1,5 +1,4 @@
 import {NextFunction, Request, Response} from "express";
-import {securityAttemptsEndpoints} from "../db";
 import {SecurityOfAttemptsType} from "../routse/securityDevices-route";
 import {attemptRepository} from "../RepositoryInDB/attempt-repository";
 

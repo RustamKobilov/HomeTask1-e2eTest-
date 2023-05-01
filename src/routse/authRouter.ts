@@ -9,14 +9,12 @@ import {jwtService} from "../application/jwtService";
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {emailAdapters} from "../adapters/email-adapters";
 import {createUser, findUserById, userRepository} from "../RepositoryInDB/user-repositoryDB";
-import {securityAttemptsEndpoints, usersCollection} from "../db";
 import {getPaginationValuesAddNewUser} from "./user-router";
 import {authRefreshToken} from "../Middleware/authRefreshToken";
 import {randomUUID} from "crypto";
-import {PaginationTypeInputParamsBlogs} from "../RepositoryInDB/blog-repositoryDB";
 import {getPaginationValuesInputUserInformation} from "./securityDevices-route";
 import {authAttemptLimit} from "../Middleware/authAttemptLimit";
-import * as http from "http";
+import {UserModel} from "../shemaAndModel";
 
 export const authRouter=Router({})
 
@@ -39,7 +37,7 @@ authRouter.post('/login', authAttemptLimit,loginUserValidation, async (req:Reque
     let refreshToken=null;
     const paginationUserInformation=getPaginationValuesInputUserInformation(ipAddressInput,req.headers['user-agent'])
     const accessToken=await jwtService.createAccessTokenJWT(user.id)
-    const checkTokenInBaseByName = await jwtService.checkTokenInBaseByName(user.id,paginationUserInformation.deviceName)
+    const checkTokenInBaseByName = await jwtService.checkTokenInBaseByName(user.id,paginationUserInformation.title)
     if(!checkTokenInBaseByName){
         const deviceId=randomUUID()
         refreshToken=await jwtService.createRefreshToken(user.id, deviceId)
@@ -51,7 +49,7 @@ authRouter.post('/login', authAttemptLimit,loginUserValidation, async (req:Reque
         refreshToken = await jwtService.createRefreshToken(user.id, checkTokenInBaseByName)
         const lastActiveDate = await jwtService.getLastActiveDateFromRefreshToken(refreshToken)
         const diesAtDate = await jwtService.getDiesAtDate(refreshToken)
-        await jwtService.updateTokenInBase(user.id, paginationUserInformation.deviceName, lastActiveDate, diesAtDate)
+        await jwtService.updateTokenInBase(user.id, paginationUserInformation.title, lastActiveDate, diesAtDate)
     }
     const returnToken={
         accessToken: accessToken,
@@ -118,14 +116,14 @@ authRouter.post('/registration',authAttemptLimit,postUsersValidation,async (req:
 
     const paginationResult =getPaginationValuesAddNewUser(req.body)
     const resultNewUsers= await createUser(paginationResult)
-    await usersCollection.insertOne(resultNewUsers)
+    await UserModel.insertMany(resultNewUsers)
 
     try {
         await emailAdapters.gmailAdapter(req.body.email, resultNewUsers.userConfirmationInfo.code)
     }
     catch (error) {
         console.error('email send out')
-        await usersCollection.deleteOne({id: resultNewUsers.id})
+        await UserModel.deleteOne({id: resultNewUsers.id})
         return res.sendStatus(400)
     }
     return res.sendStatus(204)

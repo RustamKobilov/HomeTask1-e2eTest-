@@ -2,8 +2,8 @@ import {body, cookie, param, query, ValidationError, validationResult} from "exp
 import {NextFunction} from "express";
 import {Request, Response} from "express";
 import {throws} from "assert";
-import {blogsCollection, sessionsTypeCollection} from "../db";
 import {authService} from "../domain/authService";
+import {BlogModel} from "../shemaAndModel";
 
 export const errorMessagesInputValidation = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
@@ -35,7 +35,7 @@ const checkPostTitle = body('title').isString().trim().notEmpty().isLength({min:
 const checkPostShortDescription = body('shortDescription').isString().trim().notEmpty().isLength({min: 1, max: 100})
 const checkPostContent = body('content').isString().trim().notEmpty().isLength({min: 1, max: 1000})
 const checkPostBlogId = body('blogId').isString().trim().notEmpty().isLength({min: 1}).custom(async value => {
-    const blog = await blogsCollection.findOne({id: value}, {projection: {_id: 0}})
+    const blog = await BlogModel.findOne({id: value}, {projection: {_id: 0}})
     if (!blog) {
         throw new Error('blog not found')
     }

@@ -1,7 +1,7 @@
 import {findUserById, userRepository, UserType} from "../RepositoryInDB/user-repositoryDB";
 import bcrypt from "bcrypt";
 import {jwtService} from "../application/jwtService";
-import {blogsCollection} from "../db";
+
 import {randomUUID} from "crypto";
 
 export const authService = {
@@ -26,7 +26,6 @@ export const authService = {
         if(dateCode<dateNow){
             return false
         }
-        console.log('typoi')
         console.log(resultSearchCodeInUser)
 
         await userRepository.updateUserConformation(resultSearchCodeInUser.id)

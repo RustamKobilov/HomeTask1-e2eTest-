@@ -2,8 +2,6 @@ import {Request,Response,Router} from "express";
 
 export const usersRouter=Router({})
 
-import {blogsCollection, usersCollection} from "../db";
-
 import {
     createUser, findUserById,
     getAllUsers,
@@ -11,10 +9,9 @@ import {
     PaginationTypeInputUser
 } from "../RepositoryInDB/user-repositoryDB";
 import {basicAuthMiddleware} from "../Middleware/autorized";
-import {body} from "express-validator";
 import {getUsersValidation, postUsersValidation} from "../Models/InputValidation";
-import {findBlogOnId} from "../RepositoryInDB/blog-repositoryDB";
-import {setDate} from "date-fns";
+import {UserModel} from "../shemaAndModel";
+
 
 const getPaginationValuesUser = (query:any): PaginationTypeInputUser=>{
    return {
@@ -46,7 +43,7 @@ usersRouter.post('/',basicAuthMiddleware,postUsersValidation,async (req:Request,
     const paginationResult =getPaginationValuesAddNewUser(req.body)
     const resultNewUsers= await createUser(paginationResult)
     resultNewUsers.userConfirmationInfo.userConformation=true
-    await usersCollection.insertOne(resultNewUsers)
+    await UserModel.insertMany(resultNewUsers)
     return res.status(201).send({id:resultNewUsers.id,login:resultNewUsers.login,email:resultNewUsers.email,createdAt:resultNewUsers.createdAt})
 })
 
@@ -55,6 +52,6 @@ usersRouter.delete('/:id',basicAuthMiddleware,async (req:Request,res:Response)=>
     if (!findDeleteUser) {
         return res.sendStatus(404);
     }
-    await usersCollection.deleteOne({id: findDeleteUser.id})
+    await UserModel.deleteOne({id: findDeleteUser.id})
     return res.sendStatus(204);
 })

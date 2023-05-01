@@ -1,7 +1,6 @@
-import {commentsCollection, postsCollection} from "../db";
-import {Filter} from "mongodb";
-import {inputSortDataBaseType, PaginationTypePostInputCommentByPost, PostType} from "./posts-repositiryDB";
+import {inputSortDataBaseType, PaginationTypePostInputCommentByPost} from "./posts-repositiryDB";
 import {helper} from "./helper";
+import {CommentModel} from "../shemaAndModel";
 
 export type CommentatorInfo={
     userId:string
@@ -33,12 +32,12 @@ export type UpdateCommentType ={
 
 export async function getAllCommentForPostInBase(pagination:PaginationTypePostInputCommentByPost):
     Promise<inputSortDataBaseType<OutputCommentOutputType>>{
-    const filter: Filter<OutputCommentOutputType> = {postId: pagination.idPost}
-    const countCommentsForPost = await commentsCollection.countDocuments(filter)
+    const filter= {postId: pagination.idPost}
+    const countCommentsForPost = await CommentModel.countDocuments(filter)
     const paginationFromHelperForComments=helper.getPaginationFunctionSkipSortTotal(pagination.pageNumber,pagination.pageSize, countCommentsForPost)
 
-    let sortCommentsForPosts = await commentsCollection.find(filter).sort({[pagination.sortBy]: pagination.sortDirection}).
-    skip(paginationFromHelperForComments.skipPage).limit(pagination.pageSize).project<OutputCommentOutputType>({_id: 0,postId:0}).toArray()
+    let sortCommentsForPosts = await CommentModel.find(filter,{_id: 0, __v: 0}).sort({[pagination.sortBy]: pagination.sortDirection}).
+    skip(paginationFromHelperForComments.skipPage).limit(pagination.pageSize).lean()
 
     return {
         pagesCount: paginationFromHelperForComments.totalCount,
@@ -50,7 +49,7 @@ export async function getAllCommentForPostInBase(pagination:PaginationTypePostIn
 }
 
 export async function createCommentByPost(comment:CommentType):Promise<OutputCommentOutputType>{
-    await commentsCollection.insertOne(comment)
+    await CommentModel.insertMany(comment)
 
     return({id: comment.id,
         content: comment.content,
@@ -58,12 +57,12 @@ export async function createCommentByPost(comment:CommentType):Promise<OutputCom
         createdAt: comment.createdAt})
 }
 export async function getCommentOnId(id:string):Promise<CommentType|null>{
-    const result=await commentsCollection.findOne({id: id}, {projection: {_id: 0,postId:0}});
+    const result=await CommentModel.findOne({id: id}, {_id: 0, __v: 0});
     return result
 }
 
 export async function updateComment(id:string,content:string):Promise<boolean>{
-     const commentUpdate =await commentsCollection.updateOne({id:id},{
+     const commentUpdate =await CommentModel.updateOne({id:id},{
          $set:{
              content:content
          }

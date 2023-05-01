@@ -6,11 +6,9 @@ import {
     getCommentOnId, updateComment
 } from "../RepositoryInDB/commentator-repositoryDB";
 import {postCommentForPostValidation} from "../Models/InputValidation";
-import {blogsCollection, commentsCollection} from "../db";
 import {authMiddleware} from "../Middleware/authMiddleware";
-import {createSecureServer} from "http2";
-import {commentsService} from "./commentsService";
 import {authCommentUser} from "../Middleware/authCommentUser";
+import {CommentModel} from "../shemaAndModel";
 
 export const commentsRouter=Router({})
 
@@ -40,7 +38,6 @@ commentsRouter.get('/:id',async (req:Request,res:Response)=>{
     if(!resultSearch){
         return res.sendStatus(404)
     }
-
     return res.status(200).send(resultSearch)
 })
 
@@ -48,10 +45,7 @@ commentsRouter.get('/:id',async (req:Request,res:Response)=>{
 commentsRouter.put('/:id',authMiddleware,authCommentUser,postCommentForPostValidation,async (req:Request,res:Response)=>{
 
     const pagination=getPaginationUpdateComment(req.params,req.body)
-    //const checkCommentsByUser=await commentsService.checkCommentsUser(req.user!.id,pagination.id)
-    //if(!checkCommentsByUser)
     const resultCommentUpdate=await updateComment(pagination.id,pagination.content)
-    console.log(resultCommentUpdate)
 
     if(!resultCommentUpdate){
         return res.sendStatus(404)
@@ -65,7 +59,7 @@ commentsRouter.delete('/:id',authMiddleware,authCommentUser,async (req:Request,r
     if(!resultSearch){
         return res.sendStatus(404)
     }
-    await commentsCollection.deleteOne({id: pagination.id})
+    await CommentModel.deleteOne({id: pagination.id})
     return res.sendStatus(204);
 })
 

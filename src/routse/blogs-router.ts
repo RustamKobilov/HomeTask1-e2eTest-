@@ -2,7 +2,6 @@ import {Request, Response, Router} from "express";
 import {basicAuthMiddleware} from "../Middleware/autorized";
 import {
     createBlogValidation,
-    createPostValidation,
     errorMessagesInputValidation,
     getBlogsValidation,
     getPostForBlogsValidation, postPostForBlogsValidation,
@@ -14,11 +13,10 @@ import {
     getAllBlog,
     getAllPostsForBlogInBase, PaginationTypeInputParamsBlogs
 } from "../RepositoryInDB/blog-repositoryDB";
-import {blogsCollection} from "../db";
-import {createPostOnId} from "../RepositoryInDB/posts-repositiryDB";
 import {getPaginationPostValueForPost, getPaginationValuesPosts} from "./posts-router";
 import {blogsService} from "./blogsService";
 import {postsService} from "./postsService";
+import {BlogModel} from "../shemaAndModel";
 
 export const blogsRouter = Router({});
 
@@ -48,7 +46,7 @@ blogsRouter.post('/', basicAuthMiddleware, createBlogValidation, errorMessagesIn
         const websiteUrlNewBlog = req.body.websiteUrl;
         const resultCreatBlog = await blogsService.createBlog(nameNewBlog, descriptionNewBlog, websiteUrlNewBlog)
 
-        await blogsCollection.insertOne(resultCreatBlog);
+        await BlogModel.insertMany(resultCreatBlog);
         return res.status(201).send({
             id: resultCreatBlog.id,
             name: resultCreatBlog.name,
@@ -118,6 +116,6 @@ blogsRouter.delete('/:id', basicAuthMiddleware,
         if (!findDeleteBlog) {
             return res.sendStatus(404);
         }
-        await blogsCollection.deleteOne({id: findDeleteBlog.id})
+        await BlogModel.deleteOne({id: findDeleteBlog.id})
         return res.sendStatus(204);
     })

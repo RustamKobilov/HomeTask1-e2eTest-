@@ -1,21 +1,19 @@
 import {Request, Response, Router} from "express";
-import {securityAttemptsEndpoints, sessionsTypeCollection} from "../db";
-import {PaginationTypeInputParamsBlogs} from "../RepositoryInDB/blog-repositoryDB";
-import {UserType} from "../RepositoryInDB/user-repositoryDB";
-import {ActiveSessionsType, jwtService} from "../application/jwtService";
+import {jwtService} from "../application/jwtService";
 import {authRefreshToken} from "../Middleware/authRefreshToken";
+import {AttemptModel, DeviceModel} from "../shemaAndModel";
 
 export const securityRouter = Router({})
 
 export const getPaginationValuesInputUserInformation = (ipAddress: any, userAgent: any): UserInformationType => {
     return {
         ipAddress: ipAddress,
-        deviceName: userAgent
+        title: userAgent
 
     }
 }
 export type UserInformationType = {
-    deviceName: string,
+    title: string,
     ipAddress: string,
 }
 
@@ -31,8 +29,8 @@ securityRouter.get('/devices',authRefreshToken, async (req: Request, res: Respon
     const inputRefreshToken = req.cookies.refreshToken
     const userIdByAndDeviceIdRefreshToken = await jwtService.verifyToken(inputRefreshToken)
 
-    const allCollection = await sessionsTypeCollection
-        .find({userId:userIdByAndDeviceIdRefreshToken.userId}, {projection: {_id: 0, title: '$deviceName',ip:1,lastActiveDate:1,deviceId:1}}).toArray()
+    const allCollection = await DeviceModel
+        .find({userId:userIdByAndDeviceIdRefreshToken.userId},{_id: 0, __v: 0}).lean()
 
     return res.send(allCollection).status(200)
 })
@@ -41,7 +39,7 @@ securityRouter.delete('/devices', authRefreshToken, async (req: Request, res: Re
     const inputRefreshToken = req.cookies.refreshToken
     const userIdByAndDeviceIdRefreshToken = await jwtService.verifyToken(inputRefreshToken)
 
-    const deleteSessionEveryoneBut = await sessionsTypeCollection.deleteMany({
+    const deleteSessionEveryoneBut = await DeviceModel.deleteMany({
         userId: userIdByAndDeviceIdRefreshToken.userId,
         deviceId: {$ne: userIdByAndDeviceIdRefreshToken.deviceId}
     })
@@ -53,19 +51,19 @@ securityRouter.delete('/devices/:deviceId', authRefreshToken, async (req: Reques
     const inputRefreshToken = req.cookies.refreshToken
     const userIdByAndDeviceIdRefreshToken = await jwtService.verifyToken(inputRefreshToken)
 
-    const searchDeviceIdParamsInBase = await sessionsTypeCollection
+    const searchDeviceIdParamsInBase = await DeviceModel
         .findOne({deviceId: req.params.deviceId})
     if (!searchDeviceIdParamsInBase) {
         return res.sendStatus(404)
     }
 
-    const searchDeviceIdParamsInBaseForUser = await sessionsTypeCollection
+    const searchDeviceIdParamsInBaseForUser = await DeviceModel
         .findOne({userId: userIdByAndDeviceIdRefreshToken.userId, deviceId: req.params.deviceId})
     if (!searchDeviceIdParamsInBaseForUser) {
         return res.sendStatus(403)
     }
 
-    const deleteSessionEveryoneBut = await sessionsTypeCollection.deleteMany({
+    const deleteSessionEveryoneBut = await DeviceModel.deleteMany({
         userId: userIdByAndDeviceIdRefreshToken.userId,
         deviceId: req.params.deviceId
     })
@@ -73,8 +71,9 @@ securityRouter.delete('/devices/:deviceId', authRefreshToken, async (req: Reques
     return res.sendStatus(204)
 })
 
+//admin
 securityRouter.get('/attempt',authRefreshToken, async (req: Request, res: Response) => {
-    const allCollection = await securityAttemptsEndpoints.find({}).toArray()
+    const allCollection = await AttemptModel.find({}).lean()
 
     return res.send(allCollection).status(204)
 })

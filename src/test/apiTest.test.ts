@@ -3,12 +3,9 @@ import {app} from "../app";
 import {BlogsType} from "../RepositoryInDB/blog-repositoryDB";
 import {PostType} from "../RepositoryInDB/posts-repositiryDB";
 import {UserType} from "../RepositoryInDB/user-repositoryDB";
-import any = jasmine.any;
-import {header} from "express-validator";
-import {authRouter} from "../routse/authRouter";
-import {sessionsTypeCollection} from "../db";
 import {jwtService} from "../application/jwtService";
-import {notEqual, throws} from "assert";
+import {DeviceModel} from "../shemaAndModel";
+
 
 const delay= async(ms:number)=>{
     return new Promise<void>((resolve,reject)=>{
@@ -669,7 +666,7 @@ describe('auth login token realize', ()=>{
         const lastActiveDate=await jwtService.getLastActiveDateFromRefreshToken(newRefreshToken)
         const verifyToken=await jwtService.verifyToken(newRefreshToken)
         deviceId=verifyToken.deviceId
-        const countUserToken=await sessionsTypeCollection.countDocuments({userId:userId,deviceId:deviceId})
+        const countUserToken=await DeviceModel.countDocuments({userId:userId,deviceId:deviceId})
         expect(countUserToken).toEqual(1)//check many token
 
         refreshToken=newRefreshToken
@@ -682,7 +679,7 @@ describe('auth login token realize', ()=>{
         const LogoutUserRefreshTokensResponse=await request(app).post('/auth/logout')
             .set('Cookie', [refreshTokenCookies]).expect(204)
 
-        const countUserToken=await sessionsTypeCollection.countDocuments({id:userId,deviceId:deviceId})
+        const countUserToken=await DeviceModel.countDocuments({id:userId,deviceId:deviceId})
         expect(countUserToken).toEqual(0)
 
     })

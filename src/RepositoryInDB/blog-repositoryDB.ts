@@ -1,8 +1,7 @@
-import {blogsCollection, postsCollection} from "../db";
-import {randomUUID} from "crypto";
-import {Filter, SortDirection} from "mongodb";
 import {inputSortDataBaseType, PaginationTypeInputPosts, PostType} from "./posts-repositiryDB";
 import {helper, ReturnDistributedDate} from "./helper";
+import {BlogModel, PostModel} from "../shemaAndModel";
+
 
 export type BlogsType = {
     id: string
@@ -24,17 +23,18 @@ export type PaginationTypeInputParamsBlogs = {
 
 export async function getAllBlog(paginationBlogs: PaginationTypeInputParamsBlogs):
     Promise<ReturnDistributedDate<BlogsType>> {
-    console.log(paginationBlogs)
 
-    const filter: Filter<BlogsType> = {name: {$regex: paginationBlogs.searchNameTerm ?? '', $options: "$i"}}
+    const filter={name: {$regex: paginationBlogs.searchNameTerm ?? '', $options: "i"}}
 
-    const totalCountBlog =  await blogsCollection.countDocuments(filter)
+    const totalCountBlog =  await BlogModel.countDocuments(filter)
 
-    const filterFindBlog = await blogsCollection.find(filter)
-
+    const sortBy=paginationBlogs.sortBy
+    const sortDirection=paginationBlogs.sortDirection
     const paginationFromHelperForBlogs=helper.getPaginationFunctionSkipSortTotal(paginationBlogs.pageNumber,paginationBlogs.pageSize, totalCountBlog)
 
-    const blogs = await filterFindBlog.sort({[paginationBlogs.sortBy]: paginationBlogs.sortDirection}).skip(paginationFromHelperForBlogs.skipPage).limit(paginationBlogs.pageSize).project<BlogsType>({_id: 0}).toArray()
+    const blogs = await BlogModel.find(filter, {_id: 0, __v: 0}).sort({[sortBy]: sortDirection})
+        .skip(paginationFromHelperForBlogs.skipPage)
+        .limit(paginationBlogs.pageSize).lean()
 
     return {
         pagesCount: paginationFromHelperForBlogs.totalCount, page: paginationBlogs.pageNumber, pageSize: paginationBlogs.pageSize,
@@ -47,12 +47,12 @@ export async function getAllPostsForBlogInBase(paginationPosts: PaginationTypeIn
     Promise<inputSortDataBaseType<PostType>> {
 
 
-    const filter: Filter<PostType> = {blogId: blogId}
-    const countPostsForBlog = await postsCollection.countDocuments(filter)
+    const filter= {blogId: blogId}
+    const countPostsForBlog = await PostModel.countDocuments(filter)
     const paginationFromHelperForPosts=helper.getPaginationFunctionSkipSortTotal(paginationPosts.pageNumber,paginationPosts.pageSize, countPostsForBlog)
 
-    let sortPostsForBlogs = await postsCollection.find(filter).sort({[paginationPosts.sortBy]: paginationPosts.sortDirection}).
-    skip(paginationFromHelperForPosts.skipPage).limit(paginationPosts.pageSize).project<PostType>({_id: 0}).toArray()
+    let sortPostsForBlogs = await PostModel.find(filter, {_id: 0, __v: 0}).sort({[paginationPosts.sortBy]: paginationPosts.sortDirection}).
+    skip(paginationFromHelperForPosts.skipPage).limit(paginationPosts.pageSize).lean()
 
     return {
         pagesCount: paginationFromHelperForPosts.totalCount,
@@ -64,21 +64,21 @@ export async function getAllPostsForBlogInBase(paginationPosts: PaginationTypeIn
 }
 
 export async function findBlogOnId(id: string): Promise<BlogsType | null> {
-    let blog = await blogsCollection.findOne({id: id}, {projection: {_id: 0}});
-    console.log(blog)
+    let blog = await BlogModel.findOne({id: id}, {_id: 0, __v: 0});
+    console.log(blog + ' result search blog for delete')
     return blog;
 }
 
 export async function updateBlogOnId(id: string, newName: string, newDescription: string, newWebsiteUrl: string):
     Promise<boolean> {
-    let blog = await blogsCollection.updateOne({id: id}, {
+    let blog = await BlogModel.updateOne({id: id}, {
         $set: {
             name: newName,
             websiteUrl: newWebsiteUrl,
             description: newDescription
         }
     })
-    console.log(blog)
+    console.log(blog.matchedCount  + ' result update blog')
     return blog.matchedCount === 1
 }
 
