@@ -4,29 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="efca8f2c-cf58-4b7b-abe7-c4ff0a3c8910" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/shemaAndModel.ts" afterDir="false" />
+    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="30/03/23 work test finish yakubovskogo.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Middleware/authAttemptLimit.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Middleware/authAttemptLimit.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/InputValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/InputValidation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/attempt-repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/attempt-repository.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/commentator-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/commentator-repositoryDB.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/posts-repositiryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/posts-repositiryDB.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/user-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/user-repositoryDB.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/jwtService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/jwtService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/db.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/authService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/authService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/adapters/email-adapters.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/adapters/email-adapters.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routse/authRouter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/authRouter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/blogs-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/blogs-router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/commentsRouter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/commentsRouter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/posts-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/posts-router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/securityDevices-route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/securityDevices-route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/user-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/user-router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/apiTest.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/apiTest.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shemaAndModel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shemaAndModel.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +25,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="hometaskSprint3dz1SecurityDevices" />
+        <entry key="$PROJECT_DIR$" value="hometaskSprint2dz4RefreshTiken" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -55,27 +37,26 @@
     <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2J2VHcp7Z3dVT9COTzuMKnFwF8t" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/it incubator/hometask1(e2eTest)&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs.jest.jest_package&quot;: &quot;D:/it incubator/hometask1(e2eTest)/node_modules/jest&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\it incubator\\hometask1(e2eTest)\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "D:/it incubator/hometask1(e2eTest)/node_modules/jest",
+    "nodejs_package_manager_path": "yarn",
+    "ts.external.directory.path": "D:\\Inst\\webstorm\\WebStorm 2022.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\it incubator\hometask1(e2eTest)\src\RepositoryInDB" />
@@ -88,34 +69,8 @@
       <recent name="D:\it incubator\hometask1(e2eTest)\src" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.dev">
-    <configuration name="Session and device for User /SecurityDevices" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
-      <test-names>
-        <test-name value="Session and device for User /SecurityDevices" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="auth login token realize" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
-      <test-names>
-        <test-name value="auth login token realize" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="auth login token realize.give token(create admin) and auth with token true" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="npm.watch">
+    <configuration name="Output model checking(byBlogs) true.sortBy checking query params true" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
@@ -124,8 +79,21 @@
       <scope-kind value="TEST" />
       <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
       <test-names>
-        <test-name value="auth login token realize" />
-        <test-name value="give token(create admin) and auth with token true" />
+        <test-name value="Output model checking(byBlogs) true" />
+        <test-name value="sortBy checking query params true" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="auth/registration test" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
+      <test-names>
+        <test-name value="auth/registration test" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -152,13 +120,23 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="watch" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="watch" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.watch" />
         <item itemvalue="npm.dev" />
-        <item itemvalue="Jest.Session and device for User /SecurityDevices" />
-        <item itemvalue="Jest.auth login token realize.give token(create admin) and auth with token true" />
-        <item itemvalue="Jest.auth login token realize" />
+        <item itemvalue="Jest.Output model checking(byBlogs) true.sortBy checking query params true" />
         <item itemvalue="Jest.auth/registration-confirmation test" />
+        <item itemvalue="Jest.auth/registration test" />
       </list>
     </recent_temporary>
   </component>
@@ -186,9 +164,105 @@
       <workItem from="1679420325600" duration="2720000" />
       <workItem from="1679498886507" duration="7369000" />
       <workItem from="1679670302193" duration="11061000" />
-      <workItem from="1680340080334" duration="37903000" />
-      <workItem from="1681320297073" duration="2395000" />
-      <workItem from="1681402312018" duration="129970000" />
+      <workItem from="1680340080334" duration="34342000" />
+    </task>
+    <task id="LOCAL-00138" summary="09/03/23 test.">
+      <created>1678480768284</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
+      <option name="project" value="LOCAL" />
+      <updated>1678480768284</updated>
+    </task>
+    <task id="LOCAL-00139" summary="09/03/23 test.">
+      <created>1678524806155</created>
+      <option name="number" value="00139" />
+      <option name="presentableId" value="LOCAL-00139" />
+      <option name="project" value="LOCAL" />
+      <updated>1678524806155</updated>
+    </task>
+    <task id="LOCAL-00140" summary="11/03/23 fix code.">
+      <created>1678525323249</created>
+      <option name="number" value="00140" />
+      <option name="presentableId" value="LOCAL-00140" />
+      <option name="project" value="LOCAL" />
+      <updated>1678525323249</updated>
+    </task>
+    <task id="LOCAL-00141" summary="11/03/23 fix code.">
+      <created>1678525774125</created>
+      <option name="number" value="00141" />
+      <option name="presentableId" value="LOCAL-00141" />
+      <option name="project" value="LOCAL" />
+      <updated>1678525774125</updated>
+    </task>
+    <task id="LOCAL-00142" summary="11/03/23 fix code.">
+      <created>1678527194063</created>
+      <option name="number" value="00142" />
+      <option name="presentableId" value="LOCAL-00142" />
+      <option name="project" value="LOCAL" />
+      <updated>1678527194063</updated>
+    </task>
+    <task id="LOCAL-00143" summary="11/03/23 fix code.">
+      <created>1678527891437</created>
+      <option name="number" value="00143" />
+      <option name="presentableId" value="LOCAL-00143" />
+      <option name="project" value="LOCAL" />
+      <updated>1678527891437</updated>
+    </task>
+    <task id="LOCAL-00144" summary="11/03/23 fix code.">
+      <created>1678528687779</created>
+      <option name="number" value="00144" />
+      <option name="presentableId" value="LOCAL-00144" />
+      <option name="project" value="LOCAL" />
+      <updated>1678528687779</updated>
+    </task>
+    <task id="LOCAL-00145" summary="11/03/23 fix code.">
+      <created>1678530459280</created>
+      <option name="number" value="00145" />
+      <option name="presentableId" value="LOCAL-00145" />
+      <option name="project" value="LOCAL" />
+      <updated>1678530459280</updated>
+    </task>
+    <task id="LOCAL-00146" summary="11/03/23 fix code.">
+      <created>1678530821007</created>
+      <option name="number" value="00146" />
+      <option name="presentableId" value="LOCAL-00146" />
+      <option name="project" value="LOCAL" />
+      <updated>1678530821007</updated>
+    </task>
+    <task id="LOCAL-00147" summary="11/03/23 fix code.">
+      <created>1678532766455</created>
+      <option name="number" value="00147" />
+      <option name="presentableId" value="LOCAL-00147" />
+      <option name="project" value="LOCAL" />
+      <updated>1678532766455</updated>
+    </task>
+    <task id="LOCAL-00148" summary="18/03/23 email send.">
+      <created>1679127219815</created>
+      <option name="number" value="00148" />
+      <option name="presentableId" value="LOCAL-00148" />
+      <option name="project" value="LOCAL" />
+      <updated>1679127219889</updated>
+    </task>
+    <task id="LOCAL-00149" summary="18/03/23 email send.">
+      <created>1679128859250</created>
+      <option name="number" value="00149" />
+      <option name="presentableId" value="LOCAL-00149" />
+      <option name="project" value="LOCAL" />
+      <updated>1679128859250</updated>
+    </task>
+    <task id="LOCAL-00150" summary="18/03/23 email send.">
+      <created>1679133782593</created>
+      <option name="number" value="00150" />
+      <option name="presentableId" value="LOCAL-00150" />
+      <option name="project" value="LOCAL" />
+      <updated>1679133782593</updated>
+    </task>
+    <task id="LOCAL-00151" summary="18/03/23 email send.">
+      <created>1679134782081</created>
+      <option name="number" value="00151" />
+      <option name="presentableId" value="LOCAL-00151" />
+      <option name="project" value="LOCAL" />
+      <updated>1679134782081</updated>
     </task>
     <task id="LOCAL-00152" summary="18/03/23 email send.">
       <created>1679135280201</created>
@@ -435,105 +509,7 @@
       <option name="project" value="LOCAL" />
       <updated>1680365968050</updated>
     </task>
-    <task id="LOCAL-00187" summary="api test 04.04.23">
-      <created>1680632803688</created>
-      <option name="number" value="00187" />
-      <option name="presentableId" value="LOCAL-00187" />
-      <option name="project" value="LOCAL" />
-      <updated>1680632803720</updated>
-    </task>
-    <task id="LOCAL-00188" summary="work 22.04.23">
-      <created>1682186085367</created>
-      <option name="number" value="00188" />
-      <option name="presentableId" value="LOCAL-00188" />
-      <option name="project" value="LOCAL" />
-      <updated>1682186085368</updated>
-    </task>
-    <task id="LOCAL-00189" summary="tests 24.04.23">
-      <created>1682350679910</created>
-      <option name="number" value="00189" />
-      <option name="presentableId" value="LOCAL-00189" />
-      <option name="project" value="LOCAL" />
-      <updated>1682350679975</updated>
-    </task>
-    <task id="LOCAL-00190" summary="tests 24.04.23">
-      <created>1682369534064</created>
-      <option name="number" value="00190" />
-      <option name="presentableId" value="LOCAL-00190" />
-      <option name="project" value="LOCAL" />
-      <updated>1682369534112</updated>
-    </task>
-    <task id="LOCAL-00191" summary="tests 26.04.23">
-      <created>1682516867743</created>
-      <option name="number" value="00191" />
-      <option name="presentableId" value="LOCAL-00191" />
-      <option name="project" value="LOCAL" />
-      <updated>1682516867764</updated>
-    </task>
-    <task id="LOCAL-00192" summary="refactor 26.04.23">
-      <created>1682518405532</created>
-      <option name="number" value="00192" />
-      <option name="presentableId" value="LOCAL-00192" />
-      <option name="project" value="LOCAL" />
-      <updated>1682518405532</updated>
-    </task>
-    <task id="LOCAL-00193" summary="refactor 26.04.23">
-      <created>1682519462249</created>
-      <option name="number" value="00193" />
-      <option name="presentableId" value="LOCAL-00193" />
-      <option name="project" value="LOCAL" />
-      <updated>1682519462249</updated>
-    </task>
-    <task id="LOCAL-00194" summary="refactor 26.04.23">
-      <created>1682520754690</created>
-      <option name="number" value="00194" />
-      <option name="presentableId" value="LOCAL-00194" />
-      <option name="project" value="LOCAL" />
-      <updated>1682520754690</updated>
-    </task>
-    <task id="LOCAL-00195" summary="refactor 26.04.23">
-      <created>1682521177578</created>
-      <option name="number" value="00195" />
-      <option name="presentableId" value="LOCAL-00195" />
-      <option name="project" value="LOCAL" />
-      <updated>1682521177578</updated>
-    </task>
-    <task id="LOCAL-00196" summary="refactor 26.04.23">
-      <created>1682521710262</created>
-      <option name="number" value="00196" />
-      <option name="presentableId" value="LOCAL-00196" />
-      <option name="project" value="LOCAL" />
-      <updated>1682521710263</updated>
-    </task>
-    <task id="LOCAL-00197" summary="refactor 26.04.23">
-      <created>1682522484607</created>
-      <option name="number" value="00197" />
-      <option name="presentableId" value="LOCAL-00197" />
-      <option name="project" value="LOCAL" />
-      <updated>1682522484607</updated>
-    </task>
-    <task id="LOCAL-00198" summary="refactor 26.04.23">
-      <created>1682526075788</created>
-      <option name="number" value="00198" />
-      <option name="presentableId" value="LOCAL-00198" />
-      <option name="project" value="LOCAL" />
-      <updated>1682526075788</updated>
-    </task>
-    <task id="LOCAL-00199" summary="refactor 26.04.23">
-      <created>1682531413453</created>
-      <option name="number" value="00199" />
-      <option name="presentableId" value="LOCAL-00199" />
-      <option name="project" value="LOCAL" />
-      <updated>1682531413454</updated>
-    </task>
-    <task id="LOCAL-00200" summary="refactor 26.04.23">
-      <created>1682532794123</created>
-      <option name="number" value="00200" />
-      <option name="presentableId" value="LOCAL-00200" />
-      <option name="project" value="LOCAL" />
-      <updated>1682532794126</updated>
-    </task>
-    <option name="localTasksCounter" value="201" />
+    <option name="localTasksCounter" value="187" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -586,11 +562,6 @@
     <MESSAGE value="gi" />
     <MESSAGE value="api test 30.03.23" />
     <MESSAGE value="api test 01.04.23" />
-    <MESSAGE value="api test 04.04.23" />
-    <MESSAGE value="work 22.04.23" />
-    <MESSAGE value="tests 24.04.23" />
-    <MESSAGE value="tests 26.04.23" />
-    <MESSAGE value="refactor 26.04.23" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor 26.04.23" />
+    <option name="LAST_COMMIT_MESSAGE" value="api test 01.04.23" />
   </component>
 </project>

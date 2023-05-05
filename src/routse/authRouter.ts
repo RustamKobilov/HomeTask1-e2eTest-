@@ -119,7 +119,7 @@ authRouter.post('/registration',authAttemptLimit,postUsersValidation,async (req:
     await UserModel.insertMany(resultNewUsers)
 
     try {
-        await emailAdapters.gmailAdapter(req.body.email, resultNewUsers.userConfirmationInfo.code)
+        await emailAdapters.gmailSendEmailRegistration(req.body.email, resultNewUsers.userConfirmationInfo.code)
     }
     catch (error) {
         console.error('email send out')
@@ -144,7 +144,7 @@ authRouter.post('/registration-email-resending',authAttemptLimit,postRegistratio
         return res.sendStatus(400)
     }
     try {
-        await emailAdapters.gmailAdapter(user.email, refreshUserConfirmationCode)
+        await emailAdapters.gmailSendEmailRegistration(user.email, refreshUserConfirmationCode)
     }
     catch (error) {
         console.error('email send out')

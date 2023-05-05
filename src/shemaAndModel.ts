@@ -29,15 +29,30 @@ const postSchema = new mongoose.Schema({
 
 export const PostModel=mongoose.model(postCollectionName,postSchema)
 
+
+const commentatorInfoShema= new mongoose.Schema({
+    userId:{type:String,required:true},
+    userLogin:{type:String,required:true}
+})
+
+
+
 const commentSchema=new mongoose.Schema({
     postId:{type:String,required:true},
     id:{type:String,required:true},
     content:{type:String,required:true},
-    commentatorInfo:{userId:{type:String,required:true}, userLogin:{type:String,required:true},required:true},
+    commentatorInfo:{type:commentatorInfoShema,required:true},
     createdAt:{type:String,required:true}
 })
 
 export const CommentModel=mongoose.model(commentCollectionName,commentSchema)
+
+const  userConfirmationInfoShema = new mongoose.Schema({
+    userConformation:{type:Boolean,required:true},
+    code:{type:String,required:true},
+    expirationCode:{type:String,required:true}
+})
+
 
 
 const userSchema= new mongoose.Schema({
@@ -48,11 +63,7 @@ const userSchema= new mongoose.Schema({
     createdAt: {type:String,required:true},
     salt: {type:String,required:true},
     hash: {type:String,required:true},
-    userConfirmationInfo:{
-        userConformation:{type:Boolean,required:true},
-        code:{type:String,required:true},
-        expirationCode:{type:String,required:true},required:true
-    }
+    userConfirmationInfo:{type:userConfirmationInfoShema,required:true}
 })
 
 export const UserModel=mongoose.model(userCollectionName,userSchema)

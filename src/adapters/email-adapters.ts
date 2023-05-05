@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 
 export const emailAdapters={
-    async gmailAdapter(email:string,code:string){
+    async gmailSendEmailRegistration(email:string, code:string){
         const transport= await nodemailer.createTransport({
             service:'gmail',
             auth:
@@ -22,5 +22,26 @@ export const emailAdapters={
 
 
         })
+    },
+    async gmailSendEmailPasswordRecovery(email:string,code:string){
+        const transport= await nodemailer.createTransport({
+            service:'gmail',
+            auth:
+                {
+                    user:'rustamincubator@gmail.com',
+                    pass:'poznkvwenjowduaq'
+                }
+        })
+
+        const info=await transport.sendMail({
+                from:'admin <rustamincubator@gmail.com>',
+                to:email,
+                subject:'Password recovery in platform',
+            html: '<h1>Password recovery</h1>'+
+            '<p>To finish password recovery please follow the link below:'+
+                ' <a href=\'https://somesite.com/password-recovery?recoveryCode=' + code + '>recovery password</a>'+
+             '</p>'
+
+    })
     }
 }
