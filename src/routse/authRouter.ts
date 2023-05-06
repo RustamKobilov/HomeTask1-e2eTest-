@@ -165,6 +165,7 @@ authRouter.post('/password-recovery',authAttemptLimit,postRecoveryPassword
     ,async(req:Request,res:Response)=>{
         const emailInput=req.body.email
         const recoveryCode= randomUUID()
+        console.log('skolko vremia ne yasno')
         const expiredRecoveryCode:number=30000
 
     try {
