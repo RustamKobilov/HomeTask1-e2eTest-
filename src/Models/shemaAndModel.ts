@@ -6,6 +6,8 @@ const userCollectionName='Users'
 const deviceCollectionName='Devices'
 const commentCollectionName='Comments'
 const attemptAccessEndpointCollectionName='AttemptAccessEndpoint'
+const recoveryPasswordCollectionName='recoveryCodePasswordForUser'
+
 export const blogSchema = new mongoose.Schema({
     id: {type:String,required:true},
     name: {type:String,required:true},
@@ -30,18 +32,16 @@ const postSchema = new mongoose.Schema({
 export const PostModel=mongoose.model(postCollectionName,postSchema)
 
 
-const commentatorInfoShema= new mongoose.Schema({
+const commentatorInfoSchema= new mongoose.Schema({
     userId:{type:String,required:true},
     userLogin:{type:String,required:true}
 })
-
-
 
 const commentSchema=new mongoose.Schema({
     postId:{type:String,required:true},
     id:{type:String,required:true},
     content:{type:String,required:true},
-    commentatorInfo:{type:commentatorInfoShema,required:true},
+    commentatorInfo:{type:commentatorInfoSchema,required:true},
     createdAt:{type:String,required:true}
 })
 
@@ -52,8 +52,6 @@ const  userConfirmationInfoShema = new mongoose.Schema({
     code:{type:String,required:true},
     expirationCode:{type:String,required:true}
 })
-
-
 
 const userSchema= new mongoose.Schema({
     id:{type:String,required:true},
@@ -73,7 +71,7 @@ const deviceSchema= new mongoose.Schema({
     lastActiveDate:{type:String,required:true},
     diesAtDate:{type:String,required:true},
     deviceId:{type:String,required:true},
-    deviceName:{type:String,required:true},
+    title:{type:String,required:true},
     ip:{type:String,required:true}
 })
 
@@ -86,4 +84,12 @@ const attemptAccessEndpoint = new mongoose.Schema({
 })
 
 export const AttemptModel=mongoose.model(attemptAccessEndpointCollectionName,attemptAccessEndpoint)
+
+const recoveryCodePasswordForUserSchema=new mongoose.Schema({
+    recoveryCode:{type:String,required:true},
+    userId:{type:String,required:true},
+    diesAtDate:{type:String,required:true}
+})
+
+export const RecoveryPasswordModel= mongoose.model(recoveryPasswordCollectionName,recoveryCodePasswordForUserSchema)
 

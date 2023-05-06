@@ -10,7 +10,7 @@ import {commentsRouter} from "./routse/commentsRouter";
 import {securityRouter} from "./routse/securityDevices-route";
 import cookieParser from "cookie-parser";
 import useragent from "express-useragent"
-import {AttemptModel, BlogModel, CommentModel, DeviceModel, PostModel, UserModel} from "./shemaAndModel";
+import {AttemptModel, BlogModel, CommentModel, DeviceModel, PostModel, UserModel} from "./Models/shemaAndModel";
 
 
 export const app = express();

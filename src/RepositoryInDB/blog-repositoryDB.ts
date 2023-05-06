@@ -1,6 +1,6 @@
 import {inputSortDataBaseType, PaginationTypeInputPosts, PostType} from "./posts-repositiryDB";
 import {helper, ReturnDistributedDate} from "./helper";
-import {BlogModel, PostModel} from "../shemaAndModel";
+import {BlogModel, PostModel} from "../Models/shemaAndModel";
 
 
 export type BlogsType = {

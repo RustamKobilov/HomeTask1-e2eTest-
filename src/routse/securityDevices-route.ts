@@ -1,7 +1,7 @@
 import {Request, Response, Router} from "express";
 import {jwtService} from "../application/jwtService";
 import {authRefreshToken} from "../Middleware/authRefreshToken";
-import {AttemptModel, DeviceModel} from "../shemaAndModel";
+import {AttemptModel, DeviceModel} from "../Models/shemaAndModel";
 
 export const securityRouter = Router({})
 

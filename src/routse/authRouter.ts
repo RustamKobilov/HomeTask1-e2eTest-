@@ -1,6 +1,6 @@
 import {Request, Response, Router} from "express";
 import {
-    loginUserValidation, postRegistrationEmailResending,
+    loginUserValidation, postNewPassword, postRecoveryPassword, postRegistrationEmailResending,
     postRegistrConfirm,
     postUsersValidation,
 } from "../Models/InputValidation";
@@ -14,7 +14,7 @@ import {authRefreshToken} from "../Middleware/authRefreshToken";
 import {randomUUID} from "crypto";
 import {getPaginationValuesInputUserInformation} from "./securityDevices-route";
 import {authAttemptLimit} from "../Middleware/authAttemptLimit";
-import {UserModel} from "../shemaAndModel";
+import {RecoveryPasswordModel, UserModel} from "../Models/shemaAndModel";
 
 export const authRouter=Router({})
 
@@ -161,3 +161,49 @@ authRouter.post('/registration-email-resending',authAttemptLimit,postRegistratio
     return res.sendStatus(204)
 })
 
+authRouter.post('/password-recovery',authAttemptLimit,postRecoveryPassword
+    ,async(req:Request,res:Response)=>{
+        const emailInput=req.body.email
+        const recoveryCode= randomUUID()
+        const expiredRecoveryCode:number=30000
+
+    try {
+        await emailAdapters.gmailSendEmailPasswordRecovery(emailInput, recoveryCode)
+    }
+    catch (error) {
+        console.error('email send out')
+        return res.status(400).send({
+            "errorsMessages": [
+                {
+                    "message": "email invalid",
+                    "field": "email"
+                }
+            ]
+        })
+    }
+
+
+        const checkEmailAmongUser = await authService.checkEmail(emailInput)
+        if(checkEmailAmongUser) {
+            await  RecoveryPasswordModel.insertMany({
+                recoveryCode:recoveryCode,
+                userId:checkEmailAmongUser.id,
+                diesAtDate:new Date(Date.now() +expiredRecoveryCode).toISOString()
+            })
+
+        }
+
+
+    return res.sendStatus(204)
+
+})
+
+authRouter.post('/new-password',authAttemptLimit,postNewPassword,async (req:Request,res:Response)=>{
+    const newPassword=req.body.newPassword
+    const recoveryCode=req.body.recoveryCode
+    const updatePassword=await userRepository.updatePasswordForUserbyRecovery(newPassword,recoveryCode)
+    if(!updatePassword){
+        return res.sendStatus(400)
+    }
+    return res.sendStatus(204)
+})

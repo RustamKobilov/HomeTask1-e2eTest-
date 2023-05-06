@@ -1,5 +1,5 @@
 import {SecurityOfAttemptsType} from "../routse/securityDevices-route";
-import {AttemptModel} from "../shemaAndModel";
+import {AttemptModel} from "../Models/shemaAndModel";
 
 
 export const attemptRepository={

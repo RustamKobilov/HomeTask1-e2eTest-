@@ -4,7 +4,7 @@ import {BlogsType} from "../RepositoryInDB/blog-repositoryDB";
 import {PostType} from "../RepositoryInDB/posts-repositiryDB";
 import {UserType} from "../RepositoryInDB/user-repositoryDB";
 import {jwtService} from "../application/jwtService";
-import {DeviceModel} from "../shemaAndModel";
+import {DeviceModel} from "../Models/shemaAndModel";
 
 
 const delay= async(ms:number)=>{

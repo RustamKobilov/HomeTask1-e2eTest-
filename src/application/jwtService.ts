@@ -4,7 +4,7 @@ dotenv.config()
 import jwt from 'jsonwebtoken'
 import {settings} from "../settings";
 import {UserInformationType} from "../routse/securityDevices-route";
-import {DeviceModel} from "../shemaAndModel";
+import {DeviceModel} from "../Models/shemaAndModel";
 
 
 export type ActiveSessionsType ={

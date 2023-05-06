@@ -8,7 +8,7 @@ import {
 import {postCommentForPostValidation} from "../Models/InputValidation";
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {authCommentUser} from "../Middleware/authCommentUser";
-import {CommentModel} from "../shemaAndModel";
+import {CommentModel} from "../Models/shemaAndModel";
 
 export const commentsRouter=Router({})
 

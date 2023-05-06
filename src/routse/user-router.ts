@@ -10,7 +10,7 @@ import {
 } from "../RepositoryInDB/user-repositoryDB";
 import {basicAuthMiddleware} from "../Middleware/autorized";
 import {getUsersValidation, postUsersValidation} from "../Models/InputValidation";
-import {UserModel} from "../shemaAndModel";
+import {UserModel} from "../Models/shemaAndModel";
 
 
 const getPaginationValuesUser = (query:any): PaginationTypeInputUser=>{

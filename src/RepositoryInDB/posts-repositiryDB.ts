@@ -2,7 +2,7 @@ import {BlogsType} from "./blog-repositoryDB";
 import {randomUUID} from "crypto";
 import { helper} from "./helper";
 import {CommentatorInfo, OutputCommentOutputType, CommentType} from "./commentator-repositoryDB";
-import {BlogModel, PostModel} from "../shemaAndModel";
+import {BlogModel, PostModel} from "../Models/shemaAndModel";
 
 export type PostType = {
     id: string

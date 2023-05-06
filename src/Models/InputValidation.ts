@@ -3,7 +3,7 @@ import {NextFunction} from "express";
 import {Request, Response} from "express";
 import {throws} from "assert";
 import {authService} from "../domain/authService";
-import {BlogModel} from "../shemaAndModel";
+import {BlogModel, RecoveryPasswordModel} from "./shemaAndModel";
 
 export const errorMessagesInputValidation = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
@@ -27,7 +27,6 @@ const checkBlogWebsiteUrl = body('websiteUrl').isString().trim().notEmpty().isLe
 }).matches(/^https:\/\/([a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*\/?$/);
 
 
-//('[a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*\/?$')
 export const createBlogValidation = [checkBlogName, checkBlogDescription, checkBlogWebsiteUrl]
 export const updateBlogValidation = [checkBlogName, checkBlogDescription, checkBlogWebsiteUrl]
 
@@ -57,7 +56,8 @@ const checkUserEmail=body('email').isString().trim().notEmpty().matches(/^[\w-\.
     throw new Error('email busy')
 })
 
-const checkUserEmailAndConformation=body('email').isString().trim().matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/).custom(async (value,{req}) => {
+const checkUserEmailAndConformation=body('email').isString().trim().matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
+    .custom(async (value,{req}) => {
     const user = await authService.checkEmail(value)
     if (!user) {
         throw new Error('email busy')
@@ -92,6 +92,17 @@ const checkInputCode=body('code').exists().isString().notEmpty().custom(async va
     return true
 })
 
+const checkUserEmailPasswordRecovery=body('email').isString().trim().notEmpty().matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
+
+const checkPasswordRecovery=body('newPassword').isString().trim().notEmpty().isLength({min:6,max:20})
+const checkInputRecoveryCode=body("recoveryCode").isString().trim().notEmpty()
+    .custom(async (value,{req})=>{
+    const resultRecoveryCode=await authService.checkRecoveryCode(value)
+    if(!resultRecoveryCode){
+        throw new Error('RecoveryCode invalid')
+    }
+    return true
+})
 
 export const createPostValidation = [checkPostTitle, checkPostShortDescription, checkPostContent, checkPostBlogId]
 export const updatePostValidation = [...createPostValidation]
@@ -108,3 +119,5 @@ export const getCommentsForPostValidation = [checkPageNumber, checkPageSize, che
 
 export const postRegistrationEmailResending=[checkUserEmailAndConformation,errorMessagesInputValidation]
 export const postRegistrConfirm=[checkInputCode,errorMessagesInputValidation]
+export const postRecoveryPassword=[checkUserEmailPasswordRecovery,errorMessagesInputValidation]
+export const postNewPassword=[checkPasswordRecovery,checkInputRecoveryCode,errorMessagesInputValidation]

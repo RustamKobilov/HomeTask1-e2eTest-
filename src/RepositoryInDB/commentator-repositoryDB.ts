@@ -1,6 +1,6 @@
 import {inputSortDataBaseType, PaginationTypePostInputCommentByPost} from "./posts-repositiryDB";
 import {helper} from "./helper";
-import {CommentModel} from "../shemaAndModel";
+import {CommentModel} from "../Models/shemaAndModel";
 
 export type CommentatorInfo={
     userId:string

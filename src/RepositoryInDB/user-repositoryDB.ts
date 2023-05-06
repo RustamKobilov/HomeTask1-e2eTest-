@@ -3,7 +3,7 @@ import {randomUUID} from "crypto";
 import {helper} from "./helper";
 import {inputSortDataBaseType, PostType} from "./posts-repositiryDB";
 import {ObjectId} from "mongodb";
-import {UserModel} from "../shemaAndModel";
+import {RecoveryPasswordModel, UserModel} from "../Models/shemaAndModel";
 
 export type UserType = {
     id: string
@@ -41,6 +41,13 @@ export type PaginationTypeAddNewUser = {
     password: string
     email: string
 }
+
+export type RecoveryPassword={
+    recoveryCode:string,
+    userId:string,
+    diesAtDate:string
+}
+
 
 export async function getAllUsers(paginationUser: PaginationTypeInputUser): Promise<inputSortDataBaseType<UserType>> {
     const searchLoginTerm = paginationUser.searchLoginTerm != null ? {
@@ -142,5 +149,21 @@ export const userRepository = {
         })
 
         return user.matchedCount === 1
-    }
+    },
+    async getRecoveryCode(code:String):Promise<RecoveryPassword|null>{
+        return RecoveryPasswordModel.findOne({recoveryCode:code}, {_id: 0, __v: 0})
+    },
+    async updatePasswordForUserbyRecovery(newPassword:string,recoveryCode:string):
+    Promise<boolean> {
+        let userIdInRecovery= await this.getRecoveryCode(recoveryCode)
+        if(!userIdInRecovery){
+            return false
+        }
+        let password = await UserModel.updateOne({id: userIdInRecovery.userId}, {
+            $set: {
+                password:newPassword
+            }
+        })
+        return password.matchedCount === 1
+}
 }

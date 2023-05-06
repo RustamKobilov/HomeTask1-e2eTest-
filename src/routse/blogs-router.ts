@@ -16,7 +16,7 @@ import {
 import {getPaginationPostValueForPost, getPaginationValuesPosts} from "./posts-router";
 import {blogsService} from "./blogsService";
 import {postsService} from "./postsService";
-import {BlogModel} from "../shemaAndModel";
+import {BlogModel} from "../Models/shemaAndModel";
 
 export const blogsRouter = Router({});
 

@@ -18,7 +18,7 @@ import {
 import {postsService} from "./postsService";
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {getAllCommentForPostInBase, getCommentOnId} from "../RepositoryInDB/commentator-repositoryDB";
-import {PostModel} from "../shemaAndModel";
+import {PostModel} from "../Models/shemaAndModel";
 
 export const postsRouter = Router({});
 

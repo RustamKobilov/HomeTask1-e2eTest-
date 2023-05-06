@@ -23,7 +23,7 @@ export const emailAdapters={
 
         })
     },
-    async gmailSendEmailPasswordRecovery(email:string,code:string){
+    async gmailSendEmailPasswordRecovery(email:string,recoveryCode:string){
         const transport= await nodemailer.createTransport({
             service:'gmail',
             auth:
@@ -39,7 +39,7 @@ export const emailAdapters={
                 subject:'Password recovery in platform',
             html: '<h1>Password recovery</h1>'+
             '<p>To finish password recovery please follow the link below:'+
-                ' <a href=\'https://somesite.com/password-recovery?recoveryCode=' + code + '>recovery password</a>'+
+                ' <a href=\'https://somesite.com/password-recovery?recoveryCode=' + recoveryCode + '>recovery password</a>'+
              '</p>'
 
     })
