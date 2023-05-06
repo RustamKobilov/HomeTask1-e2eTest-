@@ -10,7 +10,15 @@ import {commentsRouter} from "./routse/commentsRouter";
 import {securityRouter} from "./routse/securityDevices-route";
 import cookieParser from "cookie-parser";
 import useragent from "express-useragent"
-import {AttemptModel, BlogModel, CommentModel, DeviceModel, PostModel, UserModel} from "./Models/shemaAndModel";
+import {
+    AttemptModel,
+    BlogModel,
+    CommentModel,
+    DeviceModel,
+    PostModel,
+    RecoveryPasswordModel,
+    UserModel
+} from "./Models/shemaAndModel";
 
 
 export const app = express();
@@ -38,6 +46,7 @@ app.delete('/testing/all-data', async (req: Request, res: Response) => {
     await CommentModel.deleteMany({})
     await DeviceModel.deleteMany({})
     await AttemptModel.deleteMany({})
+    await RecoveryPasswordModel.deleteMany({})
 
     return res.sendStatus(204);
 });
