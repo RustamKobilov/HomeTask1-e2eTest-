@@ -63,7 +63,7 @@ const searchEmailTerm = paginationUser.searchEmailTerm != null ? {
         paginationUser.pageSize,totalCountUser)
 
     let sortUser = await UserModel.find({$or: [searchLoginTerm,searchEmailTerm]}
-        ,{_id: 0, __v: 0,hash: 0, salt: 0, password: 0}).
+        ,{_id: 0, __v: 0,hash: 0, salt: 0, password: 0, userConfirmationInfo:{_id: 0, __v: 0}}).
     sort({[paginationUser.sortBy]: paginationUser.sortDirection})
         .skip(paginationFromHelperForUsers.skipPage)
         .limit(paginationUser.pageSize).lean()

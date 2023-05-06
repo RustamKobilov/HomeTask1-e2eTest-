@@ -72,7 +72,7 @@ securityRouter.delete('/devices/:deviceId', authRefreshToken, async (req: Reques
 })
 
 //admin
-securityRouter.get('/attempt',authRefreshToken, async (req: Request, res: Response) => {
+securityRouter.get('/attempt', async (req: Request, res: Response) => {
     const allCollection = await AttemptModel.find({}).lean()
 
     return res.send(allCollection).status(204)
