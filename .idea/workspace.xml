@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="efca8f2c-cf58-4b7b-abe7-c4ff0a3c8910" name="Changes" comment="realize new password,but no time(html text) 06.05.23">
-      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/user-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/user-repositoryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/apiTest.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/apiTest.test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +71,7 @@
       <recent name="D:\it incubator\hometask1(e2eTest)\src\application " />
     </key>
   </component>
-  <component name="RunManager" selected="npm.dev">
+  <component name="RunManager" selected="Jest.recovery password">
     <configuration name="Session and device for User /SecurityDevices" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -111,7 +112,7 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="auth/registration-confirmation test" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="recovery password" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
@@ -120,7 +121,7 @@
       <scope-kind value="SUITE" />
       <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
       <test-names>
-        <test-name value="auth/registration-confirmation test" />
+        <test-name value="recovery password" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -136,11 +137,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.recovery password" />
         <item itemvalue="npm.dev" />
         <item itemvalue="Jest.Session and device for User /SecurityDevices" />
         <item itemvalue="Jest.auth login token realize.give token(create admin) and auth with token true" />
         <item itemvalue="Jest.auth login token realize" />
-        <item itemvalue="Jest.auth/registration-confirmation test" />
       </list>
     </recent_temporary>
   </component>
@@ -171,13 +172,6 @@
       <workItem from="1680340080334" duration="37903000" />
       <workItem from="1681320297073" duration="2395000" />
       <workItem from="1681402312018" duration="129970000" />
-    </task>
-    <task id="LOCAL-00162" summary="api test 30.03.23">
-      <created>1680198158388</created>
-      <option name="number" value="00162" />
-      <option name="presentableId" value="LOCAL-00162" />
-      <option name="project" value="LOCAL" />
-      <updated>1680198158388</updated>
     </task>
     <task id="LOCAL-00163" summary="api test 30.03.23">
       <created>1680198727924</created>
@@ -515,7 +509,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683468568626</updated>
     </task>
-    <option name="localTasksCounter" value="211" />
+    <task id="LOCAL-00211" summary="realize new password,but no time(html text) 06.05.23">
+      <created>1683469103947</created>
+      <option name="number" value="00211" />
+      <option name="presentableId" value="LOCAL-00211" />
+      <option name="project" value="LOCAL" />
+      <updated>1683469103947</updated>
+    </task>
+    <option name="localTasksCounter" value="212" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

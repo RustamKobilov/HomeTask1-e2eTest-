@@ -4,7 +4,8 @@ import {BlogsType} from "../RepositoryInDB/blog-repositoryDB";
 import {PostType} from "../RepositoryInDB/posts-repositiryDB";
 import {UserType} from "../RepositoryInDB/user-repositoryDB";
 import {jwtService} from "../application/jwtService";
-import {DeviceModel} from "../Models/shemaAndModel";
+import {DeviceModel, RecoveryPasswordModel} from "../Models/shemaAndModel";
+import mongoose from "mongoose";
 
 
 const delay= async(ms:number)=>{
@@ -13,8 +14,8 @@ const delay= async(ms:number)=>{
     })
 }
 
-
-
+const mongoURI = 'mongodb://127.0.0.1:27017' ;
+//process.env.MONGO_URI_CLUSTER||
 const BasicAuthorized={
     authorization:'Authorization',
     password:'Basic YWRtaW46cXdlcnR5'
@@ -928,8 +929,42 @@ describe('Session and device for User /SecurityDevices', ()=> {
     })
 })
 
+describe('recovery password',()=> {
+
+        beforeAll(async () => {
+            /* Connecting to the database. */
+            await mongoose.connect(mongoURI)
+        })
+
+        afterAll(async () => {
+            /* Closing database connection after each test. */
+            await mongoose.connection.close()
+        })
 
 
+    beforeAll(async () => {
+        await request(app).delete('/testing/all-data')
+    })
+    const userForChecking1 = {
+        login: 'token1',
+        password: '1234222223',
+        email: 'tryToken1@ram.by'
+    }
+    const emailRecoveryPassword={
+        email:userForChecking1.email
+    }
 
 
+    it('validation email false',async ()=> {
+        const CreateUserResponse = await request(app).post('/users/').set(BasicAuthorized.authorization, BasicAuthorized.password).send(userForChecking1).expect(201)
+        const RecoveryPasswordResponse= await request(app).post('/auth/password-recovery').send(emailRecoveryPassword).expect(204)
+        const RecoveryBaseLength= await RecoveryPasswordModel.findOne({}).count()
+        console.log(RecoveryBaseLength)
+        emailRecoveryPassword.email='ffdd.by'
+        const FakeEmailRecoveryPasswordResponse=await request(app).post('/auth/password-recovery').send(emailRecoveryPassword).expect(400)
+        const RecoveryBaseLengthAfter= await RecoveryPasswordModel.findOne({}).count()
+        console.log(RecoveryBaseLengthAfter)
+        expect(RecoveryBaseLength).toEqual(RecoveryBaseLengthAfter)
+    })
+    })
 
