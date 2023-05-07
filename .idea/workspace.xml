@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="efca8f2c-cf58-4b7b-abe7-c4ff0a3c8910" name="Changes" comment="realize new password,but no time(html text) 06.05.23">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/user-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/user-repositoryDB.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/securityDevices-route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/securityDevices-route.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,13 +171,6 @@
       <workItem from="1680340080334" duration="37903000" />
       <workItem from="1681320297073" duration="2395000" />
       <workItem from="1681402312018" duration="129970000" />
-    </task>
-    <task id="LOCAL-00161" summary="api test 30.03.23">
-      <created>1680197799988</created>
-      <option name="number" value="00161" />
-      <option name="presentableId" value="LOCAL-00161" />
-      <option name="project" value="LOCAL" />
-      <updated>1680197799988</updated>
     </task>
     <task id="LOCAL-00162" summary="api test 30.03.23">
       <created>1680198158388</created>
@@ -517,7 +508,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683466779534</updated>
     </task>
-    <option name="localTasksCounter" value="210" />
+    <task id="LOCAL-00210" summary="realize new password,but no time(html text) 06.05.23">
+      <created>1683468568626</created>
+      <option name="number" value="00210" />
+      <option name="presentableId" value="LOCAL-00210" />
+      <option name="project" value="LOCAL" />
+      <updated>1683468568626</updated>
+    </task>
+    <option name="localTasksCounter" value="211" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -165,7 +165,8 @@ export const userRepository = {
         let password = await UserModel.updateOne({id: userIdInRecovery.userId}, {
             $set: {
                 password:hashResultNewPassword,
-                hash:hashResultNewPassword
+                hash:hashResultNewPassword,
+                salt:salt
             }
         })
         return password.matchedCount === 1
