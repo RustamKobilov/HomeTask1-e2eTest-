@@ -159,9 +159,13 @@ export const userRepository = {
         if(!userIdInRecovery){
             return false
         }
+        const salt = await bcrypt.genSalt(8)
+        const hashResultNewPassword = await hashPassword(newPassword, salt)
+
         let password = await UserModel.updateOne({id: userIdInRecovery.userId}, {
             $set: {
-                password:newPassword
+                password:hashResultNewPassword,
+                hash:hashResultNewPassword
             }
         })
         return password.matchedCount === 1

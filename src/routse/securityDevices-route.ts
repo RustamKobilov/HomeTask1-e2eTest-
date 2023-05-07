@@ -1,7 +1,7 @@
 import {Request, Response, Router} from "express";
 import {jwtService} from "../application/jwtService";
 import {authRefreshToken} from "../Middleware/authRefreshToken";
-import {AttemptModel, DeviceModel, RecoveryPasswordModel} from "../Models/shemaAndModel";
+import {AttemptModel, DeviceModel, RecoveryPasswordModel, UserModel} from "../Models/shemaAndModel";
 
 export const securityRouter = Router({})
 
@@ -74,6 +74,12 @@ securityRouter.delete('/devices/:deviceId', authRefreshToken, async (req: Reques
 //admin
 securityRouter.get('/attempt', async (req: Request, res: Response) => {
     const allCollection = await RecoveryPasswordModel.find({}).lean()
+
+    return res.send(allCollection).status(204)
+})
+
+securityRouter.get('/userAll', async (req: Request, res: Response) => {
+    const allCollection = await UserModel.find({}).lean()
 
     return res.send(allCollection).status(204)
 })
