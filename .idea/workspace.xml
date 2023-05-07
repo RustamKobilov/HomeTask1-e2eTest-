@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="efca8f2c-cf58-4b7b-abe7-c4ff0a3c8910" name="Changes" comment="realize new password 06.05.23">
+    <list default="true" id="efca8f2c-cf58-4b7b-abe7-c4ff0a3c8910" name="Changes" comment="realize new password,but no time 06.05.23">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/InputValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/InputValidation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/user-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/user-repositoryDB.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domain/authService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/authService.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routse/authRouter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/authRouter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/securityDevices-route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/securityDevices-route.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,13 +174,6 @@
       <workItem from="1680340080334" duration="37903000" />
       <workItem from="1681320297073" duration="2395000" />
       <workItem from="1681402312018" duration="129970000" />
-    </task>
-    <task id="LOCAL-00158" summary="18/03/23 email send.">
-      <created>1679147807285</created>
-      <option name="number" value="00158" />
-      <option name="presentableId" value="LOCAL-00158" />
-      <option name="project" value="LOCAL" />
-      <updated>1679147807285</updated>
     </task>
     <task id="LOCAL-00159" summary="18/03/23 email send.">
       <created>1679148762700</created>
@@ -519,7 +511,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683390792660</updated>
     </task>
-    <option name="localTasksCounter" value="207" />
+    <task id="LOCAL-00207" summary="realize new password,but no time 06.05.23">
+      <created>1683464316626</created>
+      <option name="number" value="00207" />
+      <option name="presentableId" value="LOCAL-00207" />
+      <option name="project" value="LOCAL" />
+      <updated>1683464316626</updated>
+    </task>
+    <option name="localTasksCounter" value="208" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -553,7 +552,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="23/12/22 end version" />
     <MESSAGE value="23/12/22 end version + vercel" />
     <MESSAGE value="29/12/22 end version + vercel(vosk.znak)" />
     <MESSAGE value="05/01/23 blogs complete." />
@@ -578,6 +576,7 @@
     <MESSAGE value="tests 26.04.23" />
     <MESSAGE value="refactor 26.04.23" />
     <MESSAGE value="realize new password 06.05.23" />
-    <option name="LAST_COMMIT_MESSAGE" value="realize new password 06.05.23" />
+    <MESSAGE value="realize new password,but no time 06.05.23" />
+    <option name="LAST_COMMIT_MESSAGE" value="realize new password,but no time 06.05.23" />
   </component>
 </project>

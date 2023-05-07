@@ -171,6 +171,7 @@ authRouter.post('/password-recovery',authAttemptLimit,postRecoveryPassword
         const checkEmailAmongUser = await authService.checkEmail(emailInput)
 
         if(checkEmailAmongUser) {
+            console.log('email yes')
             await  RecoveryPasswordModel.insertMany({
                 recoveryCode:recoveryCode,
                 userId:checkEmailAmongUser.id,

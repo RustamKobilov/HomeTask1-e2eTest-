@@ -64,7 +64,7 @@ export const authService = {
         }
         return true
     },
-    async checkRecoveryCode(recoveryCode:string):Promise<RecoveryPassword|boolean>{
+    async checkRecoveryCode(recoveryCode:string):Promise<RecoveryPassword|false>{
         const resultVerifyCode=await userRepository.getRecoveryCode(recoveryCode)
         if(!resultVerifyCode){
             return false
