@@ -164,34 +164,34 @@ authRouter.post('/registration-email-resending',authAttemptLimit,postRegistratio
 authRouter.post('/password-recovery',authAttemptLimit,postRecoveryPassword
     ,async(req:Request,res:Response)=>{
         const emailInput=req.body.email
-        const recoveryCode= randomUUID()
+        let recoveryCode=randomUUID()
         console.log('skolko vremia ne yasno')
         const expiredRecoveryCode:number=30000
 
-    try {
-        await emailAdapters.gmailSendEmailPasswordRecovery(emailInput, recoveryCode)
-    }
-    catch (error) {
-        console.error('email send out')
-        return res.status(400).send({
-            "errorsMessages": [
-                {
-                    "message": "email invalid",
-                    "field": "email"
-                }
-            ]
-        })
-    }
-
-
         const checkEmailAmongUser = await authService.checkEmail(emailInput)
+
         if(checkEmailAmongUser) {
             await  RecoveryPasswordModel.insertMany({
                 recoveryCode:recoveryCode,
                 userId:checkEmailAmongUser.id,
                 diesAtDate:new Date(Date.now() +expiredRecoveryCode).toISOString()
             })
+        }
 
+
+        try {
+            await emailAdapters.gmailSendEmailPasswordRecovery(emailInput, recoveryCode)
+        }
+        catch (error) {
+            console.error('email send out')
+            return res.status(400).send({
+                "errorsMessages": [
+                    {
+                        "message": "email invalid",
+                        "field": "email"
+                    }
+                ]
+            })
         }
 
 
@@ -202,9 +202,16 @@ authRouter.post('/password-recovery',authAttemptLimit,postRecoveryPassword
 authRouter.post('/new-password',authAttemptLimit,postNewPassword,async (req:Request,res:Response)=>{
     const newPassword=req.body.newPassword
     const recoveryCode=req.body.recoveryCode
-    const updatePassword=await userRepository.updatePasswordForUserbyRecovery(newPassword,recoveryCode)
+    const updatePassword=await userRepository.updatePasswordForUserByRecovery(newPassword,recoveryCode)
     if(!updatePassword){
-        return res.sendStatus(400)
+        return res.status(400).send({
+            "errorsMessages": [
+                {
+                    "message": "update password invalid",
+                    "field": "password"
+                }
+            ]
+        })
     }
     return res.sendStatus(204)
 })

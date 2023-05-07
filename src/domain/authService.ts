@@ -54,20 +54,29 @@ export const authService = {
         }
         return newCode
     },
-    async checkRecoveryCode(recoveryCode:string):Promise<boolean>{
+    async checkPasswordReplay(newPassword:string,userId:string):Promise<boolean>{
+      const oldPassword = await userRepository.getPasswordByUserId(userId)
+        if(!oldPassword){
+            return false
+        }
+        if(oldPassword.password==newPassword){
+            return false
+        }
+        return true
+    },
+    async checkRecoveryCode(recoveryCode:string):Promise<RecoveryPassword|boolean>{
         const resultVerifyCode=await userRepository.getRecoveryCode(recoveryCode)
         if(!resultVerifyCode){
             return false
         }
-        console.log('recoverCode find seccess')
-        console.log(resultVerifyCode)
-        console.log(new Date().toISOString() + ' date now')
-        const dateExpire=Date.parse(resultVerifyCode.diesAtDate)
-        if(dateExpire<Date.now()){
-            return false
-        }
-        console.log('recoveryCode time seceess')
-        return true
-    },
-
+        // console.log('recoverCode find seccess')
+        // console.log(resultVerifyCode)
+        // console.log(new Date().toISOString() + ' date now')
+        // const dateExpire=Date.parse(resultVerifyCode.diesAtDate)
+        // if(dateExpire<Date.now()){
+        //     return false
+        // }
+        //console.log('recoveryCode time seceess')
+        return resultVerifyCode
+    }
 }

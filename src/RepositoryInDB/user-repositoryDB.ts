@@ -153,7 +153,7 @@ export const userRepository = {
     async getRecoveryCode(code:String):Promise<RecoveryPassword|null>{
         return RecoveryPasswordModel.findOne({recoveryCode:code}, {_id: 0, __v: 0})
     },
-    async updatePasswordForUserbyRecovery(newPassword:string,recoveryCode:string):
+    async updatePasswordForUserByRecovery(newPassword:string, recoveryCode:string):
     Promise<boolean> {
         let userIdInRecovery= await this.getRecoveryCode(recoveryCode)
         if(!userIdInRecovery){
@@ -165,5 +165,8 @@ export const userRepository = {
             }
         })
         return password.matchedCount === 1
-}
+},
+    async getPasswordByUserId(userId:string):Promise<UserType|null>{
+        return UserModel.findOne({id:userId},{_id: 0, __v: 0})
+    }
 }

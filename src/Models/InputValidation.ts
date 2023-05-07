@@ -95,7 +95,8 @@ const checkInputCode=body('code').exists().isString().notEmpty().custom(async va
 const checkUserEmailPasswordRecovery=body('email').isString().trim().notEmpty().matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
 
 const checkPasswordRecovery=body('newPassword').isString().trim().notEmpty().isLength({min:6,max:20})
-const checkInputRecoveryCode=body("recoveryCode").isString().trim().notEmpty()
+
+const checkInputRecoveryCodeAndPasswordReplay=body("recoveryCode").isString().trim().notEmpty()
     .custom(async (value,{req})=>{
     const resultRecoveryCode=await authService.checkRecoveryCode(value)
     if(!resultRecoveryCode){
@@ -120,4 +121,15 @@ export const getCommentsForPostValidation = [checkPageNumber, checkPageSize, che
 export const postRegistrationEmailResending=[checkUserEmailAndConformation,errorMessagesInputValidation]
 export const postRegistrConfirm=[checkInputCode,errorMessagesInputValidation]
 export const postRecoveryPassword=[checkUserEmailPasswordRecovery,errorMessagesInputValidation]
-export const postNewPassword=[checkPasswordRecovery,checkInputRecoveryCode,errorMessagesInputValidation]
+export const postNewPassword=[checkPasswordRecovery,checkInputRecoveryCodeAndPasswordReplay,errorMessagesInputValidation]
+
+//   const recoveryCode=body("recoveryCode").isString().custom(async valueCode=>{
+//             const resultRecoveryCode=await authService.checkRecoveryCode(valueCode)
+//             if(!resultRecoveryCode){
+//                 throw new Error('RecoveryCode no in base')
+//             }
+//             const resultPasswortReplay=await authService.checkPasswordReplay(valuePassword,resultRecoveryCode.userId)
+//             if(!resultPasswortReplay){
+//
+//             }
+//             })
