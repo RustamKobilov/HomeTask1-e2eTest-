@@ -7,7 +7,7 @@ import {postsRouter} from "./routse/posts-router";
 import {usersRouter} from "./routse/user-router";
 import {authRouter} from "./routse/authRouter";
 import {commentsRouter} from "./routse/commentsRouter";
-import {securityRouter} from "./routse/securityDevices-route";
+import {securityRouter} from "./routse/devices-route";
 import cookieParser from "cookie-parser";
 import useragent from "express-useragent"
 import {

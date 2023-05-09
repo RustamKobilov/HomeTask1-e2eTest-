@@ -1,4 +1,4 @@
-import {SecurityOfAttemptsType} from "../routse/securityDevices-route";
+import {SecurityOfAttemptsType} from "../routse/devices-route";
 import {AttemptModel} from "../Models/shemaAndModel";
 
 

@@ -1,12 +1,11 @@
 import {randomUUID} from "crypto";
 import {
-    createPostOnId,
-    findBlogName, PaginationTypeGetInputCommentByPost,
-    PaginationTypeInputPostValueForPost,
+    PaginationTypeGetInputCommentByPost,
+    PaginationTypeInputPostValueForPost, postsRepository,
     PostType
-} from "../RepositoryInDB/posts-repositiryDB";
+} from "../RepositoryInDB/posts-repositoryDB";
 import {UserType} from "../RepositoryInDB/user-repositoryDB";
-import {CommentatorInfo, createCommentByPost, CommentType} from "../RepositoryInDB/commentator-repositoryDB";
+import {CommentatorInfo, commentsRepository, CommentType} from "../RepositoryInDB/comments-repositoryDB";
 
 export const postsService={
     async createPost(titleNewPost: string, shortDescriptionNewPost: string, contentNewPost: string,
@@ -22,12 +21,12 @@ export const postsService={
             blogName: blogNameForPost,
             createdAt: new Date().toISOString()
         };
-        const addNewPost=await createPostOnId(newPost)
+        const addNewPost=await postsRepository.createPostOnId(newPost)
 
         return addNewPost;
     },
     async createPostOnId(pagination:PaginationTypeInputPostValueForPost,blogId:string):Promise<PostType|boolean> {
-        const blogNameForPost = await findBlogName(blogId);
+        const blogNameForPost = await postsRepository.findBlogName(blogId);
 
         if (!blogNameForPost) {
             return false;
@@ -49,7 +48,7 @@ export const postsService={
             },
             createdAt: new Date().toISOString()
         };
-        const addNewComment=await createCommentByPost(newComment)
+        const addNewComment=await commentsRepository.createCommentByPost(newComment)
         return addNewComment
     }
 }

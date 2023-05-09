@@ -9,15 +9,14 @@ import {
 } from "../Models/InputValidation";
 
 import {
-    findPostOnId,
-    getAllPosts, PaginationTypeGetInputCommentByPost,
-    PaginationTypeInputPosts, PaginationTypeInputPostValueForPost,
-    PaginationTypePostInputCommentByPost,
-    updatePostOnId
-} from "../RepositoryInDB/posts-repositiryDB";
+    PaginationTypeGetInputCommentByPost,
+    PaginationTypeInputPosts,
+    PaginationTypeInputPostValueForPost, PaginationTypePostInputCommentByPost,
+    postsRepository
+} from "../RepositoryInDB/posts-repositoryDB";
 import {postsService} from "./postsService";
 import {authMiddleware} from "../Middleware/authMiddleware";
-import {getAllCommentForPostInBase, getCommentOnId} from "../RepositoryInDB/commentator-repositoryDB";
+import {commentsRepository} from "../RepositoryInDB/comments-repositoryDB";
 import {PostModel} from "../Models/shemaAndModel";
 
 export const postsRouter = Router({});
@@ -58,7 +57,7 @@ export const getPaginationPostCommentForPost=(params:any, body:any):PaginationTy
 
 postsRouter.get('/', getPostValidation, async (req: Request, res: Response) => {
     const paginationResultPosts = getPaginationValuesPosts(req.query)
-    const resultAllPosts = await getAllPosts(paginationResultPosts);
+    const resultAllPosts = await postsRepository.getAllPosts(paginationResultPosts);
     return res.status(200).send(resultAllPosts)
 })
 
@@ -75,7 +74,7 @@ postsRouter.post('/', basicAuthMiddleware, createPostValidation, errorMessagesIn
     })
 
 postsRouter.get('/:id', async (req: Request, res: Response) => {
-    const findPost = await findPostOnId(req.params.id);
+    const findPost = await postsRepository.findPostOnId(req.params.id);
     if (findPost) {
         return res.status(200).send(findPost)
     }
@@ -87,7 +86,7 @@ postsRouter.put('/:id', basicAuthMiddleware, updatePostValidation, errorMessages
     async (req: Request, res: Response) => {
         const idUpdatePost = req.params.id;
         const paginationValues=getPaginationPostValueForPost(req.body)
-        const findUpdatePost = await updatePostOnId(idUpdatePost,paginationValues,req.body.blogId);
+        const findUpdatePost = await postsRepository.updatePostOnId(idUpdatePost,paginationValues,req.body.blogId);
         if (!findUpdatePost) {
             return res.sendStatus(404);
         }
@@ -97,7 +96,7 @@ postsRouter.put('/:id', basicAuthMiddleware, updatePostValidation, errorMessages
     })
 
 postsRouter.delete('/:id', basicAuthMiddleware, async (req: Request, res: Response) => {
-    const findDeletePost = await findPostOnId(req.params.id);
+    const findDeletePost = await postsRepository.findPostOnId(req.params.id);
     if (!findDeletePost) {
 
         return res.sendStatus(404);
@@ -109,18 +108,18 @@ postsRouter.delete('/:id', basicAuthMiddleware, async (req: Request, res: Respon
 
 postsRouter.get('/:postId/comments', getCommentsForPostValidation,async (req: Request, res: Response) => {
     const pagination=getPaginationGetCommentForPost(req.query,req.params)
-    const resultSearchPost=await findPostOnId(pagination.idPost)
+    const resultSearchPost=await postsRepository.findPostOnId(pagination.idPost)
     if(!resultSearchPost){
         return res.sendStatus(404)
     }
-    const resultAllCommentsByPosts = await getAllCommentForPostInBase(pagination);
+    const resultAllCommentsByPosts = await commentsRepository.getAllCommentForPostInBase(pagination);
     return res.status(200).send(resultAllCommentsByPosts)
 })
 postsRouter.post('/:postId/comments', authMiddleware,postCommentForPostValidation,async (req: Request, res: Response) => {
     const pagination=getPaginationPostCommentForPost(req.params,req.body)
     const user=req.user!
 
-    const resultSearchPost=await findPostOnId(pagination.idPost)
+    const resultSearchPost=await postsRepository.findPostOnId(pagination.idPost)
     if(!resultSearchPost){
         return res.sendStatus(404)
     }

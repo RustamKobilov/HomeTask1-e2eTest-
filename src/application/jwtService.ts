@@ -3,7 +3,7 @@ dotenv.config()
 
 import jwt from 'jsonwebtoken'
 import {settings} from "../settings";
-import {UserInformationType} from "../routse/securityDevices-route";
+import {UserInformationType} from "../routse/devices-route";
 import {DeviceModel} from "../Models/shemaAndModel";
 
 

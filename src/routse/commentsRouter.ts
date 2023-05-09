@@ -1,14 +1,12 @@
 import {Request, Response,Router} from "express";
 import {
-    CommentatorInfo,
-    InputCommentByIdType,
-    CommentType, UpdateCommentType,
-    getCommentOnId, updateComment
-} from "../RepositoryInDB/commentator-repositoryDB";
+    commentsRepository, InputCommentByIdType, UpdateCommentType
+} from "../RepositoryInDB/comments-repositoryDB";
 import {postCommentForPostValidation} from "../Models/InputValidation";
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {authCommentUser} from "../Middleware/authCommentUser";
 import {CommentModel} from "../Models/shemaAndModel";
+import {commentsService} from "./commentsService";
 
 export const commentsRouter=Router({})
 
@@ -33,7 +31,7 @@ const getPaginationDeleteCommentById=(params:any):InputCommentByIdType=>{
 
 commentsRouter.get('/:id',async (req:Request,res:Response)=>{
     const pagination=getPaginationCommentById(req.params)
-    const resultSearch=await getCommentOnId(pagination.id)
+    const resultSearch=await commentsRepository.getCommentOnId(pagination.id)
 
     if(!resultSearch){
         return res.sendStatus(404)
@@ -45,7 +43,7 @@ commentsRouter.get('/:id',async (req:Request,res:Response)=>{
 commentsRouter.put('/:id',authMiddleware,authCommentUser,postCommentForPostValidation,async (req:Request,res:Response)=>{
 
     const pagination=getPaginationUpdateComment(req.params,req.body)
-    const resultCommentUpdate=await updateComment(pagination.id,pagination.content)
+    const resultCommentUpdate=await commentsRepository.updateComment(pagination.id,pagination.content)
 
     if(!resultCommentUpdate){
         return res.sendStatus(404)
@@ -55,7 +53,7 @@ commentsRouter.put('/:id',authMiddleware,authCommentUser,postCommentForPostValid
 
 commentsRouter.delete('/:id',authMiddleware,authCommentUser,async (req:Request,res:Response)=>{
     const pagination=getPaginationDeleteCommentById(req.params)
-    const resultSearch=await getCommentOnId(pagination.id)
+    const resultSearch=await commentsRepository.getCommentOnId(pagination.id)
     if(!resultSearch){
         return res.sendStatus(404)
     }

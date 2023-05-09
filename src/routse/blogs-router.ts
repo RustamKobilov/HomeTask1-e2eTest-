@@ -7,11 +7,7 @@ import {
     getPostForBlogsValidation, postPostForBlogsValidation,
     updateBlogValidation
 } from "../Models/InputValidation";
-import {
-    findBlogOnId,
-    updateBlogOnId,
-    getAllBlog,
-    getAllPostsForBlogInBase, PaginationTypeInputParamsBlogs
+import {PaginationTypeInputParamsBlogs, blogRepository
 } from "../RepositoryInDB/blog-repositoryDB";
 import {getPaginationPostValueForPost, getPaginationValuesPosts} from "./posts-router";
 import {blogsService} from "./blogsService";
@@ -33,7 +29,7 @@ const getPaginationValuesBlogs = (query: any): PaginationTypeInputParamsBlogs =>
 
 blogsRouter.get('/', getBlogsValidation, async (req: Request, res: Response) => {
     const paginationResult = getPaginationValuesBlogs(req.query)
-    const resultAllBlogs = await getAllBlog(paginationResult);
+    const resultAllBlogs = blogRepository.getAllBlog(paginationResult);
     return res.status(200).send(resultAllBlogs)
 })
 
@@ -61,12 +57,12 @@ blogsRouter.post('/', basicAuthMiddleware, createBlogValidation, errorMessagesIn
 blogsRouter.get('/:id/posts', getPostForBlogsValidation, errorMessagesInputValidation, async (req: Request, res: Response) => {
     const blogId = req.params.id;
     const paginationResult = getPaginationValuesPosts(req.query)
-    const searchBlog=await findBlogOnId(blogId)
+    const searchBlog=await blogRepository.findBlogOnId(blogId)
     if (searchBlog==null) {
         return res.sendStatus(404);
     }
 
-    const getAllPostsForBLog = await getAllPostsForBlogInBase(paginationResult, blogId)
+    const getAllPostsForBLog = await blogRepository.getAllPostsForBlogInBase(paginationResult, blogId)
 
     return res.status(200).send(getAllPostsForBLog);
 
@@ -85,7 +81,7 @@ blogsRouter.post('/:id/posts', basicAuthMiddleware, postPostForBlogsValidation, 
 
 
 blogsRouter.get('/:id', async (req: Request, res: Response) => {
-    const findBlog = await findBlogOnId(req.params.id);
+    const findBlog = await blogRepository.findBlogOnId(req.params.id);
     if (findBlog) {
         return res.status(200).send(findBlog)
     }
@@ -100,7 +96,7 @@ blogsRouter.put('/:id', basicAuthMiddleware, updateBlogValidation, errorMessages
         const descriptionUpdateBlog = req.body.description;
         const websiteUrlUpdateBlog = req.body.websiteUrl;
 
-        const UpdateBlog = await updateBlogOnId(idBlog, nameUpdateBlog, descriptionUpdateBlog, websiteUrlUpdateBlog);
+        const UpdateBlog = await blogRepository.updateBlogOnId(idBlog, nameUpdateBlog, descriptionUpdateBlog, websiteUrlUpdateBlog);
         if (!UpdateBlog) {
             return res.sendStatus(404);
         }
@@ -112,7 +108,7 @@ blogsRouter.put('/:id', basicAuthMiddleware, updateBlogValidation, errorMessages
 blogsRouter.delete('/:id', basicAuthMiddleware,
     async (req: Request, res: Response) => {
 
-        const findDeleteBlog = await findBlogOnId(req.params.id);
+        const findDeleteBlog = await blogRepository.findBlogOnId(req.params.id);
         if (!findDeleteBlog) {
             return res.sendStatus(404);
         }

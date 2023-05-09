@@ -1,11 +1,12 @@
 import request from "supertest";
 import {app} from "../app";
 import {BlogsType} from "../RepositoryInDB/blog-repositoryDB";
-import {PostType} from "../RepositoryInDB/posts-repositiryDB";
-import {UserType} from "../RepositoryInDB/user-repositoryDB";
+import {PostType} from "../RepositoryInDB/posts-repositoryDB";
+import {userRepository, UserType} from "../RepositoryInDB/user-repositoryDB";
 import {jwtService} from "../application/jwtService";
 import {DeviceModel, RecoveryPasswordModel} from "../Models/shemaAndModel";
 import mongoose from "mongoose";
+import {randomUUID} from "crypto";
 
 
 const delay= async(ms:number)=>{
@@ -20,6 +21,20 @@ const BasicAuthorized={
     authorization:'Authorization',
     password:'Basic YWRtaW46cXdlcnR5'
 }
+
+
+describe('all test',()=>{
+
+    beforeAll(async () => {
+        /* Connecting to the database. */
+        await mongoose.connect(mongoURI)
+    })
+
+    afterAll(async () => {
+        /* Closing database connection after each test. */
+        await mongoose.connection.close()
+    })
+
 
 describe('/Blogs CRUD', () => {
     beforeAll(async () => {
@@ -931,16 +946,6 @@ describe('Session and device for User /SecurityDevices', ()=> {
 
 describe('recovery password',()=> {
 
-        beforeAll(async () => {
-            /* Connecting to the database. */
-            await mongoose.connect(mongoURI)
-        })
-
-        afterAll(async () => {
-            /* Closing database connection after each test. */
-            await mongoose.connection.close()
-        })
-
 
     beforeAll(async () => {
         await request(app).delete('/testing/all-data')
@@ -953,18 +958,48 @@ describe('recovery password',()=> {
     const emailRecoveryPassword={
         email:userForChecking1.email
     }
+    let userIdForTrueRecoveryPassword:any=null
+    const newPasswordBody={
+        newPassword: '1123jiyg',
+        recoveryCode: 'null'
+    }
 
-
-    it('validation email false',async ()=> {
+    it('validation email false and check email in base',async ()=> {
         const CreateUserResponse = await request(app).post('/users/').set(BasicAuthorized.authorization, BasicAuthorized.password).send(userForChecking1).expect(201)
         const RecoveryPasswordResponse= await request(app).post('/auth/password-recovery').send(emailRecoveryPassword).expect(204)
+        const RecoveryBase=await RecoveryPasswordModel.find({}).lean()
+        newPasswordBody.recoveryCode=RecoveryBase[0].recoveryCode
+        userIdForTrueRecoveryPassword=RecoveryBase[0].userId
+        console.log(RecoveryBase)
+        console.log(userIdForTrueRecoveryPassword)
+        emailRecoveryPassword.email='ffa55.by'
+        const EmailIncorrectInputRecoveryPasswordResponse=await request(app).post('/auth/password-recovery').send(emailRecoveryPassword).expect(400)
+        emailRecoveryPassword.email='255ghht@gmail.com'
         const RecoveryBaseLength= await RecoveryPasswordModel.findOne({}).count()
-        console.log(RecoveryBaseLength)
-        emailRecoveryPassword.email='ffdd.by'
-        const FakeEmailRecoveryPasswordResponse=await request(app).post('/auth/password-recovery').send(emailRecoveryPassword).expect(400)
+        const emailNoInBaseInput=await request(app).post('/auth/password-recovery').send(emailRecoveryPassword).expect(204)
         const RecoveryBaseLengthAfter= await RecoveryPasswordModel.findOne({}).count()
         console.log(RecoveryBaseLengthAfter)
         expect(RecoveryBaseLength).toEqual(RecoveryBaseLengthAfter)
+    })
+    it('password recovery true',async ()=>{
+            const oldPasswordUserInBase= await userRepository.getPasswordByUserId(userIdForTrueRecoveryPassword)
+            console.log(oldPasswordUserInBase)
+            const updatePasswordResponse=await request(app).post('/auth/new-password').send(newPasswordBody).expect(204)
+            const checkNewPasswordUserInBase=await userRepository.getPasswordByUserId(userIdForTrueRecoveryPassword)
+            console.log(checkNewPasswordUserInBase)
+            expect(oldPasswordUserInBase?.password).not.toEqual(checkNewPasswordUserInBase?.password)
+        })
+    it('password recovery false',async ()=>{
+        //аналог fake recoveryCode в email любой uuid
+        newPasswordBody.newPassword='fake'
+        const updatePasswordInvalidPasswordResponse=await request(app).post('/auth/new-password').send(newPasswordBody).expect(400)
+        console.log(updatePasswordInvalidPasswordResponse.body)
+        newPasswordBody.newPassword='truepassword'
+        newPasswordBody.recoveryCode=randomUUID()
+        const updatePasswordResponseFalseCode=await request(app).post('/auth/new-password').send(newPasswordBody).expect(400)
+        console.log(updatePasswordResponseFalseCode.body)
+
+    })
     })
     })
 

@@ -1,6 +1,6 @@
 import {jwtService} from "../application/jwtService";
 import {Request,Response,NextFunction} from "express";
-import {findUserById} from "../RepositoryInDB/user-repositoryDB";
+import {userRepository} from "../RepositoryInDB/user-repositoryDB";
 
 export const authMiddleware =async (req: Request, res: Response, next: NextFunction) => {
     const inputToken = req.headers.authorization;
@@ -9,7 +9,7 @@ export const authMiddleware =async (req: Request, res: Response, next: NextFunct
     const token = inputToken.split(' ')[1]
     const resultSearchUserIdbyToken = await jwtService.verifyToken(token)
     if (resultSearchUserIdbyToken) {
-        const user=await findUserById(resultSearchUserIdbyToken.userId)
+        const user=await userRepository.findUserById(resultSearchUserIdbyToken.userId)
         if (user) {
             req.user = user
             next()

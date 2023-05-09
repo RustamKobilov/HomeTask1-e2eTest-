@@ -1,15 +1,16 @@
 import nodemailer from "nodemailer";
 
+const transport= nodemailer.createTransport({
+    service:'gmail',
+    auth:
+        {
+            user:'rustamincubator@gmail.com',
+            pass:'poznkvwenjowduaq'
+        }
+})
+
 export const emailAdapters={
     async gmailSendEmailRegistration(email:string, code:string){
-        const transport= await nodemailer.createTransport({
-            service:'gmail',
-            auth:
-                {
-                    user:'rustamincubator@gmail.com',
-                    pass:'poznkvwenjowduaq'
-                }
-        })
 
         const info= await transport.sendMail({
             from:'admin <rustamincubator@gmail.com>',
@@ -24,14 +25,6 @@ export const emailAdapters={
         })
     },
     async gmailSendEmailPasswordRecovery(email:string,recoveryCode:string){
-        const transport= await nodemailer.createTransport({
-            service:'gmail',
-            auth:
-                {
-                    user:'rustamincubator@gmail.com',
-                    pass:'poznkvwenjowduaq'
-                }
-        })
 
         const info=await transport.sendMail({
                 from:'admin <rustamincubator@gmail.com>',

@@ -1,7 +1,5 @@
-import {findUserById, RecoveryPassword, userRepository, UserType} from "../RepositoryInDB/user-repositoryDB";
+import {PaginationTypeRecoveryPassword, userRepository, UserType} from "../RepositoryInDB/user-repositoryDB";
 import bcrypt from "bcrypt";
-import {jwtService} from "../application/jwtService";
-
 import {randomUUID} from "crypto";
 
 export const authService = {
@@ -64,7 +62,7 @@ export const authService = {
         }
         return true
     },
-    async checkRecoveryCode(recoveryCode:string):Promise<RecoveryPassword|false>{
+    async checkRecoveryCode(recoveryCode:string):Promise<PaginationTypeRecoveryPassword|false>{
         const resultVerifyCode=await userRepository.getRecoveryCode(recoveryCode)
         if(!resultVerifyCode){
             return false

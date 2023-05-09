@@ -1,9 +1,9 @@
 import {NextFunction, Request, Response} from "express";
-import {getCommentOnId} from "../RepositoryInDB/commentator-repositoryDB";
+import {commentsRepository} from "../RepositoryInDB/comments-repositoryDB";
 
 
 export const authCommentUser =async (req: Request, res: Response, next: NextFunction) => {
-    const resultSearch=await getCommentOnId(req.params.id)
+    const resultSearch=await commentsRepository.getCommentOnId(req.params.id)
 
     if(!resultSearch){
         return res.sendStatus(404)

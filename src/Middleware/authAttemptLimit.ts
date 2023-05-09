@@ -1,5 +1,5 @@
 import {NextFunction, Request, Response} from "express";
-import {SecurityOfAttemptsType} from "../routse/securityDevices-route";
+import {SecurityOfAttemptsType} from "../routse/devices-route";
 import {attemptRepository} from "../RepositoryInDB/attempt-repository";
 
 export const authAttemptLimit=async (req: Request, res: Response, next: NextFunction)=>{

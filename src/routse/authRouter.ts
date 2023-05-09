@@ -8,11 +8,11 @@ import {authService} from "../domain/authService";
 import {jwtService} from "../application/jwtService";
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {emailAdapters} from "../adapters/email-adapters";
-import {createUser, findUserById, userRepository} from "../RepositoryInDB/user-repositoryDB";
+import {userRepository} from "../RepositoryInDB/user-repositoryDB";
 import {getPaginationValuesAddNewUser} from "./user-router";
 import {authRefreshToken} from "../Middleware/authRefreshToken";
 import {randomUUID} from "crypto";
-import {getPaginationValuesInputUserInformation} from "./securityDevices-route";
+import {getPaginationValuesInputUserInformation} from "./devices-route";
 import {authAttemptLimit} from "../Middleware/authAttemptLimit";
 import {RecoveryPasswordModel, UserModel} from "../Models/shemaAndModel";
 
@@ -115,7 +115,7 @@ authRouter.get('/me',authMiddleware,async (req:Request,res:Response)=>{
 authRouter.post('/registration',authAttemptLimit,postUsersValidation,async (req:Request,res:Response)=>{
 
     const paginationResult =getPaginationValuesAddNewUser(req.body)
-    const resultNewUsers= await createUser(paginationResult)
+    const resultNewUsers= await userRepository.createUser(paginationResult)
     await UserModel.insertMany(resultNewUsers)
 
     try {
