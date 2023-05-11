@@ -3,8 +3,8 @@ import {
     PaginationTypeGetInputCommentByPost,
     PaginationTypeInputPostValueForPost, Post, postsRepository,
 } from "../RepositoryInDB/posts-repositoryDB";
-import {UserType} from "../RepositoryInDB/user-repositoryDB";
 import {Comment, CommentatorInfo, commentsRepository} from "../RepositoryInDB/comments-repositoryDB";
+import {User} from "../RepositoryInDB/user-repositoryDB";
 
 export const postsService={
     async createPost(titleNewPost: string, shortDescriptionNewPost: string, contentNewPost: string,
@@ -31,7 +31,7 @@ export const postsService={
             pagination.contentPost, blogId, blogNameForPost.name)
     return resultCreatePost
     },
-    async createCommentOnId(pagination:PaginationTypeGetInputCommentByPost, user:UserType){
+    async createCommentOnId(pagination:PaginationTypeGetInputCommentByPost, user:User){
         const idNewComment = randomUUID();
         const CommentatorInfoNewComment:CommentatorInfo= new CommentatorInfo(user.id,user.login)
 
