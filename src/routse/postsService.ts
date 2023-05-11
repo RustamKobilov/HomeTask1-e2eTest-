@@ -1,31 +1,27 @@
 import {randomUUID} from "crypto";
 import {
     PaginationTypeGetInputCommentByPost,
-    PaginationTypeInputPostValueForPost, postsRepository,
-    PostType
+    PaginationTypeInputPostValueForPost, Post, postsRepository,
 } from "../RepositoryInDB/posts-repositoryDB";
 import {UserType} from "../RepositoryInDB/user-repositoryDB";
-import {CommentatorInfo, commentsRepository, CommentType} from "../RepositoryInDB/comments-repositoryDB";
+import {Comment, CommentatorInfo, commentsRepository} from "../RepositoryInDB/comments-repositoryDB";
 
 export const postsService={
     async createPost(titleNewPost: string, shortDescriptionNewPost: string, contentNewPost: string,
-                              blogIdForPost: string, blogNameForPost: string): Promise<PostType> {
+                     blogIdForPost: string, blogNameForPost: string): Promise<Post> {
         const idNewPost = randomUUID();
 
-        const newPost: PostType = {
-            id: idNewPost,
-            title: titleNewPost,
-            shortDescription: shortDescriptionNewPost,
-            content: contentNewPost,
-            blogId: blogIdForPost,
-            blogName: blogNameForPost,
-            createdAt: new Date().toISOString()
-        };
-        const addNewPost=await postsRepository.createPostOnId(newPost)
+        const newPost: Post = new Post(idNewPost,
+            titleNewPost,
+            shortDescriptionNewPost,
+            contentNewPost, blogIdForPost,
+            blogNameForPost,
+            new Date().toISOString())
+        const addNewPost = await postsRepository.createPostOnId(newPost)
 
         return addNewPost;
     },
-    async createPostOnId(pagination:PaginationTypeInputPostValueForPost,blogId:string):Promise<PostType|boolean> {
+    async createPostOnId(pagination:PaginationTypeInputPostValueForPost,blogId:string):Promise<Post|boolean> {
         const blogNameForPost = await postsRepository.findBlogName(blogId);
 
         if (!blogNameForPost) {
@@ -37,17 +33,14 @@ export const postsService={
     },
     async createCommentOnId(pagination:PaginationTypeGetInputCommentByPost, user:UserType){
         const idNewComment = randomUUID();
+        const CommentatorInfoNewComment:CommentatorInfo= new CommentatorInfo(user.id,user.login)
 
-        const newComment: CommentType = {
-            postId:pagination.idPost,
-            id: idNewComment,
-            content: pagination.content,
-            commentatorInfo:<CommentatorInfo>{
-              userId:user.id,
-              userLogin:user.login
-            },
-            createdAt: new Date().toISOString()
-        };
+        const newComment: Comment = new Comment(pagination.idPost,
+                                                idNewComment,
+                                                pagination.content,
+                                                CommentatorInfoNewComment,
+                                                new Date().toISOString())
+
         const addNewComment=await commentsRepository.createCommentByPost(newComment)
         return addNewComment
     }

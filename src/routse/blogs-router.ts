@@ -7,7 +7,8 @@ import {
     getPostForBlogsValidation, postPostForBlogsValidation,
     updateBlogValidation
 } from "../Models/InputValidation";
-import {PaginationTypeInputParamsBlogs, blogRepository
+import {
+    PaginationTypeInputParamsBlogs, blogRepository
 } from "../RepositoryInDB/blog-repositoryDB";
 import {getPaginationPostValueForPost, getPaginationValuesPosts} from "./posts-router";
 import {blogsService} from "./blogsService";

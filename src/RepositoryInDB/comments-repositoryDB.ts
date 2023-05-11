@@ -2,22 +2,23 @@ import {inputSortDataBaseType, PaginationTypePostInputCommentByPost} from "./pos
 import {helper} from "./helper";
 import {CommentModel} from "../Models/shemaAndModel";
 
-export type CommentatorInfo={
-    userId:string
-    userLogin:string
-}
 
 export type InputCommentByIdType ={
     id:string
 }
 
-export type CommentType ={
-    postId:string,
-    id:string
-    content:string
-    commentatorInfo:CommentatorInfo
-    createdAt:string
+export class Comment {
+    constructor(public postId:string,
+                public id:string,
+                public content:string,
+                public commentatorInfo:CommentatorInfo,
+                public createdAt:string){}
 }
+
+export class CommentatorInfo{
+    constructor(public userId:string, public userLogin:string){}
+}
+
 export type OutputCommentOutputType ={
     id:string
     content:string
@@ -48,7 +49,7 @@ export const commentsRepository={
             items: sortCommentsForPosts
         }
     },
-     async createCommentByPost(comment:CommentType):Promise<OutputCommentOutputType>{
+     async createCommentByPost(comment:Comment):Promise<OutputCommentOutputType>{
         await CommentModel.insertMany(comment)
 
         return({id: comment.id,
@@ -56,7 +57,7 @@ export const commentsRepository={
             commentatorInfo:comment.commentatorInfo,
             createdAt: comment.createdAt})
     },
-    async getCommentOnId(id:string):Promise<CommentType|null>{
+    async getCommentOnId(id:string):Promise<Comment|null>{
         const result=await CommentModel.findOne({id: id}, {_id: 0, __v: 0});
         return result
     },

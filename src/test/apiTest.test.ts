@@ -1,12 +1,12 @@
 import request from "supertest";
 import {app} from "../app";
-import {BlogsType} from "../RepositoryInDB/blog-repositoryDB";
-import {PostType} from "../RepositoryInDB/posts-repositoryDB";
 import {userRepository, UserType} from "../RepositoryInDB/user-repositoryDB";
 import {jwtService} from "../application/jwtService";
 import {DeviceModel, RecoveryPasswordModel} from "../Models/shemaAndModel";
 import mongoose from "mongoose";
 import {randomUUID} from "crypto";
+import {Blog} from "../RepositoryInDB/blog-repositoryDB";
+import {Post} from "../RepositoryInDB/posts-repositoryDB";
 
 
 const delay= async(ms:number)=>{
@@ -54,7 +54,7 @@ describe('/Blogs CRUD', () => {
         send(blogCheck).expect(201)
         CreateBlog = CreateBlogResponse.body;
 
-        const resultBlog: BlogsType = {
+        const resultBlog: Blog = {
             id: expect.any(String),
             name: blogCheck.name,
             description: blogCheck.description,
@@ -109,7 +109,7 @@ describe('/Blogs CRUD', () => {
             websiteUrl: 'https://api-swagger.it-incubator.ru/UPDATE'
         }
 
-        const resultBlogUpdate: BlogsType = {
+        const resultBlogUpdate: Blog = {
             id: CreateBlog.id,
             name: blogUpdate.name,
             description: blogUpdate.description,
@@ -165,7 +165,7 @@ describe('/Post CRUD',()=>{
         set(BasicAuthorized.authorization, BasicAuthorized.password).send(blogCheck).expect(201)
         CreateBlog = CreateBlogResponse.body;
 
-        const resultBlog: BlogsType = {
+        const resultBlog: Blog = {
             id: expect.any(String),
             name: blogCheck.name,
             description: blogCheck.description,
@@ -190,7 +190,7 @@ describe('/Post CRUD',()=>{
         set(BasicAuthorized.authorization, BasicAuthorized.password).send(postCheck).expect(201)
         CreatePost = CreatePostsResponse.body;
 
-        const resultPost:PostType={
+        const resultPost:Post={
             id:expect.any(String),
             title:postCheck.title,
             shortDescription:postCheck.shortDescription,
@@ -217,7 +217,7 @@ describe('/Post CRUD',()=>{
             blogId:CreateBlog.id
         }
 
-        const resultPostUpdate:PostType={
+        const resultPostUpdate:Post={
             id:CreatePost.id,
             title:postCheck2.title,
             shortDescription:postCheck2.shortDescription,

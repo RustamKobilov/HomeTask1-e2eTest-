@@ -1,19 +1,22 @@
-import {inputSortDataBaseType, PaginationTypeInputPosts, PostType} from "./posts-repositoryDB";
+import {inputSortDataBaseType, PaginationTypeInputPosts, Post} from "./posts-repositoryDB";
 import {helper, ReturnDistributedDate} from "./helper";
 import {BlogModel, PostModel} from "../Models/shemaAndModel";
 
 
-export type BlogsType = {
-    id: string
-    name: string
-    description: string
-    websiteUrl: string
-    createdAt: string
-    isMembership: boolean
+export class Blog {
+    constructor(public id: string,
+                public name: string,
+                public description: string,
+                public websiteUrl: string,
+                public createdAt: string,
+                public isMembership: boolean) {
+    }
 }
 
+
+
 export type PaginationTypeInputParamsBlogs = {
-    searchNameTerm: string|null
+    searchNameTerm: string | null
     pageNumber: number
     pageSize: number
     sortBy: string
@@ -23,7 +26,7 @@ export type PaginationTypeInputParamsBlogs = {
 
 export const blogRepository={
     async getAllBlog(paginationBlogs: PaginationTypeInputParamsBlogs):
-        Promise<ReturnDistributedDate<BlogsType>> {
+        Promise<ReturnDistributedDate<Blog>> {
 
         const filter={name: {$regex: paginationBlogs.searchNameTerm ?? '', $options: "i"}}
 
@@ -43,7 +46,7 @@ export const blogRepository={
         }
     },
     async getAllPostsForBlogInBase(paginationPosts: PaginationTypeInputPosts, blogId: string):
-        Promise<inputSortDataBaseType<PostType>> {
+        Promise<inputSortDataBaseType<Post>> {
 
 
         const filter= {blogId: blogId}
@@ -61,7 +64,7 @@ export const blogRepository={
             items: sortPostsForBlogs
         }
     },
-    async findBlogOnId(id: string): Promise<BlogsType | null> {
+    async findBlogOnId(id: string): Promise<Blog | null> {
         let blog = await BlogModel.findOne({id: id}, {_id: 0, __v: 0});
         console.log(blog + ' result search blog for delete')
         return blog;

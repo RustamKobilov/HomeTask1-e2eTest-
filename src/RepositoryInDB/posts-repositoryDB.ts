@@ -1,15 +1,16 @@
-import {BlogsType} from "./blog-repositoryDB";
 import { helper} from "./helper";
 import {BlogModel, PostModel} from "../Models/shemaAndModel";
+import {Blog} from "./blog-repositoryDB";
 
-export type PostType = {
-    id: string
-    title: string
-    shortDescription: string
-    content: string
-    blogId: string
-    blogName: string
-    createdAt: string
+export class Post {
+    constructor(public id: string,
+                public title: string,
+                public shortDescription: string,
+                public content: string,
+                public blogId: string,
+                public blogName: string,
+                public createdAt: string) {
+    }
 }
 
 export type inputSortDataBaseType<T> = {
@@ -48,7 +49,7 @@ export type PaginationTypePostInputCommentByPost={
 }
 
 export const postsRepository={
-   async getAllPosts(paginationPosts: PaginationTypeInputPosts): Promise<inputSortDataBaseType<PostType>> {
+   async getAllPosts(paginationPosts: PaginationTypeInputPosts): Promise<inputSortDataBaseType<Post>> {
 
         const pagesCountBlog = await PostModel.countDocuments({});
 
@@ -62,7 +63,7 @@ export const postsRepository={
             totalCount: pagesCountBlog, items: posts
         };
     },
-    async findPostOnId(id: string): Promise<PostType | null> {
+    async findPostOnId(id: string): Promise<Post | null> {
         let post = await PostModel.findOne({id: id},{_id: 0, __v: 0});
         return post;
     },
@@ -78,12 +79,12 @@ export const postsRepository={
 
         return post.matchedCount === 1
     },
-    async findBlogName(id: string): Promise<BlogsType | null> {
+    async findBlogName(id: string): Promise<Blog | null> {
         return BlogModel.findOne({id:id},{_id: 0, __v: 0});
 
     },
-    async createPostOnId(resultCreatePost:PostType):
-        Promise<PostType> {
+    async createPostOnId(resultCreatePost:Post):
+        Promise<Post> {
 
         await PostModel.insertMany(resultCreatePost);
 
