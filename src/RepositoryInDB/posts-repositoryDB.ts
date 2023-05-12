@@ -48,7 +48,7 @@ export type PaginationTypePostInputCommentByPost={
     sortDirection: 1|-1
 }
 
-export const postsRepository={
+class PostsRepository{
    async getAllPosts(paginationPosts: PaginationTypeInputPosts): Promise<inputSortDataBaseType<Post>> {
 
         const pagesCountBlog = await PostModel.countDocuments({});
@@ -62,11 +62,11 @@ export const postsRepository={
             pagesCount: paginationFromHelperForPosts.totalCount, page: paginationPosts.pageNumber, pageSize: paginationPosts.pageSize,
             totalCount: pagesCountBlog, items: posts
         };
-    },
+    }
     async findPostOnId(id: string): Promise<Post | null> {
         let post = await PostModel.findOne({id: id},{_id: 0, __v: 0});
         return post;
-    },
+    }
     async updatePostOnId(id: string, pagination:PaginationTypeInputPostValueForPost,blogId:string): Promise<boolean> {
         let post = await PostModel.updateOne({id: id}, {
             $set: {
@@ -78,11 +78,11 @@ export const postsRepository={
         });
 
         return post.matchedCount === 1
-    },
+    }
     async findBlogName(id: string): Promise<Blog | null> {
         return BlogModel.findOne({id:id},{_id: 0, __v: 0});
 
-    },
+    }
     async createPostOnId(resultCreatePost:Post):
         Promise<Post> {
 
@@ -96,5 +96,7 @@ export const postsRepository={
 
     }
 }
+
+export const postsRepository = new PostsRepository()
 
 

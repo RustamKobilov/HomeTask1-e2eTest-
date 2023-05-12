@@ -6,7 +6,7 @@ import {
 import {Comment, CommentatorInfo, commentsRepository} from "../RepositoryInDB/comments-repositoryDB";
 import {User} from "../RepositoryInDB/user-repositoryDB";
 
-export const postsService={
+class PostsService{
     async createPost(titleNewPost: string, shortDescriptionNewPost: string, contentNewPost: string,
                      blogIdForPost: string, blogNameForPost: string): Promise<Post> {
         const idNewPost = randomUUID();
@@ -20,17 +20,17 @@ export const postsService={
         const addNewPost = await postsRepository.createPostOnId(newPost)
 
         return addNewPost;
-    },
+    }
     async createPostOnId(pagination:PaginationTypeInputPostValueForPost,blogId:string):Promise<Post|boolean> {
         const blogNameForPost = await postsRepository.findBlogName(blogId);
 
         if (!blogNameForPost) {
             return false;
         }
-        const resultCreatePost = await postsService.createPost(pagination.titlePost, pagination.shortDescriptionPost,
+        const resultCreatePost = await this.createPost(pagination.titlePost, pagination.shortDescriptionPost,
             pagination.contentPost, blogId, blogNameForPost.name)
     return resultCreatePost
-    },
+    }
     async createCommentOnId(pagination:PaginationTypeGetInputCommentByPost, user:User){
         const idNewComment = randomUUID();
         const CommentatorInfoNewComment:CommentatorInfo= new CommentatorInfo(user.id,user.login)
@@ -45,3 +45,5 @@ export const postsService={
         return addNewComment
     }
 }
+
+export const postsService = new PostsService()

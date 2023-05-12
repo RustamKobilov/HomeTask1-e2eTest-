@@ -1,7 +1,7 @@
 import {randomUUID} from "crypto";
 import {Blog} from "../RepositoryInDB/blog-repositoryDB";
 
-export const blogsService={
+class BlogsService{
     async createBlog(nameNewBlog: string, descriptionNewBlog: string, websiteUrlNewBlog: string): Promise<Blog> {
         const newId = randomUUID();
         const newBlog: Blog = new Blog(newId, nameNewBlog, descriptionNewBlog, websiteUrlNewBlog, new Date().toISOString(), false)
@@ -9,3 +9,5 @@ export const blogsService={
         return newBlog
     }
 }
+
+export const blogsService = new BlogsService()

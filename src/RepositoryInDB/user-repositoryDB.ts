@@ -49,7 +49,7 @@ export type PaginationTypeRecoveryPassword = {
 }
 
 
-export const userRepository = {
+class UserRepository{
     async getAllUsers(paginationUser: PaginationTypeInputUser): Promise<inputSortDataBaseType<User>> {
         const searchLoginTerm = paginationUser.searchLoginTerm != null ? {
             login: {$regex: paginationUser.searchLoginTerm, $options: "i"}
@@ -84,10 +84,10 @@ export const userRepository = {
             totalCount: totalCountUser,
             items: sortUser
         }
-    },
+    }
     async createUser(paginationAddUser: PaginationTypeAddNewUser): Promise<User> {
         const salt = await bcrypt.genSalt(8)
-        const hashResult = await userRepository.hashPassword(paginationAddUser.password, salt)
+        const hashResult = await this.hashPassword(paginationAddUser.password, salt)
 
         const date0 = new Date()
         const date02 = date0.getHours()
@@ -109,22 +109,22 @@ export const userRepository = {
 
         return newUser
 
-    },
+    }
     async hashPassword(password: string, salt: string) {
         const hash = await bcrypt.hash(password, salt)
         return hash
-    },
+    }
     async findUserById(id: string): Promise<User | null> {
         const user = await UserModel.findOne({id: id}, {_id: 0, __v: 0})
         return user
-    },
+    }
     async findUserByLoginOrEmail(loginOrEmail: string): Promise<User | null> {
         return UserModel.findOne({$or: [{login: loginOrEmail}, {email: loginOrEmail}]}, {_id: 0, __v: 0})
-    },
+    }
     async findUserByCode(code: string): Promise<User | null> {
         console.log(code)
         return UserModel.findOne({'userConfirmationInfo.code': code}, {_id: 0, __v: 0})
-    },
+    }
     async updateUserConformation(id: string):
         Promise<boolean> {
         let user = await UserModel.updateOne({id: id}, {
@@ -135,15 +135,15 @@ export const userRepository = {
         })
 
         return user.matchedCount === 1
-    },
+    }
     async findUserByEmail(email: string): Promise<User | null> {
 
         return UserModel.findOne({email: email}, {_id: 0, __v: 0})
-    },
+    }
     async findUserByLogin(login: string): Promise<User | null> {
 
         return UserModel.findOne({login: login}, {_id: 0, __v: 0})
-    },
+    }
     async updateUserConformationCode(id: string, code: string):
         Promise<boolean> {
         let user = await UserModel.updateOne({id: id}, {
@@ -154,10 +154,10 @@ export const userRepository = {
         })
 
         return user.matchedCount === 1
-    },
+    }
     async getRecoveryCode(code: String): Promise<PaginationTypeRecoveryPassword | null> {
         return RecoveryPasswordModel.findOne({recoveryCode: code}, {_id: 0, __v: 0})
-    },
+    }
     async updatePasswordForUserByRecovery(newPassword: string, recoveryCode: string):
         Promise<boolean> {
         let userIdInRecovery = await this.getRecoveryCode(recoveryCode)
@@ -165,7 +165,7 @@ export const userRepository = {
             return false
         }
         const salt = await bcrypt.genSalt(8)
-        const hashResultNewPassword = await userRepository.hashPassword(newPassword, salt)
+        const hashResultNewPassword = await this.hashPassword(newPassword, salt)
 
         let password = await UserModel.updateOne({id: userIdInRecovery.userId}, {
             $set: {
@@ -175,8 +175,10 @@ export const userRepository = {
             }
         })
         return password.matchedCount === 1
-    },
+    }
     async getPasswordByUserId(userId: string): Promise<User | null> {
         return UserModel.findOne({id: userId}, {_id: 0, __v: 0})
-    },
+    }
 }
+
+export const userRepository=new UserRepository()

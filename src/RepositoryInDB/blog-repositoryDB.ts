@@ -24,7 +24,7 @@ export type PaginationTypeInputParamsBlogs = {
 }
 
 
-export const blogRepository={
+class BlogRepository{
     async getAllBlog(paginationBlogs: PaginationTypeInputParamsBlogs):
         Promise<ReturnDistributedDate<Blog>> {
 
@@ -44,7 +44,7 @@ export const blogRepository={
             pagesCount: paginationFromHelperForBlogs.totalCount, page: paginationBlogs.pageNumber, pageSize: paginationBlogs.pageSize,
             totalCount: totalCountBlog, items: blogs
         }
-    },
+    }
     async getAllPostsForBlogInBase(paginationPosts: PaginationTypeInputPosts, blogId: string):
         Promise<inputSortDataBaseType<Post>> {
 
@@ -63,12 +63,12 @@ export const blogRepository={
             totalCount: countPostsForBlog,
             items: sortPostsForBlogs
         }
-    },
+    }
     async findBlogOnId(id: string): Promise<Blog | null> {
         let blog = await BlogModel.findOne({id: id}, {_id: 0, __v: 0});
         console.log(blog + ' result search blog for delete')
         return blog;
-    },
+    }
     async updateBlogOnId(id: string, newName: string, newDescription: string, newWebsiteUrl: string):
         Promise<boolean> {
         let blog = await BlogModel.updateOne({id: id}, {
@@ -81,6 +81,7 @@ export const blogRepository={
         console.log(blog.matchedCount  + ' result update blog')
         return blog.matchedCount === 1
     }
-
 }
+
+export const blogRepository=new BlogRepository()
 

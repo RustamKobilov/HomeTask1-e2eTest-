@@ -31,7 +31,7 @@ export type UpdateCommentType ={
     content:string
 }
 
-export const commentsRepository={
+class CommentsRepository{
     async getAllCommentForPostInBase(pagination:PaginationTypePostInputCommentByPost):
         Promise<inputSortDataBaseType<OutputCommentOutputType>>{
         const filter= {postId: pagination.idPost}
@@ -48,7 +48,7 @@ export const commentsRepository={
             totalCount: countCommentsForPost,
             items: sortCommentsForPosts
         }
-    },
+    }
      async createCommentByPost(comment:Comment):Promise<OutputCommentOutputType>{
         await CommentModel.insertMany(comment)
 
@@ -56,11 +56,11 @@ export const commentsRepository={
             content: comment.content,
             commentatorInfo:comment.commentatorInfo,
             createdAt: comment.createdAt})
-    },
+    }
     async getCommentOnId(id:string):Promise<Comment|null>{
         const result=await CommentModel.findOne({id: id}, {_id: 0, __v: 0});
         return result
-    },
+    }
     async updateComment(id:string,content:string):Promise<boolean>{
         const commentUpdate =await CommentModel.updateOne({id:id},{
             $set:{
@@ -72,3 +72,4 @@ export const commentsRepository={
     }
 }
 
+export const commentsRepository= new CommentsRepository()
