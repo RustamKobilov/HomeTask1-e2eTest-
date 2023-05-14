@@ -1,6 +1,6 @@
 import request from "supertest";
 import {app} from "../app";
-import {userRepository, UserType} from "../RepositoryInDB/user-repositoryDB";
+import {User, userRepository} from "../RepositoryInDB/user-repositoryDB";
 import {jwtService} from "../application/jwtService";
 import {DeviceModel, RecoveryPasswordModel} from "../Models/shemaAndModel";
 import mongoose from "mongoose";
@@ -445,7 +445,7 @@ describe('user add', ()=> {
         CreateUser.password = expect.any(String)
         CreateUser.salt = expect.any(String)
 
-        const resultBlog: UserType = {
+        const resultBlog: User = {
             id: expect.any(String),
             login: userForChecking.login,
             password: userForChecking.password,

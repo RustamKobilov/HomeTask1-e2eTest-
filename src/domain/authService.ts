@@ -1,9 +1,9 @@
-import {PaginationTypeRecoveryPassword, userRepository, UserType} from "../RepositoryInDB/user-repositoryDB";
+import {PaginationTypeRecoveryPassword, User, userRepository} from "../RepositoryInDB/user-repositoryDB";
 import bcrypt from "bcrypt";
 import {randomUUID} from "crypto";
 
 export const authService = {
-    async login(loginOrEmail: string, password: string): Promise<false|UserType> {
+    async login(loginOrEmail: string, password: string): Promise<false|User> {
         const user = await userRepository.findUserByLoginOrEmail(loginOrEmail)
         if(!user){return false}
         const resultCompare=await bcrypt.compare(password, user.hash)
@@ -29,7 +29,7 @@ export const authService = {
         await userRepository.updateUserConformation(resultSearchCodeInUser.id)
         return true
     },
-    async checkEmail(email:string):Promise<false|UserType>{
+    async checkEmail(email:string):Promise<false|User>{
         const resultSearchEmail=await userRepository.findUserByEmail(email)
 
         if(!resultSearchEmail){
@@ -37,7 +37,7 @@ export const authService = {
         }
         return resultSearchEmail
     },
-    async checkLogin(login:string):Promise<false|UserType>{
+    async checkLogin(login:string):Promise<false|User>{
         const resultSearchLogin=await userRepository.findUserByLogin(login)
         if(!resultSearchLogin){
             return false

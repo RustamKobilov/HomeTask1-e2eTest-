@@ -30,7 +30,7 @@ const getPaginationValuesBlogs = (query: any): PaginationTypeInputParamsBlogs =>
 class BlogController{
     async getBlogs(req: Request, res: Response) {
     const paginationResult = getPaginationValuesBlogs(req.query)
-    const resultAllBlogs = blogRepository.getAllBlog(paginationResult);
+    const resultAllBlogs =await blogRepository.getAllBlog(paginationResult);
     return res.status(200).send(resultAllBlogs)
 }
 
@@ -110,7 +110,7 @@ class BlogController{
 }
 const blogController = new BlogController()
 
-blogsRouter.get('/', getBlogsValidation, blogController.getBlog)
+blogsRouter.get('/', getBlogsValidation, blogController.getBlogs)
 
 blogsRouter.post('/', basicAuthMiddleware, createBlogValidation, errorMessagesInputValidation, blogController.createBlog)
 
@@ -118,7 +118,7 @@ blogsRouter.get('/:id/posts', getPostForBlogsValidation, errorMessagesInputValid
 
 blogsRouter.post('/:id/posts', basicAuthMiddleware, postPostForBlogsValidation, errorMessagesInputValidation, blogController.createPostForBlog)
 
-blogsRouter.get('/:id', blogController.getBlogs)
+blogsRouter.get('/:id', blogController.getBlog)
 
 blogsRouter.put('/:id', basicAuthMiddleware, updateBlogValidation, errorMessagesInputValidation, blogController.updateBlog)
 
