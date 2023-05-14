@@ -8,12 +8,13 @@ import {
     updateBlogValidation
 } from "../Models/InputValidation";
 import {
-    PaginationTypeInputParamsBlogs, blogRepository
+    PaginationTypeInputParamsBlogs, PaginationTypeUpdateBlog
 } from "../RepositoryInDB/blog-repositoryDB";
 import {getPaginationPostValueForPost, getPaginationValuesPosts} from "./posts-router";
-import {blogsService} from "./blogsService";
+import {BlogsService} from "./blogsService";
 import {postsService} from "./postsService";
 import {BlogModel} from "../Models/shemaAndModel";
+import {body} from "express-validator";
 
 export const blogsRouter = Router({});
 
@@ -27,10 +28,24 @@ const getPaginationValuesBlogs = (query: any): PaginationTypeInputParamsBlogs =>
     }
 }
 
+const getPaginationValuesUpdateBlog = (body: any , params : any): PaginationTypeUpdateBlog =>{
+    return {
+        idBlog : params.id,
+        nameBlog : body.name,
+        descriptionBlog : body.description,
+        websiteUrlBlog : body.websiteUrl
+    }
+}
+
+
 class BlogController{
+    private blogService:BlogsService
+    constructor() {
+        this.blogService = new BlogsService()
+    }
     async getBlogs(req: Request, res: Response) {
     const paginationResult = getPaginationValuesBlogs(req.query)
-    const resultAllBlogs =await blogRepository.getAllBlog(paginationResult);
+    const resultAllBlogs =await this.blogService.getAllBlog(paginationResult);
     return res.status(200).send(resultAllBlogs)
 }
 
@@ -39,7 +54,7 @@ class BlogController{
         const nameNewBlog = req.body.name;
         const descriptionNewBlog = req.body.description;
         const websiteUrlNewBlog = req.body.websiteUrl;
-        const resultCreatBlog = await blogsService.createBlog(nameNewBlog, descriptionNewBlog, websiteUrlNewBlog)
+        const resultCreatBlog = await this.blogService.createBlog(nameNewBlog, descriptionNewBlog, websiteUrlNewBlog)
 
         await BlogModel.insertMany(resultCreatBlog);
         return res.status(201).send({
@@ -55,12 +70,11 @@ class BlogController{
     async getPostForBlog(req: Request, res: Response) {
         const blogId = req.params.id;
         const paginationResult = getPaginationValuesPosts(req.query)
-        const searchBlog = await blogRepository.findBlogOnId(blogId)
+        const searchBlog = await this.blogService.findBlogOnId(blogId)
         if (searchBlog == null) {
             return res.sendStatus(404);
         }
-
-        const getAllPostsForBLog = await blogRepository.getAllPostsForBlogInBase(paginationResult, blogId)
+        const getAllPostsForBLog = await this.blogService.getAllPostsForBlogInBase(paginationResult, blogId)
 
         return res.status(200).send(getAllPostsForBLog);
 
@@ -79,7 +93,7 @@ class BlogController{
     }
 
     async getBlog(req: Request, res: Response) {
-        const findBlog = await blogRepository.findBlogOnId(req.params.id);
+        const findBlog = await this.blogService.findBlogOnId(req.params.id);
         if (findBlog) {
             return res.status(200).send(findBlog)
         }
@@ -87,12 +101,9 @@ class BlogController{
     }
 
     async updateBlog(req: Request, res: Response) {
-        const idBlog = req.params.id;
-        const nameUpdateBlog = req.body.name;
-        const descriptionUpdateBlog = req.body.description;
-        const websiteUrlUpdateBlog = req.body.websiteUrl;
+        const paginationResult = getPaginationValuesUpdateBlog(req.body,req.params)
 
-        const UpdateBlog = await blogRepository.updateBlogOnId(idBlog, nameUpdateBlog, descriptionUpdateBlog, websiteUrlUpdateBlog);
+        const UpdateBlog = await this.blogService.updateBlogOnId(paginationResult);
         if (!UpdateBlog) {
             return res.sendStatus(404);
         }
@@ -100,7 +111,8 @@ class BlogController{
     }
 
     async deleteBlog(req: Request, res: Response) {
-        const findDeleteBlog = await blogRepository.findBlogOnId(req.params.id);
+        //ff
+        const findDeleteBlog = await this.blogService.findBlogOnId(req.params.id);
         if (!findDeleteBlog) {
             return res.sendStatus(404);
         }

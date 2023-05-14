@@ -13,8 +13,6 @@ export class Blog {
     }
 }
 
-
-
 export type PaginationTypeInputParamsBlogs = {
     searchNameTerm: string | null
     pageNumber: number
@@ -23,9 +21,15 @@ export type PaginationTypeInputParamsBlogs = {
     sortDirection: 1 | -1
 }
 
+export type PaginationTypeUpdateBlog = {
+    idBlog :string
+    nameBlog : string
+    descriptionBlog : string
+    websiteUrlBlog : string
+}
 
-class BlogRepository{
-    async getAllBlog(paginationBlogs: PaginationTypeInputParamsBlogs):
+export class BlogRepository{
+    async getBlogs(paginationBlogs: PaginationTypeInputParamsBlogs):
         Promise<ReturnDistributedDate<Blog>> {
 
         const filter={name: {$regex: paginationBlogs.searchNameTerm ?? '', $options: "i"}}
@@ -45,7 +49,7 @@ class BlogRepository{
             totalCount: totalCountBlog, items: blogs
         }
     }
-    async getAllPostsForBlogInBase(paginationPosts: PaginationTypeInputPosts, blogId: string):
+    async getPostsForBlog(paginationPosts: PaginationTypeInputPosts, blogId: string):
         Promise<inputSortDataBaseType<Post>> {
 
 
@@ -64,24 +68,23 @@ class BlogRepository{
             items: sortPostsForBlogs
         }
     }
-    async findBlogOnId(id: string): Promise<Blog | null> {
+    async findBlog(id: string): Promise<Blog | null> {
         let blog = await BlogModel.findOne({id: id}, {_id: 0, __v: 0});
         console.log(blog + ' result search blog for delete')
         return blog;
     }
-    async updateBlogOnId(id: string, newName: string, newDescription: string, newWebsiteUrl: string):
+    async updateBlog(paginationUpdateBlog:PaginationTypeUpdateBlog):
         Promise<boolean> {
-        let blog = await BlogModel.updateOne({id: id}, {
+        let blog = await BlogModel.updateOne({id: paginationUpdateBlog.idBlog}, {
             $set: {
-                name: newName,
-                websiteUrl: newWebsiteUrl,
-                description: newDescription
+                name: paginationUpdateBlog.nameBlog,
+                websiteUrl: paginationUpdateBlog.websiteUrlBlog,
+                description: paginationUpdateBlog.descriptionBlog
             }
         })
-        console.log(blog.matchedCount  + ' result update blog')
         return blog.matchedCount === 1
     }
 }
 
-export const blogRepository=new BlogRepository()
+//export const blogRepository=new BlogRepository()
 
