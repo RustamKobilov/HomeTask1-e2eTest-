@@ -72,4 +72,4 @@ class CommentsRepository{
     }
 }
 
-export const commentsRepository= new CommentsRepository()
+export const commentsRepository = new CommentsRepository()

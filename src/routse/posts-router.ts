@@ -54,77 +54,92 @@ export const getPaginationPostCommentForPost=(params:any, body:any):PaginationTy
     }
     }
 
+class PostController{
+    async getPosts(req: Request, res: Response) {
+        const paginationResultPosts = getPaginationValuesPosts(req.query)
+        const resultAllPosts = await postsRepository.getAllPosts(paginationResultPosts);
+        return res.status(200).send(resultAllPosts)
+    }
 
-postsRouter.get('/', getPostValidation, async (req: Request, res: Response) => {
-    const paginationResultPosts = getPaginationValuesPosts(req.query)
-    const resultAllPosts = await postsRepository.getAllPosts(paginationResultPosts);
-    return res.status(200).send(resultAllPosts)
-})
-
-postsRouter.post('/', basicAuthMiddleware, createPostValidation, errorMessagesInputValidation,
-    async (req: Request, res: Response) => {
-        const resultPagination=getPaginationPostValueForPost(req.body)
-        const resultCreatePost = await postsService.createPostOnId(resultPagination,req.body.blogId)
+    async createPost(req: Request, res: Response) {
+        const resultPagination = getPaginationPostValueForPost(req.body)
+        const resultCreatePost = await postsService.createPostOnId(resultPagination, req.body.blogId)
 
         if (!resultCreatePost) {
             return res.sendStatus(404);
         }
 
         res.status(201).send(resultCreatePost)
-    })
-
-postsRouter.get('/:id', async (req: Request, res: Response) => {
-    const findPost = await postsRepository.findPostOnId(req.params.id);
-    if (findPost) {
-        return res.status(200).send(findPost)
     }
-    return res.sendStatus(404)
-})
 
+    async getPost(req: Request, res: Response) {
+        const findPost = await postsRepository.findPostOnId(req.params.id);
+        if (findPost) {
+            return res.status(200).send(findPost)
+        }
+        return res.sendStatus(404)
+    }
 
-postsRouter.put('/:id', basicAuthMiddleware, updatePostValidation, errorMessagesInputValidation,
-    async (req: Request, res: Response) => {
+    async updatePost(req: Request, res: Response) {
         const idUpdatePost = req.params.id;
-        const paginationValues=getPaginationPostValueForPost(req.body)
-        const findUpdatePost = await postsRepository.updatePostOnId(idUpdatePost,paginationValues,req.body.blogId);
+        const paginationValues = getPaginationPostValueForPost(req.body)
+        const findUpdatePost = await postsRepository.updatePostOnId(idUpdatePost, paginationValues, req.body.blogId);
         if (!findUpdatePost) {
             return res.sendStatus(404);
         }
 
         return res.sendStatus(204);
 
-    })
-
-postsRouter.delete('/:id', basicAuthMiddleware, async (req: Request, res: Response) => {
-    const findDeletePost = await postsRepository.findPostOnId(req.params.id);
-    if (!findDeletePost) {
-
-        return res.sendStatus(404);
     }
-    await PostModel.deleteOne({id: findDeletePost.id})
-    return res.sendStatus(204);
-})
 
+    async deletePost(req: Request, res: Response) {
+        const findDeletePost = await postsRepository.findPostOnId(req.params.id);
+        if (!findDeletePost) {
 
-postsRouter.get('/:postId/comments', getCommentsForPostValidation,async (req: Request, res: Response) => {
-    const pagination=getPaginationGetCommentForPost(req.query,req.params)
-    const resultSearchPost=await postsRepository.findPostOnId(pagination.idPost)
-    if(!resultSearchPost){
-        return res.sendStatus(404)
+            return res.sendStatus(404);
+        }
+        await PostModel.deleteOne({id: findDeletePost.id})
+        return res.sendStatus(204);
     }
-    const resultAllCommentsByPosts = await commentsRepository.getAllCommentForPostInBase(pagination);
-    return res.status(200).send(resultAllCommentsByPosts)
-})
-postsRouter.post('/:postId/comments', authMiddleware,postCommentForPostValidation,async (req: Request, res: Response) => {
-    const pagination=getPaginationPostCommentForPost(req.params,req.body)
-    const user=req.user!
 
-    const resultSearchPost=await postsRepository.findPostOnId(pagination.idPost)
-    if(!resultSearchPost){
-        return res.sendStatus(404)
+    async getCommentsForPost(req: Request, res: Response) {
+        const pagination = getPaginationGetCommentForPost(req.query, req.params)
+        const resultSearchPost = await postsRepository.findPostOnId(pagination.idPost)
+        if (!resultSearchPost) {
+            return res.sendStatus(404)
+        }
+        const resultAllCommentsByPosts = await commentsRepository.getAllCommentForPostInBase(pagination);
+        return res.status(200).send(resultAllCommentsByPosts)
     }
-    const addCommentByPost=await postsService.createCommentOnId(pagination,user)
-    return res.status(201).send(addCommentByPost)
 
-})
+    async createCommentForPost(req: Request, res: Response) {
+        const pagination = getPaginationPostCommentForPost(req.params, req.body)
+        const user = req.user!
+
+        const resultSearchPost = await postsRepository.findPostOnId(pagination.idPost)
+        if (!resultSearchPost) {
+            return res.sendStatus(404)
+        }
+        const addCommentByPost = await postsService.createCommentOnId(pagination, user)
+        return res.status(201).send(addCommentByPost)
+
+    }
+
+}
+
+const postController = new PostController()
+
+postsRouter.get('/', getPostValidation, postController.getPosts)
+
+postsRouter.post('/', basicAuthMiddleware, createPostValidation, errorMessagesInputValidation, postController.createPost)
+
+postsRouter.get('/:id', postController.getPosts)
+
+postsRouter.put('/:id', basicAuthMiddleware, updatePostValidation, errorMessagesInputValidation, postController.updatePost)
+
+postsRouter.delete('/:id', basicAuthMiddleware, postController.deletePost)
+
+postsRouter.get('/:postId/comments', getCommentsForPostValidation, postController.getCommentsForPost)
+
+postsRouter.post('/:postId/comments', authMiddleware,postCommentForPostValidation, postController.createCommentForPost)
 

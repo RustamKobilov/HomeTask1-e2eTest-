@@ -30,26 +30,40 @@ export const getPaginationValuesAddNewUser = (body:any):PaginationTypeAddNewUser
 }
 }
 
-usersRouter.get('/',basicAuthMiddleware, getUsersValidation,async (req:Request,res:Response)=>{
-    const paginationResult = getPaginationValuesUser(req.query)
-    const resultAllUsers= await userRepository.getAllUsers(paginationResult)
+class UserController{
+    async getUsers(req: Request, res: Response) {
+        const paginationResult = getPaginationValuesUser(req.query)
+        const resultAllUsers = await userRepository.getAllUsers(paginationResult)
 
-    return res.status(200).send(resultAllUsers)
-})
-
-usersRouter.post('/',basicAuthMiddleware,postUsersValidation,async (req:Request,res:Response)=>{
-    const paginationResult =getPaginationValuesAddNewUser(req.body)
-    const resultNewUsers= await userRepository.createUser(paginationResult)
-    resultNewUsers.userConfirmationInfo.userConformation=true
-    await UserModel.insertMany(resultNewUsers)
-    return res.status(201).send({id:resultNewUsers.id,login:resultNewUsers.login,email:resultNewUsers.email,createdAt:resultNewUsers.createdAt})
-})
-
-usersRouter.delete('/:id',basicAuthMiddleware,async (req:Request,res:Response)=>{
-    const findDeleteUser = await userRepository.findUserById(req.params.id);
-    if (!findDeleteUser) {
-        return res.sendStatus(404);
+        return res.status(200).send(resultAllUsers)
     }
-    await UserModel.deleteOne({id: findDeleteUser.id})
-    return res.sendStatus(204);
-})
+
+    async createUser(req: Request, res: Response) {
+        const paginationResult = getPaginationValuesAddNewUser(req.body)
+        const resultNewUsers = await userRepository.createUser(paginationResult)
+        resultNewUsers.userConfirmationInfo.userConformation = true
+        await UserModel.insertMany(resultNewUsers)
+        return res.status(201).send({
+            id: resultNewUsers.id,
+            login: resultNewUsers.login,
+            email: resultNewUsers.email,
+            createdAt: resultNewUsers.createdAt
+        })
+    }
+
+    async deleteUser(req: Request, res: Response) {
+        const findDeleteUser = await userRepository.findUserById(req.params.id);
+        if (!findDeleteUser) {
+            return res.sendStatus(404);
+        }
+        await UserModel.deleteOne({id: findDeleteUser.id})
+        return res.sendStatus(204);
+    }
+}
+const userController = new UserController()
+
+usersRouter.get('/',basicAuthMiddleware, getUsersValidation,userController.getUsers)
+
+usersRouter.post('/',basicAuthMiddleware,postUsersValidation, userController.createUser)
+
+usersRouter.delete('/:id',basicAuthMiddleware, userController.deleteUser)

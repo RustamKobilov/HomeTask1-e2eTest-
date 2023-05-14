@@ -28,35 +28,43 @@ const getPaginationDeleteCommentById=(params:any):InputCommentByIdType=>{
     }
 }
 
-commentsRouter.get('/:id',async (req:Request,res:Response)=>{
-    const pagination=getPaginationCommentById(req.params)
-    const resultSearch=await commentsRepository.getCommentOnId(pagination.id)
+class CommentController{
+    async getComment(req: Request, res: Response) {
+        const pagination = getPaginationCommentById(req.params)
+        const resultSearch = await commentsRepository.getCommentOnId(pagination.id)
 
-    if(!resultSearch){
-        return res.sendStatus(404)
+        if (!resultSearch) {
+            return res.sendStatus(404)
+        }
+        return res.status(200).send(resultSearch)
     }
-    return res.status(200).send(resultSearch)
-})
 
+    async updateComment(req: Request, res: Response) {
 
-commentsRouter.put('/:id',authMiddleware,authCommentUser,postCommentForPostValidation,async (req:Request,res:Response)=>{
+        const pagination = getPaginationUpdateComment(req.params, req.body)
+        const resultCommentUpdate = await commentsRepository.updateComment(pagination.id, pagination.content)
 
-    const pagination=getPaginationUpdateComment(req.params,req.body)
-    const resultCommentUpdate=await commentsRepository.updateComment(pagination.id,pagination.content)
-
-    if(!resultCommentUpdate){
-        return res.sendStatus(404)
+        if (!resultCommentUpdate) {
+            return res.sendStatus(404)
+        }
+        return res.sendStatus(204)
     }
-    return res.sendStatus(204)
-})
 
-commentsRouter.delete('/:id',authMiddleware,authCommentUser,async (req:Request,res:Response)=>{
-    const pagination=getPaginationDeleteCommentById(req.params)
-    const resultSearch=await commentsRepository.getCommentOnId(pagination.id)
-    if(!resultSearch){
-        return res.sendStatus(404)
-    }
-    await CommentModel.deleteOne({id: pagination.id})
-    return res.sendStatus(204);
-})
+    async deleteComment(req: Request, res: Response) {
+        const pagination = getPaginationDeleteCommentById(req.params)
+        const resultSearch = await commentsRepository.getCommentOnId(pagination.id)
+        if (!resultSearch) {
+            return res.sendStatus(404)
+        }
+        await CommentModel.deleteOne({id: pagination.id})
+        return res.sendStatus(204);
+}
+}
+const commentController = new CommentController()
+
+commentsRouter.get('/:id',commentController.getComment)
+
+commentsRouter.put('/:id',authMiddleware,authCommentUser,postCommentForPostValidation,commentController.updateComment)
+
+commentsRouter.delete('/:id',authMiddleware,authCommentUser,commentController.deleteComment)
 
