@@ -1,4 +1,4 @@
-import { helper} from "./helper";
+import { helper} from "../Service/helper";
 import {BlogModel, PostModel} from "../Models/shemaAndModel";
 import {Blog} from "./blog-repositoryDB";
 
@@ -48,8 +48,8 @@ export type PaginationTypePostInputCommentByPost={
     sortDirection: 1|-1
 }
 
-class PostsRepository{
-   async getAllPosts(paginationPosts: PaginationTypeInputPosts): Promise<inputSortDataBaseType<Post>> {
+export class PostsRepository{
+   async getPosts(paginationPosts: PaginationTypeInputPosts): Promise<inputSortDataBaseType<Post>> {
 
         const pagesCountBlog = await PostModel.countDocuments({});
 
@@ -63,11 +63,11 @@ class PostsRepository{
             totalCount: pagesCountBlog, items: posts
         };
     }
-    async findPostOnId(id: string): Promise<Post | null> {
+    async findPost(id: string): Promise<Post | null> {
         let post = await PostModel.findOne({id: id},{_id: 0, __v: 0});
         return post;
     }
-    async updatePostOnId(id: string, pagination:PaginationTypeInputPostValueForPost,blogId:string): Promise<boolean> {
+    async updatePost(id: string, pagination:PaginationTypeInputPostValueForPost, blogId:string): Promise<boolean> {
         let post = await PostModel.updateOne({id: id}, {
             $set: {
                 title: pagination.titlePost,
@@ -83,7 +83,7 @@ class PostsRepository{
         return BlogModel.findOne({id:id},{_id: 0, __v: 0});
 
     }
-    async createPostOnId(resultCreatePost:Post):
+    async createPost(resultCreatePost:Post):
         Promise<Post> {
 
         await PostModel.insertMany(resultCreatePost);
@@ -97,6 +97,5 @@ class PostsRepository{
     }
 }
 
-export const postsRepository = new PostsRepository()
 
 

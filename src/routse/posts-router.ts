@@ -11,13 +11,13 @@ import {
 import {
     PaginationTypeGetInputCommentByPost,
     PaginationTypeInputPosts,
-    PaginationTypeInputPostValueForPost, PaginationTypePostInputCommentByPost,
-    postsRepository
+    PaginationTypeInputPostValueForPost, PaginationTypePostInputCommentByPost, PostsRepository
 } from "../RepositoryInDB/posts-repositoryDB";
-import {postsService} from "./postsService";
+import {PostsService} from "../Service/postsService";
 import {authMiddleware} from "../Middleware/authMiddleware";
-import {commentsRepository} from "../RepositoryInDB/comments-repositoryDB";
 import {PostModel} from "../Models/shemaAndModel";
+import {BlogsService} from "../Service/blogsService";
+import {CommentsService} from "../Service/commentsService";
 
 export const postsRouter = Router({});
 
@@ -55,15 +55,21 @@ export const getPaginationPostCommentForPost=(params:any, body:any):PaginationTy
     }
 
 class PostController{
+    private postService: PostsService
+    private commentService = new CommentsService
+    constructor() {
+        this.postService = new PostsService()
+        this.commentService = new CommentsService()
+    }
     async getPosts(req: Request, res: Response) {
         const paginationResultPosts = getPaginationValuesPosts(req.query)
-        const resultAllPosts = await postsRepository.getAllPosts(paginationResultPosts);
-        return res.status(200).send(resultAllPosts)
+        const posts = await this.postService.getAllPosts(paginationResultPosts);
+        return res.status(200).send(posts)
     }
 
     async createPost(req: Request, res: Response) {
         const resultPagination = getPaginationPostValueForPost(req.body)
-        const resultCreatePost = await postsService.createPostOnId(resultPagination, req.body.blogId)
+        const resultCreatePost = await this.postService.createPostOnId(resultPagination, req.body.blogId)
 
         if (!resultCreatePost) {
             return res.sendStatus(404);
@@ -73,7 +79,7 @@ class PostController{
     }
 
     async getPost(req: Request, res: Response) {
-        const findPost = await postsRepository.findPostOnId(req.params.id);
+        const findPost = await this.postService.findPostOnId(req.params.id);
         if (findPost) {
             return res.status(200).send(findPost)
         }
@@ -83,7 +89,7 @@ class PostController{
     async updatePost(req: Request, res: Response) {
         const idUpdatePost = req.params.id;
         const paginationValues = getPaginationPostValueForPost(req.body)
-        const findUpdatePost = await postsRepository.updatePostOnId(idUpdatePost, paginationValues, req.body.blogId);
+        const findUpdatePost = await this.postService.updatePostOnId(idUpdatePost, paginationValues, req.body.blogId);
         if (!findUpdatePost) {
             return res.sendStatus(404);
         }
@@ -93,7 +99,7 @@ class PostController{
     }
 
     async deletePost(req: Request, res: Response) {
-        const findDeletePost = await postsRepository.findPostOnId(req.params.id);
+        const findDeletePost = await this.postService.findPostOnId(req.params.id);
         if (!findDeletePost) {
 
             return res.sendStatus(404);
@@ -104,11 +110,11 @@ class PostController{
 
     async getCommentsForPost(req: Request, res: Response) {
         const pagination = getPaginationGetCommentForPost(req.query, req.params)
-        const resultSearchPost = await postsRepository.findPostOnId(pagination.idPost)
+        const resultSearchPost = await this.postService.findPostOnId(pagination.idPost)
         if (!resultSearchPost) {
             return res.sendStatus(404)
         }
-        const resultAllCommentsByPosts = await commentsRepository.getAllCommentForPostInBase(pagination);
+        const resultAllCommentsByPosts = await this.commentService.getAllCommentForPostInBase(pagination);
         return res.status(200).send(resultAllCommentsByPosts)
     }
 
@@ -116,11 +122,11 @@ class PostController{
         const pagination = getPaginationPostCommentForPost(req.params, req.body)
         const user = req.user!
 
-        const resultSearchPost = await postsRepository.findPostOnId(pagination.idPost)
+        const resultSearchPost = await this.postService.findPostOnId(pagination.idPost)
         if (!resultSearchPost) {
             return res.sendStatus(404)
         }
-        const addCommentByPost = await postsService.createCommentOnId(pagination, user)
+        const addCommentByPost = await this.postService.createCommentOnId(pagination, user)
         return res.status(201).send(addCommentByPost)
 
     }
@@ -133,7 +139,7 @@ postsRouter.get('/', getPostValidation, postController.getPosts)
 
 postsRouter.post('/', basicAuthMiddleware, createPostValidation, errorMessagesInputValidation, postController.createPost)
 
-postsRouter.get('/:id', postController.getPosts)
+postsRouter.get('/:id', postController.getPost)
 
 postsRouter.put('/:id', basicAuthMiddleware, updatePostValidation, errorMessagesInputValidation, postController.updatePost)
 

@@ -1,11 +1,11 @@
 import {Request, Response,Router} from "express";
-import {
-    commentsRepository, InputCommentByIdType, UpdateCommentType
+import { InputCommentByIdType, UpdateCommentType
 } from "../RepositoryInDB/comments-repositoryDB";
 import {postCommentForPostValidation} from "../Models/InputValidation";
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {authCommentUser} from "../Middleware/authCommentUser";
 import {CommentModel} from "../Models/shemaAndModel";
+import {CommentsService} from "../Service/commentsService";
 
 export const commentsRouter=Router({})
 
@@ -28,10 +28,14 @@ const getPaginationDeleteCommentById=(params:any):InputCommentByIdType=>{
     }
 }
 
-class CommentController{
+export class CommentController{
+    private commentService = new CommentsService
+    constructor() {
+        this.commentService = new CommentsService()
+    }
     async getComment(req: Request, res: Response) {
         const pagination = getPaginationCommentById(req.params)
-        const resultSearch = await commentsRepository.getCommentOnId(pagination.id)
+        const resultSearch = await this.commentService.getCommentOnId(pagination.id)
 
         if (!resultSearch) {
             return res.sendStatus(404)
@@ -42,7 +46,7 @@ class CommentController{
     async updateComment(req: Request, res: Response) {
 
         const pagination = getPaginationUpdateComment(req.params, req.body)
-        const resultCommentUpdate = await commentsRepository.updateComment(pagination.id, pagination.content)
+        const resultCommentUpdate = await this.commentService.updateCommentOnId(pagination.id, pagination.content)
 
         if (!resultCommentUpdate) {
             return res.sendStatus(404)
@@ -52,7 +56,7 @@ class CommentController{
 
     async deleteComment(req: Request, res: Response) {
         const pagination = getPaginationDeleteCommentById(req.params)
-        const resultSearch = await commentsRepository.getCommentOnId(pagination.id)
+        const resultSearch = await this.commentService.getCommentOnId(pagination.id)
         if (!resultSearch) {
             return res.sendStatus(404)
         }

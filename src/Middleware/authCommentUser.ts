@@ -1,9 +1,11 @@
 import {NextFunction, Request, Response} from "express";
-import {commentsRepository} from "../RepositoryInDB/comments-repositoryDB";
+import {CommentsService} from "../Service/commentsService";
+
 
 
 export const authCommentUser =async (req: Request, res: Response, next: NextFunction) => {
-    const resultSearch=await commentsRepository.getCommentOnId(req.params.id)
+    const commentsService = new CommentsService()
+    const resultSearch=await commentsService.getCommentOnId(req.params.id)
 
     if(!resultSearch){
         return res.sendStatus(404)

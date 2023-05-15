@@ -5,7 +5,7 @@ import {
     PaginationTypeInputParamsBlogs,
     PaginationTypeUpdateBlog
 } from "../RepositoryInDB/blog-repositoryDB";
-import {ReturnDistributedDate} from "../RepositoryInDB/helper";
+import {ReturnDistributedDate} from "./helper";
 import {inputSortDataBaseType, PaginationTypeInputPosts, Post} from "../RepositoryInDB/posts-repositoryDB";
 
 export class BlogsService{
@@ -34,5 +34,3 @@ export class BlogsService{
         return await this.blogRepository.updateBlog(paginationUpdateBlog)
     }
 }
-
-//export const blogsService = new BlogsService()

@@ -11,10 +11,9 @@ import {
     PaginationTypeInputParamsBlogs, PaginationTypeUpdateBlog
 } from "../RepositoryInDB/blog-repositoryDB";
 import {getPaginationPostValueForPost, getPaginationValuesPosts} from "./posts-router";
-import {BlogsService} from "./blogsService";
-import {postsService} from "./postsService";
+import {BlogsService} from "../Service/blogsService";
 import {BlogModel} from "../Models/shemaAndModel";
-import {body} from "express-validator";
+import {PostsService} from "../Service/postsService";
 
 export const blogsRouter = Router({});
 
@@ -40,8 +39,10 @@ const getPaginationValuesUpdateBlog = (body: any , params : any): PaginationType
 
 class BlogController{
     private blogService:BlogsService
+    private postService: PostsService
     constructor() {
         this.blogService = new BlogsService()
+        this.postService = new PostsService()
     }
     async getBlogs(req: Request, res: Response) {
     const paginationResult = getPaginationValuesBlogs(req.query)
@@ -83,7 +84,7 @@ class BlogController{
     async createPostForBlog(req: Request, res: Response) {
         const blogId = req.params.id;
         const paginationResult = getPaginationPostValueForPost(req.body)
-        const resultCreatePost = await postsService.createPostOnId(paginationResult, blogId)
+        const resultCreatePost = await this.postService.createPostOnId(paginationResult, blogId)
         console.log(resultCreatePost)
         if (!resultCreatePost) {
             return res.sendStatus(404);

@@ -1,12 +1,29 @@
 import {randomUUID} from "crypto";
 import {
-    PaginationTypeGetInputCommentByPost,
-    PaginationTypeInputPostValueForPost, Post, postsRepository,
+    inputSortDataBaseType,
+    PaginationTypeGetInputCommentByPost, PaginationTypeInputPosts,
+    PaginationTypeInputPostValueForPost, Post, PostsRepository,
 } from "../RepositoryInDB/posts-repositoryDB";
-import {Comment, CommentatorInfo, commentsRepository} from "../RepositoryInDB/comments-repositoryDB";
+import {
+    Comment,
+    CommentatorInfo
+} from "../RepositoryInDB/comments-repositoryDB";
 import {User} from "../RepositoryInDB/user-repositoryDB";
+import {CommentsService} from "./commentsService";
 
-class PostsService{
+export class PostsService{
+    private postRepository: PostsRepository
+    private commentService = new CommentsService
+    constructor() {
+        this.postRepository = new PostsRepository()
+        this.commentService = new CommentsService()
+    }
+    async getAllPosts(paginationPosts: PaginationTypeInputPosts): Promise<inputSortDataBaseType<Post>> {
+        return await this.postRepository.getPosts(paginationPosts)
+    }
+    async findPostOnId(id: string): Promise<Post | null> {
+        return await this.postRepository.findPost(id)
+    }
     async createPost(titleNewPost: string, shortDescriptionNewPost: string, contentNewPost: string,
                      blogIdForPost: string, blogNameForPost: string): Promise<Post> {
         const idNewPost = randomUUID();
@@ -17,12 +34,12 @@ class PostsService{
             contentNewPost, blogIdForPost,
             blogNameForPost,
             new Date().toISOString())
-        const addNewPost = await postsRepository.createPostOnId(newPost)
+        const addNewPost = await this.postRepository.createPost(newPost)
 
         return addNewPost;
     }
     async createPostOnId(pagination:PaginationTypeInputPostValueForPost,blogId:string):Promise<Post|boolean> {
-        const blogNameForPost = await postsRepository.findBlogName(blogId);
+        const blogNameForPost = await this.postRepository.findBlogName(blogId);
 
         if (!blogNameForPost) {
             return false;
@@ -30,6 +47,9 @@ class PostsService{
         const resultCreatePost = await this.createPost(pagination.titlePost, pagination.shortDescriptionPost,
             pagination.contentPost, blogId, blogNameForPost.name)
     return resultCreatePost
+    }
+    async updatePostOnId(id: string, pagination:PaginationTypeInputPostValueForPost,blogId:string): Promise<boolean> {
+        return await this.postRepository.updatePost(id,pagination,blogId)
     }
     async createCommentOnId(pagination:PaginationTypeGetInputCommentByPost, user:User){
         const idNewComment = randomUUID();
@@ -41,9 +61,8 @@ class PostsService{
                                                 CommentatorInfoNewComment,
                                                 new Date().toISOString())
 
-        const addNewComment=await commentsRepository.createCommentByPost(newComment)
+        const addNewComment=await this.commentService.createCommentByPost(newComment)
         return addNewComment
     }
 }
 
-export const postsService = new PostsService()

@@ -1,5 +1,5 @@
 import {inputSortDataBaseType, PaginationTypePostInputCommentByPost} from "./posts-repositoryDB";
-import {helper} from "./helper";
+import {helper} from "../Service/helper";
 import {CommentModel} from "../Models/shemaAndModel";
 
 
@@ -31,8 +31,8 @@ export type UpdateCommentType ={
     content:string
 }
 
-class CommentsRepository{
-    async getAllCommentForPostInBase(pagination:PaginationTypePostInputCommentByPost):
+export class CommentsRepository{
+    async getComments(pagination:PaginationTypePostInputCommentByPost):
         Promise<inputSortDataBaseType<OutputCommentOutputType>>{
         const filter= {postId: pagination.idPost}
         const countCommentsForPost = await CommentModel.countDocuments(filter)
@@ -49,7 +49,7 @@ class CommentsRepository{
             items: sortCommentsForPosts
         }
     }
-     async createCommentByPost(comment:Comment):Promise<OutputCommentOutputType>{
+     async createCommentForPost(comment:Comment):Promise<OutputCommentOutputType>{
         await CommentModel.insertMany(comment)
 
         return({id: comment.id,
@@ -57,7 +57,7 @@ class CommentsRepository{
             commentatorInfo:comment.commentatorInfo,
             createdAt: comment.createdAt})
     }
-    async getCommentOnId(id:string):Promise<Comment|null>{
+    async getComment(id:string):Promise<Comment|null>{
         const result=await CommentModel.findOne({id: id}, {_id: 0, __v: 0});
         return result
     }
@@ -67,9 +67,6 @@ class CommentsRepository{
                 content:content
             }
         })
-
         return commentUpdate.matchedCount === 1
     }
 }
-
-export const commentsRepository = new CommentsRepository()

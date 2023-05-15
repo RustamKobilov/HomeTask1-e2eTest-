@@ -1,7 +1,8 @@
 import {Request, Response, Router} from "express";
 import {jwtService} from "../application/jwtService";
 import {authRefreshToken} from "../Middleware/authRefreshToken";
-import {DeviceModel, RecoveryPasswordModel, UserModel} from "../Models/shemaAndModel";
+import {RecoveryPasswordModel, UserModel} from "../Models/shemaAndModel";
+import {DevicesService} from "../Service/devicesService";
 
 export const securityRouter = Router({})
 
@@ -22,52 +23,44 @@ export type SecurityOfAttemptsType ={
     dateAttempt:string
 }
 
-class DeviceController{
+export class DeviceController{
+    private devicesService : DevicesService
+    constructor() {
+        this.devicesService = new DevicesService()
+    }
     async getDevices(req: Request, res: Response) {
         const inputRefreshToken = req.cookies.refreshToken
-        const userIdByAndDeviceIdRefreshToken = await jwtService.verifyToken(inputRefreshToken)
+        const devices = await this.devicesService.getAllDevices(inputRefreshToken)
 
-        const allCollection = await DeviceModel
-            .find({userId: userIdByAndDeviceIdRefreshToken.userId}, {_id: 0, __v: 0}).lean()
-
-        return res.send(allCollection).status(200)
+        return res.send(devices).status(200)
     }
 
     async deleteDevices(req: Request, res: Response) {
         const inputRefreshToken = req.cookies.refreshToken
-        const userIdByAndDeviceIdRefreshToken = await jwtService.verifyToken(inputRefreshToken)
-
-        const deleteSessionEveryoneBut = await DeviceModel.deleteMany({
-            userId: userIdByAndDeviceIdRefreshToken.userId,
-            deviceId: {$ne: userIdByAndDeviceIdRefreshToken.deviceId}
-        })
+        await this.devicesService.deleteDevicesExceptForHim(inputRefreshToken)
 
         return res.sendStatus(204)
     }
 
     async deleteDeviceOnId(req: Request, res: Response) {
-    const inputRefreshToken = req.cookies.refreshToken
-    const userIdByAndDeviceIdRefreshToken = await jwtService.verifyToken(inputRefreshToken)
+        const inputRefreshToken = req.cookies.refreshToken
+        const userIdByAndDeviceIdRefreshToken = await jwtService.verifyToken(inputRefreshToken)
 
-    const searchDeviceIdParamsInBase = await DeviceModel
-        .findOne({deviceId: req.params.deviceId})
-    if (!searchDeviceIdParamsInBase) {
-    return res.sendStatus(404)
-}
+        const searchDeviceIdParamsInBase = await this.devicesService.searchDevice(userIdByAndDeviceIdRefreshToken.userId)
+        if (!searchDeviceIdParamsInBase) {
+            return res.sendStatus(404)
+        }
 
-const searchDeviceIdParamsInBaseForUser = await DeviceModel
-    .findOne({userId: userIdByAndDeviceIdRefreshToken.userId, deviceId: req.params.deviceId})
-if (!searchDeviceIdParamsInBaseForUser) {
-    return res.sendStatus(403)
-}
+        const searchDeviceIdParamsInBaseForUser = await this.devicesService.
+        searchDeviceOnTwoParametr(userIdByAndDeviceIdRefreshToken.userId,userIdByAndDeviceIdRefreshToken.deviceId)
+        if (!searchDeviceIdParamsInBaseForUser) {
+            return res.sendStatus(403)
+        }
 
-const deleteSessionEveryoneBut = await DeviceModel.deleteMany({
-    userId: userIdByAndDeviceIdRefreshToken.userId,
-    deviceId: req.params.deviceId
-})
+        await this.devicesService.deleteDevice(userIdByAndDeviceIdRefreshToken.userId,userIdByAndDeviceIdRefreshToken.deviceId)
 
-return res.sendStatus(204)
-}
+        return res.sendStatus(204)
+    }
 }
 const deviceController = new DeviceController()
 

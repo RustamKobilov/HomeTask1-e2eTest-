@@ -1,5 +1,5 @@
 import {inputSortDataBaseType, PaginationTypeInputPosts, Post} from "./posts-repositoryDB";
-import {helper, ReturnDistributedDate} from "./helper";
+import {helper, ReturnDistributedDate} from "../Service/helper";
 import {BlogModel, PostModel} from "../Models/shemaAndModel";
 
 
@@ -85,6 +85,4 @@ export class BlogRepository{
         return blog.matchedCount === 1
     }
 }
-
-//export const blogRepository=new BlogRepository()
 
