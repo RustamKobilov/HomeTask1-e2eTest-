@@ -4,11 +4,12 @@ export const usersRouter=Router({})
 
 import {
     PaginationTypeAddNewUser,
-    PaginationTypeInputUser, userRepository
+    PaginationTypeInputUser, UserRepository, userRepository
 } from "../RepositoryInDB/user-repositoryDB";
 import {basicAuthMiddleware} from "../Middleware/autorized";
 import {getUsersValidation, postUsersValidation} from "../Models/InputValidation";
 import {UserModel} from "../Models/shemaAndModel";
+import {UserService} from "../Service/userService";
 
 
 const getPaginationValuesUser = (query:any): PaginationTypeInputUser=>{
@@ -31,18 +32,21 @@ export const getPaginationValuesAddNewUser = (body:any):PaginationTypeAddNewUser
 }
 
 class UserController{
+    private userService : UserService
+    constructor() {
+        this.userService = new UserService()
+    }
     async getUsers(req: Request, res: Response) {
         const paginationResult = getPaginationValuesUser(req.query)
-        const resultAllUsers = await userRepository.getAllUsers(paginationResult)
+        const resultAllUsers = await this.userService.getAllUsers(paginationResult)
 
         return res.status(200).send(resultAllUsers)
     }
 
     async createUser(req: Request, res: Response) {
         const paginationResult = getPaginationValuesAddNewUser(req.body)
-        const resultNewUsers = await userRepository.createUser(paginationResult)
-        resultNewUsers.userConfirmationInfo.userConformation = true
-        await UserModel.insertMany(resultNewUsers)
+        const resultNewUsers = await this.userService.createUserByAdmin(paginationResult)
+
         return res.status(201).send({
             id: resultNewUsers.id,
             login: resultNewUsers.login,
@@ -52,11 +56,10 @@ class UserController{
     }
 
     async deleteUser(req: Request, res: Response) {
-        const findDeleteUser = await userRepository.findUserById(req.params.id);
-        if (!findDeleteUser) {
+        const deleteUser = await this.userService.deleteUserById(req.params.id);
+        if (!deleteUser) {
             return res.sendStatus(404);
         }
-        await UserModel.deleteOne({id: findDeleteUser.id})
         return res.sendStatus(204);
     }
 }

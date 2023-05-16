@@ -1,17 +1,20 @@
-import {jwtService} from "../application/jwtService";
+import {JwtService} from "../application/jwtService";
 import {DeviceRepository} from "../RepositoryInDB/device-repositoryDB";
 
 export class DevicesService{
     private deviceRepository : DeviceRepository
+    private jwtService : JwtService
+
     constructor() {
         this.deviceRepository = new DeviceRepository()
+        this.jwtService = new JwtService()
     }
     async getAllDevices(refreshToken:string){
-        const userPayload = await jwtService.verifyToken(refreshToken)
+        const userPayload = await this.jwtService.verifyToken(refreshToken)
        return await this.deviceRepository.getDevices(userPayload)
     }
     async deleteDevicesExceptForHim(refreshToken:string) {
-        const userPayload = await jwtService.verifyToken(refreshToken)
+        const userPayload = await this.jwtService.verifyToken(refreshToken)
     return await this.deviceRepository.deleteDevices(userPayload)
     }
     async searchDevice(id:string) {

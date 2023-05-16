@@ -1,4 +1,4 @@
-import {jwtService} from "../application/jwtService";
+import {JwtService} from "../application/jwtService";
 import {Request,Response,NextFunction} from "express";
 import {userRepository} from "../RepositoryInDB/user-repositoryDB";
 
@@ -6,6 +6,7 @@ export const authMiddleware =async (req: Request, res: Response, next: NextFunct
     const inputToken = req.headers.authorization;
     if (!inputToken) return res.sendStatus(401)
 
+    const jwtService = new JwtService()
     const token = inputToken.split(' ')[1]
     const resultSearchUserIdbyToken = await jwtService.verifyToken(token)
     if (resultSearchUserIdbyToken) {

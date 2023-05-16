@@ -43,14 +43,14 @@ export type PaginationTypeAddNewUser = {
 }
 
 export type PaginationTypeRecoveryPassword = {
-    recoveryCode: string,
-    userId: string,
+    recoveryCode: string
+    userId: string
     diesAtDate: string
 }
 
 
-class UserRepository{
-    async getAllUsers(paginationUser: PaginationTypeInputUser): Promise<inputSortDataBaseType<User>> {
+export class UserRepository{
+    async getUsers(paginationUser: PaginationTypeInputUser): Promise<inputSortDataBaseType<User>> {
         const searchLoginTerm = paginationUser.searchLoginTerm != null ? {
             login: {$regex: paginationUser.searchLoginTerm, $options: "i"}
         } : {}
@@ -85,44 +85,20 @@ class UserRepository{
             items: sortUser
         }
     }
-    async createUser(paginationAddUser: PaginationTypeAddNewUser): Promise<User> {
-        const salt = await bcrypt.genSalt(8)
-        const hashResult = await this.hashPassword(paginationAddUser.password, salt)
-
-        const date0 = new Date()
-        const date02 = date0.getHours()
-        date0.setHours(date02 + 1)
-        const dateExpiration = new Date(date0).toISOString()
-
-        const newUser:User=new User(randomUUID(),
-            paginationAddUser.login,
-            hashResult,
-            paginationAddUser.email,
-            new Date().toISOString(),
-            salt,
-            hashResult,
-            {
-            userConformation: false,
-                code: randomUUID(),
-                expirationCode: dateExpiration
-            })
-
-        return newUser
-
+    async createUser(user:User){
+        await UserModel.insertMany(user)
     }
     async hashPassword(password: string, salt: string) {
         const hash = await bcrypt.hash(password, salt)
         return hash
     }
     async findUserById(id: string): Promise<User | null> {
-        const user = await UserModel.findOne({id: id}, {_id: 0, __v: 0})
-        return user
+        return await UserModel.findOne({id: id}, {_id: 0, __v: 0})
     }
     async findUserByLoginOrEmail(loginOrEmail: string): Promise<User | null> {
         return UserModel.findOne({$or: [{login: loginOrEmail}, {email: loginOrEmail}]}, {_id: 0, __v: 0})
     }
     async findUserByCode(code: string): Promise<User | null> {
-        console.log(code)
         return UserModel.findOne({'userConfirmationInfo.code': code}, {_id: 0, __v: 0})
     }
     async updateUserConformation(id: string):
@@ -136,12 +112,13 @@ class UserRepository{
 
         return user.matchedCount === 1
     }
+    async deleteUser(id: string){
+        await UserModel.deleteOne({id: id})
+    }
     async findUserByEmail(email: string): Promise<User | null> {
-
         return UserModel.findOne({email: email}, {_id: 0, __v: 0})
     }
     async findUserByLogin(login: string): Promise<User | null> {
-
         return UserModel.findOne({login: login}, {_id: 0, __v: 0})
     }
     async updateUserConformationCode(id: string, code: string):
@@ -158,7 +135,7 @@ class UserRepository{
     async getRecoveryCode(code: String): Promise<PaginationTypeRecoveryPassword | null> {
         return RecoveryPasswordModel.findOne({recoveryCode: code}, {_id: 0, __v: 0})
     }
-    async updatePasswordForUserByRecovery(newPassword: string, recoveryCode: string):
+    async updatePassword(newPassword: string, recoveryCode: string):
         Promise<boolean> {
         let userIdInRecovery = await this.getRecoveryCode(recoveryCode)
         if (!userIdInRecovery) {
@@ -178,6 +155,13 @@ class UserRepository{
     }
     async getPasswordByUserId(userId: string): Promise<User | null> {
         return UserModel.findOne({id: userId}, {_id: 0, __v: 0})
+    }
+    async createRecoveryPassword(paginationRecoveryPassword:PaginationTypeRecoveryPassword){
+        await RecoveryPasswordModel.insertMany({
+            recoveryCode: paginationRecoveryPassword.recoveryCode,
+            userId: paginationRecoveryPassword.userId,
+            diesAtDate: paginationRecoveryPassword.diesAtDate
+        })
     }
 }
 

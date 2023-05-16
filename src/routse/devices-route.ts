@@ -1,5 +1,5 @@
 import {Request, Response, Router} from "express";
-import {jwtService} from "../application/jwtService";
+import {JwtService} from "../application/jwtService";
 import {authRefreshToken} from "../Middleware/authRefreshToken";
 import {RecoveryPasswordModel, UserModel} from "../Models/shemaAndModel";
 import {DevicesService} from "../Service/devicesService";
@@ -25,8 +25,10 @@ export type SecurityOfAttemptsType ={
 
 export class DeviceController{
     private devicesService : DevicesService
+    private jwtService : JwtService
     constructor() {
         this.devicesService = new DevicesService()
+        this.jwtService = new JwtService()
     }
     async getDevices(req: Request, res: Response) {
         const inputRefreshToken = req.cookies.refreshToken
@@ -44,7 +46,7 @@ export class DeviceController{
 
     async deleteDeviceOnId(req: Request, res: Response) {
         const inputRefreshToken = req.cookies.refreshToken
-        const userIdByAndDeviceIdRefreshToken = await jwtService.verifyToken(inputRefreshToken)
+        const userIdByAndDeviceIdRefreshToken = await this.jwtService.verifyToken(inputRefreshToken)
 
         const searchDeviceIdParamsInBase = await this.devicesService.searchDevice(userIdByAndDeviceIdRefreshToken.userId)
         if (!searchDeviceIdParamsInBase) {

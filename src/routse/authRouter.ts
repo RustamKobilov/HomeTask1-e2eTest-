@@ -5,21 +5,27 @@ import {
     postUsersValidation,
 } from "../Models/InputValidation";
 import {authService} from "../domain/authService";
-import {jwtService} from "../application/jwtService";
+import {JwtService} from "../application/jwtService";
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {emailAdapters} from "../adapters/email-adapters";
-import {userRepository} from "../RepositoryInDB/user-repositoryDB";
 import {getPaginationValuesAddNewUser} from "./user-router";
 import {authRefreshToken} from "../Middleware/authRefreshToken";
 import {randomUUID} from "crypto";
 import {getPaginationValuesInputUserInformation} from "./devices-route";
 import {authAttemptLimit} from "../Middleware/authAttemptLimit";
 import {RecoveryPasswordModel, UserModel} from "../Models/shemaAndModel";
+import {UserService} from "../Service/userService";
 
 export const authRouter=Router({})
 
 class UserController{
-    constructor(){}
+    private userService : UserService
+    private jwtService : JwtService
+
+    constructor() {
+        this.userService = new UserService()
+        this.jwtService = new JwtService()
+    }
 
     async loginUser(req: Request, res: Response) {
         const {loginOrEmail, password} = req.body
@@ -31,25 +37,25 @@ class UserController{
             req.headers['user-agent'] = 'default'
         }
         const ipAddressInput = req.ip
-        console.log('addressInput ' + ipAddressInput)
         if (!ipAddressInput) {
             return res.status(404).send('not found ipAddress')
         }
+
         let refreshToken = null;
         const paginationUserInformation = getPaginationValuesInputUserInformation(ipAddressInput, req.headers['user-agent'])
-        const accessToken = await jwtService.createAccessTokenJWT(user.id)
-        const checkTokenInBaseByName = await jwtService.checkTokenInBaseByName(user.id, paginationUserInformation.title)
+        const accessToken = await this.jwtService.createAccessTokenJWT(user.id)
+        const checkTokenInBaseByName = await this.jwtService.checkTokenInBaseByName(user.id, paginationUserInformation.title)
         if (!checkTokenInBaseByName) {
             const deviceId = randomUUID()
-            refreshToken = await jwtService.createRefreshToken(user.id, deviceId)
-            const lastActiveDate = await jwtService.getLastActiveDateFromRefreshToken(refreshToken)
-            const diesAtDate = await jwtService.getDiesAtDate(refreshToken)
-            await jwtService.createTokenByUserIdInBase(user.id, paginationUserInformation, deviceId, lastActiveDate, diesAtDate)
+            refreshToken = await this.jwtService.createRefreshToken(user.id, deviceId)
+            const lastActiveDate = await this.jwtService.getLastActiveDateFromRefreshToken(refreshToken)
+            const diesAtDate = await this.jwtService.getDiesAtDate(refreshToken)
+            await this.jwtService.createTokenByUserIdInBase(user.id, paginationUserInformation, deviceId, lastActiveDate, diesAtDate)
         } else {
-            refreshToken = await jwtService.createRefreshToken(user.id, checkTokenInBaseByName)
-            const lastActiveDate = await jwtService.getLastActiveDateFromRefreshToken(refreshToken)
-            const diesAtDate = await jwtService.getDiesAtDate(refreshToken)
-            await jwtService.updateTokenInBase(user.id, paginationUserInformation.title, lastActiveDate, diesAtDate)
+            refreshToken = await this.jwtService.createRefreshToken(user.id, checkTokenInBaseByName)
+            const lastActiveDate = await this.jwtService.getLastActiveDateFromRefreshToken(refreshToken)
+            const diesAtDate = await this.jwtService.getDiesAtDate(refreshToken)
+            await this.jwtService.updateTokenInBase(user.id, paginationUserInformation.title, lastActiveDate, diesAtDate)
         }
         const returnToken = {
             accessToken: accessToken,
@@ -64,24 +70,27 @@ class UserController{
 
     async updateRefreshToken(req: Request, res: Response) {
         const inputRefreshToken = req.cookies.refreshToken
-        const userIdByOldRefreshToken = await jwtService.verifyToken(inputRefreshToken)
+        const userIdByOldRefreshToken = await this.jwtService.verifyToken(inputRefreshToken)
 
         if (!userIdByOldRefreshToken) {
             return res.status(401).send('controller')
         }
 
-        const accessToken = await jwtService.createAccessTokenJWT(userIdByOldRefreshToken.userId)
-        const refreshToken = await jwtService.createRefreshToken(userIdByOldRefreshToken.userId, userIdByOldRefreshToken.deviceId)
-        const lastActiveDate = await jwtService.getLastActiveDateFromRefreshToken(refreshToken)
-        console.log(lastActiveDate)
-        const diesAtDate = await jwtService.getDiesAtDate(refreshToken)
-        console.log(diesAtDate)
-        const refreshTokenUpdate = await jwtService
-            .refreshTokenInBase(userIdByOldRefreshToken.userId, userIdByOldRefreshToken.deviceId, lastActiveDate, diesAtDate)
+        const accessToken = await this.jwtService.createAccessTokenJWT(userIdByOldRefreshToken.userId)
+        const refreshToken = await this.jwtService.createRefreshToken(userIdByOldRefreshToken.userId, userIdByOldRefreshToken.deviceId)
+        const lastActiveDate = await this.jwtService.getLastActiveDateFromRefreshToken(refreshToken)
+        const diesAtDate = await this.jwtService.getDiesAtDate(refreshToken)
+        const refreshTokenUpdate = await this.jwtService
+            .refreshTokenInBase(
+                userIdByOldRefreshToken.userId,
+                userIdByOldRefreshToken.deviceId,
+                lastActiveDate,
+                diesAtDate
+            )
         if (!refreshTokenUpdate) {
             return res.send('no update RefreshToken')
         }
-        console.log(refreshToken)
+
         const returnToken = {
             accessToken: accessToken
 
@@ -94,13 +103,13 @@ class UserController{
 
     async logoutUser(req: Request, res: Response) {
         const refreshToken = req.cookies.refreshToken
-        const userIdByOldRefreshToken = await jwtService.verifyToken(refreshToken)
+        const userIdByOldRefreshToken = await this.jwtService.verifyToken(refreshToken)
 
         if (!userIdByOldRefreshToken) {
             return res.status(401).send('controller logout')
         }
 
-        const deleteDeviceUser = await jwtService.deleteTokenRealize(userIdByOldRefreshToken.userId, userIdByOldRefreshToken.deviceId)
+        const deleteDeviceUser = await this.jwtService.deleteTokenRealize(userIdByOldRefreshToken.userId, userIdByOldRefreshToken.deviceId)
         if (!deleteDeviceUser) {
             return res.status(404).send('delete not successful')
         }
@@ -112,14 +121,13 @@ class UserController{
     async registrationUser(req: Request, res: Response) {
 
         const paginationResult = getPaginationValuesAddNewUser(req.body)
-        const resultNewUsers = await userRepository.createUser(paginationResult)
-        await UserModel.insertMany(resultNewUsers)
+        const resultNewUsers = await this.userService.createUserRegistration(paginationResult)
 
         try {
             await emailAdapters.gmailSendEmailRegistration(req.body.email, resultNewUsers.userConfirmationInfo.code)
         } catch (error) {
             console.error('email send out')
-            await UserModel.deleteOne({id: resultNewUsers.id})
+            await this.userService.deleteUserById(resultNewUsers.id)
             return res.sendStatus(400)
         }
         return res.sendStatus(204)
@@ -156,14 +164,14 @@ class UserController{
     async passwordRecoveryUser(req: Request, res: Response) {
         const emailInput = req.body.email
         let recoveryCode = randomUUID()
-        console.log('skolko vremia ne yasno')
-        const expiredRecoveryCode: number = 30000
+        const expiredRecoveryCode: number = 30000//why comment?
 
         const checkEmailAmongUser = await authService.checkEmail(emailInput)
 
         if (checkEmailAmongUser) {
             console.log('email yes')
-            await RecoveryPasswordModel.insertMany({
+            //const paginationResult = getPaginationValuesRecoveryPassword()
+            await this.userService.createRecoveryPasswordUserItem({
                 recoveryCode: recoveryCode,
                 userId: checkEmailAmongUser.id,
                 diesAtDate: new Date(Date.now() + expiredRecoveryCode).toISOString()
@@ -192,7 +200,8 @@ return res.sendStatus(204)
     async newPasswordUser(req: Request, res: Response) {
         const newPassword = req.body.newPassword
         const recoveryCode = req.body.recoveryCode
-        const updatePassword = await userRepository.updatePasswordForUserByRecovery(newPassword, recoveryCode)
+        const updatePassword = await this.userService.
+        updatePasswordForUserByRecovery(newPassword, recoveryCode)
         if (!updatePassword) {
             return res.status(400).send({
                 "errorsMessages": [

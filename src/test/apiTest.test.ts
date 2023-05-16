@@ -1,7 +1,7 @@
 import request from "supertest";
 import {app} from "../app";
 import {User, userRepository} from "../RepositoryInDB/user-repositoryDB";
-import {jwtService} from "../application/jwtService";
+import {JwtService} from "../application/jwtService";
 import {DeviceModel, RecoveryPasswordModel} from "../Models/shemaAndModel";
 import mongoose from "mongoose";
 import {randomUUID} from "crypto";
@@ -22,6 +22,7 @@ const BasicAuthorized={
     password:'Basic YWRtaW46cXdlcnR5'
 }
 
+const jwtService = new JwtService()
 
 describe('all test',()=>{
 

@@ -1,9 +1,10 @@
 import {NextFunction, Request, Response} from "express";
-import {jwtService} from "../application/jwtService";
+import {JwtService} from "../application/jwtService";
 
 
 export const authRefreshToken =async (req: Request, res: Response, next: NextFunction) => {
     const refreshToken=req.cookies.refreshToken
+    const jwtService = new JwtService()
     const resultVerifyToken=await jwtService.verifyToken(refreshToken)
     if(!resultVerifyToken){
         return res.status(401).send('dont verify authRefreshMiddleware' + refreshToken)
