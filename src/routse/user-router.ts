@@ -65,8 +65,8 @@ export class UserController{
     }
 }
 
-usersRouter.get('/',basicAuthMiddleware, getUsersValidation,usersController.getUsers)
+usersRouter.get('/',basicAuthMiddleware, getUsersValidation,usersController.getUsers.bind(usersRouter))
 
-usersRouter.post('/',basicAuthMiddleware,postUsersValidation, usersController.createUser)
+usersRouter.post('/',basicAuthMiddleware,postUsersValidation, usersController.createUser.bind(usersController))
 
-usersRouter.delete('/:id',basicAuthMiddleware, usersController.deleteUser)
+usersRouter.delete('/:id',basicAuthMiddleware, usersController.deleteUser.bind(usersController))
