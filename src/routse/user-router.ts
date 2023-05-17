@@ -10,6 +10,7 @@ import {basicAuthMiddleware} from "../Middleware/autorized";
 import {getUsersValidation, postUsersValidation} from "../Models/InputValidation";
 import {UserModel} from "../Models/shemaAndModel";
 import {UserService} from "../Service/userService";
+import {usersController} from "../composition-root";
 
 
 const getPaginationValuesUser = (query:any): PaginationTypeInputUser=>{
@@ -31,10 +32,10 @@ export const getPaginationValuesAddNewUser = (body:any):PaginationTypeAddNewUser
 }
 }
 
-class UserController{
-    private userService : UserService
-    constructor() {
-        this.userService = new UserService()
+export class UserController{
+    private usersService : UserService
+    constructor(protected userService : UserService) {
+        this.usersService = userService
     }
     async getUsers(req: Request, res: Response) {
         const paginationResult = getPaginationValuesUser(req.query)
@@ -63,10 +64,9 @@ class UserController{
         return res.sendStatus(204);
     }
 }
-const userController = new UserController()
 
-usersRouter.get('/',basicAuthMiddleware, getUsersValidation,userController.getUsers)
+usersRouter.get('/',basicAuthMiddleware, getUsersValidation,usersController.getUsers)
 
-usersRouter.post('/',basicAuthMiddleware,postUsersValidation, userController.createUser)
+usersRouter.post('/',basicAuthMiddleware,postUsersValidation, usersController.createUser)
 
-usersRouter.delete('/:id',basicAuthMiddleware, userController.deleteUser)
+usersRouter.delete('/:id',basicAuthMiddleware, usersController.deleteUser)

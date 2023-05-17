@@ -11,9 +11,9 @@ import {inputSortDataBaseType} from "../RepositoryInDB/posts-repositoryDB";
 import {UserModel} from "../Models/shemaAndModel";
 import {helper} from "./helper";
 export class UserService {
-        private userRepository : UserRepository
-        constructor() {
-            this.userRepository = new UserRepository()
+        private usersRepository : UserRepository
+        constructor(protected userRepository:UserRepository) {
+            this.usersRepository = userRepository
         }
 
     async createUser(paginationAddUser: PaginationTypeAddNewUser): Promise<User> {
