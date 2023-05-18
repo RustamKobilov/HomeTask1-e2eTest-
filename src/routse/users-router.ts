@@ -1,17 +1,15 @@
 import {Request,Response,Router} from "express";
-
-export const usersRouter=Router({})
-
 import {
     PaginationTypeAddNewUser,
-    PaginationTypeInputUser, UserRepository, userRepository
+    PaginationTypeInputUser,
 } from "../RepositoryInDB/user-repositoryDB";
 import {basicAuthMiddleware} from "../Middleware/autorized";
 import {getUsersValidation, postUsersValidation} from "../Models/InputValidation";
-import {UserModel} from "../Models/shemaAndModel";
 import {UserService} from "../Service/userService";
 import {usersController} from "../composition-root";
 
+
+export const usersRouter=Router({})
 
 const getPaginationValuesUser = (query:any): PaginationTypeInputUser=>{
    return {
@@ -33,10 +31,8 @@ export const getPaginationValuesAddNewUser = (body:any):PaginationTypeAddNewUser
 }
 
 export class UserController{
-    private usersService : UserService
-    constructor(protected userService : UserService) {
-        this.usersService = userService
-    }
+
+    constructor(protected userService : UserService) {}
     async getUsers(req: Request, res: Response) {
         const paginationResult = getPaginationValuesUser(req.query)
         const resultAllUsers = await this.userService.getAllUsers(paginationResult)
@@ -65,7 +61,7 @@ export class UserController{
     }
 }
 
-usersRouter.get('/',basicAuthMiddleware, getUsersValidation,usersController.getUsers.bind(usersRouter))
+usersRouter.get('/',basicAuthMiddleware, getUsersValidation,usersController.getUsers.bind(usersController))
 
 usersRouter.post('/',basicAuthMiddleware,postUsersValidation, usersController.createUser.bind(usersController))
 

@@ -1,11 +1,12 @@
 import {Request, Response,Router} from "express";
 import { InputCommentByIdType, UpdateCommentType
-} from "../RepositoryInDB/comments-repositoryDB";
+} from "../RepositoryInDB/comment-repositoryDB";
 import {postCommentForPostValidation} from "../Models/InputValidation";
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {authCommentUser} from "../Middleware/authCommentUser";
 import {CommentModel} from "../Models/shemaAndModel";
-import {CommentsService} from "../Service/commentsService";
+import {CommentService} from "../Service/commentsService";
+import {commentsController} from "../composition-root";
 
 export const commentsRouter=Router({})
 
@@ -29,10 +30,8 @@ const getPaginationDeleteCommentById=(params:any):InputCommentByIdType=>{
 }
 
 export class CommentController{
-    private commentService = new CommentsService
-    constructor() {
-        this.commentService = new CommentsService()
-    }
+
+    constructor(protected commentService : CommentService) {}
     async getComment(req: Request, res: Response) {
         const pagination = getPaginationCommentById(req.params)
         const resultSearch = await this.commentService.getCommentOnId(pagination.id)
@@ -64,11 +63,11 @@ export class CommentController{
         return res.sendStatus(204);
 }
 }
-const commentController = new CommentController()
 
-commentsRouter.get('/:id',commentController.getComment)
 
-commentsRouter.put('/:id',authMiddleware,authCommentUser,postCommentForPostValidation,commentController.updateComment)
+commentsRouter.get('/:id',commentsController.getComment.bind(commentsController))
 
-commentsRouter.delete('/:id',authMiddleware,authCommentUser,commentController.deleteComment)
+commentsRouter.put('/:id',authMiddleware,authCommentUser,postCommentForPostValidation,commentsController.updateComment.bind(commentsController))
+
+commentsRouter.delete('/:id',authMiddleware,authCommentUser,commentsController.deleteComment.bind(commentsController))
 

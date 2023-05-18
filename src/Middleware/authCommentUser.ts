@@ -1,10 +1,10 @@
 import {NextFunction, Request, Response} from "express";
-import {CommentsService} from "../Service/commentsService";
+import {CommentService} from "../Service/commentsService";
 
 
 
 export const authCommentUser =async (req: Request, res: Response, next: NextFunction) => {
-    const commentsService = new CommentsService()
+    const commentsService = new CommentService()
     const resultSearch=await commentsService.getCommentOnId(req.params.id)
 
     if(!resultSearch){

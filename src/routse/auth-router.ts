@@ -8,26 +8,20 @@ import {authService} from "../domain/authService";
 import {JwtService} from "../application/jwtService";
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {emailAdapters} from "../adapters/email-adapters";
-import {getPaginationValuesAddNewUser} from "./user-router";
+import {getPaginationValuesAddNewUser} from "./users-router";
 import {authRefreshToken} from "../Middleware/authRefreshToken";
 import {randomUUID} from "crypto";
 import {getPaginationValuesInputUserInformation} from "./devices-route";
 import {authAttemptLimit} from "../Middleware/authAttemptLimit";
-import {RecoveryPasswordModel, UserModel} from "../Models/shemaAndModel";
 import {UserService} from "../Service/userService";
+import {authControllers} from "../composition-root";
 
 export const authRouter=Router({})
 
-class UserController{
-    private userService : UserService
-    private jwtService : JwtService
+export class AuthController{
+    constructor(protected userService : UserService, protected jwtService : JwtService) {}
 
-    constructor() {
-        this.userService = new UserService()
-        this.jwtService = new JwtService()
-    }
-
-    async loginUser(req: Request, res: Response) {
+        async loginUser(req: Request, res: Response) {
         const {loginOrEmail, password} = req.body
         const user = await authService.login(loginOrEmail, password)
         if (!user) {
@@ -170,7 +164,6 @@ class UserController{
 
         if (checkEmailAmongUser) {
             console.log('email yes')
-            //const paginationResult = getPaginationValuesRecoveryPassword()
             await this.userService.createRecoveryPasswordUserItem({
                 recoveryCode: recoveryCode,
                 userId: checkEmailAmongUser.id,
@@ -216,22 +209,21 @@ return res.sendStatus(204)
     }
 }
 
-const userController = new UserController()
 
-authRouter.post('/login', authAttemptLimit,loginUserValidation,userController.loginUser)
+authRouter.post('/login', authAttemptLimit,loginUserValidation,authControllers.loginUser.bind(authControllers))
 
-authRouter.post('/refresh-token',authAttemptLimit,authRefreshToken, userController.updateRefreshToken)
+authRouter.post('/refresh-token',authAttemptLimit,authRefreshToken, authControllers.updateRefreshToken.bind(authControllers))
 
-authRouter.post('/logout',authRefreshToken, userController.logoutUser)
+authRouter.post('/logout',authRefreshToken, authControllers.logoutUser.bind(authControllers))
 
-authRouter.get('/me',authMiddleware, userController.informationUser)
+authRouter.get('/me',authMiddleware, authControllers.informationUser.bind(authControllers))
 
-authRouter.post('/registration',authAttemptLimit,postUsersValidation, userController.registrationUser)
+authRouter.post('/registration',authAttemptLimit,postUsersValidation, authControllers.registrationUser.bind(authControllers))
 
-authRouter.post('/registration-confirmation',authAttemptLimit,postRegistrConfirm, userController.registrationConfirmationUser)
+authRouter.post('/registration-confirmation',authAttemptLimit,postRegistrConfirm, authControllers.registrationConfirmationUser.bind(authControllers))
 
-authRouter.post('/registration-email-resending',authAttemptLimit,postRegistrationEmailResending, userController.registrationEmailResendingUser)
+authRouter.post('/registration-email-resending',authAttemptLimit,postRegistrationEmailResending, authControllers.registrationEmailResendingUser.bind(authControllers))
 
-authRouter.post('/password-recovery',authAttemptLimit,postRecoveryPassword, userController.passwordRecoveryUser)
+authRouter.post('/password-recovery',authAttemptLimit,postRecoveryPassword, authControllers.passwordRecoveryUser.bind(authControllers))
 
-authRouter.post('/new-password',authAttemptLimit,postNewPassword, userController.newPasswordUser)
+authRouter.post('/new-password',authAttemptLimit,postNewPassword, authControllers.newPasswordUser.bind(authControllers))

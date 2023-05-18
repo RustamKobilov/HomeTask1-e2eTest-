@@ -11,13 +11,13 @@ import {
 import {
     PaginationTypeGetInputCommentByPost,
     PaginationTypeInputPosts,
-    PaginationTypeInputPostValueForPost, PaginationTypePostInputCommentByPost, PostsRepository
-} from "../RepositoryInDB/posts-repositoryDB";
-import {PostsService} from "../Service/postsService";
+    PaginationTypeInputPostValueForPost, PaginationTypePostInputCommentByPost
+} from "../RepositoryInDB/post-repositoryDB";
+import {PostService} from "../Service/postService";
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {PostModel} from "../Models/shemaAndModel";
-import {BlogsService} from "../Service/blogsService";
-import {CommentsService} from "../Service/commentsService";
+import {CommentService} from "../Service/commentsService";
+import {postsController} from "../composition-root";
 
 export const postsRouter = Router({});
 
@@ -54,13 +54,8 @@ export const getPaginationPostCommentForPost=(params:any, body:any):PaginationTy
     }
     }
 
-class PostController{
-    private postService: PostsService
-    private commentService = new CommentsService
-    constructor() {
-        this.postService = new PostsService()
-        this.commentService = new CommentsService()
-    }
+export class PostController{
+    constructor(protected postService: PostService,  protected commentService : CommentService) {}
     async getPosts(req: Request, res: Response) {
         const paginationResultPosts = getPaginationValuesPosts(req.query)
         const posts = await this.postService.getAllPosts(paginationResultPosts);
@@ -126,26 +121,25 @@ class PostController{
         if (!resultSearchPost) {
             return res.sendStatus(404)
         }
-        const addCommentByPost = await this.postService.createCommentOnId(pagination, user)
+        const addCommentByPost = await this.commentService.createCommentOnId(pagination, user)
         return res.status(201).send(addCommentByPost)
 
     }
 
 }
 
-const postController = new PostController()
 
-postsRouter.get('/', getPostValidation, postController.getPosts)
+postsRouter.get('/', getPostValidation, postsController.getPosts.bind(postsController))
 
-postsRouter.post('/', basicAuthMiddleware, createPostValidation, errorMessagesInputValidation, postController.createPost)
+postsRouter.post('/', basicAuthMiddleware, createPostValidation, errorMessagesInputValidation, postsController.createPost.bind(postsController))
 
-postsRouter.get('/:id', postController.getPost)
+postsRouter.get('/:id', postsController.getPost.bind(postsController))
 
-postsRouter.put('/:id', basicAuthMiddleware, updatePostValidation, errorMessagesInputValidation, postController.updatePost)
+postsRouter.put('/:id', basicAuthMiddleware, updatePostValidation, errorMessagesInputValidation, postsController.updatePost.bind(postsController))
 
-postsRouter.delete('/:id', basicAuthMiddleware, postController.deletePost)
+postsRouter.delete('/:id', basicAuthMiddleware, postsController.deletePost.bind(postsController))
 
-postsRouter.get('/:postId/comments', getCommentsForPostValidation, postController.getCommentsForPost)
+postsRouter.get('/:postId/comments', getCommentsForPostValidation, postsController.getCommentsForPost.bind(postsController))
 
-postsRouter.post('/:postId/comments', authMiddleware,postCommentForPostValidation, postController.createCommentForPost)
+postsRouter.post('/:postId/comments', authMiddleware,postCommentForPostValidation, postsController.createCommentForPost.bind(postsController))
 

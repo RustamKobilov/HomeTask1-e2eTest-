@@ -6,7 +6,7 @@ import {DeviceModel, RecoveryPasswordModel} from "../Models/shemaAndModel";
 import mongoose from "mongoose";
 import {randomUUID} from "crypto";
 import {Blog} from "../RepositoryInDB/blog-repositoryDB";
-import {Post} from "../RepositoryInDB/posts-repositoryDB";
+import {Post} from "../RepositoryInDB/post-repositoryDB";
 
 
 const delay= async(ms:number)=>{

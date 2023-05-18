@@ -1,4 +1,4 @@
-import {inputSortDataBaseType, PaginationTypePostInputCommentByPost} from "./posts-repositoryDB";
+import {inputSortDataBaseType, PaginationTypePostInputCommentByPost} from "./post-repositoryDB";
 import {helper} from "../Service/helper";
 import {CommentModel} from "../Models/shemaAndModel";
 
@@ -31,7 +31,7 @@ export type UpdateCommentType ={
     content:string
 }
 
-export class CommentsRepository{
+export class CommentRepository {
     async getComments(pagination:PaginationTypePostInputCommentByPost):
         Promise<inputSortDataBaseType<OutputCommentOutputType>>{
         const filter= {postId: pagination.idPost}

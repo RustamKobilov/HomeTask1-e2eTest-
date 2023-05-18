@@ -2,7 +2,8 @@ import {Request, Response, Router} from "express";
 import {JwtService} from "../application/jwtService";
 import {authRefreshToken} from "../Middleware/authRefreshToken";
 import {RecoveryPasswordModel, UserModel} from "../Models/shemaAndModel";
-import {DevicesService} from "../Service/devicesService";
+import {DeviceService} from "../Service/deviceService";
+import {devicesController} from "../composition-root";
 
 export const securityRouter = Router({})
 
@@ -24,12 +25,8 @@ export type SecurityOfAttemptsType ={
 }
 
 export class DeviceController{
-    private devicesService : DevicesService
-    private jwtService : JwtService
-    constructor() {
-        this.devicesService = new DevicesService()
-        this.jwtService = new JwtService()
-    }
+
+    constructor(protected devicesService : DeviceService, protected jwtService : JwtService) {}
     async getDevices(req: Request, res: Response) {
         const inputRefreshToken = req.cookies.refreshToken
         const devices = await this.devicesService.getAllDevices(inputRefreshToken)
@@ -64,13 +61,13 @@ export class DeviceController{
         return res.sendStatus(204)
     }
 }
-const deviceController = new DeviceController()
 
-securityRouter.get('/devices',authRefreshToken, deviceController.getDevices)
 
-securityRouter.delete('/devices', authRefreshToken, deviceController.deleteDevices)
+securityRouter.get('/devices',authRefreshToken, devicesController.getDevices.bind(devicesController))
 
-securityRouter.delete('/devices/:deviceId', authRefreshToken, deviceController.deleteDeviceOnId)
+securityRouter.delete('/devices', authRefreshToken, devicesController.deleteDevices.bind(devicesController))
+
+securityRouter.delete('/devices/:deviceId', authRefreshToken, devicesController.deleteDeviceOnId.bind(devicesController))
 
 
 

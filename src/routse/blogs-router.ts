@@ -11,9 +11,10 @@ import {
     PaginationTypeInputParamsBlogs, PaginationTypeUpdateBlog
 } from "../RepositoryInDB/blog-repositoryDB";
 import {getPaginationPostValueForPost, getPaginationValuesPosts} from "./posts-router";
-import {BlogsService} from "../Service/blogsService";
+import {BlogService} from "../Service/blogService";
 import {BlogModel} from "../Models/shemaAndModel";
-import {PostsService} from "../Service/postsService";
+import {PostService} from "../Service/postService";
+import {blogsController} from "../composition-root";
 
 export const blogsRouter = Router({});
 
@@ -37,25 +38,20 @@ const getPaginationValuesUpdateBlog = (body: any , params : any): PaginationType
 }
 
 
-class BlogController{
-    private blogService:BlogsService
-    private postService: PostsService
-    constructor() {
-        this.blogService = new BlogsService()
-        this.postService = new PostsService()
-    }
+export class BlogController{
+    constructor(protected blogsService:BlogService ,
+                protected postsService: PostService ) {}
     async getBlogs(req: Request, res: Response) {
     const paginationResult = getPaginationValuesBlogs(req.query)
-    const resultAllBlogs =await this.blogService.getAllBlog(paginationResult);
+    const resultAllBlogs =await this.blogsService.getAllBlog(paginationResult);
     return res.status(200).send(resultAllBlogs)
 }
 
     async createBlog(req: Request, res: Response) {
-
         const nameNewBlog = req.body.name;
         const descriptionNewBlog = req.body.description;
         const websiteUrlNewBlog = req.body.websiteUrl;
-        const resultCreatBlog = await this.blogService.createBlog(nameNewBlog, descriptionNewBlog, websiteUrlNewBlog)
+        const resultCreatBlog = await this.blogsService.createBlog(nameNewBlog, descriptionNewBlog, websiteUrlNewBlog)
 
         await BlogModel.insertMany(resultCreatBlog);
         return res.status(201).send({
@@ -71,11 +67,11 @@ class BlogController{
     async getPostForBlog(req: Request, res: Response) {
         const blogId = req.params.id;
         const paginationResult = getPaginationValuesPosts(req.query)
-        const searchBlog = await this.blogService.findBlogOnId(blogId)
+        const searchBlog = await this.blogsService.findBlogOnId(blogId)
         if (searchBlog == null) {
             return res.sendStatus(404);
         }
-        const getAllPostsForBLog = await this.blogService.getAllPostsForBlogInBase(paginationResult, blogId)
+        const getAllPostsForBLog = await this.blogsService.getAllPostsForBlogInBase(paginationResult, blogId)
 
         return res.status(200).send(getAllPostsForBLog);
 
@@ -84,7 +80,7 @@ class BlogController{
     async createPostForBlog(req: Request, res: Response) {
         const blogId = req.params.id;
         const paginationResult = getPaginationPostValueForPost(req.body)
-        const resultCreatePost = await this.postService.createPostOnId(paginationResult, blogId)
+        const resultCreatePost = await this.postsService.createPostOnId(paginationResult, blogId)
         console.log(resultCreatePost)
         if (!resultCreatePost) {
             return res.sendStatus(404);
@@ -94,7 +90,7 @@ class BlogController{
     }
 
     async getBlog(req: Request, res: Response) {
-        const findBlog = await this.blogService.findBlogOnId(req.params.id);
+        const findBlog = await this.blogsService.findBlogOnId(req.params.id);
         if (findBlog) {
             return res.status(200).send(findBlog)
         }
@@ -104,7 +100,7 @@ class BlogController{
     async updateBlog(req: Request, res: Response) {
         const paginationResult = getPaginationValuesUpdateBlog(req.body,req.params)
 
-        const UpdateBlog = await this.blogService.updateBlogOnId(paginationResult);
+        const UpdateBlog = await this.blogsService.updateBlogOnId(paginationResult);
         if (!UpdateBlog) {
             return res.sendStatus(404);
         }
@@ -112,8 +108,7 @@ class BlogController{
     }
 
     async deleteBlog(req: Request, res: Response) {
-        //ff
-        const findDeleteBlog = await this.blogService.findBlogOnId(req.params.id);
+        const findDeleteBlog = await this.blogsService.findBlogOnId(req.params.id);
         if (!findDeleteBlog) {
             return res.sendStatus(404);
         }
@@ -121,18 +116,18 @@ class BlogController{
         return res.sendStatus(204);
     }
 }
-const blogController = new BlogController()
 
-blogsRouter.get('/', getBlogsValidation, blogController.getBlogs)
 
-blogsRouter.post('/', basicAuthMiddleware, createBlogValidation, errorMessagesInputValidation, blogController.createBlog)
+blogsRouter.get('/', getBlogsValidation, blogsController.getBlogs.bind(blogsController))
 
-blogsRouter.get('/:id/posts', getPostForBlogsValidation, errorMessagesInputValidation, blogController.getPostForBlog)
+blogsRouter.post('/', basicAuthMiddleware, createBlogValidation, errorMessagesInputValidation, blogsController.createBlog.bind(blogsController))
 
-blogsRouter.post('/:id/posts', basicAuthMiddleware, postPostForBlogsValidation, errorMessagesInputValidation, blogController.createPostForBlog)
+blogsRouter.get('/:id/posts', getPostForBlogsValidation, errorMessagesInputValidation, blogsController.getPostForBlog.bind(blogsController))
 
-blogsRouter.get('/:id', blogController.getBlog)
+blogsRouter.post('/:id/posts', basicAuthMiddleware, postPostForBlogsValidation, errorMessagesInputValidation, blogsController.createPostForBlog.bind(blogsController))
 
-blogsRouter.put('/:id', basicAuthMiddleware, updateBlogValidation, errorMessagesInputValidation, blogController.updateBlog)
+blogsRouter.get('/:id', blogsController.getBlog.bind(blogsController))
 
-blogsRouter.delete('/:id', basicAuthMiddleware, blogController.deleteBlog)
+blogsRouter.put('/:id', basicAuthMiddleware, updateBlogValidation, errorMessagesInputValidation, blogsController.updateBlog.bind(blogsController))
+
+blogsRouter.delete('/:id', basicAuthMiddleware, blogsController.deleteBlog.bind(blogsController))

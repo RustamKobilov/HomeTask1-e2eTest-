@@ -48,7 +48,7 @@ export type PaginationTypePostInputCommentByPost={
     sortDirection: 1|-1
 }
 
-export class PostsRepository{
+export class PostRepository {
    async getPosts(paginationPosts: PaginationTypeInputPosts): Promise<inputSortDataBaseType<Post>> {
 
         const pagesCountBlog = await PostModel.countDocuments({});

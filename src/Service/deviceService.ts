@@ -1,13 +1,9 @@
 import {JwtService} from "../application/jwtService";
 import {DeviceRepository} from "../RepositoryInDB/device-repositoryDB";
 
-export class DevicesService{
-    private deviceRepository : DeviceRepository
-    private jwtService : JwtService
+export class DeviceService {
 
-    constructor() {
-        this.deviceRepository = new DeviceRepository()
-        this.jwtService = new JwtService()
+    constructor(protected deviceRepository : DeviceRepository, protected jwtService : JwtService) {
     }
     async getAllDevices(refreshToken:string){
         const userPayload = await this.jwtService.verifyToken(refreshToken)

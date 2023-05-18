@@ -1,4 +1,4 @@
-import {inputSortDataBaseType, PaginationTypeInputPosts, Post} from "./posts-repositoryDB";
+import {inputSortDataBaseType, PaginationTypeInputPosts, Post} from "./post-repositoryDB";
 import {helper, ReturnDistributedDate} from "../Service/helper";
 import {BlogModel, PostModel} from "../Models/shemaAndModel";
 

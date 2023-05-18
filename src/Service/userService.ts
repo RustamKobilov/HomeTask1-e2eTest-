@@ -1,4 +1,3 @@
-import {DeviceRepository} from "../RepositoryInDB/device-repositoryDB";
 import {
     PaginationTypeAddNewUser,
     PaginationTypeInputUser, PaginationTypeRecoveryPassword,
@@ -7,9 +6,8 @@ import {
 } from "../RepositoryInDB/user-repositoryDB";
 import bcrypt from "bcrypt";
 import {randomUUID} from "crypto";
-import {inputSortDataBaseType} from "../RepositoryInDB/posts-repositoryDB";
-import {UserModel} from "../Models/shemaAndModel";
-import {helper} from "./helper";
+import {inputSortDataBaseType} from "../RepositoryInDB/post-repositoryDB";
+
 export class UserService {
         private usersRepository : UserRepository
         constructor(protected userRepository:UserRepository) {

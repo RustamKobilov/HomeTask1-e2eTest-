@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import {randomUUID} from "crypto";
 import {helper} from "../Service/helper";
-import {inputSortDataBaseType} from "./posts-repositoryDB";
+import {inputSortDataBaseType} from "./post-repositoryDB";
 import {ObjectId} from "mongodb";
 import {RecoveryPasswordModel, UserModel} from "../Models/shemaAndModel";
 
