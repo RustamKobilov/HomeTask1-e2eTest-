@@ -1,10 +1,12 @@
 import {NextFunction, Request, Response} from "express";
 import {CommentService} from "../Service/commentsService";
+import {CommentRepository} from "../RepositoryInDB/comment-repositoryDB";
 
 
 
 export const authCommentUser =async (req: Request, res: Response, next: NextFunction) => {
-    const commentsService = new CommentService()
+    const commentsRepository = new CommentRepository()
+    const commentsService = new CommentService(commentsRepository)
     const resultSearch=await commentsService.getCommentOnId(req.params.id)
 
     if(!resultSearch){
