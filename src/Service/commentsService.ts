@@ -11,6 +11,7 @@ import {
 } from "../RepositoryInDB/comment-repositoryDB";
 import {User} from "../RepositoryInDB/user-repositoryDB";
 import {randomUUID} from "crypto";
+import {likeStatus} from "../Models/Enums";
 
 export class CommentService {
     constructor(protected commentsRepository : CommentRepository){}
@@ -31,11 +32,13 @@ export class CommentService {
         const idNewComment = randomUUID();
         const CommentatorInfoNewComment:CommentatorInfo= new CommentatorInfo(user.id,user.login)
 
-        const newComment: Comment = new Comment(pagination.idPost,
+        const newComment: Comment = new Comment(
+            pagination.idPost,
             idNewComment,
             pagination.content,
             CommentatorInfoNewComment,
-            new Date().toISOString())
+            new Date().toISOString(),
+            likeStatus.None)
 
         const addNewComment=await this.createCommentByPost(newComment)
         return addNewComment

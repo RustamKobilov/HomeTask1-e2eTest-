@@ -1,9 +1,8 @@
 import {body, cookie, param, query, ValidationError, validationResult} from "express-validator";
 import {NextFunction} from "express";
 import {Request, Response} from "express";
-import {throws} from "assert";
 import {authService} from "../domain/authService";
-import {BlogModel, RecoveryPasswordModel} from "./shemaAndModel";
+import {BlogModel} from "./shemaAndModel";
 
 export const errorMessagesInputValidation = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);

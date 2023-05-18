@@ -61,7 +61,10 @@ export class CommentController{
         }
         await CommentModel.deleteOne({id: pagination.id})
         return res.sendStatus(204);
-}
+    }
+    async updatelikeStatus(req:Request,res:Response){
+
+    }
 }
 
 
@@ -70,4 +73,6 @@ commentsRouter.get('/:id',commentsController.getComment.bind(commentsController)
 commentsRouter.put('/:id',authMiddleware,authCommentUser,postCommentForPostValidation,commentsController.updateComment.bind(commentsController))
 
 commentsRouter.delete('/:id',authMiddleware,authCommentUser,commentsController.deleteComment.bind(commentsController))
+
+commentsRouter.put('/:commentId/like-status',authMiddleware,)
 

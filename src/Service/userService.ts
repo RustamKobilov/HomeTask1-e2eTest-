@@ -9,10 +9,7 @@ import {randomUUID} from "crypto";
 import {inputSortDataBaseType} from "../RepositoryInDB/post-repositoryDB";
 
 export class UserService {
-        private usersRepository : UserRepository
-        constructor(protected userRepository:UserRepository) {
-            this.usersRepository = userRepository
-        }
+        constructor(protected userRepository:UserRepository) {}
 
     async createUser(paginationAddUser: PaginationTypeAddNewUser): Promise<User> {
         const salt = await bcrypt.genSalt(8)

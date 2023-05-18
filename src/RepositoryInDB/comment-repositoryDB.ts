@@ -1,6 +1,7 @@
 import {inputSortDataBaseType, PaginationTypePostInputCommentByPost} from "./post-repositoryDB";
 import {helper} from "../Service/helper";
 import {CommentModel} from "../Models/shemaAndModel";
+import {likeStatus} from "../Models/Enums";
 
 
 export type InputCommentByIdType ={
@@ -12,7 +13,8 @@ export class Comment {
                 public id:string,
                 public content:string,
                 public commentatorInfo:CommentatorInfo,
-                public createdAt:string){}
+                public createdAt:string,
+                public likeStatus:likeStatus){}
 }
 
 export class CommentatorInfo{
@@ -58,8 +60,7 @@ export class CommentRepository {
             createdAt: comment.createdAt})
     }
     async getComment(id:string):Promise<Comment|null>{
-        const result=await CommentModel.findOne({id: id}, {_id: 0, __v: 0});
-        return result
+        return await CommentModel.findOne({id: id}, {_id: 0, __v: 0});
     }
     async updateComment(id:string,content:string):Promise<boolean>{
         const commentUpdate =await CommentModel.updateOne({id:id},{
