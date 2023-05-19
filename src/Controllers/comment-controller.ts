@@ -1,4 +1,8 @@
-import {InputCommentByIdType, UpdateCommentType} from "../RepositoryInDB/comment-repositoryDB";
+import {
+    InputCommentByIdType,
+    InputUpdateLikeStatusCommentByIdType,
+    UpdateCommentType
+} from "../RepositoryInDB/comment-repositoryDB";
 import {CommentService} from "../Service/commentsService";
 import {Request, Response} from "express";
 import {CommentModel} from "../Models/shemaAndModel";
@@ -17,6 +21,13 @@ export const getPaginationUpdateComment = (params: any, body: any): UpdateCommen
 const getPaginationDeleteCommentById = (params: any): InputCommentByIdType => {
     return {
         id: params.id
+    }
+}
+
+const getPaginationUpdateLikeStatusById = (params: any, body:any): InputUpdateLikeStatusCommentByIdType => {
+    return {
+        id: params.id,
+        likeStatus: body.likeStatus
     }
 }
 
@@ -57,8 +68,11 @@ export class CommentController {
     }
 
     async updatelikeStatus(req: Request, res: Response) {
+        const resultPagination = getPaginationUpdateLikeStatusById(req.params,req.body)
         console.log(req.params)
         console.log(req.body)
+        console.log(resultPagination)
+
         return res.sendStatus(204)
     }
 }

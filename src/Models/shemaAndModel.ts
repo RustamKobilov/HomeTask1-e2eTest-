@@ -34,11 +34,15 @@ const postSchema = new mongoose.Schema({
 
 export const PostModel=mongoose.model(postCollectionName,postSchema)
 
-
+const usersStatusLikeAndDislike = new mongoose.Schema({
+    userId:{type:String,required:true},
+    likeStatus:{type:String,required:true}
+})
 const likesSchema = new mongoose.Schema({
     likesCount:  {type:Number,required:true},
     dislikesCount : {type:Number,required:true},
-    myStatus: {type :String,required:true}
+    myStatus: {type :String,required:true},
+    usersStatus : {type :[usersStatusLikeAndDislike],required:true}
 })
 
 const commentatorInfoSchema= new mongoose.Schema({
@@ -52,12 +56,12 @@ const commentSchema=new mongoose.Schema({
     content:{type:String,required:true},
     commentatorInfo:{type:commentatorInfoSchema,required:true},
     createdAt:{type:String,required:true},
-    likesinfo:{type:likesSchema,required:true}
+    likesInfo:{type:likesSchema,required:true}
 })
 
 export const CommentModel=mongoose.model(commentCollectionName,commentSchema)
 
-const  userConfirmationInfoShema = new mongoose.Schema({
+const  userConfirmationInfoSchema = new mongoose.Schema({
     userConformation:{type:Boolean,required:true},
     code:{type:String,required:true},
     expirationCode:{type:String,required:true}
@@ -71,7 +75,7 @@ const userSchema= new mongoose.Schema({
     createdAt: {type:String,required:true},
     salt: {type:String,required:true},
     hash: {type:String,required:true},
-    userConfirmationInfo:{type:userConfirmationInfoShema,required:true}
+    userConfirmationInfo:{type:userConfirmationInfoSchema,required:true}
 })
 
 export const UserModel=mongoose.model(userCollectionName,userSchema)

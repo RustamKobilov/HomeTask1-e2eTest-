@@ -1,11 +1,15 @@
 import {inputSortDataBaseType, PaginationTypePostInputCommentByPost} from "./post-repositoryDB";
 import {helper} from "../Service/helper";
 import {CommentModel} from "../Models/shemaAndModel";
-import {likeStatus} from "../Models/Enums";
 
 
 export type InputCommentByIdType ={
     id:string
+}
+
+export type InputUpdateLikeStatusCommentByIdType ={
+    id:string,
+    likeStatus:string
 }
 
 export class Comment {
@@ -14,7 +18,7 @@ export class Comment {
                 public content:string,
                 public commentatorInfo:CommentatorInfo,
                 public createdAt:string,
-                public likeStatus:LikesInfo){}
+                public likesInfo:LikesInfo){}
 }
 
 export class CommentatorInfo{

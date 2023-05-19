@@ -29,6 +29,9 @@ export class CommentService {
         const CommentatorInfoNewComment:CommentatorInfo= new CommentatorInfo(user.id,user.login)
         const likesAndDislikeNewComment : LikesInfo = new LikesInfo(0,0,likeStatus.None)
 
+        console.log(CommentatorInfoNewComment)
+        console.log(likesAndDislikeNewComment)
+
         const newComment: Comment = new Comment(
             pagination.idPost,
             idNewComment,
@@ -36,6 +39,9 @@ export class CommentService {
             CommentatorInfoNewComment,
             new Date().toISOString(),
             likesAndDislikeNewComment)
+
+
+        console.log(newComment)
 
         const addNewComment=await this.commentsRepository.createCommentForPost(newComment)
         return addNewComment
