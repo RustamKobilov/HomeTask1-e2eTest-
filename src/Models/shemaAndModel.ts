@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import mongoose, {mongo} from "mongoose";
+import {likeStatus} from "./Enums";
 
 const blogCollectionName='Blogs'
 const postCollectionName='Posts'
@@ -7,6 +8,8 @@ const deviceCollectionName='Devices'
 const commentCollectionName='Comments'
 const attemptAccessEndpointCollectionName='AttemptAccessEndpoint'
 const recoveryPasswordCollectionName='recoveryCodePasswordForUser'
+const likesDislikeCollectionName = 'likesInfo'
+
 
 export const blogSchema = new mongoose.Schema({
     id: {type:String,required:true},
@@ -32,6 +35,12 @@ const postSchema = new mongoose.Schema({
 export const PostModel=mongoose.model(postCollectionName,postSchema)
 
 
+const likesSchema = new mongoose.Schema({
+    likesCount:  {type:Number,required:true},
+    dislikesCount : {type:Number,required:true},
+    myStatus: {type :String,required:true}
+})
+
 const commentatorInfoSchema= new mongoose.Schema({
     userId:{type:String,required:true},
     userLogin:{type:String,required:true}
@@ -42,7 +51,8 @@ const commentSchema=new mongoose.Schema({
     id:{type:String,required:true},
     content:{type:String,required:true},
     commentatorInfo:{type:commentatorInfoSchema,required:true},
-    createdAt:{type:String,required:true}
+    createdAt:{type:String,required:true},
+    likesinfo:{type:likesSchema,required:true}
 })
 
 export const CommentModel=mongoose.model(commentCollectionName,commentSchema)

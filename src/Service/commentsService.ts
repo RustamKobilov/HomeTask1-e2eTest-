@@ -4,9 +4,8 @@ import {
     PaginationTypePostInputCommentByPost
 } from "../RepositoryInDB/post-repositoryDB";
 import {
-    Comment,
-    CommentatorInfo,
-    CommentRepository,
+    Comment, CommentatorInfo,
+    CommentRepository, LikesInfo,
     OutputCommentOutputType
 } from "../RepositoryInDB/comment-repositoryDB";
 import {User} from "../RepositoryInDB/user-repositoryDB";
@@ -19,9 +18,6 @@ export class CommentService {
         Promise<inputSortDataBaseType<OutputCommentOutputType>>{
         return await this.commentsRepository.getComments(pagination)
     }
-    async createCommentByPost(comment:Comment):Promise<OutputCommentOutputType> {
-        return await this.commentsRepository.createCommentForPost(comment)
-    }
     async getCommentOnId(id:string):Promise<Comment|null> {
         return this.commentsRepository.getComment(id)
     }
@@ -31,6 +27,7 @@ export class CommentService {
     async createCommentOnId(pagination:PaginationTypeGetInputCommentByPost, user:User){
         const idNewComment = randomUUID();
         const CommentatorInfoNewComment:CommentatorInfo= new CommentatorInfo(user.id,user.login)
+        const likesAndDislikeNewComment : LikesInfo = new LikesInfo(0,0,likeStatus.None)
 
         const newComment: Comment = new Comment(
             pagination.idPost,
@@ -38,9 +35,9 @@ export class CommentService {
             pagination.content,
             CommentatorInfoNewComment,
             new Date().toISOString(),
-            likeStatus.None)
+            likesAndDislikeNewComment)
 
-        const addNewComment=await this.createCommentByPost(newComment)
+        const addNewComment=await this.commentsRepository.createCommentForPost(newComment)
         return addNewComment
     }
 }

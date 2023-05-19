@@ -1,6 +1,5 @@
 import {UserRepository} from "./RepositoryInDB/user-repositoryDB";
 import {UserService} from "./Service/userService";
-import {UserController} from "./routse/users-router";
 import {AuthController} from "./routse/auth-router";
 import {JwtService} from "./application/jwtService";
 import {BlogRepository} from "./RepositoryInDB/blog-repositoryDB";
@@ -15,6 +14,7 @@ import {CommentController} from "./routse/comments-router";
 import {DeviceController} from "./routse/devices-route";
 import {DeviceService} from "./Service/deviceService";
 import {DeviceRepository} from "./RepositoryInDB/device-repositoryDB";
+import {UserController} from "./routse/users-router";
 
 const usersRepository = new UserRepository()
 const usersService = new UserService(usersRepository)

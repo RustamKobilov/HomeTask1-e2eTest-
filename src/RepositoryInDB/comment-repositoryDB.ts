@@ -14,12 +14,18 @@ export class Comment {
                 public content:string,
                 public commentatorInfo:CommentatorInfo,
                 public createdAt:string,
-                public likeStatus:likeStatus){}
+                public likeStatus:LikesInfo){}
 }
 
 export class CommentatorInfo{
     constructor(public userId:string, public userLogin:string){}
 }
+
+export class LikesInfo {
+    constructor (public likesCount :  number, public dislikesCount  : number, public myStatus :  string){}
+}
+
+
 
 export type OutputCommentOutputType ={
     id:string
@@ -51,13 +57,8 @@ export class CommentRepository {
             items: sortCommentsForPosts
         }
     }
-     async createCommentForPost(comment:Comment):Promise<OutputCommentOutputType>{
+     async createCommentForPost(comment:Comment){
         await CommentModel.insertMany(comment)
-
-        return({id: comment.id,
-            content: comment.content,
-            commentatorInfo:comment.commentatorInfo,
-            createdAt: comment.createdAt})
     }
     async getComment(id:string):Promise<Comment|null>{
         return await CommentModel.findOne({id: id}, {_id: 0, __v: 0});
@@ -69,5 +70,16 @@ export class CommentRepository {
             }
         })
         return commentUpdate.matchedCount === 1
+    }
+    async updateCountLikesAndDislikes(likeStatus:string, id: string):Promise<boolean>{
+        const updateLikeStatusByComment = await CommentModel.updateOne({id:id},{
+            $inc:{
+                [likeStatus]:1
+            },
+            $set:{
+                myStatus:likeStatus
+            }
+        })
+        return updateLikeStatusByComment.matchedCount === 1
     }
 }

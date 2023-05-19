@@ -1,1 +1,1 @@
-export enum likeStatus { None, Like, Dislike}
+export enum likeStatus { None='None', Like='Like', Dislike='Dislike'}

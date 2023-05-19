@@ -63,7 +63,9 @@ export class CommentController{
         return res.sendStatus(204);
     }
     async updatelikeStatus(req:Request,res:Response){
-
+    console.log(req.params)
+        console.log(req.body)
+    return res.sendStatus(204)
     }
 }
 
@@ -74,5 +76,5 @@ commentsRouter.put('/:id',authMiddleware,authCommentUser,postCommentForPostValid
 
 commentsRouter.delete('/:id',authMiddleware,authCommentUser,commentsController.deleteComment.bind(commentsController))
 
-commentsRouter.put('/:commentId/like-status',authMiddleware,)
+commentsRouter.put('/:commentId/like-status',authMiddleware,commentsController.updatelikeStatus.bind(commentsController))
 
