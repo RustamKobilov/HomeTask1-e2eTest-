@@ -3,18 +3,18 @@ dotenv.config()
 
 import jwt from 'jsonwebtoken'
 import {settings} from "../settings";
-import {UserInformationType} from "../routse/devices-route";
 import {DeviceModel} from "../Models/shemaAndModel";
+import {UserInformationType} from "../Controllers/device-controller";
 
 
-export type ActiveSessionsType ={
-    userId:string,
-    lastActiveDate:string,
-    diesAtDate:string,
-    deviceId:string,
-    title:string,
-    ip:string
-}
+// export type ActiveSessionsType ={
+//     userId:string,
+//     lastActiveDate:string,
+//     diesAtDate:string,
+//     deviceId:string,
+//     title:string,
+//     ip:string
+// }
 
 export class JwtService{
     async createAccessTokenJWT(userId: string) {

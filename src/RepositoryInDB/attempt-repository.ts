@@ -1,5 +1,5 @@
-import {SecurityOfAttemptsType} from "../routse/devices-route";
 import {AttemptModel} from "../Models/shemaAndModel";
+import {SecurityOfAttemptsType} from "../Controllers/device-controller";
 
 
 class AttemptRepository{

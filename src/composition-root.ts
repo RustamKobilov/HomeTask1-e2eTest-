@@ -1,20 +1,20 @@
 import {UserRepository} from "./RepositoryInDB/user-repositoryDB";
 import {UserService} from "./Service/userService";
-import {AuthController} from "./routse/auth-router";
 import {JwtService} from "./application/jwtService";
 import {BlogRepository} from "./RepositoryInDB/blog-repositoryDB";
 import {BlogService} from "./Service/blogService";
-import {BlogController} from "./routse/blogs-router";
 import {PostService} from "./Service/postService";
 import {PostRepository} from "./RepositoryInDB/post-repositoryDB";
-import {PostController} from "./routse/posts-router";
 import {CommentRepository} from "./RepositoryInDB/comment-repositoryDB";
 import {CommentService} from "./Service/commentsService";
-import {CommentController} from "./routse/comments-router";
-import {DeviceController} from "./routse/devices-route";
 import {DeviceService} from "./Service/deviceService";
 import {DeviceRepository} from "./RepositoryInDB/device-repositoryDB";
-import {UserController} from "./routse/users-router";
+import {UserController} from "./Controllers/userController";
+import {AuthController} from "./Controllers/auth-controller";
+import {BlogController} from "./Controllers/blog-controller";
+import {PostController} from "./Controllers/post-controller";
+import {CommentController} from "./Controllers/comment-controller";
+import {DeviceController} from "./Controllers/device-controller";
 
 const usersRepository = new UserRepository()
 const usersService = new UserService(usersRepository)
