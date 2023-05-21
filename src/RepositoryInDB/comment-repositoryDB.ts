@@ -1,6 +1,7 @@
 import {inputSortDataBaseType, PaginationTypePostInputCommentByPost} from "./post-repositoryDB";
 import {helper} from "../Service/helper";
 import {CommentModel} from "../Models/shemaAndModel";
+import {likeStatus} from "../Models/Enums";
 
 
 export type InputCommentByIdType ={
@@ -25,8 +26,13 @@ export class CommentatorInfo{
     constructor(public userId:string, public userLogin:string){}
 }
 
+export class UsersLikeStatusLikesInfo {
+    constructor(public userId:string, public likeStatus:string) {}
+}
+
 export class LikesInfo {
-    constructor (public likesCount :  number, public dislikesCount  : number, public myStatus :  string){}
+    constructor (public likesCount :  number, public dislikesCount  : number, public myStatus :  likeStatus
+    , public usersStatus: [UsersLikeStatusLikesInfo]){}
 }
 
 
@@ -50,8 +56,9 @@ export class CommentRepository {
         const countCommentsForPost = await CommentModel.countDocuments(filter)
         const paginationFromHelperForComments=helper.getPaginationFunctionSkipSortTotal(pagination.pageNumber,pagination.pageSize, countCommentsForPost)
 
-        let sortCommentsForPosts = await CommentModel.find(filter,{_id: 0, __v: 0,commentatorInfo: {_id: 0, __v: 0}}).sort({[pagination.sortBy]: pagination.sortDirection}).
-        skip(paginationFromHelperForComments.skipPage).limit(pagination.pageSize).lean()
+        let sortCommentsForPosts = await CommentModel.find(filter,{_id: 0, __v: 0,commentatorInfo: {_id: 0, __v: 0},likesInfo: {_id: 0, __v: 0, usersStatus:0}})
+            .sort({[pagination.sortBy]: pagination.sortDirection})
+            .skip(paginationFromHelperForComments.skipPage).limit(pagination.pageSize).lean()
 
         return {
             pagesCount: paginationFromHelperForComments.totalCount,
@@ -75,15 +82,22 @@ export class CommentRepository {
         })
         return commentUpdate.matchedCount === 1
     }
-    async updateCountLikesAndDislikes(likeStatus:string, id: string):Promise<boolean>{
-        const updateLikeStatusByComment = await CommentModel.updateOne({id:id},{
+    async updateCountLikesAndDislikes(usersLikeStatus:UsersLikeStatusLikesInfo,commentId:string):Promise<boolean>{
+        console.log(usersLikeStatus)
+        console.log(commentId)
+        console.log(usersLikeStatus.likeStatus)
+        const updateLikeStatusByComment = await CommentModel.updateOne({id:commentId},{
             $inc:{
-                [likeStatus]:1
+                [usersLikeStatus.likeStatus]:1
             },
             $set:{
-                myStatus:likeStatus
-            }
+                myStatus:usersLikeStatus.likeStatus,
+            },
+            // $push:{
+            //     usersStatus:usersLikeStatus
+            // }
         })
+        console.log(updateLikeStatusByComment.matchedCount)
         return updateLikeStatusByComment.matchedCount === 1
     }
 }

@@ -27,7 +27,7 @@ const getPaginationDeleteCommentById = (params: any): InputCommentByIdType => {
 const getPaginationUpdateLikeStatusById = (params: any, body:any): InputUpdateLikeStatusCommentByIdType => {
     return {
         id: params.id,
-        likeStatus: body.likeStatus
+        likeStatus: body.likeStatus,
     }
 }
 
@@ -68,10 +68,17 @@ export class CommentController {
     }
 
     async updatelikeStatus(req: Request, res: Response) {
+        //get help no auth/user why likestatus?
         const resultPagination = getPaginationUpdateLikeStatusById(req.params,req.body)
         console.log(req.params)
         console.log(req.body)
         console.log(resultPagination)
+        const resultSearch = await this.commentService.getCommentOnId(resultPagination.id)
+        if (!resultSearch) {
+            return res.sendStatus(404)
+        }
+        await this.commentService.changeCountLikeStatusUser(resultSearch,req.user.id,resultPagination.likeStatus)
+
 
         return res.sendStatus(204)
     }
