@@ -68,7 +68,6 @@ export class CommentController {
     }
 
     async updatelikeStatus(req: Request, res: Response) {
-        //get help no auth/user why likestatus?
         const resultPagination = getPaginationUpdateLikeStatusById(req.params,req.body)
         console.log(req.params)
         console.log(req.body)

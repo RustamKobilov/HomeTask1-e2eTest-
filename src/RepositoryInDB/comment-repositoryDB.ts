@@ -85,17 +85,22 @@ export class CommentRepository {
     async updateCountLikesAndDislikes(usersLikeStatus:UsersLikeStatusLikesInfo,commentId:string):Promise<boolean>{
         console.log(usersLikeStatus)
         console.log(commentId)
-        console.log(usersLikeStatus.likeStatus)
+        console.log([usersLikeStatus.likeStatus])
+        let itemStatusModel = 'likesInfo.dislikesCount'
+        if(usersLikeStatus.likeStatus==likeStatus.Like){
+            itemStatusModel = 'likesInfo.likesCount'
+        }
+        console.log([itemStatusModel])
         const updateLikeStatusByComment = await CommentModel.updateOne({id:commentId},{
-            $inc:{
-                [usersLikeStatus.likeStatus]:1
-            },
+            $inc: {
+                [itemStatusModel]: 1
+                },
             $set:{
-                myStatus:usersLikeStatus.likeStatus,
+                'likesInfo.myStatus':usersLikeStatus.likeStatus,
             },
-            // $push:{
-            //     usersStatus:usersLikeStatus
-            // }
+            $push:{
+                'likesInfo.usersStatus':usersLikeStatus
+            }
         })
         console.log(updateLikeStatusByComment.matchedCount)
         return updateLikeStatusByComment.matchedCount === 1
