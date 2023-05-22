@@ -51,20 +51,32 @@ export class CommentService {
         const addNewComment=await this.commentsRepository.createCommentForPost(newComment)
         return addNewComment
     }
-    async changeCountLikeStatusUser(comment:Comment,userId:string,likeStatus:string){
+    async changeCountLikeStatusUser(comment:Comment,userId:string,newLikeStatus:string){
         const resultStatusUser = comment.likesInfo.usersStatus.filter(function (value){
-            console.log(value)
             return value.userId == userId
         })
         console.log(resultStatusUser)
         console.log(resultStatusUser.length)
-        const usersLikeStatus:UsersLikeStatusLikesInfo=new UsersLikeStatusLikesInfo(userId,likeStatus)
+
+        const usersLikeStatus:UsersLikeStatusLikesInfo=new UsersLikeStatusLikesInfo(userId,newLikeStatus)
         if(resultStatusUser.length===0){
-          await this.updateLikeStatus(usersLikeStatus,comment.id)
+            //подумать как убрать этот вход,если просто отправляют нейтральный ,то ретерн он ничего не меняет
+          if(newLikeStatus === likeStatus.None){
+             return await this.commentsRepository.updateCountLikesAndDislikes(usersLikeStatus,comment.id)
+          }
+           return await this.commentsRepository.updateUsersStatusByComment(usersLikeStatus,comment.id)
+        }
+        if(comment.likesInfo.myStatus===newLikeStatus){
+            console.log('status ravny')
+            const oldUsersLikeStatus = newLikeStatus
+            newLikeStatus===likeStatus.None
+            return await this.commentsRepository.updateUsersStatusRepeatedByComment(oldUsersLikeStatus,usersLikeStatus,comment.id)
+        }
+        if(comment.likesInfo.myStatus===likeStatus.None){
+            console.log('status ne ravny')
+            return
         }
 
-    }
-    async updateLikeStatus(usersLikeStatus:UsersLikeStatusLikesInfo,commentId:string):Promise<boolean> {
-        return await this.commentsRepository.updateCountLikesAndDislikes(usersLikeStatus,commentId)
+
     }
 }

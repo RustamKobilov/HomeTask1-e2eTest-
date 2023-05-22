@@ -18,11 +18,11 @@ import {UserInformationType} from "../Controllers/device-controller";
 
 export class JwtService{
     async createAccessTokenJWT(userId: string) {
-            let accessToken = jwt.sign({userId: userId}, settings.JWT_Service, {expiresIn: '10s'})
+            let accessToken = jwt.sign({userId: userId}, settings.JWT_Service, {expiresIn: '300000s'})
         return accessToken
     }
     async createRefreshToken(userId: string,deviceId:string){
-        const refreshToken= jwt.sign({userId: userId,deviceId:deviceId}, settings.JWT_Service, {expiresIn: '20s'})
+        const refreshToken= jwt.sign({userId: userId,deviceId:deviceId}, settings.JWT_Service, {expiresIn: '86400000s'})
     return refreshToken
     }
     async verifyToken(token: string) {

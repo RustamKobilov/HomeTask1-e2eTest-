@@ -6,7 +6,7 @@ import {randomUUID} from "crypto";
 import {getPaginationValuesAddNewUser} from "./userController";
 import {emailAdapters} from "../adapters/email-adapters";
 import {getPaginationValuesInputUserInformation} from "./device-controller";
-import {likeStatus} from "../Models/Enums";
+
 
 export class AuthController {
     constructor(protected userService: UserService, protected jwtService: JwtService) {
@@ -49,7 +49,7 @@ export class AuthController {
 // /httpOnly:true,,secure: true
         return res.status(200)
             .cookie('refreshToken', refreshToken,
-                {expires: new Date(Date.now() + 20000), httpOnly: true, secure: true})
+                {expires: new Date(Date.now() + 86400000), httpOnly: true, secure: true})
             .send(returnToken);
     }
 
@@ -82,7 +82,7 @@ export class AuthController {
             //httpOnly:true,, secure: true
         }
         return res.cookie('refreshToken', refreshToken,
-            {expires: new Date(Date.now() + 20000), httpOnly: true, secure: true})
+            {expires: new Date(Date.now() + 86400000), httpOnly: true, secure: true})
             .status(200).send(returnToken);
     }
 
