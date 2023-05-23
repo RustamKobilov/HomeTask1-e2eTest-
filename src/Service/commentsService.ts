@@ -8,7 +8,8 @@ import {
     CommentatorInfo,
     CommentRepository,
     LikesInfo,
-    OutputCommentOutputType, UsersLikeStatusLikesInfo
+    OutputCommentOutputType,
+    UsersLikeStatusLikesInfo
 } from "../RepositoryInDB/comment-repositoryDB";
 import {User} from "../RepositoryInDB/user-repositoryDB";
 import {randomUUID} from "crypto";
@@ -60,21 +61,26 @@ export class CommentService {
 
         const usersLikeStatus:UsersLikeStatusLikesInfo=new UsersLikeStatusLikesInfo(userId,newLikeStatus)
         if(resultStatusUser.length===0){
-            //подумать как убрать этот вход,если просто отправляют нейтральный ,то ретерн он ничего не меняет
-          if(newLikeStatus === likeStatus.None){
+
+          if(newLikeStatus !== likeStatus.None){
              return await this.commentsRepository.updateCountLikesAndDislikes(usersLikeStatus,comment.id)
           }
            return await this.commentsRepository.updateUsersStatusByComment(usersLikeStatus,comment.id)
         }
-        if(comment.likesInfo.myStatus===newLikeStatus){
-            console.log('status ravny')
-            const oldUsersLikeStatus = newLikeStatus
-            newLikeStatus===likeStatus.None
-            return await this.commentsRepository.updateUsersStatusRepeatedByComment(oldUsersLikeStatus,usersLikeStatus,comment.id)
-        }
-        if(comment.likesInfo.myStatus===likeStatus.None){
-            console.log('status ne ravny')
-            return
+        console.log('dashlo')
+        console.log(comment.likesInfo.myStatus + ' oldStatus')
+        console.log(newLikeStatus + ' nesStatus')
+        console.log(comment.likesInfo.myStatus!==newLikeStatus)
+        console.log('zahlo')
+
+        if(comment.likesInfo.myStatus!==newLikeStatus){
+            console.log('status update')
+            const oldUsersLikeStatus = comment.likesInfo.myStatus
+            if(comment.likesInfo.myStatus===likeStatus.None) {
+
+                return await this.commentsRepository.updateUsersStatusRepeatedByComment(oldUsersLikeStatus, usersLikeStatus, comment.id)
+            }
+            return await  this.commentsRepository.updateUsersStatusRepeateEditCountdByComment(oldUsersLikeStatus, usersLikeStatus, comment.id)
         }
 
 
