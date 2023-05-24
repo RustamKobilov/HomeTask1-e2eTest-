@@ -76,7 +76,7 @@ export class CommentController {
         if (!resultSearch) {
             return res.sendStatus(404)
         }
-        await this.commentService.changeCountLikeStatusUser(resultSearch,req.user.id,resultPagination.likeStatus)
+        await this.commentService.changeCountLikeStatusUser(resultSearch,req.user.id, req.body.likeStatus)
 
 
         return res.sendStatus(204)

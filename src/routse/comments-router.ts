@@ -13,5 +13,5 @@ commentsRouter.put('/:id',authMiddleware,authCommentUser,postCommentForPostValid
 
 commentsRouter.delete('/:id',authMiddleware,authCommentUser,commentsController.deleteComment.bind(commentsController))
 
-commentsRouter.put('/:id/like-status',authMiddleware,/*updateLikeStatus*/commentsController.updateLikeStatus.bind(commentsController))
+commentsRouter.put('/:id/like-status',authMiddleware,updateLikeStatus,commentsController.updateLikeStatus.bind(commentsController))
 
