@@ -59,7 +59,7 @@ export class CommentRepository {
         let sortCommentsForPosts = await CommentModel.find(filter, {
             _id: 0,
             __v: 0,
-            commentatorInfo: {_id: 0, __v: 0},
+            postId: 0,
             likesInfo: {_id: 0, __v: 0, usersStatus: 0}
         })
             .sort({[pagination.sortBy]: pagination.sortDirection})
@@ -79,7 +79,7 @@ export class CommentRepository {
     }
 
     async getComment(id: string): Promise<Comment | null> {
-        return await CommentModel.findOne({id: id}, {_id: 0, __v: 0});
+        return  CommentModel.findOne({id: id}, {_id: 0, __v: 0, postId: 0,'likesInfo.usersStatus': 0})
     }
 
     async updateComment(id: string, content: string): Promise<boolean> {
@@ -92,99 +92,126 @@ export class CommentRepository {
     }
 
     async updateCountLikesAndDislikes(usersLikeStatus: UsersLikeStatusLikesInfo, commentId: string): Promise<boolean> {
-        console.log('input count one repeat')
-        console.log(usersLikeStatus + ' status now ')
-        console.log(commentId + ' comment id')
-        console.log(usersLikeStatus.userId + ' userId')
-        let countUsersStatus = 'likesInfo.'+usersLikeStatus.likeStatus + 'sCount'
-        console.log(countUsersStatus)
+
+        let countNewStatusUser = 'likesInfo.dislikesCount'
+        if(usersLikeStatus.likeStatus!==likeStatus.Dislike){
+            countNewStatusUser ='likesInfo.likesCount'
+        }
+
         const updateLikeStatusByComment = await CommentModel.updateOne({id: commentId}, {
 
             $inc: {
-                [countUsersStatus]: 1
-            },
-            $set: {
-                'likesInfo.myStatus': usersLikeStatus.likeStatus,
-            },
-            $push: {
-                'likesInfo.usersStatus': usersLikeStatus
-            }
-        })
-        console.log(updateLikeStatusByComment.matchedCount)
-        return updateLikeStatusByComment.matchedCount === 1
-    }
-
-    async updateUsersStatusByComment(usersLikeStatus: UsersLikeStatusLikesInfo, commentId: string): Promise<boolean> {
-        console.log('input none one repeat')
-        console.log(usersLikeStatus + ' status now ')
-        console.log(commentId + ' comment id')
-        console.log(usersLikeStatus.userId + ' userId')
-
-        const updateLikeStatusByComment = await CommentModel.updateOne({id: commentId}, {
-
-            $set: {
-                'likesInfo.myStatus': usersLikeStatus.likeStatus,
-            },
-            $push: {
-                'likesInfo.usersStatus': usersLikeStatus
-            }
-        })
-        console.log(updateLikeStatusByComment.matchedCount)
-        return updateLikeStatusByComment.matchedCount === 1
-    }
-
-    async updateUsersStatusRepeatedByComment(oldUsersLikeStatus: string, usersLikeStatus: UsersLikeStatusLikesInfo, commentId: string): Promise<boolean> {
-        console.log('input void hardudtate !!!!!!!!!!!')
-        console.log(oldUsersLikeStatus + ' oldStatus')
-        console.log(usersLikeStatus.likeStatus + ' status now ')
-        console.log(commentId + ' comment id')
-        console.log(usersLikeStatus.userId + ' userId')
-        let newStatusUserbyUser = 'likesInfo.usersStatus.' + usersLikeStatus.userId
-        console.log(newStatusUserbyUser + ' newStatusUserbyUser')
-
-        const updateLikeStatusByComment = await CommentModel.updateOne({id: commentId}, {
-
-            $set: {
-                'likesInfo.myStatus': usersLikeStatus.likeStatus,
-                [newStatusUserbyUser]:usersLikeStatus.likeStatus
-            },
-            // $pull: {
-            //     'likesInfo.usersStatus': {'userId': usersLikeStatus.userId}
-            // }
-            // ,
-        })
-        console.log(updateLikeStatusByComment.matchedCount)
-        return updateLikeStatusByComment.matchedCount === 1
-    }
-    async updateUsersStatusRepeateEditCountdByComment(oldUsersLikeStatus: string, usersLikeStatus: UsersLikeStatusLikesInfo, commentId: string): Promise<boolean> {
-        console.log('input void hardudtate but inc:-1 !!!!!!!!!!!!')
-        console.log(oldUsersLikeStatus + ' oldStatus')
-        console.log(usersLikeStatus.likeStatus + ' status now ')
-        console.log(commentId + ' comment id')
-        console.log(usersLikeStatus.userId + ' userId')
-        let countOldStatusUser = 'likesInfo.' + oldUsersLikeStatus + 'sCount'
-        console.log(countOldStatusUser + ' countOldStatusUser')
-        let countNewStatusUser = 'likesInfo.' + usersLikeStatus.likeStatus + 'sCount'
-        console.log(countNewStatusUser + ' countNewStatusUser')
-        let newStatusUserbyUser = 'likesInfo.usersStatus.' + usersLikeStatus.userId
-        console.log(newStatusUserbyUser + ' newStatusUserbyUser')
-
-        const updateLikeStatusByComment = await CommentModel.updateOne({id: commentId}, {
-            $inc: {
-                [countOldStatusUser]: -1,
                 [countNewStatusUser]: 1
             },
             $set: {
                 'likesInfo.myStatus': usersLikeStatus.likeStatus,
-                [newStatusUserbyUser]:usersLikeStatus.likeStatus
+            },
+            $push: {
+                'likesInfo.usersStatus': usersLikeStatus
             }
-            //ридумать как менять статус вложенного обьекта
-            // ,
-            // $push: {
-            //     'likesInfo.usersStatus': usersLikeStatus
-            // }
         })
-        console.log(updateLikeStatusByComment.matchedCount)
+
         return updateLikeStatusByComment.matchedCount === 1
     }
+
+    async updateUsersStatusByComment(usersLikeStatus: UsersLikeStatusLikesInfo, commentId: string): Promise<boolean> {
+
+        const updateLikeStatusByComment = await CommentModel.updateOne({id: commentId}, {
+
+            $set: {
+                'likesInfo.myStatus': usersLikeStatus.likeStatus,
+            },
+            $push: {
+                'likesInfo.usersStatus': usersLikeStatus
+            }
+        })
+
+        return updateLikeStatusByComment.matchedCount === 1
+    }
+
+    async updateUsersStatusNeitralByComment(oldUsersLikeStatus: string, usersLikeStatus: UsersLikeStatusLikesInfo, commentId: string): Promise<boolean> {
+
+        let countNewStatusUser = 'likesInfo.dislikesCount'
+        if(usersLikeStatus.likeStatus!==likeStatus.Dislike){
+            countNewStatusUser ='likesInfo.likesCount'
+        }
+
+        const updateLikeStatusByComment = await CommentModel.updateOne({id: commentId}, {
+            $inc: {
+                [countNewStatusUser]: 1
+            },
+            $set: {
+                'likesInfo.myStatus': usersLikeStatus.likeStatus
+            },
+            $pull: {
+                'likesInfo.usersStatus': {'userId': usersLikeStatus.userId}
+            }
+        })
+        const updateLikeStatusUsersStatus = await CommentModel.updateOne({id: commentId}, {
+                $push: {
+                    'likesInfo.usersStatus': usersLikeStatus
+                }
+        })
+
+        return updateLikeStatusByComment.matchedCount === 1
+    }
+    async updateUsersStatusInNeitralByComment(oldUsersLikeStatus: string, usersLikeStatus: UsersLikeStatusLikesInfo, commentId: string): Promise<boolean> {
+
+        let countOldStatusUser = 'likesInfo.dislikesCount'
+        if(oldUsersLikeStatus!==likeStatus.Dislike){
+            countOldStatusUser ='likesInfo.likesCount'
+        }
+
+
+        const updateLikeStatusByComment = await CommentModel.updateOne({id: commentId}, {
+            $inc: {
+                [countOldStatusUser]: -1
+            },
+            $set: {
+                'likesInfo.myStatus': usersLikeStatus.likeStatus
+            },
+            $pull: {
+                'likesInfo.usersStatus': {'userId': usersLikeStatus.userId}
+            }
+        })
+        const updateLikeStatusUsersStatus = await CommentModel.updateOne({id: commentId}, {
+            $push: {
+                'likesInfo.usersStatus': usersLikeStatus
+            }
+        })
+
+        return updateLikeStatusByComment.matchedCount === 1
+    }
+    async updateUsersStatusRepeateEditCountdByComment(oldUsersLikeStatus: string, usersLikeStatus: UsersLikeStatusLikesInfo, commentId: string): Promise<boolean> {
+
+        let countNewStatusUser = 'likesInfo.likesCount'
+        let countOldStatusUser = 'likesInfo.dislikesCount'
+
+        if(usersLikeStatus.likeStatus!==likeStatus.Like){
+                countNewStatusUser ='likesInfo.dislikesCount'
+                countOldStatusUser = 'likesInfo.likesCount'
+            }
+
+        const updateLikeStatusByComment = await CommentModel.updateOne({id: commentId}, {
+            $inc: {
+                [countNewStatusUser]: 1,
+                [countOldStatusUser]: -1
+            },
+            $set: {
+                'likesInfo.myStatus': usersLikeStatus.likeStatus,
+            },
+            $pull: {
+                'likesInfo.usersStatus': {'userId': usersLikeStatus.userId}
+            }
+        })
+
+
+        const updateLikeStatusUsersStatus = await CommentModel.updateOne({id: commentId}, {
+            $push: {
+                'likesInfo.usersStatus': usersLikeStatus
+            }
+        }, )
+
+        return updateLikeStatusByComment.matchedCount === 1 && updateLikeStatusUsersStatus.matchedCount === 1
+}
 }

@@ -3,6 +3,7 @@ import {NextFunction} from "express";
 import {Request, Response} from "express";
 import {authService} from "../domain/authService";
 import {BlogModel} from "./shemaAndModel";
+import {likeStatus} from "./Enums";
 
 export const errorMessagesInputValidation = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
@@ -104,6 +105,9 @@ const checkInputRecoveryCodeAndPasswordReplay=body("recoveryCode").isString().tr
     return true
 })
 
+const checkLikeStatus=body("likeStatus").isIn([likeStatus]/*[['None','Like', 'Dislike']]*/)
+
+
 export const createPostValidation = [checkPostTitle, checkPostShortDescription, checkPostContent, checkPostBlogId]
 export const updatePostValidation = [...createPostValidation]
 export const getPostForBlogsValidation = [checkPageNumber, checkPageSize, checkSortBy, checkSortDirection]
@@ -122,13 +126,4 @@ export const postRegistrConfirm=[checkInputCode,errorMessagesInputValidation]
 export const postRecoveryPassword=[checkUserEmailPasswordRecovery,errorMessagesInputValidation]
 export const postNewPassword=[checkPasswordRecovery,checkInputRecoveryCodeAndPasswordReplay,errorMessagesInputValidation]
 
-//   const recoveryCode=body("recoveryCode").isString().custom(async valueCode=>{
-//             const resultRecoveryCode=await authService.checkRecoveryCode(valueCode)
-//             if(!resultRecoveryCode){
-//                 throw new Error('RecoveryCode no in base')
-//             }
-//             const resultPasswortReplay=await authService.checkPasswordReplay(valuePassword,resultRecoveryCode.userId)
-//             if(!resultPasswortReplay){
-//
-//             }
-//             })
+export const updateLikeStatus=[checkLikeStatus,errorMessagesInputValidation]

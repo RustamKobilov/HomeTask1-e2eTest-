@@ -67,7 +67,7 @@ export class CommentController {
         return res.sendStatus(204);
     }
 
-    async updatelikeStatus(req: Request, res: Response) {
+    async updateLikeStatus(req: Request, res: Response) {
         const resultPagination = getPaginationUpdateLikeStatusById(req.params,req.body)
         console.log(req.params)
         console.log(req.body)

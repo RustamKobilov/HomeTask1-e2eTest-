@@ -14,6 +14,7 @@ import {
 import {User} from "../RepositoryInDB/user-repositoryDB";
 import {randomUUID} from "crypto";
 import {likeStatus} from "../Models/Enums";
+import {CommentModel} from "../Models/shemaAndModel";
 
 export class CommentService {
     constructor(protected commentsRepository : CommentRepository){}
@@ -52,12 +53,10 @@ export class CommentService {
         const addNewComment=await this.commentsRepository.createCommentForPost(newComment)
         return addNewComment
     }
-    async changeCountLikeStatusUser(comment:Comment,userId:string,newLikeStatus:string){
+    async changeCountLikeStatusUser(comment:Comment,userId:string,newLikeStatus:string):Promise<boolean>{
         const resultStatusUser = comment.likesInfo.usersStatus.filter(function (value){
             return value.userId == userId
         })
-        console.log(resultStatusUser)
-        console.log(resultStatusUser.length)
 
         const usersLikeStatus:UsersLikeStatusLikesInfo=new UsersLikeStatusLikesInfo(userId,newLikeStatus)
         if(resultStatusUser.length===0){
@@ -67,22 +66,19 @@ export class CommentService {
           }
            return await this.commentsRepository.updateUsersStatusByComment(usersLikeStatus,comment.id)
         }
-        console.log('dashlo')
-        console.log(comment.likesInfo.myStatus + ' oldStatus')
-        console.log(newLikeStatus + ' nesStatus')
-        console.log(comment.likesInfo.myStatus!==newLikeStatus)
-        console.log('zahlo')
 
         if(comment.likesInfo.myStatus!==newLikeStatus){
-            console.log('status update')
+
             const oldUsersLikeStatus = comment.likesInfo.myStatus
             if(comment.likesInfo.myStatus===likeStatus.None) {
-
-                return await this.commentsRepository.updateUsersStatusRepeatedByComment(oldUsersLikeStatus, usersLikeStatus, comment.id)
+                return await this.commentsRepository.updateUsersStatusNeitralByComment(oldUsersLikeStatus, usersLikeStatus, comment.id)
+            }
+            if(usersLikeStatus.likeStatus===likeStatus.None){
+                return await this.commentsRepository.updateUsersStatusInNeitralByComment(oldUsersLikeStatus, usersLikeStatus, comment.id)
             }
             return await  this.commentsRepository.updateUsersStatusRepeateEditCountdByComment(oldUsersLikeStatus, usersLikeStatus, comment.id)
         }
-
+        return true
 
     }
 }
