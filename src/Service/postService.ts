@@ -4,10 +4,21 @@ import {
     PaginationTypeGetInputCommentByPost, PaginationTypeInputPosts,
     PaginationTypeInputPostValueForPost, Post, PostRepository,
 } from "../RepositoryInDB/post-repositoryDB";
+import {likeStatus} from "../Models/Enums";
+import {IReaction} from "../Models/shemaAndModel";
 
 export class PostService {
 
     constructor(protected postsRepository : PostRepository) {}
+    private createReaction(parentId: string, userId: string, userLogin:string, status: likeStatus): IReaction {
+        return {
+            parentId,
+            userId,
+            userLogin,
+            status,
+            createdAt: new Date().toISOString()
+        }
+    }
     async getAllPosts(paginationPosts: PaginationTypeInputPosts): Promise<inputSortDataBaseType<Post>> {
         return await this.postsRepository.getPosts(paginationPosts)
     }

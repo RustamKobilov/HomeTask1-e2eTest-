@@ -24,12 +24,6 @@ const getPaginationDeleteCommentById = (params: any): InputCommentByIdType => {
     }
 }
 
-const getPaginationUpdateLikeStatusById = (params: any, body:any): InputUpdateLikeStatusCommentByIdType => {
-    return {
-        id: params.id,
-        likeStatus: body.likeStatus,
-    }
-}
 
 export class CommentController {
 
@@ -38,7 +32,7 @@ export class CommentController {
 
     async getComment(req: Request, res: Response) {
         const pagination = getPaginationCommentById(req.params)
-        const resultSearch = await this.commentService.getCommentOnId(pagination.id)
+        const resultSearch = await this.commentService.getCommentOnId(pagination.id,req.user.id)
 
         if (!resultSearch) {
             return res.sendStatus(404)
@@ -59,7 +53,7 @@ export class CommentController {
 
     async deleteComment(req: Request, res: Response) {
         const pagination = getPaginationDeleteCommentById(req.params)
-        const resultSearch = await this.commentService.getCommentOnId(pagination.id)
+        const resultSearch = await this.commentService.getCommentOnId(pagination.id,req.user.id)
         if (!resultSearch) {
             return res.sendStatus(404)
         }
@@ -68,15 +62,11 @@ export class CommentController {
     }
 
     async updateLikeStatus(req: Request, res: Response) {
-        const resultPagination = getPaginationUpdateLikeStatusById(req.params,req.body)
-        console.log(req.params)
-        console.log(req.body)
-        console.log(resultPagination)
-        const resultSearch = await this.commentService.getCommentOnId(resultPagination.id)
-        if (!resultSearch) {
+        const resultSearchComment = await this.commentService.getCommentOnId(req.params.id,req.user.id)
+        if (!resultSearchComment) {
             return res.sendStatus(404)
         }
-        await this.commentService.changeCountLikeStatusUser(resultSearch,req.user.id, req.body.likeStatus)
+        await this.commentService.changeCountLikeStatusUser(resultSearchComment,req.user, req.body.likeStatus)
 
 
         return res.sendStatus(204)

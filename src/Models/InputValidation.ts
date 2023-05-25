@@ -2,7 +2,7 @@ import {body, cookie, param, query, ValidationError, validationResult} from "exp
 import {NextFunction} from "express";
 import {Request, Response} from "express";
 import {authService} from "../domain/authService";
-import {BlogModel, EReactionStatus} from "./shemaAndModel";
+import {BlogModel} from "./shemaAndModel";
 import {likeStatus} from "./Enums";
 
 export const errorMessagesInputValidation = (req: Request, res: Response, next: NextFunction) => {
@@ -106,13 +106,12 @@ const checkInputRecoveryCodeAndPasswordReplay=body("recoveryCode").isString().tr
 })
 
 const checkLikeStatus=body("likeStatus").custom((v ) => {
-    if (Object.values(EReactionStatus).includes(v)){
+    if (Object.values(likeStatus).includes(v)){
         return true
     } else {
         throw new Error()
     }
 })
-    //.isIn([likeStatus]/*[['None','Like', 'Dislike']]*/)
 
 
 export const createPostValidation = [checkPostTitle, checkPostShortDescription, checkPostContent, checkPostBlogId]

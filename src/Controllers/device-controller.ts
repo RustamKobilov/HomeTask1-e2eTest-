@@ -14,11 +14,6 @@ export type UserInformationType = {
     title: string,
     ipAddress: string,
 }
-export type SecurityOfAttemptsType ={
-    endPointName:string,
-    ip:string,
-    dateAttempt:string
-}
 
 
 export class DeviceController {

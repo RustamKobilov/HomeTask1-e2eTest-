@@ -1,6 +1,6 @@
 import {Request, Response, Router} from "express";
 import {authRefreshToken} from "../Middleware/authRefreshToken";
-import {CommentModel, RecoveryPasswordModel, UserModel} from "../Models/shemaAndModel";
+import {CommentModel, PostModel, RecoveryPasswordModel, UserModel} from "../Models/shemaAndModel";
 import {devicesController} from "../composition-root";
 import {likeStatus} from "../Models/Enums";
 
