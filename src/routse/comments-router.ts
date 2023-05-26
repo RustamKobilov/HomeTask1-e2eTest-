@@ -3,11 +3,12 @@ import {postCommentForPostValidation, updateLikeStatus} from "../Models/InputVal
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {authCommentUser} from "../Middleware/authCommentUser";
 import {commentsController} from "../composition-root";
+import {authUserIdentification} from "../Middleware/authUserIdentification";
 
 export const commentsRouter=Router({})
 
 
-commentsRouter.get('/:id',commentsController.getComment.bind(commentsController))
+commentsRouter.get('/:id',authUserIdentification,commentsController.getComment.bind(commentsController))
 
 commentsRouter.put('/:id',authMiddleware,authCommentUser,postCommentForPostValidation,commentsController.updateComment.bind(commentsController))
 

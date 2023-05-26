@@ -14,13 +14,11 @@ import {User} from "../RepositoryInDB/user-repositoryDB";
 import {randomUUID} from "crypto";
 import {likeStatus} from "../Models/Enums";
 import {
-    CommentModel,
     IComment,
     ICommentatorInfo,
     ILikesInfo,
     IReaction,
     IUser,
-    ReactionModel
 } from "../Models/shemaAndModel";
 
 export class CommentService {
@@ -39,8 +37,8 @@ export class CommentService {
         Promise<inputSortDataBaseType<OutputCommentOutputType>>{
         return await this.commentsRepository.getComments(pagination)
     }
-    async getCommentOnId(id:string,userId:string):Promise<Comment|null> {
-        return this.commentsRepository.getComment(id,userId)
+    async getCommentOnId(id:string):Promise<Comment|null> {
+        return this.commentsRepository.getComment(id)
     }
     async updateCommentOnId(id:string,content:string):Promise<boolean> {
         return await this.commentsRepository.updateComment(id,content)
@@ -61,6 +59,13 @@ export class CommentService {
         console.log(newComment)
         const addNewComment=await this.commentsRepository.createCommentForPost(newComment)
         return addNewComment
+    }
+    async getCommentOnIdForUser(id:string,user:IUser):Promise<Comment|null> {
+            return this.commentsRepository.getCommentForUser(id,user)
+    }
+    async getAllCommentForPostInBaseForUser(pagination:PaginationTypePostInputCommentByPost):
+        Promise<inputSortDataBaseType<OutputCommentOutputType>>{
+        return await this.commentsRepository.getCommentsForUser(pagination)
     }
     async changeCountLikeStatusUser(comment: Comment, user: IUser, newLikeStatus: likeStatus): Promise<boolean> {
         const newReaction: IReaction = this.createReaction(comment.id, user.id, user.login, newLikeStatus)

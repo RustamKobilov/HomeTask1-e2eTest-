@@ -7,11 +7,7 @@ import {CommentService} from "../Service/commentsService";
 import {Request, Response} from "express";
 import {CommentModel} from "../Models/shemaAndModel";
 
-const getPaginationCommentById = (params: any): InputCommentByIdType => {
-    return {
-        id: params.id
-    }
-}
+
 export const getPaginationUpdateComment = (params: any, body: any): UpdateCommentType => {
     return {
         id: params.id,
@@ -31,8 +27,11 @@ export class CommentController {
     }
 
     async getComment(req: Request, res: Response) {
-        const pagination = getPaginationCommentById(req.params)
-        const resultSearch = await this.commentService.getCommentOnId(pagination.id,req.user.id)
+        let resultSearch
+        if(!req.user) {
+            resultSearch = await this.commentService.getCommentOnId(req.params.id)
+        }
+        resultSearch = await this.commentService.getCommentOnIdForUser(req.params.id,req.user)
 
         if (!resultSearch) {
             return res.sendStatus(404)
@@ -53,7 +52,7 @@ export class CommentController {
 
     async deleteComment(req: Request, res: Response) {
         const pagination = getPaginationDeleteCommentById(req.params)
-        const resultSearch = await this.commentService.getCommentOnId(pagination.id,req.user.id)
+        const resultSearch = await this.commentService.getCommentOnId(pagination.id)
         if (!resultSearch) {
             return res.sendStatus(404)
         }
@@ -62,10 +61,11 @@ export class CommentController {
     }
 
     async updateLikeStatus(req: Request, res: Response) {
-        const resultSearchComment = await this.commentService.getCommentOnId(req.params.id,req.user.id)
+        const resultSearchComment = await this.commentService.getCommentOnId(req.params.id)
         if (!resultSearchComment) {
             return res.sendStatus(404)
         }
+
         await this.commentService.changeCountLikeStatusUser(resultSearchComment,req.user, req.body.likeStatus)
 
 

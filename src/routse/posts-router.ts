@@ -10,6 +10,7 @@ import {
 } from "../Models/InputValidation";
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {postsController} from "../composition-root";
+import {authUserIdentification} from "../Middleware/authUserIdentification";
 
 export const postsRouter = Router({});
 
@@ -24,7 +25,7 @@ postsRouter.put('/:id', basicAuthMiddleware, updatePostValidation, errorMessages
 
 postsRouter.delete('/:id', basicAuthMiddleware, postsController.deletePost.bind(postsController))
 
-postsRouter.get('/:postId/comments', getCommentsForPostValidation, postsController.getCommentsForPost.bind(postsController))
+postsRouter.get('/:postId/comments', getCommentsForPostValidation, authUserIdentification, postsController.getCommentsForPost.bind(postsController))
 
 postsRouter.post('/:postId/comments', authMiddleware,postCommentForPostValidation, postsController.createCommentForPost.bind(postsController))
 
