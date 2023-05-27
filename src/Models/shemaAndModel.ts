@@ -47,7 +47,7 @@ const ReactionSchema = new mongoose.Schema<IReaction>({
     userId: {type: String, required: true},
     userLogin : {type: String, required: true},
     status: {type: String, enum: likeStatus, required: true},
-    createdAt: {type: String, required: true, default: new Date().toISOString}
+    createdAt: {type: String, required: true}
 })
 
 

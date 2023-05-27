@@ -68,7 +68,9 @@ export class CommentService {
         return await this.commentsRepository.getCommentsForUser(pagination)
     }
     async changeCountLikeStatusUser(comment: Comment, user: IUser, newLikeStatus: likeStatus): Promise<boolean> {
+
         const newReaction: IReaction = this.createReaction(comment.id, user.id, user.login, newLikeStatus)
+        console.log(newReaction)
         const updateReaction = await this.commentsRepository.updateLikeStatusComment(comment, newReaction)
         return updateReaction
 

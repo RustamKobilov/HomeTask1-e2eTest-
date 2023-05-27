@@ -80,10 +80,10 @@ export class CommentRepository {
     async getComment(id: string, ): Promise<any> {
         return CommentModel.findOne({id: id}, {_id: 0, __v: 0, postId: 0})
     }
-    async getCommentForUser(id: string, user:IUser): Promise<any> {
-
-        return CommentModel.findOne({id: id}, {_id: 0, __v: 0, postId: 0})
-
+    async getCommentForUser(commentId: string, user:IUser): Promise<any> {
+        const commentForUser = await CommentModel.findOne({id: commentId}, {_id: 0, __v: 0, postId: 0})
+        const searchReaction = await helper.getReactionUserForParent(commentId,user.id)
+        return searchReaction
 
         // return await CommentModel.aggregate([{$match:{id: id}},{$lookup: {
         //             from: 'ReactionModel',
@@ -130,16 +130,24 @@ export class CommentRepository {
         return commentUpdate.matchedCount === 1
     }
     async updateLikeStatusComment(comment:IComment, newReaction:IReaction):Promise<boolean>{
-
-        const updateReaction = await ReactionModel.updateOne({parentId: comment.id}, {$set: {newReaction}}, {upsert: true})
+        const findReaction = await ReactionModel.findOne({parentId: comment.id})
+        console.log(findReaction)
+        console.log(newReaction)
+        const updateReaction = await ReactionModel.updateOne({parentId: comment.id}, {$set: {...newReaction}}
+            , {upsert: true})
+        const findReactions = await ReactionModel.findOne({parentId: comment.id})
+        console.log(findReactions)
         const likesCount = await ReactionModel.countDocuments({parentId: comment.id, status: likeStatus.Like})
-        const dislikesCount = await ReactionModel.countDocuments({parentId: comment.id, status: likeStatus.Dislike})
-        const updateCountLike = await this.updateCountReactionComment(comment,likesCount,dislikesCount)
-        const resultUpdateReaction = updateReaction.matchedCount === 1
 
-        return resultUpdateReaction == updateCountLike
+        const dislikesCount = await ReactionModel.countDocuments({parentId: comment.id, status: likeStatus.Dislike})
+
+        const updateCountLike = await this.updateCountReactionComment(comment,likesCount,dislikesCount)
+
+        return updateCountLike
     }
     async updateCountReactionComment(comment:IComment, countLikes : number , countDislike : number):Promise<boolean> {
+        console.log(countLikes)
+        console.log(countDislike)
         const updateCountLikeAndDislike = await CommentModel.updateOne({id:comment.id},{
             $set: {
                 'likesInfo.likesCount': countLikes,
