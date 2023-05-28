@@ -52,7 +52,7 @@ export class CommentRepository {
         const countCommentsForPost = await CommentModel.countDocuments(filter)
         const paginationFromHelperForComments = helper.getPaginationFunctionSkipSortTotal(pagination.pageNumber, pagination.pageSize, countCommentsForPost)
 
-        let sortCommentsForPosts = await CommentModel.find(filter, {postId: false})
+        let sortCommentsForPosts = await CommentModel.find(filter, {postId: false, _id:false})
             .sort({[pagination.sortBy]: pagination.sortDirection})
             .skip(paginationFromHelperForComments.skipPage).limit(pagination.pageSize).lean()
 
@@ -71,10 +71,10 @@ export class CommentRepository {
 
     async getComment(id: string, ): Promise<any> {
         console.log('baza')
-        return CommentModel.findOne({id: id}, {postId: false})
+        return CommentModel.findOne({id: id}, {postId: false,_id:false})
     }
     async getCommentForUser(commentId: string, user:IUser): Promise<OutputCommentOutputType|false> {
-        const commentForUser = await CommentModel.findOne({id: commentId}, {postId: false})
+        const commentForUser = await CommentModel.findOne({id: commentId}, {postId: false,_id:false})
 
         if(!commentForUser){
             return false
@@ -96,7 +96,7 @@ export class CommentRepository {
         const countCommentsForPost = await CommentModel.countDocuments(filter)
         const paginationFromHelperForComments = helper.getPaginationFunctionSkipSortTotal(pagination.pageNumber, pagination.pageSize, countCommentsForPost)
 
-        let sortCommentsForPosts = await CommentModel.find(filter, {postId: false})
+        let sortCommentsForPosts = await CommentModel.find(filter, {postId: false,_id:false})
             .sort({[pagination.sortBy]: pagination.sortDirection})
             .skip(paginationFromHelperForComments.skipPage).limit(pagination.pageSize).lean()
 
