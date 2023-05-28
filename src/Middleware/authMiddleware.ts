@@ -10,7 +10,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
     const token = inputToken.split(' ')[1]
     const resultSearchUserIdbyToken = await jwtService.verifyToken(token)
     if (!resultSearchUserIdbyToken) return res.sendStatus(401)
-
+    console.log('verify okey')
     const user = await userRepository.findUserById(resultSearchUserIdbyToken.userId)
     if (!user) return res.sendStatus(401)
 
