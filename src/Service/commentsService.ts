@@ -60,12 +60,12 @@ export class CommentService {
         const addNewComment=await this.commentsRepository.createCommentForPost(newComment)
         return addNewComment
     }
-    async getCommentOnIdForUser(id:string,user:IUser):Promise<Comment|null> {
+    async getCommentOnIdForUser(id:string,user:IUser):Promise<OutputCommentOutputType|false> {
             return this.commentsRepository.getCommentForUser(id,user)
     }
-    async getAllCommentForPostInBaseForUser(pagination:PaginationTypePostInputCommentByPost):
+    async getAllCommentForPostInBaseForUser(pagination:PaginationTypePostInputCommentByPost,user:IUser):
         Promise<inputSortDataBaseType<OutputCommentOutputType>>{
-        return await this.commentsRepository.getCommentsForUser(pagination)
+        return await this.commentsRepository.getCommentsForUser(pagination,user)
     }
     async changeCountLikeStatusUser(comment: Comment, user: IUser, newLikeStatus: likeStatus): Promise<boolean> {
 

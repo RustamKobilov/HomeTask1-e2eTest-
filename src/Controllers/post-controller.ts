@@ -99,9 +99,10 @@ export class PostController {
         }
         let resultAllCommentsByPosts
         if(!req.user) {
-            resultAllCommentsByPosts = await this.commentService.getAllCommentForPostInBase(pagination);
+             resultAllCommentsByPosts = await this.commentService.getAllCommentForPostInBase(pagination);
+            return res.status(200).send(resultAllCommentsByPosts)
         }
-        resultAllCommentsByPosts = await this.commentService.getAllCommentForPostInBaseForUser(pagination)
+        resultAllCommentsByPosts = await this.commentService.getAllCommentForPostInBaseForUser(pagination,req.user)
 
 
 
