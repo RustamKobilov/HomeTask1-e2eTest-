@@ -84,7 +84,9 @@ export class CommentRepository {
         if(!searchReaction){
             return commentForUser
         }
+
         const commentUpgrade = await this.mapComment(commentForUser)
+
         commentUpgrade.likesInfo.myStatus = searchReaction.status
 
         return commentUpgrade
@@ -106,11 +108,9 @@ export class CommentRepository {
             if(!searchReaction){
                 return comment
             }
-            console.log('do')
-            console.log(commentUpgrade)
+
             commentUpgrade.likesInfo.myStatus = searchReaction.status
-            console.log('after')
-            console.log(commentUpgrade)
+
             return commentUpgrade
         }))
 
@@ -134,9 +134,8 @@ export class CommentRepository {
     async updateLikeStatusComment(comment:IComment, newReaction:IReaction):Promise<boolean>{
         const findReaction = await ReactionModel.findOne({parentId: comment.id})
        //TODO what spread? update.no work
-        const updateReaction = await ReactionModel.updateOne({parentId: comment.id}, {$set: {...newReaction}}
+        const updateReaction = await ReactionModel.updateOne({parentId: comment.id,userId:newReaction.userId}, {$set: {...newReaction}}
             , {upsert: true})
-        const findReactions = await ReactionModel.findOne({parentId: comment.id})
 
         const likesCount = await ReactionModel.countDocuments({parentId: comment.id, status: likeStatus.Like})
 
