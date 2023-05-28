@@ -58,7 +58,7 @@ export class CommentService {
             )
         console.log(newComment)
         const addNewComment=await this.commentsRepository.createCommentForPost(newComment)
-        return newComment
+        return idNewComment
     }
     async getCommentOnIdForUser(id:string,user:IUser):Promise<OutputCommentOutputType|false> {
             return this.commentsRepository.getCommentForUser(id,user)
