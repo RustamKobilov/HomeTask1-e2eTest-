@@ -106,8 +106,11 @@ export class CommentRepository {
             if(!searchReaction){
                 return comment
             }
-
+            console.log('do')
+            console.log(commentUpgrade)
             commentUpgrade.likesInfo.myStatus = searchReaction.status
+            console.log('after')
+            console.log(commentUpgrade)
             return commentUpgrade
         }))
 
