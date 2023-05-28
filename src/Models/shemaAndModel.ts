@@ -28,7 +28,7 @@ export const blogSchema = new mongoose.Schema<IBlog>({
     websiteUrl: {type: String, required: true},
     createdAt: {type: String, required: true},
     isMembership: {type: Boolean, required: true},
-})
+},{ versionKey: false, _id:false })
 
 export const BlogModel = mongoose.model(blogCollectionName, blogSchema)
 
@@ -48,7 +48,7 @@ const ReactionSchema = new mongoose.Schema<IReaction>({
     userLogin : {type: String, required: true},
     status: {type: String, enum: likeStatus, required: true},
     createdAt: {type: String, required: true}
-})
+},{ versionKey: false, _id:false })
 
 
 
@@ -74,7 +74,7 @@ const postSchema = new mongoose.Schema<IPost>({
     blogId: {type: String, required: true},
     blogName: {type: String, required: true},
     createdAt: {type: String, required: true}
-})
+},{ versionKey: false, _id:false })
 
 export const PostModel = mongoose.model(postCollectionName, postSchema)
 
@@ -88,7 +88,7 @@ export interface ICommentatorInfo {
 const commentatorInfoSchema = new mongoose.Schema<ICommentatorInfo>({
     userId: {type: String, required: true},
     userLogin: {type: String, required: true}
-})
+},{ versionKey: false , _id:false})
 
 export interface ILikesInfo {
     likesCount: number,
@@ -100,7 +100,7 @@ const likesInfoSchema = new mongoose.Schema<ILikesInfo>({
     likesCount:{type: Number, required: true},
     dislikesCount:{type: Number, required: true},
     myStatus:{type: String, enum: likeStatus,required: true}
-})
+},{ versionKey: false, _id:false })
 
 export interface IComment {
     postId: string,
@@ -118,7 +118,7 @@ const commentSchema = new mongoose.Schema({
     commentatorInfo: {type: commentatorInfoSchema, required: true},
     createdAt: {type: String, required: true},
     likesInfo: {type: likesInfoSchema, required: true}
-})
+},{ versionKey: false , _id:false})
 
 export const CommentModel = mongoose.model(commentCollectionName, commentSchema)
 
@@ -134,7 +134,7 @@ const userConfirmationInfoSchema = new mongoose.Schema<IUserInfo>({
     userConformation: {type: Boolean, required: true},
     code: {type: String, required: true},
     expirationCode: {type: String, required: true}
-})
+},{ versionKey: false, _id:false })
 
 
 
@@ -158,7 +158,7 @@ const userSchema = new mongoose.Schema({
     salt: {type: String, required: true},
     hash: {type: String, required: true},
     userConfirmationInfo: {type: userConfirmationInfoSchema, required: true}
-})
+},{ versionKey: false, _id:false })
 
 export const UserModel = mongoose.model(userCollectionName, userSchema)
 
@@ -180,7 +180,7 @@ const deviceSchema = new mongoose.Schema<IDevice>({
     deviceId: {type: String, required: true},
     title: {type: String, required: true},
     ip: {type: String, required: true}
-})
+},{ versionKey: false, _id:false })
 
 export const DeviceModel = mongoose.model(deviceCollectionName, deviceSchema)
 
@@ -196,7 +196,7 @@ const attemptAccessEndpoint = new mongoose.Schema<IAttemptLoginEndPoint>({
     endpointName: {type: String, required: true},
     ip: {type: String, required: true},
     dateAttempt: {type: String, required: true}
-})
+},{ versionKey: false, _id:false })
 
 export const AttemptModel = mongoose.model(attemptAccessEndpointCollectionName, attemptAccessEndpoint)
 
@@ -212,6 +212,6 @@ const recoveryCodePasswordForUserSchema = new mongoose.Schema<IRecoveryPassword>
     recoveryCode: {type: String, required: true},
     userId: {type: String, required: true},
     diesAtDate: {type: String, required: true}
-})
+},{ versionKey: false, _id:false })
 
 export const RecoveryPasswordModel = mongoose.model(recoveryPasswordCollectionName, recoveryCodePasswordForUserSchema)
