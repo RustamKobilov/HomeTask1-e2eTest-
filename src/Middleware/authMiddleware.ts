@@ -12,6 +12,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
     if (!resultSearchUserIdbyToken) return res.sendStatus(401)
     console.log('verify okey')
     const user = await userRepository.findUserById(resultSearchUserIdbyToken.userId)
+    console.log(user)
     if (!user) return res.sendStatus(401)
 
     req.user = user
