@@ -1,6 +1,7 @@
 import {inputSortDataBaseType, PaginationTypeInputPosts, Post} from "./post-repositoryDB";
 import {helper, ReturnDistributedDate} from "../Service/helper";
 import {BlogModel, PostModel} from "../Models/shemaAndModel";
+import { injectable } from "inversify";
 
 
 export class Blog {
@@ -28,6 +29,7 @@ export type PaginationTypeUpdateBlog = {
     websiteUrlBlog : string
 }
 
+@injectable()
 export class BlogRepository{
     async getBlogs(paginationBlogs: PaginationTypeInputParamsBlogs):
         Promise<ReturnDistributedDate<Blog>> {

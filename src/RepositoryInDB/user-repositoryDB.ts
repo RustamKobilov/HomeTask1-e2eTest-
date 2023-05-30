@@ -4,6 +4,7 @@ import {helper} from "../Service/helper";
 import {inputSortDataBaseType} from "./post-repositoryDB";
 import {ObjectId} from "mongodb";
 import {RecoveryPasswordModel, UserModel} from "../Models/shemaAndModel";
+import { injectable } from 'inversify';
 
 export class User{
     constructor( public id: string,
@@ -49,6 +50,7 @@ export type PaginationTypeRecoveryPassword = {
 }
 
 
+@injectable()
 export class UserRepository{
     async getUsers(paginationUser: PaginationTypeInputUser): Promise<inputSortDataBaseType<User>> {
         const searchLoginTerm = paginationUser.searchLoginTerm != null ? {

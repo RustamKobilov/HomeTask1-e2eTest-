@@ -7,9 +7,11 @@ import {
 } from "../RepositoryInDB/blog-repositoryDB";
 import {ReturnDistributedDate} from "./helper";
 import {inputSortDataBaseType, PaginationTypeInputPosts, Post} from "../RepositoryInDB/post-repositoryDB";
+import { inject, injectable } from "inversify";
 
+@injectable()
 export class BlogService {
-    constructor( protected blogsRepository : BlogRepository) {}
+    constructor(@inject(BlogRepository) protected blogsRepository : BlogRepository) {}
     async createBlog(nameNewBlog: string, descriptionNewBlog: string, websiteUrlNewBlog: string): Promise<Blog> {
         const newId = randomUUID();
         const newBlog: Blog = new Blog(newId, nameNewBlog, descriptionNewBlog, websiteUrlNewBlog, new Date().toISOString(), false)

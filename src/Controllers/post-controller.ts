@@ -8,6 +8,7 @@ import {PostService} from "../Service/postService";
 import {CommentService} from "../Service/commentsService";
 import {Request, Response} from "express";
 import {PostModel} from "../Models/shemaAndModel";
+import {inject, injectable } from "inversify";
 
 export const getPaginationValuesPosts = (query: any): PaginationTypeInputPosts => {
     return {
@@ -40,8 +41,10 @@ export const getPaginationPostCommentForPost = (params: any, body: any): Paginat
     }
 }
 
+@injectable()
 export class PostController {
-    constructor(protected postService: PostService, protected commentService: CommentService) {
+    constructor(@inject(PostService) protected postService: PostService,
+                @inject(CommentService) protected commentService: CommentService) {
     }
 
     async getPosts(req: Request, res: Response) {

@@ -7,9 +7,11 @@ import {
 import bcrypt from "bcrypt";
 import {randomUUID} from "crypto";
 import {inputSortDataBaseType} from "../RepositoryInDB/post-repositoryDB";
+import { inject, injectable } from "inversify";
 
+@injectable()
 export class UserService {
-    constructor(protected userRepository: UserRepository) {
+    constructor(@inject(UserRepository) protected userRepository: UserRepository) {
     }
 
     async createUser(paginationAddUser: PaginationTypeAddNewUser): Promise<User> {

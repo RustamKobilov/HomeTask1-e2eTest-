@@ -1,10 +1,14 @@
+import { inject, injectable } from "inversify";
 import {JwtService} from "../application/jwtService";
 import {DeviceRepository} from "../RepositoryInDB/device-repositoryDB";
 
+@injectable()
 export class DeviceService {
 
-    constructor(protected deviceRepository : DeviceRepository, protected jwtService : JwtService) {
+    constructor(@inject(DeviceRepository) protected deviceRepository : DeviceRepository,
+                @inject(JwtService) protected jwtService : JwtService) {
     }
+
     async getAllDevices(refreshToken:string){
         const userPayload = await this.jwtService.verifyToken(refreshToken)
        return await this.deviceRepository.getDevices(userPayload)

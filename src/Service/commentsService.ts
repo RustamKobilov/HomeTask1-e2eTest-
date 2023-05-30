@@ -20,9 +20,11 @@ import {
     IReaction,
     IUser,
 } from "../Models/shemaAndModel";
+import {inject, injectable } from "inversify";
 
+@injectable()
 export class CommentService {
-    constructor(protected commentsRepository : CommentRepository){}
+    constructor(@inject(CommentRepository) protected commentsRepository : CommentRepository){}
     private createReaction(parentId: string, userId: string, userLogin:string, status: likeStatus): IReaction {
         return {
             parentId,

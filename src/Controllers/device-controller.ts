@@ -1,6 +1,7 @@
 import {DeviceService} from "../Service/deviceService";
 import {JwtService} from "../application/jwtService";
 import {Request, Response} from "express";
+import {inject, injectable } from "inversify";
 
 
 export const getPaginationValuesInputUserInformation = (ipAddress: any, userAgent: any): UserInformationType => {
@@ -15,10 +16,11 @@ export type UserInformationType = {
     ipAddress: string,
 }
 
-
+@injectable()
 export class DeviceController {
 
-    constructor(protected devicesService: DeviceService, protected jwtService: JwtService) {
+    constructor(@inject(DeviceService) protected devicesService: DeviceService,
+                @inject(JwtService) protected jwtService: JwtService) {
     }
 
     async getDevices(req: Request, res: Response) {

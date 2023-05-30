@@ -1,12 +1,13 @@
 import {Request, Response, Router} from "express";
 import {authRefreshToken} from "../Middleware/authRefreshToken";
 import {CommentModel, DeviceModel, IReaction, ReactionModel, RecoveryPasswordModel} from "../Models/shemaAndModel";
-import {devicesController} from "../composition-root";
 import {likeStatus} from "../Models/Enums";
 import {Reaction} from "../RepositoryInDB/reaction-repository";
 import {helper} from "../Service/helper";
+import { DeviceContainer } from "../composition-root";
+import { DeviceController } from "../Controllers/device-controller";
 
-
+const devicesController = DeviceContainer.resolve(DeviceController)
 export const securityRouter = Router({})
 
 
@@ -17,13 +18,7 @@ securityRouter.delete('/devices', authRefreshToken, devicesController.deleteDevi
 securityRouter.delete('/devices/:deviceId', authRefreshToken, devicesController.deleteDeviceOnId.bind(devicesController))
 
 
-//admin
-securityRouter.get('/attempt', async (req: Request, res: Response) => {
 
-    const allCollection = await RecoveryPasswordModel.find({}).lean()
-
-    return res.send(allCollection).status(204)
-})
 
 securityRouter.get('/userAll', async (req: Request, res: Response) => {
 

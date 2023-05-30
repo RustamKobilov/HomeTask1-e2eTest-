@@ -2,6 +2,7 @@ import {inputSortDataBaseType, PaginationTypePostInputCommentByPost} from "./pos
 import {helper} from "../Service/helper";
 import {CommentModel, IComment, IReaction, IUser, ReactionModel} from "../Models/shemaAndModel";
 import {likeStatus} from "../Models/Enums";
+import { injectable } from "inversify";
 
 
 export type InputCommentByIdType ={
@@ -45,6 +46,8 @@ export type UpdateCommentType ={
     content:string
 }
 
+
+@injectable()
 export class CommentRepository {
     async getComments(pagination: PaginationTypePostInputCommentByPost):
         Promise<inputSortDataBaseType<OutputCommentOutputType>> {
@@ -102,7 +105,7 @@ export class CommentRepository {
             .sort({[pagination.sortBy]: pagination.sortDirection})
             .skip(paginationFromHelperForComments.skipPage).limit(pagination.pageSize).lean()
 
-        const resultCommentsAddLikes = await Promise.all(sortCommentsForPosts.map(async comment=>{
+        const resultCommentsAddLikes = await Promise.all(sortCommentsForPosts.map(async (comment: IComment)=>{
             const commentUpgrade = await this.mapComment(comment)
             const searchReaction = await helper.getReactionUserForParent(commentUpgrade.id,user.id)
             if(!searchReaction){

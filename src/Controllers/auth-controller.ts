@@ -6,10 +6,12 @@ import {randomUUID} from "crypto";
 import {getPaginationValuesAddNewUser} from "./userController";
 import {emailAdapters} from "../adapters/email-adapters";
 import {getPaginationValuesInputUserInformation} from "./device-controller";
+import { inject, injectable } from "inversify";
 
-
+@injectable()
 export class AuthController {
-    constructor(protected userService: UserService, protected jwtService: JwtService) {
+    constructor(@inject(UserService) protected userService: UserService,
+                @inject(JwtService) protected jwtService: JwtService) {
     }
 
     async loginUser(req: Request, res: Response) {

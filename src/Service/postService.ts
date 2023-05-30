@@ -6,10 +6,12 @@ import {
 } from "../RepositoryInDB/post-repositoryDB";
 import {likeStatus} from "../Models/Enums";
 import {IReaction} from "../Models/shemaAndModel";
+import {inject, injectable } from "inversify";
 
+@injectable()
 export class PostService {
 
-    constructor(protected postsRepository : PostRepository) {}
+    constructor(@inject(PostRepository) protected postsRepository : PostRepository) {}
     private createReaction(parentId: string, userId: string, userLogin:string, status: likeStatus): IReaction {
         return {
             parentId,

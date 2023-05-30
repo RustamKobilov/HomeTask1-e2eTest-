@@ -1,6 +1,7 @@
 import { helper} from "../Service/helper";
 import {BlogModel, PostModel} from "../Models/shemaAndModel";
 import {Blog} from "./blog-repositoryDB";
+import { injectable } from "inversify";
 
 export class Post {
     constructor(public id: string,
@@ -48,6 +49,7 @@ export type PaginationTypePostInputCommentByPost={
     sortDirection: 1|-1
 }
 
+@injectable()
 export class PostRepository {
    async getPosts(paginationPosts: PaginationTypeInputPosts): Promise<inputSortDataBaseType<Post>> {
 

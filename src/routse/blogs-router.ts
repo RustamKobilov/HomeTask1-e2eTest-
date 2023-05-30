@@ -1,4 +1,6 @@
 import {Router} from "express";
+import { BlogContainer } from "../composition-root";
+import { BlogController } from "../Controllers/blog-controller";
 import {basicAuthMiddleware} from "../Middleware/autorized";
 import {
     createBlogValidation,
@@ -8,7 +10,9 @@ import {
     postPostForBlogsValidation,
     updateBlogValidation
 } from "../Models/InputValidation";
-import {blogsController} from "../composition-root";
+
+
+const blogsController = BlogContainer.resolve(BlogController)
 
 export const blogsRouter = Router({});
 
