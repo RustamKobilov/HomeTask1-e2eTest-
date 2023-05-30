@@ -30,7 +30,13 @@ export class CommentController {
         let resultSearch
         if(!req.user) {
             resultSearch = await this.commentService.getCommentOnId(req.params.id)
+            if (!resultSearch) {
+                return res.sendStatus(404)
+            }
+
+            return res.status(200).send(resultSearch)
         }
+        console.log(req.user)
         resultSearch = await this.commentService.getCommentOnIdForUser(req.params.id,req.user)
 
         if (!resultSearch) {

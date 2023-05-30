@@ -99,9 +99,10 @@ export class PostController {
         }
         let resultAllCommentsByPosts
         if(!req.user) {
-            resultAllCommentsByPosts = await this.commentService.getAllCommentForPostInBase(pagination);
+             resultAllCommentsByPosts = await this.commentService.getAllCommentForPostInBase(pagination);
+            return res.status(200).send(resultAllCommentsByPosts)
         }
-        resultAllCommentsByPosts = await this.commentService.getAllCommentForPostInBaseForUser(pagination)
+        resultAllCommentsByPosts = await this.commentService.getAllCommentForPostInBaseForUser(pagination,req.user)
 
 
 
@@ -116,8 +117,10 @@ export class PostController {
         if (!resultSearchPost) {
             return res.sendStatus(404)
         }
-        const addCommentByPost = await this.commentService.createCommentOnId(pagination, user)
-        return res.status(201).send(addCommentByPost)
+        const addCommentByPost = await this.commentService.createCommentOnId(pagination, user)//return id new comment
+        const newCommentByPost = await this.commentService.getCommentOnId(addCommentByPost)
+
+        return res.status(201).send(newCommentByPost)
 
     }
 

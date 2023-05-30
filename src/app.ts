@@ -15,7 +15,7 @@ import {
     BlogModel,
     CommentModel,
     DeviceModel,
-    PostModel,
+    PostModel, ReactionModel,
     RecoveryPasswordModel,
     UserModel
 } from "./Models/shemaAndModel";
@@ -47,6 +47,7 @@ app.delete('/testing/all-data', async (req: Request, res: Response) => {
     await DeviceModel.deleteMany({})
     await AttemptModel.deleteMany({})
     await RecoveryPasswordModel.deleteMany({})
+    await ReactionModel.deleteMany({})
 
     return res.sendStatus(204);
 });

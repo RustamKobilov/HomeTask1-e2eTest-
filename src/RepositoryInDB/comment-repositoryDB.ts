@@ -26,10 +26,6 @@ export class CommentatorInfo{
     constructor(public userId:string, public userLogin:string){}
 }
 
-export class UsersLikeStatusLikesInfo {
-    constructor(public userId:string, public likeStatus:string) {}
-}
-
 export class LikesInfo {
     constructor (public likesCount :  number, public dislikesCount  : number, public myStatus :  likeStatus){}
 }
@@ -41,6 +37,7 @@ export type OutputCommentOutputType ={
     content:string
     commentatorInfo:CommentatorInfo
     createdAt:string
+    likesInfo:LikesInfo
 }
 
 export type UpdateCommentType ={
@@ -55,12 +52,7 @@ export class CommentRepository {
         const countCommentsForPost = await CommentModel.countDocuments(filter)
         const paginationFromHelperForComments = helper.getPaginationFunctionSkipSortTotal(pagination.pageNumber, pagination.pageSize, countCommentsForPost)
 
-        let sortCommentsForPosts = await CommentModel.find(filter, {
-            _id: 0,
-            __v: 0,
-            postId: 0,
-            likesInfo: {_id: 0, __v: 0}
-        })
+        let sortCommentsForPosts = await CommentModel.find(filter, {postId: false, _id:false})
             .sort({[pagination.sortBy]: pagination.sortDirection})
             .skip(paginationFromHelperForComments.skipPage).limit(pagination.pageSize).lean()
 
@@ -78,48 +70,58 @@ export class CommentRepository {
     }
 
     async getComment(id: string, ): Promise<any> {
-        return CommentModel.findOne({id: id}, {_id: 0, __v: 0, postId: 0})
+        console.log('baza')
+        return CommentModel.findOne({id: id}, {postId: false,_id:false})
     }
-    async getCommentForUser(id: string, user:IUser): Promise<any> {
+    async getCommentForUser(commentId: string, user:IUser): Promise<OutputCommentOutputType|false> {
+        const commentForUser = await CommentModel.findOne({id: commentId}, {postId: false,_id:false})
 
-        return CommentModel.findOne({id: id}, {_id: 0, __v: 0, postId: 0})
+        if(!commentForUser){
+            return false
+        }
+        const searchReaction = await helper.getReactionUserForParent(commentId,user.id)
 
+        if(!searchReaction){
+            return commentForUser
+        }
 
-        // return await CommentModel.aggregate([{$match:{id: id}},{$lookup: {
-        //             from: 'ReactionModel',
-        //             localField: userId,
-        //             foreignField: "userId",
-        //             as: "myStatus"
-        //         }]
-        // })
-        //{ "$lookup": { "localField": "user_id", "from": "user", "foreignField": "_id", "as": "userinfo" } }
+        const commentUpgrade = await this.mapComment(commentForUser)
 
+        commentUpgrade.likesInfo.myStatus = searchReaction.status
+
+        return commentUpgrade
     }
 
-    async getCommentsForUser(pagination: PaginationTypePostInputCommentByPost):
+    async getCommentsForUser(pagination: PaginationTypePostInputCommentByPost,user:IUser):
         Promise<inputSortDataBaseType<OutputCommentOutputType>> {
         const filter = {postId: pagination.idPost}
         const countCommentsForPost = await CommentModel.countDocuments(filter)
         const paginationFromHelperForComments = helper.getPaginationFunctionSkipSortTotal(pagination.pageNumber, pagination.pageSize, countCommentsForPost)
 
-        let sortCommentsForPosts = await CommentModel.find(filter, {
-            _id: 0,
-            __v: 0,
-            postId: 0,
-            likesInfo: {_id: 0, __v: 0}
-        })
+        let sortCommentsForPosts = await CommentModel.find(filter, {postId: false,_id:false})
             .sort({[pagination.sortBy]: pagination.sortDirection})
             .skip(paginationFromHelperForComments.skipPage).limit(pagination.pageSize).lean()
+
+        const resultCommentsAddLikes = await Promise.all(sortCommentsForPosts.map(async comment=>{
+            const commentUpgrade = await this.mapComment(comment)
+            const searchReaction = await helper.getReactionUserForParent(commentUpgrade.id,user.id)
+            if(!searchReaction){
+                return comment
+            }
+
+            commentUpgrade.likesInfo.myStatus = searchReaction.status
+
+            return commentUpgrade
+        }))
 
         return {
             pagesCount: paginationFromHelperForComments.totalCount,
             page: pagination.pageNumber,
             pageSize: pagination.pageSize,
             totalCount: countCommentsForPost,
-            items: sortCommentsForPosts
+            items: resultCommentsAddLikes
         }
     }
-
 
     async updateComment(id: string, content: string): Promise<boolean> {
         const commentUpdate = await CommentModel.updateOne({id: id}, {
@@ -130,16 +132,22 @@ export class CommentRepository {
         return commentUpdate.matchedCount === 1
     }
     async updateLikeStatusComment(comment:IComment, newReaction:IReaction):Promise<boolean>{
+        const findReaction = await ReactionModel.findOne({parentId: comment.id})
+       //TODO what spread? update.no work
+        const updateReaction = await ReactionModel.updateOne({parentId: comment.id,userId:newReaction.userId}, {$set: {...newReaction}}
+            , {upsert: true})
 
-        const updateReaction = await ReactionModel.updateOne({parentId: comment.id}, {$set: {newReaction}}, {upsert: true})
         const likesCount = await ReactionModel.countDocuments({parentId: comment.id, status: likeStatus.Like})
-        const dislikesCount = await ReactionModel.countDocuments({parentId: comment.id, status: likeStatus.Dislike})
-        const updateCountLike = await this.updateCountReactionComment(comment,likesCount,dislikesCount)
-        const resultUpdateReaction = updateReaction.matchedCount === 1
 
-        return resultUpdateReaction == updateCountLike
+        const dislikesCount = await ReactionModel.countDocuments({parentId: comment.id, status: likeStatus.Dislike})
+
+        const updateCountLike = await this.updateCountReactionComment(comment,likesCount,dislikesCount)
+
+        return updateCountLike
     }
     async updateCountReactionComment(comment:IComment, countLikes : number , countDislike : number):Promise<boolean> {
+        console.log(countLikes)
+        console.log(countDislike)
         const updateCountLikeAndDislike = await CommentModel.updateOne({id:comment.id},{
             $set: {
                 'likesInfo.likesCount': countLikes,
@@ -147,6 +155,15 @@ export class CommentRepository {
             }
             })
         return updateCountLikeAndDislike.matchedCount === 1
+    }
+    async mapComment(comment:IComment){
+        return{
+            id: comment.id,
+            content: comment.content,
+            commentatorInfo: comment.commentatorInfo,
+            createdAt: comment.createdAt,
+            likesInfo: comment.likesInfo
+        }
     }
 }
 
