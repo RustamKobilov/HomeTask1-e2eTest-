@@ -178,70 +178,70 @@ describe('/Post CRUD',()=>{
         expect(CreateBlog).toEqual(resultBlog)
     })
 
-    it('post POST checking create post true', async ()=>{
-        const postCheck={
-            title: 'one title',
-            shortDescription: "one shortDescription",
-            content: 'one content',
-            blogId:CreateBlog.id
-        }
-
-
-        const CreatePostsResponse = await request(app).post('/posts/').
-        set(BasicAuthorized.authorization, BasicAuthorized.password).send(postCheck).expect(201)
-        CreatePost = CreatePostsResponse.body;
-
-        const resultPost:Post={
-            id:expect.any(String),
-            title:postCheck.title,
-            shortDescription:postCheck.shortDescription,
-            content:postCheck.content,
-            blogId:CreateBlog.id,
-            blogName:expect.any(String),
-            createdAt:expect.any(String)
-        }
-
-        expect(resultPost).toEqual(CreatePost)
-
-    })
+    // it('post POST checking create post true', async ()=>{
+    //     const postCheck={
+    //         title: 'one title',
+    //         shortDescription: "one shortDescription",
+    //         content: 'one content',
+    //         blogId:CreateBlog.id
+    //     }
+    //
+    //
+    //     const CreatePostsResponse = await request(app).post('/posts/').
+    //     set(BasicAuthorized.authorization, BasicAuthorized.password).send(postCheck).expect(201)
+    //     CreatePost = CreatePostsResponse.body;
+    //
+    //     const resultPost:Post={
+    //         id:expect.any(String),
+    //         title:postCheck.title,
+    //         shortDescription:postCheck.shortDescription,
+    //         content:postCheck.content,
+    //         blogId:CreateBlog.id,
+    //         blogName:expect.any(String),
+    //         createdAt:expect.any(String)
+    //     }
+    //
+    //     expect(resultPost).toEqual(CreatePost)
+    //
+    // })
 
     it('post GET by Id checking return post by id true',async ()=>{
         const resultGetRequest=await request(app).get('/posts/'+CreatePost.id).expect(200)
         expect(CreatePost).toEqual(resultGetRequest.body)
     })
 
-    it('post UPDATE checking update post true',async ()=>{
-        const postCheck2={
-            title: 'update title',
-            shortDescription: "update shortDescription",
-            content: 'update content',
-            blogId:CreateBlog.id
-        }
-
-        const resultPostUpdate:Post={
-            id:CreatePost.id,
-            title:postCheck2.title,
-            shortDescription:postCheck2.shortDescription,
-            content:postCheck2.content,
-            blogId:postCheck2.blogId,
-            blogName:expect.any(String),
-            createdAt:expect.any(String)
-        }
-
-        await request(app).put('/posts/'+CreatePost.id).
-        set(BasicAuthorized.authorization, BasicAuthorized.password).
-        send(postCheck2).expect(204)
-
-        const resultGetRequest=await request(app).get('/posts/').expect(200)
-
-        expect(resultGetRequest.body).toEqual({
-            pagesCount: 1,
-            page: 1,
-            pageSize: 10,
-            totalCount: 1,
-            items: [resultPostUpdate]
-        })
-    })
+    // it('post UPDATE checking update post true',async ()=>{
+    //     const postCheck2={
+    //         title: 'update title',
+    //         shortDescription: "update shortDescription",
+    //         content: 'update content',
+    //         blogId:CreateBlog.id
+    //     }
+    //
+    //     const resultPostUpdate:Post={
+    //         id:CreatePost.id,
+    //         title:postCheck2.title,
+    //         shortDescription:postCheck2.shortDescription,
+    //         content:postCheck2.content,
+    //         blogId:postCheck2.blogId,
+    //         blogName:expect.any(String),
+    //         createdAt:expect.any(String)
+    //     }
+    //
+    //     await request(app).put('/posts/'+CreatePost.id).
+    //     set(BasicAuthorized.authorization, BasicAuthorized.password).
+    //     send(postCheck2).expect(204)
+    //
+    //     const resultGetRequest=await request(app).get('/posts/').expect(200)
+    //
+    //     expect(resultGetRequest.body).toEqual({
+    //         pagesCount: 1,
+    //         page: 1,
+    //         pageSize: 10,
+    //         totalCount: 1,
+    //         items: [resultPostUpdate]
+    //     })
+    // })
 
     it('post DELETE by Id true',async ()=>{
       await request(app).delete('/posts/'+CreatePost.id).

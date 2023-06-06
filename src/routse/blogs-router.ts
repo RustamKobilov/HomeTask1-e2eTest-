@@ -1,5 +1,5 @@
 import {Router} from "express";
-import { BlogContainer } from "../composition-root";
+import { Containers } from "../composition-root";
 import { BlogController } from "../Controllers/blog-controller";
 import {basicAuthMiddleware} from "../Middleware/autorized";
 import {
@@ -12,7 +12,7 @@ import {
 } from "../Models/InputValidation";
 
 
-const blogsController = BlogContainer.resolve(BlogController)
+const blogsController = Containers.resolve(BlogController)
 
 export const blogsRouter = Router({});
 

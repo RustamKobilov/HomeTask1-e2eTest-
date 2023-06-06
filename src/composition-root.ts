@@ -1,33 +1,27 @@
-import {UserRepository} from "./RepositoryInDB/user-repositoryDB";
+import "reflect-metadata"
+import {Container} from "inversify";
+import {UserController} from "./Controllers/userController";
 import {UserService} from "./Service/userService";
-import {JwtService} from "./application/jwtService";
-import {BlogRepository} from "./RepositoryInDB/blog-repositoryDB";
-import {BlogService} from "./Service/blogService";
+import {UserRepository} from "./RepositoryInDB/user-repositoryDB";
+import {AuthController} from "./Controllers/auth-controller";
+import {PostController} from "./Controllers/post-controller";
 import {PostService} from "./Service/postService";
 import {PostRepository} from "./RepositoryInDB/post-repositoryDB";
-import {CommentRepository} from "./RepositoryInDB/comment-repositoryDB";
+import {BlogController} from "./Controllers/blog-controller";
+import {BlogService} from "./Service/blogService";
+import {BlogRepository} from "./RepositoryInDB/blog-repositoryDB";
+import {CommentController} from "./Controllers/comment-controller";
 import {CommentService} from "./Service/commentsService";
+import {CommentRepository} from "./RepositoryInDB/comment-repositoryDB";
+import {DeviceController} from "./Controllers/device-controller";
 import {DeviceService} from "./Service/deviceService";
 import {DeviceRepository} from "./RepositoryInDB/device-repositoryDB";
-import {UserController} from "./Controllers/userController";
-import {AuthController} from "./Controllers/auth-controller";
-import {BlogController} from "./Controllers/blog-controller";
-import {PostController} from "./Controllers/post-controller";
-import {CommentController} from "./Controllers/comment-controller";
-import {DeviceController} from "./Controllers/device-controller";
-import { Container } from "inversify";
+import {JwtService} from "./application/jwtService";
+
 
 // const usersRepository = new UserRepository()
 // const usersService = new UserService(usersRepository)
 // export const usersController = new UserController(usersService)
-export const UserContainer = new Container()
-UserContainer.bind(UserController).to(UserController)
-UserContainer.bind(UserService).to(UserService)
-UserContainer.bind(UserRepository).to(UserRepository)
-
-export const AuthContainer = new Container()
-AuthContainer.bind(AuthController).to(AuthController)
-
 
 
 // const blogsRepository = new BlogRepository()
@@ -35,14 +29,10 @@ AuthContainer.bind(AuthController).to(AuthController)
 
 // const postsRepository = new PostRepository()
 // const postsService = new PostService(postsRepository)
-export const PostContainer = new Container()
-PostContainer.bind(PostController).to(PostController)
-PostContainer.bind(PostService).to(PostService)
-PostContainer.bind(PostRepository).to(PostRepository)
+
+
 // export const blogsController = new BlogController(blogsService,postsService)
 
-export const BlogContainer = new Container()
-BlogContainer.bind(BlogController).to(BlogController)
 
 
 
@@ -50,10 +40,6 @@ BlogContainer.bind(BlogController).to(BlogController)
 // const commentsService = new CommentService(commentsRepository)
 // export const postsController = new PostController(postsService, commentsService)
 
-export const CommentContainer = new Container()
-CommentContainer.bind(CommentController).to(CommentController)
-CommentContainer.bind(CommentService).to(CommentService)
-CommentContainer.bind(CommentRepository).to(CommentRepository)
 
 
 // export const commentsController = new CommentController(commentsService)
@@ -63,7 +49,23 @@ CommentContainer.bind(CommentRepository).to(CommentRepository)
 // const devicesService = new DeviceService(devicesRepository, jwtServices)
 // export const devicesController = new DeviceController(devicesService,jwtServices)
 
-export const DeviceContainer = new Container()
-DeviceContainer.bind(DeviceController).to(DeviceController)
-DeviceContainer.bind(DeviceService).to(DeviceService)
-DeviceContainer.bind(DeviceRepository).to(DeviceRepository)
+
+
+export const Containers = new Container()
+Containers.bind(UserController).to(UserController)
+Containers.bind(UserService).to(UserService)
+Containers.bind(UserRepository).to(UserRepository)
+Containers.bind(AuthController).to(AuthController)
+Containers.bind(CommentController).to(CommentController)
+Containers.bind(CommentService).to(CommentService)
+Containers.bind(CommentRepository).to(CommentRepository)
+Containers.bind(PostController).to(PostController)
+Containers.bind(PostService).to(PostService)
+Containers.bind(PostRepository).to(PostRepository)
+Containers.bind(BlogController).to(BlogController)
+Containers.bind(BlogService).to(BlogService)
+Containers.bind(BlogRepository).to(BlogRepository)
+Containers.bind(DeviceController).to(DeviceController)
+Containers.bind(DeviceService).to(DeviceService)
+Containers.bind(DeviceRepository).to(DeviceRepository)
+Containers.bind(JwtService).to(JwtService)

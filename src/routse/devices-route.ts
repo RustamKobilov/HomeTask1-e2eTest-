@@ -1,13 +1,10 @@
 import {Request, Response, Router} from "express";
 import {authRefreshToken} from "../Middleware/authRefreshToken";
-import {CommentModel, DeviceModel, IReaction, ReactionModel, RecoveryPasswordModel} from "../Models/shemaAndModel";
-import {likeStatus} from "../Models/Enums";
-import {Reaction} from "../RepositoryInDB/reaction-repository";
-import {helper} from "../Service/helper";
-import { DeviceContainer } from "../composition-root";
-import { DeviceController } from "../Controllers/device-controller";
+import {CommentModel, ReactionModel} from "../Models/shemaAndModel";
+import {Containers} from "../composition-root";
+import {DeviceController} from "../Controllers/device-controller";
 
-const devicesController = DeviceContainer.resolve(DeviceController)
+const devicesController = Containers.resolve(DeviceController)
 export const securityRouter = Router({})
 
 

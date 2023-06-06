@@ -4,10 +4,10 @@ import {authMiddleware} from "../Middleware/authMiddleware";
 import {authCommentUser} from "../Middleware/authCommentUser";
 import {authUserIdentification} from "../Middleware/authUserIdentification";
 import { CommentController } from "../Controllers/comment-controller";
-import { CommentContainer } from "../composition-root";
+import { Containers } from "../composition-root";
 
 
-const commentsController = CommentContainer.resolve(CommentController)
+const commentsController = Containers.resolve(CommentController)
 
 export const commentsRouter=Router({})
 

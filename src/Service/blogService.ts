@@ -8,6 +8,7 @@ import {
 import {ReturnDistributedDate} from "./helper";
 import {inputSortDataBaseType, PaginationTypeInputPosts, Post} from "../RepositoryInDB/post-repositoryDB";
 import { inject, injectable } from "inversify";
+import {IPost} from "../Models/shemaAndModel";
 
 @injectable()
 export class BlogService {
@@ -25,7 +26,7 @@ export class BlogService {
         return await this.blogsRepository.findBlog(id)
     }
     async getAllPostsForBlogInBase(paginationPosts: PaginationTypeInputPosts, blogId: string):
-        Promise<inputSortDataBaseType<Post>> {
+        Promise<inputSortDataBaseType<IPost>> {
         return await this.blogsRepository.getPostsForBlog(paginationPosts,blogId)
     }
     async updateBlogOnId(paginationUpdateBlog:PaginationTypeUpdateBlog):

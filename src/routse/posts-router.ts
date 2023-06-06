@@ -10,10 +10,11 @@ import {
 } from "../Models/InputValidation";
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {authUserIdentification} from "../Middleware/authUserIdentification";
-import { PostContainer } from "../composition-root";
-import { PostController } from "../Controllers/post-controller";
+import {Containers} from "../composition-root";
+import {PostController} from "../Controllers/post-controller";
 
-const postsController = PostContainer.resolve(PostController)
+
+const postsController = Containers.resolve(PostController)
 
 export const postsRouter = Router({});
 
