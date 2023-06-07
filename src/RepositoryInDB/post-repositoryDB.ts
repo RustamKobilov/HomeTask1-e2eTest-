@@ -108,7 +108,6 @@ export class PostRepository {
         }
     }
     async getPost(id: string): Promise<IPost | null> {
-       console.log(id)
         return await PostModel.findOne({id: id},{_id: 0, __v: 0})
     }
     async getPostForUser(postId: string, user:IUser): Promise<IPost | false> {

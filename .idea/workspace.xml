@@ -4,24 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="26/05/23 fix yakubovskogo.">
-      <change afterPath="$PROJECT_DIR$/src/Middleware/authUserIdentificationBasic.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="07/06/23 fix like for post yakubovskogo.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controllers/blog-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/blog-controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controllers/post-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/post-controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Middleware/authUserIdentification.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Middleware/authUserIdentificationBearer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/InputValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/InputValidation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/shemaAndModel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/shemaAndModel.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/comment-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/comment-repositoryDB.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/post-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/post-repositoryDB.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/blogService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/blogService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/postService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/postService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/blogs-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/blogs-router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/comments-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/comments-router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/posts-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/posts-router.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,10 +23,23 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="hometaskSprint3dz2WarWithMongoose" />
+        <entry key="$PROJECT_DIR$" value="hometaskSprint3dz3ClassAndLike" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="8681230c-0cf1-4ab2-a459-356d6c4d16d9" />
+        <option name="url" value="https://github.com/RustamKobilov/HomeTask1-e2eTest-.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/RepositoryInDB/user-repositoryDB.ts" root0="SKIP_INSPECTION" />
@@ -202,14 +200,7 @@
       <workItem from="1685010487308" duration="30826000" />
       <workItem from="1685442198850" duration="2065000" />
       <workItem from="1686131338418" duration="8762000" />
-      <workItem from="1686146466193" duration="11269000" />
-    </task>
-    <task id="LOCAL-00178" summary="api test 01.04.23">
-      <created>1680353569012</created>
-      <option name="number" value="00178" />
-      <option name="presentableId" value="LOCAL-00178" />
-      <option name="project" value="LOCAL" />
-      <updated>1680353569012</updated>
+      <workItem from="1686146466193" duration="12750000" />
     </task>
     <task id="LOCAL-00179" summary="api test 01.04.23">
       <created>1680354175557</created>
@@ -547,7 +538,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685443405270</updated>
     </task>
-    <option name="localTasksCounter" value="227" />
+    <task id="LOCAL-00227" summary="07/06/23 fix like for post yakubovskogo.">
+      <created>1686162147173</created>
+      <option name="number" value="00227" />
+      <option name="presentableId" value="LOCAL-00227" />
+      <option name="project" value="LOCAL" />
+      <updated>1686162147201</updated>
+    </task>
+    <option name="localTasksCounter" value="228" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -567,7 +565,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/hometaskSprint3dz3ClassAndLike" />
+                        <option value="origin/hometaskSprint3dz4LikePost3LastLike" />
                       </list>
                     </value>
                   </entry>
@@ -596,7 +594,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="28/02/23 hometask5." />
     <MESSAGE value="09/03/23 hometask5." />
     <MESSAGE value="09/03/23 test." />
     <MESSAGE value="11/03/23 fix code." />
@@ -621,6 +618,7 @@
     <MESSAGE value="24/05/23 fix controller yakubovskogo." />
     <MESSAGE value="25/05/23 fix pzadz yakubovskogo." />
     <MESSAGE value="26/05/23 fix yakubovskogo." />
-    <option name="LAST_COMMIT_MESSAGE" value="26/05/23 fix yakubovskogo." />
+    <MESSAGE value="07/06/23 fix like for post yakubovskogo." />
+    <option name="LAST_COMMIT_MESSAGE" value="07/06/23 fix like for post yakubovskogo." />
   </component>
 </project>
