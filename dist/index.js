@@ -9,10 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+require('dotenv').config();
 const app_1 = require("./app");
 const db_1 = require("./db");
 //
-const port = process.env.PORT || 3003;
+const port = process.env.PORT || 3005;
 const startApp = () => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, db_1.runDB)();
     app_1.app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {

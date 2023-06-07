@@ -4,14 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="27/01/23 mongodb finished.">
+    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="18/02/23 hometask5.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Middleware/authMiddleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Middleware/authMiddleware.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/InputValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/InputValidation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/posts-repositiryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/posts-repositiryDB.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/db.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/db.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/blogs-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/blogs-router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/posts-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/posts-router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/authService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/authService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/authRouter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/authRouter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/apiTest.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/apiTest.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,13 +32,16 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="develop" />
+        <entry key="$PROJECT_DIR$" value="hometaskSprint2dz2token" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2J2VHcp7Z3dVT9COTzuMKnFwF8t" />
   <component name="ProjectLevelVcsManager">
@@ -46,19 +53,14 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/it incubator/hometask1(e2eTest)/src/RepositoryInDB&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs.jest.jest_package&quot;: &quot;D:/it incubator/hometask1(e2eTest)/node_modules/jest&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\it incubator\\hometask1(e2eTest)\\node_modules\\typescript\\lib&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;D:/Inst/HomeTask1-e2eTest-/node_modules/jest&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\Inst\\HomeTask1-e2eTest-\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -67,51 +69,64 @@
       <recent name="D:\it incubator\hometask1(e2eTest)\src\RepositoryInDB" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\it incubator\hometask1(e2eTest)\dist" />
-      <recent name="D:\it incubator\hometask1(e2eTest)\src\Models" />
-      <recent name="D:\it incubator\hometask1(e2eTest)" />
-      <recent name="D:\it incubator\hometask1(e2eTest)\test" />
-      <recent name="D:\it incubator\hometask1(e2eTest)\src\routse" />
+      <recent name="D:\Inst\HomeTask1-e2eTest-" />
+      <recent name="D:\Inst\HomeTask1-e2eTest-\src" />
+      <recent name="D:\it incubator\hometask1(e2eTest)\src\application" />
+      <recent name="D:\it incubator\hometask1(e2eTest)\src\application " />
+      <recent name="D:\it incubator\hometask1(e2eTest)\src" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.dev">
-    <configuration name="/Posts" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Jest.auth/registration-confirmation test">
+    <configuration name="Auth test" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/test/apiTest.test.ts" />
+      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
       <test-names>
-        <test-name value="/Posts" />
+        <test-name value="Auth test" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="/Posts.blog POST on true" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="auth/registration-confirmation test" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
+      <test-names>
+        <test-name value="auth/registration-confirmation test" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="token realize" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
+      <test-names>
+        <test-name value="token realize" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="user add.user POST ADMIN checking create user" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/test/apiTest.test.ts" />
+      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
       <test-names>
-        <test-name value="/Posts" />
-        <test-name value="blog POST on true" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="/blogs GET (2)" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/test/apiTest.test.ts" />
-      <test-names>
-        <test-name value="/blogs GET" />
+        <test-name value="user add" />
+        <test-name value="user POST ADMIN checking create user" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -125,23 +140,13 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="watch" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="watch" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.auth/registration-confirmation test" />
+        <item itemvalue="Jest.Auth test" />
+        <item itemvalue="Jest.token realize" />
         <item itemvalue="npm.dev" />
-        <item itemvalue="npm.watch" />
-        <item itemvalue="Jest./Posts.blog POST on true" />
-        <item itemvalue="Jest./Posts" />
-        <item itemvalue="Jest./blogs GET (2)" />
+        <item itemvalue="Jest.user add.user POST ADMIN checking create user" />
       </list>
     </recent_temporary>
   </component>
@@ -160,360 +165,367 @@
       <workItem from="1673205002930" duration="3883000" />
       <workItem from="1673982536767" duration="75481000" />
       <workItem from="1674580719055" duration="13147000" />
+      <workItem from="1675601488154" duration="37535000" />
+      <workItem from="1675963750433" duration="27275000" />
+      <workItem from="1676224148921" duration="73089000" />
+      <workItem from="1676911176146" duration="4657000" />
+      <workItem from="1676920320701" duration="2775000" />
+      <workItem from="1678993986508" duration="39209000" />
+      <workItem from="1679420325600" duration="2720000" />
+      <workItem from="1679498886507" duration="7369000" />
+      <workItem from="1679670302193" duration="11061000" />
     </task>
-    <task id="LOCAL-00045" summary="08/01/23 blogs complete.">
-      <created>1673184807932</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
+    <task id="LOCAL-00111" summary="18/02/23 hometask5.">
+      <created>1676741850296</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
       <option name="project" value="LOCAL" />
-      <updated>1673184807932</updated>
+      <updated>1676741850296</updated>
     </task>
-    <task id="LOCAL-00046" summary="08/01/23 blogs complete.">
-      <created>1673185743745</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
+    <task id="LOCAL-00112" summary="18/02/23 hometask5.">
+      <created>1676742647406</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
       <option name="project" value="LOCAL" />
-      <updated>1673185743745</updated>
+      <updated>1676742647406</updated>
     </task>
-    <task id="LOCAL-00047" summary="08/01/23 blogs complete.">
-      <created>1673185941309</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
+    <task id="LOCAL-00113" summary="18/02/23 hometask5.">
+      <created>1676743144749</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
       <option name="project" value="LOCAL" />
-      <updated>1673185941310</updated>
+      <updated>1676743144749</updated>
     </task>
-    <task id="LOCAL-00048" summary="08/01/23 blogs complete.">
-      <created>1673186152381</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
+    <task id="LOCAL-00114" summary="18/02/23 hometask5.">
+      <created>1676745036984</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
       <option name="project" value="LOCAL" />
-      <updated>1673186152381</updated>
+      <updated>1676745036985</updated>
     </task>
-    <task id="LOCAL-00049" summary="08/01/23 blogs complete.">
-      <created>1673186374831</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
+    <task id="LOCAL-00115" summary="18/02/23 hometask5.">
+      <created>1676745262346</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
       <option name="project" value="LOCAL" />
-      <updated>1673186374831</updated>
+      <updated>1676745262346</updated>
     </task>
-    <task id="LOCAL-00050" summary="08/01/23 blogs complete.">
-      <created>1673186556250</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
+    <task id="LOCAL-00116" summary="18/02/23 hometask5.">
+      <created>1676745492274</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
       <option name="project" value="LOCAL" />
-      <updated>1673186556288</updated>
+      <updated>1676745492274</updated>
     </task>
-    <task id="LOCAL-00051" summary="08/01/23 blogs complete.">
-      <created>1673187998469</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
+    <task id="LOCAL-00117" summary="18/02/23 hometask5.">
+      <created>1676745505826</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
       <option name="project" value="LOCAL" />
-      <updated>1673187998469</updated>
+      <updated>1676745505826</updated>
     </task>
-    <task id="LOCAL-00052" summary="08/01/23 blogs complete.">
-      <created>1673188360355</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
+    <task id="LOCAL-00118" summary="18/02/23 hometask5.">
+      <created>1676746621210</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
       <option name="project" value="LOCAL" />
-      <updated>1673188360355</updated>
+      <updated>1676746621210</updated>
     </task>
-    <task id="LOCAL-00053" summary="08/01/23 blogs complete.">
-      <created>1673189018085</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
+    <task id="LOCAL-00119" summary="18/02/23 hometask5.">
+      <created>1676747436820</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
       <option name="project" value="LOCAL" />
-      <updated>1673189018085</updated>
+      <updated>1676747436820</updated>
     </task>
-    <task id="LOCAL-00054" summary="08/01/23 blogs complete.">
-      <created>1673189486582</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
+    <task id="LOCAL-00120" summary="18/02/23 hometask5.">
+      <created>1676801387741</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
       <option name="project" value="LOCAL" />
-      <updated>1673189486582</updated>
+      <updated>1676801387741</updated>
     </task>
-    <task id="LOCAL-00055" summary="08/01/23 blogs complete.">
-      <created>1673189921693</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
+    <task id="LOCAL-00121" summary="18/02/23 hometask5.">
+      <created>1676803048096</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
       <option name="project" value="LOCAL" />
-      <updated>1673189921693</updated>
+      <updated>1676803048096</updated>
     </task>
-    <task id="LOCAL-00056" summary="08/01/23 blogs complete.">
-      <created>1673192418688</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
+    <task id="LOCAL-00122" summary="18/02/23 hometask5.">
+      <created>1676804105183</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
       <option name="project" value="LOCAL" />
-      <updated>1673192418688</updated>
+      <updated>1676804105215</updated>
     </task>
-    <task id="LOCAL-00057" summary="08/01/23 blogs complete.">
-      <created>1673192620352</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
+    <task id="LOCAL-00123" summary="18/02/23 hometask5.">
+      <created>1676804633800</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
       <option name="project" value="LOCAL" />
-      <updated>1673192620352</updated>
+      <updated>1676804633800</updated>
     </task>
-    <task id="LOCAL-00058" summary="08/01/23 blogs complete.">
-      <created>1673192754287</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
+    <task id="LOCAL-00124" summary="18/02/23 hometask5.">
+      <created>1677606178137</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
       <option name="project" value="LOCAL" />
-      <updated>1673192754287</updated>
+      <updated>1677606178137</updated>
     </task>
-    <task id="LOCAL-00059" summary="08/01/23 blogs complete.">
-      <created>1673192951730</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
+    <task id="LOCAL-00125" summary="28/02/23 hometask5.">
+      <created>1677608144238</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
       <option name="project" value="LOCAL" />
-      <updated>1673192951730</updated>
+      <updated>1677608144238</updated>
     </task>
-    <task id="LOCAL-00060" summary="08/01/23 blogs complete.">
-      <created>1673193081271</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
+    <task id="LOCAL-00126" summary="28/02/23 hometask5.">
+      <created>1677609871203</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
       <option name="project" value="LOCAL" />
-      <updated>1673193081272</updated>
+      <updated>1677609871203</updated>
     </task>
-    <task id="LOCAL-00061" summary="24/01/23 local mongodb.">
-      <created>1674586671448</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
+    <task id="LOCAL-00127" summary="28/02/23 hometask5.">
+      <created>1677613265164</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
       <option name="project" value="LOCAL" />
-      <updated>1674586671449</updated>
+      <updated>1677613265164</updated>
     </task>
-    <task id="LOCAL-00062" summary="25/01/23 mongodb new branch.">
-      <created>1674677041704</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
+    <task id="LOCAL-00128" summary="28/02/23 hometask5.">
+      <created>1677613344426</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
       <option name="project" value="LOCAL" />
-      <updated>1674677041704</updated>
+      <updated>1677613344426</updated>
     </task>
-    <task id="LOCAL-00063" summary="25/01/23 mongodb new branch.">
-      <created>1674678487095</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
+    <task id="LOCAL-00129" summary="28/02/23 hometask5.">
+      <created>1677613870511</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
       <option name="project" value="LOCAL" />
-      <updated>1674678487096</updated>
+      <updated>1677613870511</updated>
     </task>
-    <task id="LOCAL-00064" summary="25/01/23 mongodb new branch.">
-      <created>1674679236451</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
+    <task id="LOCAL-00130" summary="28/02/23 hometask5.">
+      <created>1677614025779</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
       <option name="project" value="LOCAL" />
-      <updated>1674679236451</updated>
+      <updated>1677614025779</updated>
     </task>
-    <task id="LOCAL-00065" summary="25/01/23 mongodb new branch.">
-      <created>1674757758628</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
+    <task id="LOCAL-00131" summary="09/03/23 test.">
+      <created>1678376929373</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
       <option name="project" value="LOCAL" />
-      <updated>1674757758634</updated>
+      <updated>1678376929405</updated>
     </task>
-    <task id="LOCAL-00066" summary="25/01/23 mongodb new branch.">
-      <created>1674757939250</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
+    <task id="LOCAL-00132" summary="09/03/23 test.">
+      <created>1678378363263</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
       <option name="project" value="LOCAL" />
-      <updated>1674757939250</updated>
+      <updated>1678378363263</updated>
     </task>
-    <task id="LOCAL-00067" summary="25/01/23 mongodb new branch.">
-      <created>1674758858092</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
+    <task id="LOCAL-00133" summary="09/03/23 test.">
+      <created>1678380886855</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
       <option name="project" value="LOCAL" />
-      <updated>1674758858092</updated>
+      <updated>1678380886855</updated>
     </task>
-    <task id="LOCAL-00068" summary="27/01/23 mongodb finished.">
-      <created>1674856311891</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
+    <task id="LOCAL-00134" summary="09/03/23 test.">
+      <created>1678382484934</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
       <option name="project" value="LOCAL" />
-      <updated>1674856311891</updated>
+      <updated>1678382484934</updated>
     </task>
-    <task id="LOCAL-00069" summary="27/01/23 mongodb finished.">
-      <created>1674856973445</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
+    <task id="LOCAL-00135" summary="09/03/23 test.">
+      <created>1678383729385</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
       <option name="project" value="LOCAL" />
-      <updated>1674856973445</updated>
+      <updated>1678383729385</updated>
     </task>
-    <task id="LOCAL-00070" summary="27/01/23 mongodb finished.">
-      <created>1674857339812</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
+    <task id="LOCAL-00136" summary="09/03/23 test.">
+      <created>1678384303951</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
       <option name="project" value="LOCAL" />
-      <updated>1674857339812</updated>
+      <updated>1678384303951</updated>
     </task>
-    <task id="LOCAL-00071" summary="27/01/23 mongodb finished.">
-      <created>1674857835544</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
+    <task id="LOCAL-00137" summary="09/03/23 test.">
+      <created>1678479811324</created>
+      <option name="number" value="00137" />
+      <option name="presentableId" value="LOCAL-00137" />
       <option name="project" value="LOCAL" />
-      <updated>1674857835544</updated>
+      <updated>1678479811324</updated>
     </task>
-    <task id="LOCAL-00072" summary="27/01/23 mongodb finished.">
-      <created>1674858125538</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
+    <task id="LOCAL-00138" summary="09/03/23 test.">
+      <created>1678480768284</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
       <option name="project" value="LOCAL" />
-      <updated>1674858125538</updated>
+      <updated>1678480768284</updated>
     </task>
-    <task id="LOCAL-00073" summary="27/01/23 mongodb finished.">
-      <created>1674914310607</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
+    <task id="LOCAL-00139" summary="09/03/23 test.">
+      <created>1678524806155</created>
+      <option name="number" value="00139" />
+      <option name="presentableId" value="LOCAL-00139" />
       <option name="project" value="LOCAL" />
-      <updated>1674914310607</updated>
+      <updated>1678524806155</updated>
     </task>
-    <task id="LOCAL-00074" summary="27/01/23 mongodb finished.">
-      <created>1674914755941</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
+    <task id="LOCAL-00140" summary="11/03/23 fix code.">
+      <created>1678525323249</created>
+      <option name="number" value="00140" />
+      <option name="presentableId" value="LOCAL-00140" />
       <option name="project" value="LOCAL" />
-      <updated>1674914755941</updated>
+      <updated>1678525323249</updated>
     </task>
-    <task id="LOCAL-00075" summary="27/01/23 mongodb finished.">
-      <created>1674915373916</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
+    <task id="LOCAL-00141" summary="11/03/23 fix code.">
+      <created>1678525774125</created>
+      <option name="number" value="00141" />
+      <option name="presentableId" value="LOCAL-00141" />
       <option name="project" value="LOCAL" />
-      <updated>1674915373916</updated>
+      <updated>1678525774125</updated>
     </task>
-    <task id="LOCAL-00076" summary="27/01/23 mongodb finished.">
-      <created>1674920107680</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
+    <task id="LOCAL-00142" summary="11/03/23 fix code.">
+      <created>1678527194063</created>
+      <option name="number" value="00142" />
+      <option name="presentableId" value="LOCAL-00142" />
       <option name="project" value="LOCAL" />
-      <updated>1674920107680</updated>
+      <updated>1678527194063</updated>
     </task>
-    <task id="LOCAL-00077" summary="27/01/23 mongodb finished.">
-      <created>1674921108948</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
+    <task id="LOCAL-00143" summary="11/03/23 fix code.">
+      <created>1678527891437</created>
+      <option name="number" value="00143" />
+      <option name="presentableId" value="LOCAL-00143" />
       <option name="project" value="LOCAL" />
-      <updated>1674921108948</updated>
+      <updated>1678527891437</updated>
     </task>
-    <task id="LOCAL-00078" summary="27/01/23 mongodb finished.">
-      <created>1674924963017</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
+    <task id="LOCAL-00144" summary="11/03/23 fix code.">
+      <created>1678528687779</created>
+      <option name="number" value="00144" />
+      <option name="presentableId" value="LOCAL-00144" />
       <option name="project" value="LOCAL" />
-      <updated>1674924963017</updated>
+      <updated>1678528687779</updated>
     </task>
-    <task id="LOCAL-00079" summary="27/01/23 mongodb finished.">
-      <created>1674926648368</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
+    <task id="LOCAL-00145" summary="11/03/23 fix code.">
+      <created>1678530459280</created>
+      <option name="number" value="00145" />
+      <option name="presentableId" value="LOCAL-00145" />
       <option name="project" value="LOCAL" />
-      <updated>1674926648368</updated>
+      <updated>1678530459280</updated>
     </task>
-    <task id="LOCAL-00080" summary="27/01/23 mongodb finished.">
-      <created>1674927467437</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
+    <task id="LOCAL-00146" summary="11/03/23 fix code.">
+      <created>1678530821007</created>
+      <option name="number" value="00146" />
+      <option name="presentableId" value="LOCAL-00146" />
       <option name="project" value="LOCAL" />
-      <updated>1674927467437</updated>
+      <updated>1678530821007</updated>
     </task>
-    <task id="LOCAL-00081" summary="27/01/23 mongodb finished.">
-      <created>1674927744838</created>
-      <option name="number" value="00081" />
-      <option name="presentableId" value="LOCAL-00081" />
+    <task id="LOCAL-00147" summary="11/03/23 fix code.">
+      <created>1678532766455</created>
+      <option name="number" value="00147" />
+      <option name="presentableId" value="LOCAL-00147" />
       <option name="project" value="LOCAL" />
-      <updated>1674927744838</updated>
+      <updated>1678532766455</updated>
     </task>
-    <task id="LOCAL-00082" summary="27/01/23 mongodb finished.">
-      <created>1674929077686</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
+    <task id="LOCAL-00148" summary="18/03/23 email send.">
+      <created>1679127219815</created>
+      <option name="number" value="00148" />
+      <option name="presentableId" value="LOCAL-00148" />
       <option name="project" value="LOCAL" />
-      <updated>1674929077686</updated>
+      <updated>1679127219889</updated>
     </task>
-    <task id="LOCAL-00083" summary="27/01/23 mongodb finished.">
-      <created>1674930282771</created>
-      <option name="number" value="00083" />
-      <option name="presentableId" value="LOCAL-00083" />
+    <task id="LOCAL-00149" summary="18/03/23 email send.">
+      <created>1679128859250</created>
+      <option name="number" value="00149" />
+      <option name="presentableId" value="LOCAL-00149" />
       <option name="project" value="LOCAL" />
-      <updated>1674930282771</updated>
+      <updated>1679128859250</updated>
     </task>
-    <task id="LOCAL-00084" summary="27/01/23 mongodb finished.">
-      <created>1674930397657</created>
-      <option name="number" value="00084" />
-      <option name="presentableId" value="LOCAL-00084" />
+    <task id="LOCAL-00150" summary="18/03/23 email send.">
+      <created>1679133782593</created>
+      <option name="number" value="00150" />
+      <option name="presentableId" value="LOCAL-00150" />
       <option name="project" value="LOCAL" />
-      <updated>1674930397657</updated>
+      <updated>1679133782593</updated>
     </task>
-    <task id="LOCAL-00085" summary="27/01/23 mongodb finished.">
-      <created>1674980113657</created>
-      <option name="number" value="00085" />
-      <option name="presentableId" value="LOCAL-00085" />
+    <task id="LOCAL-00151" summary="18/03/23 email send.">
+      <created>1679134782081</created>
+      <option name="number" value="00151" />
+      <option name="presentableId" value="LOCAL-00151" />
       <option name="project" value="LOCAL" />
-      <updated>1674980113657</updated>
+      <updated>1679134782081</updated>
     </task>
-    <task id="LOCAL-00086" summary="27/01/23 mongodb finished.">
-      <created>1674982252319</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
+    <task id="LOCAL-00152" summary="18/03/23 email send.">
+      <created>1679135280201</created>
+      <option name="number" value="00152" />
+      <option name="presentableId" value="LOCAL-00152" />
       <option name="project" value="LOCAL" />
-      <updated>1674982252319</updated>
+      <updated>1679135280201</updated>
     </task>
-    <task id="LOCAL-00087" summary="27/01/23 mongodb finished.">
-      <created>1674983172784</created>
-      <option name="number" value="00087" />
-      <option name="presentableId" value="LOCAL-00087" />
+    <task id="LOCAL-00153" summary="18/03/23 email send.">
+      <created>1679139243835</created>
+      <option name="number" value="00153" />
+      <option name="presentableId" value="LOCAL-00153" />
       <option name="project" value="LOCAL" />
-      <updated>1674983172784</updated>
+      <updated>1679139243835</updated>
     </task>
-    <task id="LOCAL-00088" summary="27/01/23 mongodb finished.">
-      <created>1674983445987</created>
-      <option name="number" value="00088" />
-      <option name="presentableId" value="LOCAL-00088" />
+    <task id="LOCAL-00154" summary="18/03/23 email send.">
+      <created>1679142481435</created>
+      <option name="number" value="00154" />
+      <option name="presentableId" value="LOCAL-00154" />
       <option name="project" value="LOCAL" />
-      <updated>1674983445987</updated>
+      <updated>1679142481452</updated>
     </task>
-    <task id="LOCAL-00089" summary="27/01/23 mongodb finished.">
-      <created>1674984583631</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
+    <task id="LOCAL-00155" summary="18/03/23 email send.">
+      <created>1679144680872</created>
+      <option name="number" value="00155" />
+      <option name="presentableId" value="LOCAL-00155" />
       <option name="project" value="LOCAL" />
-      <updated>1674984583631</updated>
+      <updated>1679144680872</updated>
     </task>
-    <task id="LOCAL-00090" summary="27/01/23 mongodb finished.">
-      <created>1674984904931</created>
-      <option name="number" value="00090" />
-      <option name="presentableId" value="LOCAL-00090" />
+    <task id="LOCAL-00156" summary="18/03/23 email send.">
+      <created>1679145753277</created>
+      <option name="number" value="00156" />
+      <option name="presentableId" value="LOCAL-00156" />
       <option name="project" value="LOCAL" />
-      <updated>1674984904931</updated>
+      <updated>1679145753277</updated>
     </task>
-    <task id="LOCAL-00091" summary="27/01/23 mongodb finished.">
-      <created>1674985134362</created>
-      <option name="number" value="00091" />
-      <option name="presentableId" value="LOCAL-00091" />
+    <task id="LOCAL-00157" summary="18/03/23 email send.">
+      <created>1679147088111</created>
+      <option name="number" value="00157" />
+      <option name="presentableId" value="LOCAL-00157" />
       <option name="project" value="LOCAL" />
-      <updated>1674985134362</updated>
+      <updated>1679147088111</updated>
     </task>
-    <task id="LOCAL-00092" summary="27/01/23 mongodb finished.">
-      <created>1674985852543</created>
-      <option name="number" value="00092" />
-      <option name="presentableId" value="LOCAL-00092" />
+    <task id="LOCAL-00158" summary="18/03/23 email send.">
+      <created>1679147807285</created>
+      <option name="number" value="00158" />
+      <option name="presentableId" value="LOCAL-00158" />
       <option name="project" value="LOCAL" />
-      <updated>1674985852543</updated>
+      <updated>1679147807285</updated>
     </task>
-    <task id="LOCAL-00093" summary="27/01/23 mongodb finished.">
-      <created>1674986720419</created>
-      <option name="number" value="00093" />
-      <option name="presentableId" value="LOCAL-00093" />
+    <task id="LOCAL-00159" summary="18/03/23 email send.">
+      <created>1679148762700</created>
+      <option name="number" value="00159" />
+      <option name="presentableId" value="LOCAL-00159" />
       <option name="project" value="LOCAL" />
-      <updated>1674986720419</updated>
+      <updated>1679148762700</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <option name="localTasksCounter" value="160" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-    <option name="exactExcludedFiles">
-      <list>
-        <option value="$PROJECT_DIR$/test/apiTest.test.js" />
-      </list>
-    </option>
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -536,6 +548,14 @@
     <MESSAGE value="24/01/23 local mongodb." />
     <MESSAGE value="25/01/23 mongodb new branch." />
     <MESSAGE value="27/01/23 mongodb finished." />
-    <option name="LAST_COMMIT_MESSAGE" value="27/01/23 mongodb finished." />
+    <MESSAGE value="11/02/23 finish hometask4." />
+    <MESSAGE value="16/02/23 hometask5." />
+    <MESSAGE value="18/02/23 hometask5." />
+    <MESSAGE value="28/02/23 hometask5." />
+    <MESSAGE value="09/03/23 hometask5." />
+    <MESSAGE value="09/03/23 test." />
+    <MESSAGE value="11/03/23 fix code." />
+    <MESSAGE value="18/03/23 email send." />
+    <option name="LAST_COMMIT_MESSAGE" value="18/03/23 email send." />
   </component>
 </project>
