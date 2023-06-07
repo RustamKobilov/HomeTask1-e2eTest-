@@ -54,6 +54,34 @@ const ReactionSchema = new mongoose.Schema<IReaction>({
 
 export const ReactionModel = mongoose.model<IReaction>(reactionCollectionName, ReactionSchema)
 
+// export interface INewestLikes {
+//     addedAt: string,
+//     userId: string,
+//     login: string
+// }
+//
+// const NewestLikesSchema = new mongoose.Schema<INewestLikes>({
+//     addedAt: {type: String, required: true},
+//     userId: {type: String, required: true},
+//     login: {type: String, required: true}
+// },{ versionKey: false , _id:false})
+
+
+export interface IExtendedLikesInfo {
+    likesCount: number,
+    dislikesCount: number,
+    myStatus: likeStatus,
+    newestLikes: IReaction[]
+}
+
+const extendedLikesInfoSchema = new mongoose.Schema<IExtendedLikesInfo>({
+    likesCount:{type: Number, required: true},
+    dislikesCount:{type: Number, required: true},
+    myStatus:{type: String, enum: likeStatus,required: true},
+    newestLikes: {type: [ReactionSchema], required: true}
+
+},{ versionKey: false, _id:false })
+
 
 
 export interface IPost {
@@ -64,6 +92,7 @@ export interface IPost {
     blogId: string,
     blogName: string,
     createdAt: string,
+    extendedLikesInfo:IExtendedLikesInfo
 }
 
 const postSchema = new mongoose.Schema<IPost>({
@@ -73,7 +102,8 @@ const postSchema = new mongoose.Schema<IPost>({
     content: {type: String, required: true},
     blogId: {type: String, required: true},
     blogName: {type: String, required: true},
-    createdAt: {type: String, required: true}
+    createdAt: {type: String, required: true},
+    extendedLikesInfo: {type: extendedLikesInfoSchema, required: true}
 },{ versionKey: false, _id:false })
 
 export const PostModel = mongoose.model(postCollectionName, postSchema)

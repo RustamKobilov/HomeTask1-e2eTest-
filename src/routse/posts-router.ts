@@ -9,8 +9,12 @@ import {
     updatePostValidation
 } from "../Models/InputValidation";
 import {authMiddleware} from "../Middleware/authMiddleware";
-import {postsController} from "../composition-root";
 import {authUserIdentification} from "../Middleware/authUserIdentification";
+import {Containers} from "../composition-root";
+import {PostController} from "../Controllers/post-controller";
+
+
+const postsController = Containers.resolve(PostController)
 
 export const postsRouter = Router({});
 

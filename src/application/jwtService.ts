@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 import {settings} from "../settings";
 import {DeviceModel} from "../Models/shemaAndModel";
 import {UserInformationType} from "../Controllers/device-controller";
+import {injectable} from "inversify";
 
 
 // export type ActiveSessionsType ={
@@ -16,6 +17,7 @@ import {UserInformationType} from "../Controllers/device-controller";
 //     ip:string
 // }
 
+@injectable()
 export class JwtService{
     async createAccessTokenJWT(userId: string) {
             let accessToken = jwt.sign({userId: userId}, settings.JWT_Service, {expiresIn: '300000s'})

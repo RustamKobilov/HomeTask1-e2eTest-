@@ -10,7 +10,11 @@ import {
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {authRefreshToken} from "../Middleware/authRefreshToken";
 import {authAttemptLimit} from "../Middleware/authAttemptLimit";
-import {authControllers} from "../composition-root";
+import { Containers } from "../composition-root";
+import { AuthController } from "../Controllers/auth-controller";
+
+
+const authControllers = Containers.resolve(AuthController)
 
 export const authRouter=Router({})
 

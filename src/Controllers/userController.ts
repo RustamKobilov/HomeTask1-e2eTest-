@@ -2,6 +2,7 @@ import {Router,Request,Response} from "express";
 
 import {UserService} from "../Service/userService";
 import {PaginationTypeAddNewUser, PaginationTypeInputUser} from "../RepositoryInDB/user-repositoryDB";
+import { inject, injectable } from "inversify";
 
 export const getPaginationValuesUser = (query:any): PaginationTypeInputUser=>{
     return {
@@ -22,9 +23,10 @@ export const getPaginationValuesAddNewUser = (body:any):PaginationTypeAddNewUser
     }
 }
 
+@injectable()
 export class UserController{
 
-    constructor(protected userService : UserService) {}
+    constructor(@inject(UserService) protected userService : UserService) {}
     async getUsers(req: Request, res: Response) {
         const paginationResult = getPaginationValuesUser(req.query)
         const resultAllUsers = await this.userService.getAllUsers(paginationResult)

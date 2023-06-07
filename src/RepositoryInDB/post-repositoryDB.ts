@@ -1,6 +1,8 @@
 import { helper} from "../Service/helper";
-import {BlogModel, PostModel} from "../Models/shemaAndModel";
+import {BlogModel, IPost, IReaction, PostModel} from "../Models/shemaAndModel";
 import {Blog} from "./blog-repositoryDB";
+import { injectable } from "inversify";
+import {likeStatus} from "../Models/Enums";
 
 export class Post {
     constructor(public id: string,
@@ -9,9 +11,15 @@ export class Post {
                 public content: string,
                 public blogId: string,
                 public blogName: string,
-                public createdAt: string) {
-    }
+                public createdAt: string,
+                public extendedLikesInfo: LikesInfoPosts
+    ) {}
 }
+
+export class LikesInfoPosts {
+    constructor (public likesCount :  number, public dislikesCount  : number, public myStatus :  likeStatus, public newestLikes: IReaction []=[] ){}
+}
+
 
 export type inputSortDataBaseType<T> = {
 
@@ -48,8 +56,9 @@ export type PaginationTypePostInputCommentByPost={
     sortDirection: 1|-1
 }
 
+@injectable()
 export class PostRepository {
-   async getPosts(paginationPosts: PaginationTypeInputPosts): Promise<inputSortDataBaseType<Post>> {
+   async getPosts(paginationPosts: PaginationTypeInputPosts): Promise<inputSortDataBaseType<IPost>> {
 
         const pagesCountBlog = await PostModel.countDocuments({});
 
@@ -63,7 +72,7 @@ export class PostRepository {
             totalCount: pagesCountBlog, items: posts
         };
     }
-    async findPost(id: string): Promise<Post | null> {
+    async findPost(id: string): Promise<IPost | null> {
         let post = await PostModel.findOne({id: id},{_id: 0, __v: 0});
         return post;
     }
@@ -81,19 +90,9 @@ export class PostRepository {
     }
     async findBlogName(id: string): Promise<Blog | null> {
         return BlogModel.findOne({id:id},{_id: 0, __v: 0});
-
     }
-    async createPost(resultCreatePost:Post):
-        Promise<Post> {
-
-        await PostModel.insertMany(resultCreatePost);
-
-        return ({
-            id: resultCreatePost.id, title: resultCreatePost.title,
-            shortDescription: resultCreatePost.shortDescription, content: resultCreatePost.content,
-            blogId: resultCreatePost.blogId, blogName: resultCreatePost.blogName, createdAt: resultCreatePost.createdAt
-        })
-
+    async createPost(post:IPost){
+        await PostModel.insertMany(post);
     }
 }
 

@@ -4,10 +4,11 @@ import {
     PaginationTypeInputPostValueForPost,
     PaginationTypePostInputCommentByPost
 } from "../RepositoryInDB/post-repositoryDB";
-import {PostService} from "../Service/postService";
 import {CommentService} from "../Service/commentsService";
 import {Request, Response} from "express";
 import {PostModel} from "../Models/shemaAndModel";
+import {inject, injectable } from "inversify";
+import {PostService} from "../Service/postService";
 
 export const getPaginationValuesPosts = (query: any): PaginationTypeInputPosts => {
     return {
@@ -40,8 +41,10 @@ export const getPaginationPostCommentForPost = (params: any, body: any): Paginat
     }
 }
 
+@injectable()
 export class PostController {
-    constructor(protected postService: PostService, protected commentService: CommentService) {
+    constructor(@inject(PostService) protected postService: PostService,
+                @inject(CommentService) protected commentService: CommentService) {
     }
 
     async getPosts(req: Request, res: Response) {
@@ -52,13 +55,15 @@ export class PostController {
 
     async createPost(req: Request, res: Response) {
         const resultPagination = getPaginationPostValueForPost(req.body)
-        const resultCreatePost = await this.postService.createPostOnId(resultPagination, req.body.blogId)
+        const user = req.user!
+        const addCreatePostbyBlog = await this.postService.createPostOnId(resultPagination, req.body.blogId)//return id new comment
 
-        if (!resultCreatePost) {
+        if (!addCreatePostbyBlog) {
             return res.sendStatus(404);
         }
+        const newCommentByPost = await this.postService.findPostOnId(addCreatePostbyBlog)
 
-        res.status(201).send(resultCreatePost)
+        res.status(201).send(newCommentByPost)
     }
 
     async getPost(req: Request, res: Response) {

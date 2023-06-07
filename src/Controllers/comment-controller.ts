@@ -6,6 +6,7 @@ import {
 import {CommentService} from "../Service/commentsService";
 import {Request, Response} from "express";
 import {CommentModel} from "../Models/shemaAndModel";
+import {inject, injectable } from "inversify";
 
 
 export const getPaginationUpdateComment = (params: any, body: any): UpdateCommentType => {
@@ -20,10 +21,10 @@ const getPaginationDeleteCommentById = (params: any): InputCommentByIdType => {
     }
 }
 
-
+@injectable()
 export class CommentController {
 
-    constructor(protected commentService: CommentService) {
+    constructor(@inject(CommentService) protected commentService: CommentService) {
     }
 
     async getComment(req: Request, res: Response) {

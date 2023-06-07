@@ -1,3 +1,4 @@
+import { injectable } from "inversify";
 import {DeviceModel} from "../Models/shemaAndModel";
 
 export class Device {
@@ -8,6 +9,7 @@ export class Device {
                 public ip: string) {}
 }
 
+@injectable()
 export class DeviceRepository{
     async getDevices(userPayload:any):Promise<Device>{
         return await DeviceModel.find({userId: userPayload.userId}, {_id: 0, __v: 0}).lean()

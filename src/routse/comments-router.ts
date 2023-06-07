@@ -2,8 +2,12 @@ import {Router} from "express";
 import {postCommentForPostValidation, updateLikeStatus} from "../Models/InputValidation";
 import {authMiddleware} from "../Middleware/authMiddleware";
 import {authCommentUser} from "../Middleware/authCommentUser";
-import {commentsController} from "../composition-root";
 import {authUserIdentification} from "../Middleware/authUserIdentification";
+import { CommentController } from "../Controllers/comment-controller";
+import { Containers } from "../composition-root";
+
+
+const commentsController = Containers.resolve(CommentController)
 
 export const commentsRouter=Router({})
 

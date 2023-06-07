@@ -4,6 +4,7 @@ import {PostService} from "../Service/postService";
 import {Request, Response} from "express";
 import {BlogModel} from "../Models/shemaAndModel";
 import {getPaginationPostValueForPost, getPaginationValuesPosts} from "./post-controller";
+import {inject, injectable } from "inversify";
 
 const getPaginationValuesBlogs = (query: any): PaginationTypeInputParamsBlogs => {
     return {
@@ -23,9 +24,10 @@ const getPaginationValuesUpdateBlog = (body: any, params: any): PaginationTypeUp
     }
 }
 
+@injectable()
 export class BlogController {
-    constructor(protected blogsService: BlogService,
-                protected postsService: PostService) {
+    constructor(@inject(BlogService) protected blogsService: BlogService,
+                @inject(PostService) protected postsService: PostService) {
     }
 
     async getBlogs(req: Request, res: Response) {
