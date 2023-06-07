@@ -114,8 +114,8 @@ const checkLikeStatus=body("likeStatus").custom((v ) => {
 })
 
 
-export const createPostValidation = [checkPostTitle, checkPostShortDescription, checkPostContent, checkPostBlogId]
-export const updatePostValidation = [...createPostValidation]
+export const createPostValidation = [checkPostTitle, checkPostShortDescription, checkPostContent, checkPostBlogId,errorMessagesInputValidation]
+export const updatePostValidation = [...createPostValidation,errorMessagesInputValidation]
 export const getPostForBlogsValidation = [checkPageNumber, checkPageSize, checkSortBy, checkSortDirection]
 export const postPostForBlogsValidation=[checkPageNumber, checkPageSize, checkSortBy, checkSortDirection, checkPostTitle, checkPostShortDescription, checkPostContent]
 export const getBlogsValidation = [checkSearchNameTerm, checkPageNumber, checkPageSize, checkSortBy, checkSortDirection]

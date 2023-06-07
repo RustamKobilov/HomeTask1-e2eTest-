@@ -10,6 +10,7 @@ import {
     postPostForBlogsValidation,
     updateBlogValidation
 } from "../Models/InputValidation";
+import {authUserIdentificationBearer} from "../Middleware/authUserIdentificationBearer";
 
 
 const blogsController = Containers.resolve(BlogController)
@@ -21,7 +22,7 @@ blogsRouter.get('/', getBlogsValidation, blogsController.getBlogs.bind(blogsCont
 
 blogsRouter.post('/', basicAuthMiddleware, createBlogValidation, errorMessagesInputValidation, blogsController.createBlog.bind(blogsController))
 
-blogsRouter.get('/:id/posts', getPostForBlogsValidation, errorMessagesInputValidation, blogsController.getPostForBlog.bind(blogsController))
+blogsRouter.get('/:id/posts', getPostForBlogsValidation, authUserIdentificationBearer, errorMessagesInputValidation, blogsController.getPostForBlog.bind(blogsController))
 
 blogsRouter.post('/:id/posts', basicAuthMiddleware, postPostForBlogsValidation, errorMessagesInputValidation, blogsController.createPostForBlog.bind(blogsController))
 

@@ -54,31 +54,31 @@ const ReactionSchema = new mongoose.Schema<IReaction>({
 
 export const ReactionModel = mongoose.model<IReaction>(reactionCollectionName, ReactionSchema)
 
-// export interface INewestLikes {
-//     addedAt: string,
-//     userId: string,
-//     login: string
-// }
-//
-// const NewestLikesSchema = new mongoose.Schema<INewestLikes>({
-//     addedAt: {type: String, required: true},
-//     userId: {type: String, required: true},
-//     login: {type: String, required: true}
-// },{ versionKey: false , _id:false})
+export interface INewestLikes {
+    addedAt: string,
+    userId: string,
+    login: string
+}
+
+const NewestLikesSchema = new mongoose.Schema<INewestLikes>({
+    addedAt: {type: String, required: true},
+    userId: {type: String, required: true},
+    login: {type: String, required: true}
+},{ versionKey: false , _id:false})
 
 
 export interface IExtendedLikesInfo {
     likesCount: number,
     dislikesCount: number,
     myStatus: likeStatus,
-    newestLikes: IReaction[]
+    newestLikes: INewestLikes[]
 }
 
 const extendedLikesInfoSchema = new mongoose.Schema<IExtendedLikesInfo>({
     likesCount:{type: Number, required: true},
     dislikesCount:{type: Number, required: true},
     myStatus:{type: String, enum: likeStatus,required: true},
-    newestLikes: {type: [ReactionSchema], required: true}
+    newestLikes: {type: [NewestLikesSchema], required: true}
 
 },{ versionKey: false, _id:false })
 

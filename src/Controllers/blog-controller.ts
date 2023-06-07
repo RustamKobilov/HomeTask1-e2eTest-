@@ -1,4 +1,4 @@
-import {PaginationTypeInputParamsBlogs, PaginationTypeUpdateBlog} from "../RepositoryInDB/blog-repositoryDB";
+import {Blog, PaginationTypeInputParamsBlogs, PaginationTypeUpdateBlog} from "../RepositoryInDB/blog-repositoryDB";
 import {BlogService} from "../Service/blogService";
 import {PostService} from "../Service/postService";
 import {Request, Response} from "express";
@@ -40,30 +40,31 @@ export class BlogController {
         const nameNewBlog = req.body.name;
         const descriptionNewBlog = req.body.description;
         const websiteUrlNewBlog = req.body.websiteUrl;
-        const resultCreatBlog = await this.blogsService.createBlog(nameNewBlog, descriptionNewBlog, websiteUrlNewBlog)
+        const idCreatBlog = await this.blogsService.createBlog(nameNewBlog, descriptionNewBlog, websiteUrlNewBlog)
+        const newBlog = await this.blogsService.findBlogOnId(idCreatBlog)
+        if(!newBlog){
+            return res.sendStatus(404);
+        }
 
-        await BlogModel.insertMany(resultCreatBlog);
-        return res.status(201).send({
-            id: resultCreatBlog.id,
-            name: resultCreatBlog.name,
-            description: resultCreatBlog.description,
-            websiteUrl: resultCreatBlog.websiteUrl,
-            createdAt: resultCreatBlog.createdAt,
-            isMembership: resultCreatBlog.isMembership
-        })
+        return res.status(201).send(newBlog)
     }
 
     async getPostForBlog(req: Request, res: Response) {
         const blogId = req.params.id;
+        console.log(blogId)
         const paginationResult = getPaginationValuesPosts(req.query)
         const searchBlog = await this.blogsService.findBlogOnId(blogId)
-        if (searchBlog == null) {
-            return res.sendStatus(404);
+        if (!searchBlog) {
+            return res.sendStatus(404)
         }
-        const getAllPostsForBLog = await this.blogsService.getAllPostsForBlogInBase(paginationResult, blogId)
-
-        return res.status(200).send(getAllPostsForBLog);
-
+        if(!req.user) {
+            console.log('tyt1')
+            const getAllPostsForBLog = await this.blogsService.getPostsForBlog(paginationResult, blogId)
+            return res.status(200).send(getAllPostsForBLog)
+        }
+        console.log('tyt2')
+        const getAllPostsForBLogbyUser = await this.blogsService.getPostsForBlogbyUser(paginationResult, blogId,req.user)
+        return res.status(200).send(getAllPostsForBLogbyUser)
     }
 
     async createPostForBlog(req: Request, res: Response) {
@@ -72,10 +73,13 @@ export class BlogController {
         const resultCreatePost = await this.postsService.createPostOnId(paginationResult, blogId)
         console.log(resultCreatePost)
         if (!resultCreatePost) {
-            return res.sendStatus(404);
+            return res.sendStatus(404)
         }
-
-        res.status(201).send(resultCreatePost)
+        const newPost = await this.postsService.getPost(resultCreatePost)
+        if (!newPost) {
+            return res.sendStatus(404)
+        }
+        res.status(201).send(newPost)
     }
 
     async getBlog(req: Request, res: Response) {

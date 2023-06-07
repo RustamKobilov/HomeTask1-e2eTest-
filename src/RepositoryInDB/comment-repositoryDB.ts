@@ -73,7 +73,6 @@ export class CommentRepository {
     }
 
     async getComment(id: string, ): Promise<any> {
-        console.log('baza')
         return CommentModel.findOne({id: id}, {postId: false,_id:false})
     }
     async getCommentForUser(commentId: string, user:IUser): Promise<OutputCommentOutputType|false> {

@@ -4,7 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="26/05/23 fix yakubovskogo." />
+    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="26/05/23 fix yakubovskogo.">
+      <change afterPath="$PROJECT_DIR$/src/Middleware/authUserIdentificationBasic.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controllers/blog-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/blog-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controllers/post-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/post-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Middleware/authUserIdentification.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Middleware/authUserIdentificationBearer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/InputValidation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/InputValidation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/shemaAndModel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/shemaAndModel.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/comment-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/comment-repositoryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/post-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/post-repositoryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/blogService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/blogService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/postService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/postService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/blogs-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/blogs-router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/comments-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/comments-router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/posts-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/posts-router.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,13 +64,14 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/it incubator/hometask1(e2eTest)&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Inst/HomeTask1-e2eTest-&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs.jest.jest_package&quot;: &quot;D:/it incubator/hometask1(e2eTest)/node_modules/jest&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
     &quot;ts.external.directory.path&quot;: &quot;D:\\Inst\\HomeTask1-e2eTest-\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -139,8 +158,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.dev" />
         <item itemvalue="npm.watch" />
+        <item itemvalue="npm.dev" />
         <item itemvalue="Jest.Output model checking(byBlogs) true.sortBy checking query params true" />
         <item itemvalue="Jest.auth/registration test" />
         <item itemvalue="Jest.auth/registration-confirmation test" />
@@ -181,14 +200,9 @@
       <workItem from="1684761759598" duration="10079000" />
       <workItem from="1684917448623" duration="24202000" />
       <workItem from="1685010487308" duration="30826000" />
-      <workItem from="1685442198850" duration="1051000" />
-    </task>
-    <task id="LOCAL-00177" summary="api test 01.04.23">
-      <created>1680352140823</created>
-      <option name="number" value="00177" />
-      <option name="presentableId" value="LOCAL-00177" />
-      <option name="project" value="LOCAL" />
-      <updated>1680352140823</updated>
+      <workItem from="1685442198850" duration="2065000" />
+      <workItem from="1686131338418" duration="8762000" />
+      <workItem from="1686146466193" duration="11269000" />
     </task>
     <task id="LOCAL-00178" summary="api test 01.04.23">
       <created>1680353569012</created>
@@ -526,7 +540,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685110613509</updated>
     </task>
-    <option name="localTasksCounter" value="226" />
+    <task id="LOCAL-00226" summary="26/05/23 fix yakubovskogo.">
+      <created>1685443405270</created>
+      <option name="number" value="00226" />
+      <option name="presentableId" value="LOCAL-00226" />
+      <option name="project" value="LOCAL" />
+      <updated>1685443405270</updated>
+    </task>
+    <option name="localTasksCounter" value="227" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

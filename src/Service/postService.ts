@@ -7,7 +7,7 @@ import {
     PostRepository,
 } from "../RepositoryInDB/post-repositoryDB";
 import {likeStatus} from "../Models/Enums";
-import {IPost, IReaction} from "../Models/shemaAndModel";
+import {IPost, IReaction, IUser} from "../Models/shemaAndModel";
 import {inject, injectable} from "inversify";
 
 
@@ -27,15 +27,23 @@ export class PostService {
     async getAllPosts(paginationPosts: PaginationTypeInputPosts): Promise<inputSortDataBaseType<Post>> {
         return await this.postsRepository.getPosts(paginationPosts)
     }
-    async findPostOnId(id: string): Promise<Post | null> {
-        return await this.postsRepository.findPost(id)
+    async getAllPostsForUser(paginationPosts: PaginationTypeInputPosts, user:IUser): Promise<inputSortDataBaseType<Post>> {
+
+        return await this.postsRepository.getPostsForUser(paginationPosts,user)
+    }
+
+    async getPost(id: string): Promise<IPost | null> {
+        return await this.postsRepository.getPost(id)
+    }
+    async getPostForUser(id: string,user:IUser): Promise<Post | false> {
+        return await this.postsRepository.getPostForUser(id,user)
     }
 
     //aggregate root
     async createPost(titleNewPost: string, shortDescriptionNewPost: string, contentNewPost: string,
                      blogIdForPost: string, blogNameForPost: string): Promise<string> {
         const idNewPost = randomUUID();
-        const postsLikesInfo:LikesInfoPosts = new LikesInfoPosts(0,0,likeStatus.None,)
+        const postsLikesInfo:LikesInfoPosts = new LikesInfoPosts(0,0,likeStatus.None)
 
         const newPost: IPost = new Post(idNewPost,
             titleNewPost,
@@ -43,8 +51,7 @@ export class PostService {
             contentNewPost, blogIdForPost,
             blogNameForPost,
             new Date().toISOString(),
-            postsLikesInfo
-            )
+            postsLikesInfo)
         const addNewPost = await this.postsRepository.createPost(newPost)
 
         return idNewPost;
@@ -54,13 +61,20 @@ export class PostService {
         if (!blogNameForPost) {
             return null;
         }
-        const resultCreatePost = await this.createPost(pagination.titlePost, pagination.shortDescriptionPost,
+        const idCreatePost = await this.createPost(pagination.titlePost, pagination.shortDescriptionPost,
             pagination.contentPost, blogId, blogNameForPost.name)
 
-    return resultCreatePost
+    return idCreatePost
     }
     async updatePostOnId(id: string, pagination:PaginationTypeInputPostValueForPost,blogId:string): Promise<boolean> {
         return await this.postsRepository.updatePost(id,pagination,blogId)
+    }
+
+    async changeCountLikeStatusUser(post: Post, user: IUser, newLikeStatus: likeStatus) {
+        const newReaction: IReaction = this.createReaction(post.id, user.id, user.login, newLikeStatus)
+        console.log(newReaction)
+        const updateReaction = await this.postsRepository.updateLikeStatusPost(post, newReaction)
+        return updateReaction
     }
 }
 

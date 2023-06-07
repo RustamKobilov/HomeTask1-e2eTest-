@@ -1,7 +1,7 @@
-import {inputSortDataBaseType, PaginationTypeInputPosts, Post} from "./post-repositoryDB";
+import {inputSortDataBaseType, PaginationTypeInputPosts, Post, PostRepository} from "./post-repositoryDB";
 import {helper, ReturnDistributedDate} from "../Service/helper";
-import {BlogModel, PostModel} from "../Models/shemaAndModel";
-import { injectable } from "inversify";
+import {BlogModel, IBlog, IPost, IUser, PostModel} from "../Models/shemaAndModel";
+import {inject, injectable} from "inversify";
 
 
 export class Blog {
@@ -31,6 +31,8 @@ export type PaginationTypeUpdateBlog = {
 
 @injectable()
 export class BlogRepository{
+    constructor(@inject(PostRepository) protected postsRepository : PostRepository) {
+    }
     async getBlogs(paginationBlogs: PaginationTypeInputParamsBlogs):
         Promise<ReturnDistributedDate<Blog>> {
 
@@ -54,7 +56,6 @@ export class BlogRepository{
     async getPostsForBlog(paginationPosts: PaginationTypeInputPosts, blogId: string):
         Promise<inputSortDataBaseType<Post>> {
 
-
         const filter= {blogId: blogId}
         const countPostsForBlog = await PostModel.countDocuments(filter)
         const paginationFromHelperForPosts=helper.getPaginationFunctionSkipSortTotal(paginationPosts.pageNumber,paginationPosts.pageSize, countPostsForBlog)
@@ -70,10 +71,43 @@ export class BlogRepository{
             items: sortPostsForBlogs
         }
     }
-    async findBlog(id: string): Promise<Blog | null> {
-        let blog = await BlogModel.findOne({id: id}, {_id: 0, __v: 0});
-        console.log(blog + ' result search blog for delete')
-        return blog;
+
+    async getPostsForBlogbyUser(paginationPosts: PaginationTypeInputPosts, blogId: string,user:IUser):
+        Promise<inputSortDataBaseType<IPost>> {
+
+        const filter= {blogId: blogId}
+        const countPostsForBlog = await PostModel.countDocuments(filter)
+        const paginationFromHelperForPosts=helper.getPaginationFunctionSkipSortTotal(paginationPosts.pageNumber,paginationPosts.pageSize, countPostsForBlog)
+
+        let postsForBlogs = await PostModel.find(filter, {_id: 0, __v: 0}).sort({[paginationPosts.sortBy]: paginationPosts.sortDirection}).
+        skip(paginationFromHelperForPosts.skipPage).limit(paginationPosts.pageSize).lean()
+
+        const resulPostsAddLikes = await Promise.all(postsForBlogs.map(async (post:IPost)=>{
+            const postUpgrade = await this.postsRepository.mapPost(post)
+            const searchReaction = await helper.getReactionUserForParent(postUpgrade.id,user.id)
+            if(!searchReaction){
+                return post
+            }
+            postUpgrade.extendedLikesInfo.myStatus = searchReaction.status
+
+            return postUpgrade
+        }))
+
+
+        return {
+            pagesCount: paginationFromHelperForPosts.totalCount,
+            page: paginationPosts.pageNumber,
+            pageSize: paginationPosts.pageSize,
+            totalCount: countPostsForBlog,
+            items: resulPostsAddLikes
+        }
+    }
+
+    async createBlog(Blog:IBlog){
+       return await BlogModel.insertMany(Blog);
+    }
+    async findBlog(id: string): Promise<IBlog | null> {
+       return await BlogModel.findOne({id: id}, {_id: 0, __v: 0});
     }
     async updateBlog(paginationUpdateBlog:PaginationTypeUpdateBlog):
         Promise<boolean> {

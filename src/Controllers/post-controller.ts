@@ -49,29 +49,41 @@ export class PostController {
 
     async getPosts(req: Request, res: Response) {
         const paginationResultPosts = getPaginationValuesPosts(req.query)
-        const posts = await this.postService.getAllPosts(paginationResultPosts);
+        let posts
+        if(!req.user) {
+            posts = await this.postService.getAllPosts(paginationResultPosts)
+            return res.status(200).send(posts)
+        }
+        posts = await this.postService.getAllPostsForUser(paginationResultPosts,req.user)
         return res.status(200).send(posts)
+    }
+
+    async getPost(req: Request, res: Response) {
+        let post
+        if(!req.user) {
+            post = await this.postService.getPost(req.params.id);
+            if (!post) {
+                return res.sendStatus(404)
+            }
+            return res.status(200).send(post)
+        }
+        post = await this.postService.getPostForUser(req.params.id,req.user)
+        if (!post) {
+            return res.sendStatus(404)
+        }
+        return res.status(200).send(post)
     }
 
     async createPost(req: Request, res: Response) {
         const resultPagination = getPaginationPostValueForPost(req.body)
-        const user = req.user!
         const addCreatePostbyBlog = await this.postService.createPostOnId(resultPagination, req.body.blogId)//return id new comment
 
         if (!addCreatePostbyBlog) {
             return res.sendStatus(404);
         }
-        const newCommentByPost = await this.postService.findPostOnId(addCreatePostbyBlog)
+        const newCommentByPost = await this.postService.getPost(addCreatePostbyBlog)
 
         res.status(201).send(newCommentByPost)
-    }
-
-    async getPost(req: Request, res: Response) {
-        const findPost = await this.postService.findPostOnId(req.params.id);
-        if (findPost) {
-            return res.status(200).send(findPost)
-        }
-        return res.sendStatus(404)
     }
 
     async updatePost(req: Request, res: Response) {
@@ -87,7 +99,7 @@ export class PostController {
     }
 
     async deletePost(req: Request, res: Response) {
-        const findDeletePost = await this.postService.findPostOnId(req.params.id);
+        const findDeletePost = await this.postService.getPost(req.params.id);
         if (!findDeletePost) {
 
             return res.sendStatus(404);
@@ -98,7 +110,7 @@ export class PostController {
 
     async getCommentsForPost(req: Request, res: Response) {
         const pagination = getPaginationGetCommentForPost(req.query, req.params)
-        const resultSearchPost = await this.postService.findPostOnId(pagination.idPost)
+        const resultSearchPost = await this.postService.getPost(pagination.idPost)
         if (!resultSearchPost) {
             return res.sendStatus(404)
         }
@@ -109,8 +121,6 @@ export class PostController {
         }
         resultAllCommentsByPosts = await this.commentService.getAllCommentForPostInBaseForUser(pagination,req.user)
 
-
-
         return res.status(200).send(resultAllCommentsByPosts)
     }
 
@@ -118,15 +128,30 @@ export class PostController {
         const pagination = getPaginationPostCommentForPost(req.params, req.body)
         const user = req.user!
 
-        const resultSearchPost = await this.postService.findPostOnId(pagination.idPost)
+        const resultSearchPost = await this.postService.getPost(pagination.idPost)
         if (!resultSearchPost) {
             return res.sendStatus(404)
         }
         const addCommentByPost = await this.commentService.createCommentOnId(pagination, user)//return id new comment
         const newCommentByPost = await this.commentService.getCommentOnId(addCommentByPost)
+        if(!newCommentByPost){
+            return res.sendStatus(404)
+        }
 
         return res.status(201).send(newCommentByPost)
 
+    }
+
+    async updateLikeStatus(req: Request, res: Response) {
+        const post = await this.postService.getPost(req.params.id)
+        console.log(post)
+        if (!post) {
+            return res.sendStatus(404)
+        }
+
+        await this.postService.changeCountLikeStatusUser(post,req.user, req.body.likeStatus)
+
+        return res.sendStatus(204)
     }
 
 }
