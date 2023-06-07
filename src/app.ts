@@ -1,10 +1,15 @@
+import * as dotenv from 'dotenv'
+dotenv.config()
 import express, {Request, Response} from "express";
 import {videosRouter} from "./routse/videos-router";
 import {db} from "./routse/videos-router";
 import {blogsRouter} from "./routse/blogs-router";
 import {postsRouter} from "./routse/posts-router";
-import {dbPosts} from "./Repository/posts-repositiry";
-import {dbBlogs} from "./Repository/blog-repository";
+import {dbPosts} from "./RepositoryInDB/posts-repositiryDB";
+import {dbBlogs} from "./RepositoryInDB/blog-repositoryDB";
+import {client} from "./db";
+//import {dbPosts} from "./RepositoryInMemory/posts-repositiry";
+//import {dbBlogs} from "./RepositoryInMemory/blog-repository";
 
 export const app = express();
 
@@ -17,10 +22,9 @@ app.use('/blogs',blogsRouter);
 app.use('/posts',postsRouter);
 
 
-app.delete('/testing/all-data', (req: Request, res: Response) => {
-    db.splice(0, db.length);
-    dbPosts.splice(0, dbPosts.length);
-    dbBlogs.splice(0, dbBlogs.length);
+app.delete('/testing/all-data', async (req: Request, res: Response) => {
+    await client.db('hometask3').collection('Posts').deleteMany({})
+    await client.db('hometask3').collection('Blogs').deleteMany({})
     return res.sendStatus(204);
 });
 

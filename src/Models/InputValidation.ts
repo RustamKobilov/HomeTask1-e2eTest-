@@ -2,8 +2,9 @@ import {body, ValidationError, validationResult} from "express-validator";
 import {errorView} from "./ErrorModel";
 import {NextFunction} from "express";
 import {Request, Response} from "express";
-import {dbBlogs} from "../Repository/blog-repository";
 import {throws} from "assert";
+import {dbBlogs} from "../RepositoryInDB/blog-repositoryDB";
+import {blogsCollection, client} from "../db";
 
 const checkBlogName = body('name').isString().trim().notEmpty().isLength({min: 1, max: 15})
 const checkBlogDescription = body('description').isString().trim().notEmpty().isLength({min: 1, max: 500})
@@ -20,14 +21,15 @@ export const updateBlogValidation = [checkBlogName, checkBlogDescription, checkB
 const checkPostTitle = body('title').isString().trim().notEmpty().isLength({min: 1, max: 30})
 const checkPostShortDescription = body('shortDescription').isString().trim().notEmpty().isLength({min: 1, max: 100})
 const checkPostContent = body('content').isString().trim().notEmpty().isLength({min: 1, max: 1000})
-const checkPostBlogid = body('blogId').isString().trim().notEmpty().isLength({min: 1}).custom(value=>{
-    const blog=dbBlogs.find(blog=>blog.id===value)
+const checkPostBlogid = body('blogId').isString().trim().notEmpty().isLength({min: 1}).custom( async value=>{
+    const blog = await blogsCollection.findOne({id:value},{projection:{_id:0}})
+    console.log(blog)
     if(!blog){
-        throw new Error('blog not found')
+       throw new Error('blog not found')
     }
     return true;
 })
-//.matches(/[0-9]/)
+
 export const createPostValidation = [checkPostTitle, checkPostShortDescription, checkPostContent, checkPostBlogid]
 export const updatePostValidation = [...createPostValidation]
 

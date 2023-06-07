@@ -1,12 +1,12 @@
 import {randomUUID} from "crypto";
 
 export let dbBlogs : Array<any> =[{
-    "id": 1,
+    "id": '1',
     "name": "string1",
     "description": "string1",
     "websiteUrl": "string2"
 },{
-    "id": 2,
+    "id": '2',
     "name": "string3",
     "description": "string3",
     "websiteUrl": "string3"
