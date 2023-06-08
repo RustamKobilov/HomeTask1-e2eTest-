@@ -29,7 +29,8 @@
     "start": "node dist/index.js",
     "watch": "tsc -w",
     "dev": "nodemon dist/index.js",
-    "test": "jest"
+    "test": "jest --runInBand",
+    "test:dev": "jest --config ./jest.config.js --runInBand"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

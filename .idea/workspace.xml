@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="08/06/23 test different file yakubovskogo.">
-      <change afterPath="$PROJECT_DIR$/src/test/testComment.test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/test.utility.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/testAuthUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testAuthUser.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/testBlog.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/blog.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/testDeviceAndAttemptEndpoint.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testDeviceAndAttemptEndpoint.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/testPassword.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testPassword.test..ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/testPost.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testPost.test..ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/testUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testUser.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jest.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/jest.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/blog.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/blog.test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +26,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="hometaskSprint3dz3ClassAndLike" />
+        <entry key="$PROJECT_DIR$" value="90fbcbfa6e8de8f0ec7989baae2d8dd5ff29eef8" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -68,15 +65,15 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Inst/HomeTask1-e2eTest-",
+    "last_opened_file_path": "D:/it incubator/hometask1(e2eTest)/jest.config.js",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs.jest.jest_package": "D:/Inst/HomeTask1-e2eTest-/node_modules/jest",
+    "nodejs.jest.jest_package": "D:/it incubator/hometask1(e2eTest)/node_modules/jest",
     "nodejs_package_manager_path": "yarn",
     "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
-    "ts.external.directory.path": "D:\\Inst\\HomeTask1-e2eTest-\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "D:\\it incubator\\hometask1(e2eTest)\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -99,7 +96,7 @@
       <recent name="D:\Inst\HomeTask1-e2eTest-\src\Controllers\auth-controller.ts" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest./Blogs CRUD">
+  <component name="RunManager" selected="Jest.all test">
     <configuration name="/Blogs CRUD" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -114,6 +111,7 @@
       <method v="2" />
     </configuration>
     <configuration name="all test" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <config-file value="$PROJECT_DIR$/jest.config.js" />
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
@@ -136,11 +134,33 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="test" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="test:dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="test:dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.all test" />
+        <item itemvalue="npm.test:dev" />
+        <item itemvalue="npm.test" />
         <item itemvalue="Jest./Blogs CRUD" />
         <item itemvalue="npm.dev" />
-        <item itemvalue="Jest.all test" />
       </list>
     </recent_temporary>
   </component>

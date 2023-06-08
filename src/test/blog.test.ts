@@ -3,15 +3,15 @@ import {app} from "../app";
 import {JwtService} from "../application/jwtService";
 import mongoose from "mongoose";
 import {Blog} from "../RepositoryInDB/blog-repositoryDB";
-
-
+import {configureApp} from "./test.utility";
+import  {Express} from "express";
 const delay= async(ms:number)=>{
     return new Promise<void>((resolve,reject)=>{
         setTimeout(()=>resolve(),ms)
     })
 }
 
-// const mongoURI = 'mongodb://127.0.0.1:27017'||process.env.MONGO_URI_CLUSTER
+const mongoURI = process.env.MONGO_URI_CLUSTER || 'mongodb://127.0.0.1:27017'
 
 const BasicAuthorized={
     authorization:'Authorization',
@@ -21,18 +21,19 @@ const BasicAuthorized={
 
 
 const jwtServices = new JwtService()
+describe('all test',()=> {
 
-// describe('all test',()=> {
-//
-//     beforeAll(async () => {
-//         /* Connecting to the database. */
-//         await mongoose.connect(mongoURI)
-//     })
-//
-//     afterAll(async () => {
-//         /* Closing database connection after each test. */
-//         await mongoose.connection.close()
-//     })
+    beforeAll(async () => {
+        console.log( 'mongoose connect...')
+        /* Connecting to the database. */
+        await mongoose.connect(mongoURI)
+        console.log( 'mongoose connected')
+    })
+
+    afterAll(async () => {
+        /* Closing database connection after each test. */
+        await mongoose.connection.close()
+    })
 
 
 
@@ -153,6 +154,7 @@ describe('Output model checking(byBlogs) true', () => {
     });
 
     async function creatManyBlog(colBlog: number, searchName?: string) {
+        const insertedBlogs = [];
         for (let x = 0; x < colBlog; x++) {
             const blogCheckManyAdd = {
                 name: 'checking blog',
@@ -162,8 +164,10 @@ describe('Output model checking(byBlogs) true', () => {
             if (searchName && x == colBlog - 1) {
                 blogCheckManyAdd.name = searchName!
             }
-            const CreateBlogResponse = await request(app).post('/blogs/').set(BasicAuthorized.authorization, BasicAuthorized.password).send(blogCheckManyAdd).expect(201)
+            const CreateBlogResponse = request(app).post('/blogs/').set(BasicAuthorized.authorization, BasicAuthorized.password).send(blogCheckManyAdd).expect(201)
+            insertedBlogs.push(CreateBlogResponse);
         }
+        await Promise.all(insertedBlogs);
     }
 
 
@@ -304,6 +308,6 @@ describe('/Blogs output model checking sortBy true', () => {
 
     })
 
-//
-// //connecting to base
-// })
+
+//connecting to base
+})
