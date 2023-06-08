@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="07/06/23 fix like for post yakubovskogo.">
+      <change afterPath="$PROJECT_DIR$/src/test/testAuthUser.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/testDeviceAndAttemptEndpoint.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/testPassword.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/testPost.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/testUser.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/post-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/post-repositoryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/apiTest.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testBlog.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,11 +33,11 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -200,14 +205,8 @@
       <workItem from="1685010487308" duration="30826000" />
       <workItem from="1685442198850" duration="2065000" />
       <workItem from="1686131338418" duration="8762000" />
-      <workItem from="1686146466193" duration="12750000" />
-    </task>
-    <task id="LOCAL-00179" summary="api test 01.04.23">
-      <created>1680354175557</created>
-      <option name="number" value="00179" />
-      <option name="presentableId" value="LOCAL-00179" />
-      <option name="project" value="LOCAL" />
-      <updated>1680354175557</updated>
+      <workItem from="1686146466193" duration="13368000" />
+      <workItem from="1686222502246" duration="2771000" />
     </task>
     <task id="LOCAL-00180" summary="api test 01.04.23">
       <created>1680354584579</created>
@@ -545,7 +544,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686162147201</updated>
     </task>
-    <option name="localTasksCounter" value="228" />
+    <task id="LOCAL-00228" summary="07/06/23 fix like for post yakubovskogo.">
+      <created>1686163826964</created>
+      <option name="number" value="00228" />
+      <option name="presentableId" value="LOCAL-00228" />
+      <option name="project" value="LOCAL" />
+      <updated>1686163826964</updated>
+    </task>
+    <option name="localTasksCounter" value="229" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
