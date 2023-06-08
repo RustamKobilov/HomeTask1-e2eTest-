@@ -1,21 +1,19 @@
 import request from "supertest";
 import {app} from "../app";
 import {JwtService} from "../application/jwtService";
-import mongoose from "mongoose";
 
 
-
-describe('all test',()=> {
-
-    beforeAll(async () => {
-        /* Connecting to the database. */
-        await mongoose.connect(mongoURI)
-    })
-
-    afterAll(async () => {
-        /* Closing database connection after each test. */
-        await mongoose.connection.close()
-    })
+// describe('all test',()=> {
+//
+//     beforeAll(async () => {
+//         /* Connecting to the database. */
+//         await mongoose.connect(mongoURI)
+//     })
+//
+//     afterAll(async () => {
+//         /* Closing database connection after each test. */
+//         await mongoose.connection.close()
+//     })
 
 const delay= async(ms:number)=>{
     return new Promise<void>((resolve,reject)=>{
@@ -254,4 +252,4 @@ describe('limit request for one Ip',  ()=> {
 })
 
 //connecting to base
-})
+// })

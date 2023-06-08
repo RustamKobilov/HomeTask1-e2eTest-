@@ -4,14 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="07/06/23 fix like for post yakubovskogo.">
-      <change afterPath="$PROJECT_DIR$/src/test/testAuthUser.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/testDeviceAndAttemptEndpoint.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/testPassword.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/testPost.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/testUser.ts" afterDir="false" />
+    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="08/06/23 test different file yakubovskogo.">
+      <change afterPath="$PROJECT_DIR$/src/test/testComment.test.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/apiTest.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testBlog.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testAuthUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testAuthUser.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testBlog.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/blog.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testDeviceAndAttemptEndpoint.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testDeviceAndAttemptEndpoint.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testPassword.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testPassword.test..ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testPost.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testPost.test..ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testUser.test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,22 +64,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Inst/HomeTask1-e2eTest-&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs.jest.jest_package&quot;: &quot;D:/it incubator/hometask1(e2eTest)/node_modules/jest&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\Inst\\HomeTask1-e2eTest-\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/Inst/HomeTask1-e2eTest-",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "D:/Inst/HomeTask1-e2eTest-/node_modules/jest",
+    "nodejs_package_manager_path": "yarn",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "ts.external.directory.path": "D:\\Inst\\HomeTask1-e2eTest-\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\it incubator\hometask1(e2eTest)\src\RepositoryInDB" />
@@ -98,44 +99,30 @@
       <recent name="D:\Inst\HomeTask1-e2eTest-\src\Controllers\auth-controller.ts" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.dev">
-    <configuration name="Output model checking(byBlogs) true.sortBy checking query params true" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="TEST" />
-      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
-      <test-names>
-        <test-name value="Output model checking(byBlogs) true" />
-        <test-name value="sortBy checking query params true" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="auth/registration test" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Jest./Blogs CRUD">
+    <configuration name="/Blogs CRUD" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
+      <test-file value="$PROJECT_DIR$/src/test/blog.test.ts" />
       <test-names>
-        <test-name value="auth/registration test" />
+        <test-name value="/Blogs CRUD" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="auth/registration-confirmation test" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+    <configuration name="all test" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
       <jest-package value="$PROJECT_DIR$/node_modules/jest" />
       <working-dir value="$PROJECT_DIR$" />
       <envs />
       <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/test/apiTest.test.ts" />
+      <test-file value="$PROJECT_DIR$/src/test/blog.test.ts" />
       <test-names>
-        <test-name value="auth/registration-confirmation test" />
+        <test-name value="all test" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -149,23 +136,11 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="watch" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="watch" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.watch" />
+        <item itemvalue="Jest./Blogs CRUD" />
         <item itemvalue="npm.dev" />
-        <item itemvalue="Jest.Output model checking(byBlogs) true.sortBy checking query params true" />
-        <item itemvalue="Jest.auth/registration test" />
-        <item itemvalue="Jest.auth/registration-confirmation test" />
+        <item itemvalue="Jest.all test" />
       </list>
     </recent_temporary>
   </component>
@@ -206,14 +181,7 @@
       <workItem from="1685442198850" duration="2065000" />
       <workItem from="1686131338418" duration="8762000" />
       <workItem from="1686146466193" duration="13368000" />
-      <workItem from="1686222502246" duration="2771000" />
-    </task>
-    <task id="LOCAL-00180" summary="api test 01.04.23">
-      <created>1680354584579</created>
-      <option name="number" value="00180" />
-      <option name="presentableId" value="LOCAL-00180" />
-      <option name="project" value="LOCAL" />
-      <updated>1680354584579</updated>
+      <workItem from="1686222502246" duration="10834000" />
     </task>
     <task id="LOCAL-00181" summary="api test 01.04.23">
       <created>1680355853164</created>
@@ -551,7 +519,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686163826964</updated>
     </task>
-    <option name="localTasksCounter" value="229" />
+    <task id="LOCAL-00229" summary="08/06/23 test different file yakubovskogo.">
+      <created>1686225606645</created>
+      <option name="number" value="00229" />
+      <option name="presentableId" value="LOCAL-00229" />
+      <option name="project" value="LOCAL" />
+      <updated>1686225606646</updated>
+    </task>
+    <option name="localTasksCounter" value="230" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -600,7 +575,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="09/03/23 hometask5." />
     <MESSAGE value="09/03/23 test." />
     <MESSAGE value="11/03/23 fix code." />
     <MESSAGE value="18/03/23 email send." />
@@ -625,6 +599,7 @@
     <MESSAGE value="25/05/23 fix pzadz yakubovskogo." />
     <MESSAGE value="26/05/23 fix yakubovskogo." />
     <MESSAGE value="07/06/23 fix like for post yakubovskogo." />
-    <option name="LAST_COMMIT_MESSAGE" value="07/06/23 fix like for post yakubovskogo." />
+    <MESSAGE value="08/06/23 test different file yakubovskogo." />
+    <option name="LAST_COMMIT_MESSAGE" value="08/06/23 test different file yakubovskogo." />
   </component>
 </project>

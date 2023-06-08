@@ -1,23 +1,21 @@
 import request from "supertest";
 import {app} from "../app";
 import {Blog} from "../RepositoryInDB/blog-repositoryDB";
-import {JwtService} from "../application/jwtService";
-import mongoose from "mongoose";
-import {INewestLikes, IPost} from "../Models/shemaAndModel";
+import {IPost} from "../Models/shemaAndModel";
 import {likeStatus} from "../Models/Enums";
 
 
-describe('all test',()=> {
-
-    beforeAll(async () => {
-        /* Connecting to the database. */
-        await mongoose.connect(mongoURI)
-    })
-
-    afterAll(async () => {
-        /* Closing database connection after each test. */
-        await mongoose.connection.close()
-    })
+// describe('all test',()=> {
+//
+//     beforeAll(async () => {
+//         /* Connecting to the database. */
+//         await mongoose.connect(mongoURI)
+//     })
+//
+//     afterAll(async () => {
+//         /* Closing database connection after each test. */
+//         await mongoose.connection.close()
+//     })
 
 
 const delay= async(ms:number)=>{
@@ -33,8 +31,6 @@ const BasicAuthorized={
     password:'Basic YWRtaW46cXdlcnR5'
 }
 
-
-const jwtServices = new JwtService()
 
 describe('/Post CRUD',()=>{
     beforeAll(async ()=>{
@@ -163,4 +159,4 @@ describe('/Post CRUD',()=>{
 })
 
     //connecting to base
-})
+// })

@@ -11,8 +11,8 @@ const delay= async(ms:number)=>{
     })
 }
 
-const mongoURI = 'mongodb://127.0.0.1:27017' ;
-//process.env.MONGO_URI_CLUSTER||
+// const mongoURI = 'mongodb://127.0.0.1:27017'||process.env.MONGO_URI_CLUSTER
+
 const BasicAuthorized={
     authorization:'Authorization',
     password:'Basic YWRtaW46cXdlcnR5'
@@ -22,17 +22,17 @@ const BasicAuthorized={
 
 const jwtServices = new JwtService()
 
-describe('all test',()=> {
-
-    beforeAll(async () => {
-        /* Connecting to the database. */
-        await mongoose.connect(mongoURI)
-    })
-
-    afterAll(async () => {
-        /* Closing database connection after each test. */
-        await mongoose.connection.close()
-    })
+// describe('all test',()=> {
+//
+//     beforeAll(async () => {
+//         /* Connecting to the database. */
+//         await mongoose.connect(mongoURI)
+//     })
+//
+//     afterAll(async () => {
+//         /* Closing database connection after each test. */
+//         await mongoose.connection.close()
+//     })
 
 
 
@@ -304,8 +304,6 @@ describe('/Blogs output model checking sortBy true', () => {
 
     })
 
-
-
-
-//connecting to base
-})
+//
+// //connecting to base
+// })

@@ -1,21 +1,20 @@
 import request from "supertest";
 import {app} from "../app";
 import {User} from "../RepositoryInDB/user-repositoryDB";
-import mongoose from "mongoose";
 import {JwtService} from "../application/jwtService";
 
 
-describe('all test',()=> {
-
-    beforeAll(async () => {
-        /* Connecting to the database. */
-        await mongoose.connect(mongoURI)
-    })
-
-    afterAll(async () => {
-        /* Closing database connection after each test. */
-        await mongoose.connection.close()
-    })
+// describe('all test',()=> {
+//
+//     beforeAll(async () => {
+//         /* Connecting to the database. */
+//         await mongoose.connect(mongoURI)
+//     })
+//
+//     afterAll(async () => {
+//         /* Closing database connection after each test. */
+//         await mongoose.connection.close()
+//     })
 
 
 
@@ -149,4 +148,4 @@ describe('user add', ()=> {
 
 
 //connecting to base
-})
+// })
