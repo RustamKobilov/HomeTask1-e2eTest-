@@ -3,19 +3,9 @@ import {app} from "../app";
 import {Blog} from "../RepositoryInDB/blog-repositoryDB";
 import {IPost} from "../Models/shemaAndModel";
 import {likeStatus} from "../Models/Enums";
+import mongoose from "mongoose";
 
 
-// describe('all test',()=> {
-//
-//     beforeAll(async () => {
-//         /* Connecting to the database. */
-//         await mongoose.connect(mongoURI)
-//     })
-//
-//     afterAll(async () => {
-//         /* Closing database connection after each test. */
-//         await mongoose.connection.close()
-//     })
 
 
 const delay= async(ms:number)=>{
@@ -24,13 +14,25 @@ const delay= async(ms:number)=>{
     })
 }
 
-const mongoURI = 'mongodb://127.0.0.1:27017' ;
-//process.env.MONGO_URI_CLUSTER||
+
 const BasicAuthorized={
     authorization:'Authorization',
     password:'Basic YWRtaW46cXdlcnR5'
 }
 
+const mongoURI = process.env.MONGO_URI_CLUSTER || 'mongodb://127.0.0.1:27017'
+
+describe('all test',()=> {
+
+    beforeAll(async () => {
+        /* Connecting to the database. */
+        await mongoose.connect(mongoURI)
+    })
+
+    afterAll(async () => {
+        /* Closing database connection after each test. */
+        await mongoose.connection.close()
+    })
 
 describe('/Post CRUD',()=>{
     beforeAll(async ()=>{
@@ -159,4 +161,4 @@ describe('/Post CRUD',()=>{
 })
 
     //connecting to base
-// })
+})

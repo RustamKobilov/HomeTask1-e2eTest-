@@ -2,19 +2,7 @@ import request from "supertest";
 import {app} from "../app";
 import {User} from "../RepositoryInDB/user-repositoryDB";
 import {JwtService} from "../application/jwtService";
-
-
-// describe('all test',()=> {
-//
-//     beforeAll(async () => {
-//         /* Connecting to the database. */
-//         await mongoose.connect(mongoURI)
-//     })
-//
-//     afterAll(async () => {
-//         /* Closing database connection after each test. */
-//         await mongoose.connection.close()
-//     })
+import mongoose from "mongoose";
 
 
 
@@ -24,8 +12,9 @@ const delay= async(ms:number)=>{
     })
 }
 
-const mongoURI = 'mongodb://127.0.0.1:27017' ;
-//process.env.MONGO_URI_CLUSTER||
+const mongoURI = process.env.MONGO_URI_CLUSTER || 'mongodb://127.0.0.1:27017'
+
+
 const BasicAuthorized={
     authorization:'Authorization',
     password:'Basic YWRtaW46cXdlcnR5'
@@ -33,6 +22,19 @@ const BasicAuthorized={
 
 
 const jwtServices = new JwtService()
+
+
+describe('all test',()=> {
+
+    beforeAll(async () => {
+        /* Connecting to the database. */
+        await mongoose.connect(mongoURI)
+    })
+
+    afterAll(async () => {
+        /* Closing database connection after each test. */
+        await mongoose.connection.close()
+    })
 
 
 describe('user add', ()=> {
@@ -148,4 +150,4 @@ describe('user add', ()=> {
 
 
 //connecting to base
-// })
+})

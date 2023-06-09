@@ -5,28 +5,14 @@ import {JwtService} from "../application/jwtService";
 import mongoose from "mongoose";
 
 
-// describe('all test',()=> {
-//
-//     beforeAll(async () => {
-//         /* Connecting to the database. */
-//         await mongoose.connect(mongoURI)
-//     })
-//
-//     afterAll(async () => {
-//         /* Closing database connection after each test. */
-//         await mongoose.connection.close()
-//     })
-
-
-
 const delay= async(ms:number)=>{
     return new Promise<void>((resolve,reject)=>{
         setTimeout(()=>resolve(),ms)
     })
 }
 
-const mongoURI = 'mongodb://127.0.0.1:27017' ;
-//process.env.MONGO_URI_CLUSTER||
+const mongoURI = process.env.MONGO_URI_CLUSTER || 'mongodb://127.0.0.1:27017'
+
 const BasicAuthorized={
     authorization:'Authorization',
     password:'Basic YWRtaW46cXdlcnR5'
@@ -34,6 +20,21 @@ const BasicAuthorized={
 
 
 const jwtServices = new JwtService()
+
+
+describe('all test',()=> {
+
+    beforeAll(async () => {
+        /* Connecting to the database. */
+        await mongoose.connect(mongoURI)
+    })
+
+    afterAll(async () => {
+        /* Closing database connection after each test. */
+        await mongoose.connection.close()
+    })
+
+
 
 describe('auth/registration test',  ()=> {
 
@@ -230,4 +231,4 @@ describe('auth/registration-confirmation test',  ()=> {
 })
 
     //connecting to base
-// })
+})

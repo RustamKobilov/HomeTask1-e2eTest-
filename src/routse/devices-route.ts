@@ -1,6 +1,6 @@
 import {Request, Response, Router} from "express";
 import {authRefreshToken} from "../Middleware/authRefreshToken";
-import {CommentModel, ReactionModel} from "../Models/shemaAndModel";
+import {AttemptModel, CommentModel, ReactionModel} from "../Models/shemaAndModel";
 import {Containers} from "../composition-root";
 import {DeviceController} from "../Controllers/device-controller";
 
@@ -23,7 +23,7 @@ securityRouter.get('/userAll', async (req: Request, res: Response) => {
 
     //await ReactionModel.insertMany(reaction)
 
-    const allCollection = await CommentModel.find({}).lean()
+    const allCollection = await AttemptModel.find({}).lean()
 
     return res.send(allCollection).status(204)
 })

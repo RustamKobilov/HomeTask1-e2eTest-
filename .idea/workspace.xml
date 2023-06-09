@@ -1,6 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="38da1ad8-cd39-4a94-8b23-a05d6f11400c" name="Changes" comment="09/06/23 after reset vetok yakubovskogo (08/06/23 sozvon name mongo uri mestami)">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Middleware/authAttemptLimit.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Middleware/authAttemptLimit.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/device-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/device-repositoryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/user-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/user-repositoryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/userService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/userService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routse/devices-route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/devices-route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/blog.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/blog.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/test.utility.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testAuthUser.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testAuthUser.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testComment.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testComment.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testDeviceAndAttemptEndpoint.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testDeviceAndAttemptEndpoint.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testPassword.test..ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testPassword.test..ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testPost.test..ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testPost.test..ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testUser.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testUser.test.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/RepositoryInDB/user-repositoryDB.ts" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "D:/Inst/HomeTask1-e2eTest-/node_modules/jest",
+    "ts.external.directory.path": "D:\\Inst\\HomeTask1-e2eTest-\\node_modules\\typescript\\lib"
+  }
+}]]></component>
   <component name="RunManager" selected="npm.dev">
+    <configuration name="all test" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/test/testDeviceAndAttemptEndpoint.test.ts" />
+      <test-names>
+        <test-name value="all test" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="all test.Session and device for User /SecurityDevices" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/test/testDeviceAndAttemptEndpoint.test.ts" />
+      <test-names>
+        <test-name value="all test" />
+        <test-name value="Session and device for User /SecurityDevices" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="all test.limit request for one Ip" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/test/testDeviceAndAttemptEndpoint.test.ts" />
+      <test-names>
+        <test-name value="all test" />
+        <test-name value="limit request for one Ip" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="all test.limit request for one Ip.check limit request for one device" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/test/testDeviceAndAttemptEndpoint.test.ts" />
+      <test-names>
+        <test-name value="all test" />
+        <test-name value="limit request for one Ip" />
+        <test-name value="check limit request for one device" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -11,21 +109,52 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="watch" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="watch" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="npm.dev" />
-        <item itemvalue="npm.watch" />
+        <item itemvalue="Jest.all test.limit request for one Ip" />
+        <item itemvalue="Jest.all test.Session and device for User /SecurityDevices" />
+        <item itemvalue="Jest.all test.limit request for one Ip.check limit request for one device" />
+        <item itemvalue="Jest.all test" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task id="LOCAL-00001" summary="09/06/23 after reset vetok yakubovskogo (08/06/23 sozvon name mongo uri mestami)">
+      <created>1686316159887</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1686316159887</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="09/06/23 after reset vetok yakubovskogo (08/06/23 sozvon name mongo uri mestami)" />
+    <option name="LAST_COMMIT_MESSAGE" value="09/06/23 after reset vetok yakubovskogo (08/06/23 sozvon name mongo uri mestami)" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/test/testDeviceAndAttemptEndpoint.test.ts</url>
+          <line>224</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

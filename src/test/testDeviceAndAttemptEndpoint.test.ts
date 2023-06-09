@@ -1,19 +1,8 @@
 import request from "supertest";
 import {app} from "../app";
 import {JwtService} from "../application/jwtService";
+import mongoose from "mongoose";
 
-
-// describe('all test',()=> {
-//
-//     beforeAll(async () => {
-//         /* Connecting to the database. */
-//         await mongoose.connect(mongoURI)
-//     })
-//
-//     afterAll(async () => {
-//         /* Closing database connection after each test. */
-//         await mongoose.connection.close()
-//     })
 
 const delay= async(ms:number)=>{
     return new Promise<void>((resolve,reject)=>{
@@ -21,8 +10,8 @@ const delay= async(ms:number)=>{
     })
 }
 
-const mongoURI = 'mongodb://127.0.0.1:27017' ;
-//process.env.MONGO_URI_CLUSTER||
+const mongoURI = process.env.MONGO_URI_CLUSTER || 'mongodb://127.0.0.1:27017'
+
 const BasicAuthorized={
     authorization:'Authorization',
     password:'Basic YWRtaW46cXdlcnR5'
@@ -30,6 +19,19 @@ const BasicAuthorized={
 
 
 const jwtServices = new JwtService()
+
+
+describe('all test',()=> {
+
+    beforeAll(async () => {
+        /* Connecting to the database. */
+        await mongoose.connect(mongoURI)
+    })
+
+    afterAll(async () => {
+        /* Closing database connection after each test. */
+        await mongoose.connection.close()
+    })
 
 describe('Session and device for User /SecurityDevices', ()=> {
     jest.setTimeout(60000)
@@ -90,6 +92,8 @@ describe('Session and device for User /SecurityDevices', ()=> {
         lastActiveDate = await jwtServices.getLastActiveDateFromRefreshToken(refreshToken)
         const verifyToken = await jwtServices.verifyToken(refreshToken)
         deviceId = verifyToken.deviceId
+
+        console.log(securityDeviceResponse.body)
 
         expect(securityDeviceResponse.body).toEqual([{
             ip: expect.any(String),
@@ -243,7 +247,6 @@ describe('limit request for one Ip',  ()=> {
         for(let x=0;x<4;x++){
             const AuthUserResponse1 = await request(app).post('/auth/login').set('User-Agent',deviceName).send(userAuthForChecking1)
             const AuthUserResponseFalseLoginMin = await request(app).post('/auth/registration').send(userForChecking1)
-            console.log(x+1)
         }
         const AuthUserResponse1 = await request(app).post('/auth/login').set('User-Agent',deviceName).send(userAuthForChecking1).expect(429)
         const AuthUserResponseFalseLoginMin = await request(app).post('/auth/registration').send(userForChecking1).expect(429)
@@ -252,4 +255,4 @@ describe('limit request for one Ip',  ()=> {
 })
 
 //connecting to base
-// })
+})

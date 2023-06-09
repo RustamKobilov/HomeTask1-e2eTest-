@@ -12,7 +12,7 @@ export class Device {
 @injectable()
 export class DeviceRepository{
     async getDevices(userPayload:any):Promise<Device>{
-        return await DeviceModel.find({userId: userPayload.userId}, {_id: 0, __v: 0}).lean()
+        return await DeviceModel.find({userId: userPayload.userId}, {_id: false, __v: false,userId:false,diesAtDate:false}).lean()
     }
 
     async deleteDevices(userPayload: any) {

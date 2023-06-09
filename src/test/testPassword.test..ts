@@ -4,19 +4,20 @@ import {RecoveryPasswordModel} from "../Models/shemaAndModel";
 import {userRepository} from "../RepositoryInDB/user-repositoryDB";
 import {randomUUID} from "crypto";
 import {JwtService} from "../application/jwtService";
+import mongoose from "mongoose";
 
 
-// describe('all test',()=> {
-//
-//     beforeAll(async () => {
-//         /* Connecting to the database. */
-//         await mongoose.connect(mongoURI)
-//     })
-//
-//     afterAll(async () => {
-//         /* Closing database connection after each test. */
-//         await mongoose.connection.close()
-//     })
+describe('all test',()=> {
+
+    beforeAll(async () => {
+        /* Connecting to the database. */
+        await mongoose.connect(mongoURI)
+    })
+
+    afterAll(async () => {
+        /* Closing database connection after each test. */
+        await mongoose.connection.close()
+    })
 
 const delay= async(ms:number)=>{
     return new Promise<void>((resolve,reject)=>{
@@ -24,8 +25,8 @@ const delay= async(ms:number)=>{
     })
 }
 
-const mongoURI = 'mongodb://127.0.0.1:27017' ;
-//process.env.MONGO_URI_CLUSTER||
+const mongoURI = process.env.MONGO_URI_CLUSTER || 'mongodb://127.0.0.1:27017'
+
 const BasicAuthorized={
     authorization:'Authorization',
     password:'Basic YWRtaW46cXdlcnR5'
@@ -92,4 +93,4 @@ describe('recovery password',()=> {
 })
 
 //connecting to base
-// })
+})

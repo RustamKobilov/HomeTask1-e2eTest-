@@ -56,12 +56,13 @@ export class UserService {
         return userRegistration
     }
 
-    async deleteUserById(id: string): Promise<undefined> {
+    async deleteUserById(id: string): Promise<boolean> {
         const user = await this.userRepository.findUserById(id)
         if (!user) {
-            return undefined
+            return false
         }
         await this.userRepository.deleteUser(user.id)
+        return true
     }
 
     async updatePasswordForUserByRecovery(newPassword: string, recoveryCode: string):

@@ -1,4 +1,5 @@
 /.idea
+.idea/workspace.xml
 /dist
 /node_modules
 .env

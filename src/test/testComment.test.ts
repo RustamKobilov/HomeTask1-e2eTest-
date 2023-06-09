@@ -3,18 +3,7 @@ import {app} from "../app";
 import {likeStatus} from "../Models/Enums";
 import {IBlog, IComment, IPost} from "../Models/shemaAndModel";
 import {LikesInfo} from "../RepositoryInDB/comment-repositoryDB";
-
-// describe('all test',()=> {
-//
-//     beforeAll(async () => {
-//         /* Connecting to the database. */
-//         await mongoose.connect(mongoURI)
-//     })
-//
-//     afterAll(async () => {
-//         /* Closing database connection after each test. */
-//         await mongoose.connection.close()
-//     })
+import mongoose from "mongoose";
 
 
     const delay= async(ms:number)=>{
@@ -23,14 +12,30 @@ import {LikesInfo} from "../RepositoryInDB/comment-repositoryDB";
         })
     }
 
-    const mongoURI = 'mongodb://127.0.0.1:27017' ;
-//process.env.MONGO_URI_CLUSTER||
+const mongoURI = process.env.MONGO_URI_CLUSTER || 'mongodb://127.0.0.1:27017'
     const BasicAuthorized={
         authorization:'Authorization',
         password:'Basic YWRtaW46cXdlcnR5'
     }
 
-    describe('/Comment CRUD',()=> {
+
+describe('all test',()=> {
+
+    beforeAll(async () => {
+        /* Connecting to the database. */
+        await mongoose.connect(mongoURI)
+    })
+
+    afterAll(async () => {
+        /* Closing database connection after each test. */
+        await mongoose.connection.close()
+    })
+
+
+
+
+
+describe('/Comment CRUD',()=> {
         beforeAll(async () => {
             await request(app).delete('/testing/all-data')
         })
@@ -132,4 +137,4 @@ import {LikesInfo} from "../RepositoryInDB/comment-repositoryDB";
 
 
     //connecting to base
-// })
+})

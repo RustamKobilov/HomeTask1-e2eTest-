@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import {helper} from "../Service/helper";
 import {inputSortDataBaseType} from "./post-repositoryDB";
-import {RecoveryPasswordModel, UserModel} from "../Models/shemaAndModel";
+import {IUser, RecoveryPasswordModel, UserModel} from "../Models/shemaAndModel";
 import { injectable } from 'inversify';
 
 export class User{
@@ -92,13 +92,13 @@ export class UserRepository{
         const hash = await bcrypt.hash(password, salt)
         return hash
     }
-    async findUserById(id: string): Promise<User | null> {
+    async findUserById(id: string): Promise<IUser | null> {
         return await UserModel.findOne({id: id}, {_id: 0, __v: 0})
     }
-    async findUserByLoginOrEmail(loginOrEmail: string): Promise<User | null> {
+    async findUserByLoginOrEmail(loginOrEmail: string): Promise<IUser | null> {
         return UserModel.findOne({$or: [{login: loginOrEmail}, {email: loginOrEmail}]}, {_id: 0, __v: 0})
     }
-    async findUserByCode(code: string): Promise<User | null> {
+    async findUserByCode(code: string): Promise<IUser | null> {
         return UserModel.findOne({'userConfirmationInfo.code': code}, {_id: 0, __v: 0})
     }
     async updateUserConformation(id: string):
@@ -115,10 +115,10 @@ export class UserRepository{
     async deleteUser(id: string){
         await UserModel.deleteOne({id: id})
     }
-    async findUserByEmail(email: string): Promise<User | null> {
+    async findUserByEmail(email: string): Promise<IUser | null> {
         return UserModel.findOne({email: email}, {_id: 0, __v: 0})
     }
-    async findUserByLogin(login: string): Promise<User | null> {
+    async findUserByLogin(login: string): Promise<IUser | null> {
         return UserModel.findOne({login: login}, {_id: 0, __v: 0})
     }
     async updateUserConformationCode(id: string, code: string):
@@ -153,7 +153,7 @@ export class UserRepository{
         })
         return password.matchedCount === 1
     }
-    async getPasswordByUserId(userId: string): Promise<User | null> {
+    async getPasswordByUserId(userId: string): Promise<IUser | null> {
         return UserModel.findOne({id: userId}, {_id: 0, __v: 0})
     }
     async createRecoveryPassword(paginationRecoveryPassword:PaginationTypeRecoveryPassword){
