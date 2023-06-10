@@ -1,12 +1,12 @@
 import request from "supertest";
 import {app} from "../app";
-import {likeStatus} from "../Models/Enums";
-import {IBlog, IComment, IPost} from "../Models/shemaAndModel";
 import {LikesInfo} from "../RepositoryInDB/comment-repositoryDB";
 import mongoose from "mongoose";
+import {Blog} from "../RepositoryInDB/blog-repositoryDB";
+import {IComment, IPost} from "../Models/shemaAndModel";
 
 
-    const delay= async(ms:number)=>{
+const delay= async(ms:number)=>{
         return new Promise<void>((resolve,reject)=>{
             setTimeout(()=>resolve(),ms)
         })
@@ -49,13 +49,30 @@ describe('/Comment CRUD',()=> {
         let CreateBlog: any = null;
         let CreatePost: any = null;
         let CreateComment: any = null;
+        let accessToken:any=null;
+        let refreshToken:any=null;
+        let refreshTokenCookies:any=null;
+        let userId:any=null;
+
+
+
+        const userForChecking1 = {
+        login: 'token1',
+        password: '1234222223',
+        email: 'tryToken1@ram.by'
+        }
+        const userAuthForChecking1={
+        loginOrEmail:userForChecking1.login,
+        password:userForChecking1.password
+        }
+
 
         it('blog POST checking create blog true', async () => {
 
             const CreateBlogResponse = await request(app).post('/blogs/').set(BasicAuthorized.authorization, BasicAuthorized.password).send(blogCheck).expect(201)
             CreateBlog = CreateBlogResponse.body;
 
-            const resultBlog: IBlog = {
+            const resultBlog: Blog = {
                 id: expect.any(String),
                 name: blogCheck.name,
                 description: blogCheck.description,
@@ -92,8 +109,9 @@ describe('/Comment CRUD',()=> {
                 extendedLikesInfo: {
                     likesCount: expect.any(Number),
                     dislikesCount: expect.any(Number),
-                    myStatus: expect.any(likeStatus),
-                    newestLikes: expect.any([])
+                    //TODO myStatus no ENUM?
+                    myStatus: expect.any(String),
+                    newestLikes: expect.anything()
                 }
             }
 
@@ -101,19 +119,47 @@ describe('/Comment CRUD',()=> {
 
         })
 
+    it('give token(create admin) and auth with token true',async ()=>{
+
+        const CreateUserResponse = await request(app).post('/users/').set(BasicAuthorized.authorization, BasicAuthorized.password).send(userForChecking1).expect(201)
+
+        const AuthUserResponse = await request(app).post('/auth/login').send(userAuthForChecking1).expect(200)
+
+        expect(AuthUserResponse.body.accessToken).toEqual(expect.any(String))
+
+        ///refreshToken
+        const cookies = AuthUserResponse.headers['set-cookie']
+        console.log(cookies)
+        refreshTokenCookies=cookies.filter(function(val:string){return val.split('=')[0]=='refreshToken'})
+        console.log('refresh token cookies ' + refreshTokenCookies)
+        refreshToken= refreshTokenCookies.map(function (val:string){return val.split('=')[1]}).map(function(val:string){return val.split(';')[0]})[0]
+
+        expect(refreshToken).toEqual(expect.any(String))
+        ///
+        userId=CreateUserResponse.body.id
+        accessToken=AuthUserResponse.body.accessToken
+        ///
+
+        const AuthMeUserResponse=await request(app).get('/auth/me').set({Authorization:'bearer '+accessToken}).expect(200)
+
+        expect(AuthMeUserResponse.body).toEqual({
+            login:userForChecking1.login,
+            email:userForChecking1.email,
+            userId:CreateUserResponse.body.id
+        })
+    })
+
         it('comment POST checking create comment true', async () => {
             const postCheck = {
                 content: "my comment for check comment POST"
             }
-
+            console.log(CreatePost.id)
             const CreateCommentsResponse = await request(app).post(/posts/ + CreatePost.id + /comments/)
-                .send(postCheck)
-                .expect(201)
+                .send(postCheck).set({Authorization:'bearer '+accessToken}).expect(201)
 
             CreateComment = CreateCommentsResponse.body
 
-            const resultComment: IComment = {
-                postId: CreatePost.id,
+            const resultComment = {
                 id: CreateComment.id,
                 content: CreateComment.content,
                 commentatorInfo: {
@@ -121,7 +167,11 @@ describe('/Comment CRUD',()=> {
                     userLogin: expect.any(String)
                 },
                 createdAt: expect.any(String),
-                likesInfo: expect.any(LikesInfo)
+                likesInfo: {
+                     dislikesCount: expect.any(Number),
+                         likesCount: expect.any(Number),
+                         myStatus: expect.any(String),
+                       }
             }
 
             expect(resultComment).toEqual(CreateComment)

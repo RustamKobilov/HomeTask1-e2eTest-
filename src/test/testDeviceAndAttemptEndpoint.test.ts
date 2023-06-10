@@ -241,7 +241,7 @@ describe('limit request for one Ip',  ()=> {
     }
 
     let deviceName = 'TestDevice1'
-
+//TODO what attempt count 0?
     it('check limit request for one device',async ()=>{
         const CreateUserResponse = await request(app).post('/users/').set(BasicAuthorized.authorization, BasicAuthorized.password).send(userForChecking1).expect(201)
         for(let x=0;x<4;x++){
