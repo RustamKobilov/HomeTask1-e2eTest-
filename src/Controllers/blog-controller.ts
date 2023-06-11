@@ -1,10 +1,10 @@
-import {Blog, PaginationTypeInputParamsBlogs, PaginationTypeUpdateBlog} from "../RepositoryInDB/blog-repositoryDB";
 import {BlogService} from "../Service/blogService";
 import {PostService} from "../Service/postService";
 import {Request, Response} from "express";
 import {BlogModel} from "../Models/shemaAndModel";
 import {getPaginationPostValueForPost, getPaginationValuesPosts} from "./post-controller";
 import {inject, injectable } from "inversify";
+import {PaginationTypeInputParamsBlogs, PaginationTypeUpdateBlog} from "../Models/allTypes";
 
 const getPaginationValuesBlogs = (query: any): PaginationTypeInputParamsBlogs => {
     return {

@@ -5,15 +5,11 @@ import {IPost} from "../Models/shemaAndModel";
 import {likeStatus} from "../Models/Enums";
 import mongoose from "mongoose";
 
-
-
-
 const delay= async(ms:number)=>{
     return new Promise<void>((resolve,reject)=>{
         setTimeout(()=>resolve(),ms)
     })
 }
-
 
 const BasicAuthorized={
     authorization:'Authorization',
@@ -90,8 +86,8 @@ describe('/Post CRUD',()=>{
             extendedLikesInfo:{
                 likesCount: expect.any(Number),
                 dislikesCount: expect.any(Number),
-                myStatus: expect.any(likeStatus),
-                newestLikes:expect.any([])
+                myStatus: expect.any(String),
+                newestLikes:[]
             }
         }
 
@@ -123,8 +119,8 @@ describe('/Post CRUD',()=>{
             extendedLikesInfo:{
                 likesCount: expect.any(Number),
                 dislikesCount: expect.any(Number),
-                myStatus: expect.any(likeStatus),
-                newestLikes:expect.any([])
+                myStatus: expect.any(String),
+                newestLikes:[]
             }
         }
 

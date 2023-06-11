@@ -1,8 +1,7 @@
-import {Router,Request,Response} from "express";
-
+import {Request,Response} from "express";
 import {UserService} from "../Service/userService";
-import {PaginationTypeAddNewUser, PaginationTypeInputUser} from "../RepositoryInDB/user-repositoryDB";
 import { inject, injectable } from "inversify";
+import {PaginationTypeInputUser, InputUserNewType} from "../Models/allTypes";
 
 export const getPaginationValuesUser = (query:any): PaginationTypeInputUser=>{
     return {
@@ -12,14 +11,6 @@ export const getPaginationValuesUser = (query:any): PaginationTypeInputUser=>{
         sortDirection: query.sortDirection === 'desc' ? -1 : 1,
         searchLoginTerm:query.searchLoginTerm,
         searchEmailTerm: query.searchEmailTerm
-    }
-}
-
-export const getPaginationValuesAddNewUser = (body:any):PaginationTypeAddNewUser=>{
-    return{
-        login:body.login,
-        password:body.password,
-        email:body.email
     }
 }
 
@@ -35,8 +26,12 @@ export class UserController{
     }
 
     async createUser(req: Request, res: Response) {
-        const paginationResult = getPaginationValuesAddNewUser(req.body)
-        const resultNewUsers = await this.userService.createUserByAdmin(paginationResult)
+        const inputUserAdmin:InputUserNewType ={
+            login:req.body.login,
+            password:req.body.password,
+            email:req.body.email
+        }
+        const resultNewUsers = await this.userService.createUserByAdmin(inputUserAdmin)
 
         return res.status(201).send({
             id: resultNewUsers.id,

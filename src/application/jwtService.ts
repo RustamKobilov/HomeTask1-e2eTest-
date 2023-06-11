@@ -4,18 +4,9 @@ dotenv.config()
 import jwt from 'jsonwebtoken'
 import {settings} from "../settings";
 import {DeviceModel} from "../Models/shemaAndModel";
-import {UserInformationType} from "../Controllers/device-controller";
 import {injectable} from "inversify";
+import {UserInformationType} from "../Models/allTypes";
 
-
-// export type ActiveSessionsType ={
-//     userId:string,
-//     lastActiveDate:string,
-//     diesAtDate:string,
-//     deviceId:string,
-//     title:string,
-//     ip:string
-// }
 
 @injectable()
 export class JwtService{

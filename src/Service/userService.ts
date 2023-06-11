@@ -1,20 +1,23 @@
 import {
-    PaginationTypeAddNewUser,
-    PaginationTypeInputUser, PaginationTypeRecoveryPassword,
     User,
     UserRepository
 } from "../RepositoryInDB/user-repositoryDB";
 import bcrypt from "bcrypt";
 import {randomUUID} from "crypto";
-import {inputSortDataBaseType} from "../RepositoryInDB/post-repositoryDB";
 import { inject, injectable } from "inversify";
+import {
+    inputSortDataBaseType,
+    PaginationTypeInputUser,
+    PaginationTypeRecoveryPassword,
+    InputUserNewType
+} from "../Models/allTypes";
 
 @injectable()
 export class UserService {
     constructor(@inject(UserRepository) protected userRepository: UserRepository) {
     }
 
-    async createUser(paginationAddUser: PaginationTypeAddNewUser): Promise<User> {
+    async createUser(paginationAddUser: InputUserNewType): Promise<User> {
         const salt = await bcrypt.genSalt(8)
         const hashResult = await this.userRepository.hashPassword(paginationAddUser.password, salt)
 
@@ -39,7 +42,7 @@ export class UserService {
         return newUser
     }
 
-    async createUserByAdmin(paginationAddUser: PaginationTypeAddNewUser): Promise<User> {
+    async createUserByAdmin(paginationAddUser: InputUserNewType): Promise<User> {
         const userByAdmin = await this.createUser(paginationAddUser)
         userByAdmin.userConfirmationInfo.userConformation = true
         await this.userRepository.createUser(userByAdmin)
@@ -50,7 +53,7 @@ export class UserService {
         return await this.userRepository.getUsers(paginationUser)
     }
 
-    async createUserRegistration(paginationAddUser: PaginationTypeAddNewUser): Promise<User> {
+    async createUserRegistration(paginationAddUser: InputUserNewType): Promise<User> {
         const userRegistration = await this.createUser(paginationAddUser)
         await this.userRepository.createUser(userRegistration)
         return userRegistration

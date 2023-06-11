@@ -1,18 +1,10 @@
-import {inputSortDataBaseType, PaginationTypePostInputCommentByPost} from "./post-repositoryDB";
 import {helper} from "../Service/helper";
 import {CommentModel, IComment, IReaction, IUser, ReactionModel} from "../Models/shemaAndModel";
 import {likeStatus} from "../Models/Enums";
 import { injectable } from "inversify";
+import {inputSortDataBaseType, OutputCommentOutputType, PaginationTypePostInputCommentByPost} from "../Models/allTypes";
 
 
-export type InputCommentByIdType ={
-    id:string
-}
-
-export type InputUpdateLikeStatusCommentByIdType ={
-    id:string,
-    likeStatus:string
-}
 
 export class Comment {
     constructor(public postId:string,
@@ -30,22 +22,6 @@ export class CommentatorInfo{
 export class LikesInfo {
     constructor (public likesCount :  number, public dislikesCount  : number, public myStatus :  likeStatus){}
 }
-
-
-
-export type OutputCommentOutputType ={
-    id:string
-    content:string
-    commentatorInfo:CommentatorInfo
-    createdAt:string
-    likesInfo:LikesInfo
-}
-
-export type UpdateCommentType ={
-    id:string,
-    content:string
-}
-
 
 @injectable()
 export class CommentRepository {

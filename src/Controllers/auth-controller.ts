@@ -3,10 +3,9 @@ import {JwtService} from "../application/jwtService";
 import {Request, Response} from "express";
 import {authService} from "../domain/authService";
 import {randomUUID} from "crypto";
-import {getPaginationValuesAddNewUser} from "./userController";
 import {emailAdapters} from "../adapters/email-adapters";
-import {getPaginationValuesInputUserInformation} from "./device-controller";
 import { inject, injectable } from "inversify";
+import {getPaginationValuesInputUserInformation, InputUserNewType} from "../Models/allTypes";
 
 @injectable()
 export class AuthController {
@@ -29,20 +28,20 @@ export class AuthController {
         }
 
         let refreshToken = null;
-        const paginationUserInformation = getPaginationValuesInputUserInformation(ipAddressInput, req.headers['user-agent'])
+        const paginationUserDeviceInformation = getPaginationValuesInputUserInformation(ipAddressInput, req.headers['user-agent'])
         const accessToken = await this.jwtService.createAccessTokenJWT(user.id)
-        const checkTokenInBaseByName = await this.jwtService.checkTokenInBaseByName(user.id, paginationUserInformation.title)
+        const checkTokenInBaseByName = await this.jwtService.checkTokenInBaseByName(user.id, paginationUserDeviceInformation.title)
         if (!checkTokenInBaseByName) {
             const deviceId = randomUUID()
             refreshToken = await this.jwtService.createRefreshToken(user.id, deviceId)
             const lastActiveDate = await this.jwtService.getLastActiveDateFromRefreshToken(refreshToken)
             const diesAtDate = await this.jwtService.getDiesAtDate(refreshToken)
-            await this.jwtService.createTokenByUserIdInBase(user.id, paginationUserInformation, deviceId, lastActiveDate, diesAtDate)
+            await this.jwtService.createTokenByUserIdInBase(user.id, paginationUserDeviceInformation, deviceId, lastActiveDate, diesAtDate)
         } else {
             refreshToken = await this.jwtService.createRefreshToken(user.id, checkTokenInBaseByName)
             const lastActiveDate = await this.jwtService.getLastActiveDateFromRefreshToken(refreshToken)
             const diesAtDate = await this.jwtService.getDiesAtDate(refreshToken)
-            await this.jwtService.updateTokenInBase(user.id, paginationUserInformation.title, lastActiveDate, diesAtDate)
+            await this.jwtService.updateTokenInBase(user.id, paginationUserDeviceInformation.title, lastActiveDate, diesAtDate)
         }
         const returnToken = {
             accessToken: accessToken,
@@ -108,9 +107,12 @@ export class AuthController {
     }
 
     async registrationUser(req: Request, res: Response) {
-
-        const paginationResult = getPaginationValuesAddNewUser(req.body)
-        const resultNewUsers = await this.userService.createUserRegistration(paginationResult)
+        const inputUser:InputUserNewType ={
+            login:req.body.login,
+            password:req.body.password,
+            email:req.body.email
+        }
+        const resultNewUsers = await this.userService.createUserRegistration(inputUser)
 
         try {
             await emailAdapters.gmailSendEmailRegistration(req.body.email, resultNewUsers.userConfirmationInfo.code)

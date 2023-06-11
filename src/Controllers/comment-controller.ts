@@ -1,25 +1,7 @@
-import {
-    InputCommentByIdType,
-    InputUpdateLikeStatusCommentByIdType,
-    UpdateCommentType
-} from "../RepositoryInDB/comment-repositoryDB";
 import {CommentService} from "../Service/commentsService";
 import {Request, Response} from "express";
 import {CommentModel} from "../Models/shemaAndModel";
-import {inject, injectable } from "inversify";
-
-
-export const getPaginationUpdateComment = (params: any, body: any): UpdateCommentType => {
-    return {
-        id: params.id,
-        content: body.content
-    }
-}
-const getPaginationDeleteCommentById = (params: any): InputCommentByIdType => {
-    return {
-        id: params.id
-    }
-}
+import {inject, injectable} from "inversify";
 
 @injectable()
 export class CommentController {
@@ -29,7 +11,7 @@ export class CommentController {
 
     async getComment(req: Request, res: Response) {
         let resultSearch
-        if(!req.user) {
+        if (!req.user) {
             resultSearch = await this.commentService.getCommentOnId(req.params.id)
             if (!resultSearch) {
                 return res.sendStatus(404)
@@ -38,7 +20,7 @@ export class CommentController {
             return res.status(200).send(resultSearch)
         }
         console.log(req.user)
-        resultSearch = await this.commentService.getCommentOnIdForUser(req.params.id,req.user)
+        resultSearch = await this.commentService.getCommentOnIdForUser(req.params.id, req.user)
 
         if (!resultSearch) {
             return res.sendStatus(404)
@@ -48,8 +30,7 @@ export class CommentController {
 
     async updateComment(req: Request, res: Response) {
 
-        const pagination = getPaginationUpdateComment(req.params, req.body)
-        const resultCommentUpdate = await this.commentService.updateCommentOnId(pagination.id, pagination.content)
+        const resultCommentUpdate = await this.commentService.updateCommentOnId(req.params.id, req.body.content)
 
         if (!resultCommentUpdate) {
             return res.sendStatus(404)
@@ -58,12 +39,11 @@ export class CommentController {
     }
 
     async deleteComment(req: Request, res: Response) {
-        const pagination = getPaginationDeleteCommentById(req.params)
-        const resultSearch = await this.commentService.getCommentOnId(pagination.id)
+        const resultSearch = await this.commentService.getCommentOnId(req.params.id)
         if (!resultSearch) {
             return res.sendStatus(404)
         }
-        await CommentModel.deleteOne({id: pagination.id})
+        await CommentModel.deleteOne({id: req.params.id})
         return res.sendStatus(204);
     }
 
@@ -73,7 +53,7 @@ export class CommentController {
             return res.sendStatus(404)
         }
 
-        await this.commentService.changeCountLikeStatusUser(resultSearchComment,req.user, req.body.likeStatus)
+        await this.commentService.changeCountLikeStatusUser(resultSearchComment, req.user, req.body.likeStatus)
 
 
         return res.sendStatus(204)

@@ -1,14 +1,8 @@
 import {
-    inputSortDataBaseType,
-    PaginationTypeGetInputCommentByPost,
-    PaginationTypePostInputCommentByPost
-} from "../RepositoryInDB/post-repositoryDB";
-import {
     Comment,
     CommentatorInfo,
     CommentRepository,
-    LikesInfo,
-    OutputCommentOutputType
+    LikesInfo
 } from "../RepositoryInDB/comment-repositoryDB";
 import {User} from "../RepositoryInDB/user-repositoryDB";
 import {randomUUID} from "crypto";
@@ -20,12 +14,19 @@ import {
     IReaction,
     IUser,
 } from "../Models/shemaAndModel";
-import {inject, injectable } from "inversify";
+import {inject, injectable} from "inversify";
+import {
+    inputSortDataBaseType, OutputCommentOutputType,
+    PaginationTypeGetInputCommentByPost,
+    PaginationTypePostInputCommentByPost
+} from "../Models/allTypes";
 
 @injectable()
 export class CommentService {
-    constructor(@inject(CommentRepository) protected commentsRepository : CommentRepository){}
-    private createReaction(parentId: string, userId: string, userLogin:string, status: likeStatus): IReaction {
+    constructor(@inject(CommentRepository) protected commentsRepository: CommentRepository) {
+    }
+
+    private createReaction(parentId: string, userId: string, userLogin: string, status: likeStatus): IReaction {
         return {
             parentId,
             userId,
@@ -35,20 +36,23 @@ export class CommentService {
         }
     }
 
-    async getAllCommentForPostInBase(pagination:PaginationTypePostInputCommentByPost):
-        Promise<inputSortDataBaseType<OutputCommentOutputType>>{
+    async getAllCommentForPostInBase(pagination: PaginationTypePostInputCommentByPost):
+        Promise<inputSortDataBaseType<OutputCommentOutputType>> {
         return await this.commentsRepository.getComments(pagination)
     }
-    async getCommentOnId(id:string):Promise<Comment|null> {
+
+    async getCommentOnId(id: string): Promise<Comment | null> {
         return this.commentsRepository.getComment(id)
     }
-    async updateCommentOnId(id:string,content:string):Promise<boolean> {
-        return await this.commentsRepository.updateComment(id,content)
+
+    async updateCommentOnId(id: string, content: string): Promise<boolean> {
+        return await this.commentsRepository.updateComment(id, content)
     }
-    async createCommentOnId(pagination:PaginationTypeGetInputCommentByPost, user:User){
+
+    async createCommentOnId(pagination: PaginationTypeGetInputCommentByPost, user: User) {
         const idNewComment = randomUUID();
-        const commentatorInfoNewComment:ICommentatorInfo= new CommentatorInfo(user.id,user.login)
-        const commentLikesInfo:ILikesInfo = new LikesInfo(0,0,likeStatus.None)
+        const commentatorInfoNewComment: ICommentatorInfo = new CommentatorInfo(user.id, user.login)
+        const commentLikesInfo: ILikesInfo = new LikesInfo(0, 0, likeStatus.None)
 
         const newComment: IComment = new Comment(
             pagination.idPost,
@@ -57,18 +61,21 @@ export class CommentService {
             commentatorInfoNewComment,
             new Date().toISOString(),
             commentLikesInfo
-            )
+        )
         console.log(newComment)
-        const addNewComment=await this.commentsRepository.createCommentForPost(newComment)
+        const addNewComment = await this.commentsRepository.createCommentForPost(newComment)
         return idNewComment
     }
-    async getCommentOnIdForUser(id:string,user:IUser):Promise<OutputCommentOutputType|false> {
-            return this.commentsRepository.getCommentForUser(id,user)
+
+    async getCommentOnIdForUser(id: string, user: IUser): Promise<OutputCommentOutputType | false> {
+        return this.commentsRepository.getCommentForUser(id, user)
     }
-    async getAllCommentForPostInBaseForUser(pagination:PaginationTypePostInputCommentByPost,user:IUser):
-        Promise<inputSortDataBaseType<OutputCommentOutputType>>{
-        return await this.commentsRepository.getCommentsForUser(pagination,user)
+
+    async getAllCommentForPostInBaseForUser(pagination: PaginationTypePostInputCommentByPost, user: IUser):
+        Promise<inputSortDataBaseType<OutputCommentOutputType>> {
+        return await this.commentsRepository.getCommentsForUser(pagination, user)
     }
+
     async changeCountLikeStatusUser(comment: Comment, user: IUser, newLikeStatus: likeStatus): Promise<boolean> {
 
         const newReaction: IReaction = this.createReaction(comment.id, user.id, user.login, newLikeStatus)
@@ -78,7 +85,6 @@ export class CommentService {
 
     }
 }
-
 
 
 // const resultStatusUser = comment.likesInfo.usersStatus.filter(function (value){

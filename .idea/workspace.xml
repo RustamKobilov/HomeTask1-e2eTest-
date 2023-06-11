@@ -4,11 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="08/06/23 test different file yakubovskogo.">
+    <list default="true" id="12817263-3e8d-439f-a485-d20742018088" name="Changes" comment="10/06/23 test work">
+      <change afterPath="$PROJECT_DIR$/src/Models/allTypes.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/testBlog.test.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routse/devices-route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routse/devices-route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jest.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/jest.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controllers/auth-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/auth-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controllers/blog-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/blog-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controllers/comment-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/comment-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controllers/device-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/device-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controllers/post-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/post-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controllers/userController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/userController.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/blog-repositoryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/comment-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/comment-repositoryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/post-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/post-repositoryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RepositoryInDB/user-repositoryDB.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/RepositoryInDB/user-repositoryDB.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/blogService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/blogService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/commentsService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/commentsService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/postService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/postService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/userService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/userService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/jwtService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/jwtService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/authService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/authService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/blog.test.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/testComment.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testComment.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/testDeviceAndAttemptEndpoint.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testDeviceAndAttemptEndpoint.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testPassword.test..ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testPassword.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testPost.test..ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testPost.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testUser.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testUserCRUDAdmin.test.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +116,7 @@
       <recent name="D:\Inst\HomeTask1-e2eTest-\src\Controllers\auth-controller.ts" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.all test./Comment CRUD">
+  <component name="RunManager">
     <configuration name="all test" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -109,57 +130,9 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="all test./Comment CRUD" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/src/test/testComment.test.ts" />
-      <test-names>
-        <test-name value="all test" />
-        <test-name value="/Comment CRUD" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="dev" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
-    <configuration name="test:dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="test:dev" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
-    <configuration name="watch" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="watch" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Jest.all test./Comment CRUD" />
-        <item itemvalue="npm.dev" />
         <item itemvalue="Jest.all test" />
-        <item itemvalue="npm.watch" />
-        <item itemvalue="npm.test:dev" />
       </list>
     </recent_temporary>
   </component>
@@ -201,13 +174,7 @@
       <workItem from="1686131338418" duration="8762000" />
       <workItem from="1686146466193" duration="13368000" />
       <workItem from="1686222502246" duration="10834000" />
-    </task>
-    <task id="LOCAL-00181" summary="api test 01.04.23">
-      <created>1680355853164</created>
-      <option name="number" value="00181" />
-      <option name="presentableId" value="LOCAL-00181" />
-      <option name="project" value="LOCAL" />
-      <updated>1680355853164</updated>
+      <workItem from="1686469086282" duration="7258000" />
     </task>
     <task id="LOCAL-00182" summary="api test 01.04.23">
       <created>1680363804970</created>
@@ -545,7 +512,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686225606646</updated>
     </task>
-    <option name="localTasksCounter" value="230" />
+    <task id="LOCAL-00230" summary="10/06/23 test work">
+      <created>1686423617050</created>
+      <option name="number" value="00230" />
+      <option name="presentableId" value="LOCAL-00230" />
+      <option name="project" value="LOCAL" />
+      <updated>1686423617050</updated>
+    </task>
+    <option name="localTasksCounter" value="231" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -594,7 +568,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="09/03/23 test." />
     <MESSAGE value="11/03/23 fix code." />
     <MESSAGE value="18/03/23 email send." />
     <MESSAGE value="gi" />
@@ -619,6 +592,7 @@
     <MESSAGE value="26/05/23 fix yakubovskogo." />
     <MESSAGE value="07/06/23 fix like for post yakubovskogo." />
     <MESSAGE value="08/06/23 test different file yakubovskogo." />
-    <option name="LAST_COMMIT_MESSAGE" value="08/06/23 test different file yakubovskogo." />
+    <MESSAGE value="10/06/23 test work" />
+    <option name="LAST_COMMIT_MESSAGE" value="10/06/23 test work" />
   </component>
 </project>

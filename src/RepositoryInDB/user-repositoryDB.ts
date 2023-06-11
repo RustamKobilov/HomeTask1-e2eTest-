@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt'
 import {helper} from "../Service/helper";
-import {inputSortDataBaseType} from "./post-repositoryDB";
 import {IUser, RecoveryPasswordModel, UserModel} from "../Models/shemaAndModel";
 import { injectable } from 'inversify';
+import { inputSortDataBaseType, PaginationTypeInputUser, PaginationTypeRecoveryPassword } from '../Models/allTypes';
 
 export class User{
     constructor( public id: string,
@@ -17,34 +17,6 @@ export class User{
         code: string,
         expirationCode: string
     }){}
-}
-
-export type outputUserType = {
-    id: string
-    login: string
-    email: string
-    createdAt: string
-}
-
-export type PaginationTypeInputUser = {
-    pageNumber: number
-    pageSize: number
-    sortBy: string
-    sortDirection: 1 | -1
-    searchLoginTerm: string
-    searchEmailTerm: string
-}
-
-export type PaginationTypeAddNewUser = {
-    login: string
-    password: string
-    email: string
-}
-
-export type PaginationTypeRecoveryPassword = {
-    recoveryCode: string
-    userId: string
-    diesAtDate: string
 }
 
 

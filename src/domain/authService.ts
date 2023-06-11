@@ -1,6 +1,7 @@
-import {PaginationTypeRecoveryPassword, User, userRepository} from "../RepositoryInDB/user-repositoryDB";
+import {User, userRepository} from "../RepositoryInDB/user-repositoryDB";
 import bcrypt from "bcrypt";
 import {randomUUID} from "crypto";
+import {PaginationTypeRecoveryPassword} from "../Models/allTypes";
 
 export const authService = {
     async login(loginOrEmail: string, password: string): Promise<false|User> {

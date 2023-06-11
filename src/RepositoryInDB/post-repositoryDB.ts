@@ -1,8 +1,6 @@
 import { helper} from "../Service/helper";
 import {
-    BlogModel,
-    CommentModel,
-    IComment, INewestLikes,
+    BlogModel, INewestLikes,
     IPost,
     IReaction,
     IUser,
@@ -12,6 +10,7 @@ import {
 import {Blog} from "./blog-repositoryDB";
 import { injectable } from "inversify";
 import {likeStatus} from "../Models/Enums";
+import {inputSortDataBaseType, PaginationTypeInputPosts, PaginationTypeInputPostValueForPost} from "../Models/allTypes";
 
 export class Post {
     constructor(public id: string,
@@ -29,41 +28,6 @@ export class LikesInfoPosts {
     constructor (public likesCount :  number, public dislikesCount  : number, public myStatus :  likeStatus, public newestLikes: INewestLikes []=[] ){}
 }
 
-
-export type inputSortDataBaseType<T> = {
-
-    pagesCount: number
-    page: number
-    pageSize: number
-    totalCount: number
-    items: T[]
-}
-
-export type PaginationTypeInputPosts = {
-    pageNumber: number
-    pageSize: number
-    sortBy: string
-    sortDirection: 1|-1
-}
-
-export type PaginationTypeInputPostValueForPost={
-    titlePost: string
-    shortDescriptionPost: string
-    contentPost: string
-}
-
-export type PaginationTypeGetInputCommentByPost ={
-    idPost:string,
-    content:string
-}
-
-export type PaginationTypePostInputCommentByPost={
-    idPost:string,
-    pageNumber: number
-    pageSize: number
-    sortBy: string
-    sortDirection: 1|-1
-}
 
 @injectable()
 export class PostRepository {

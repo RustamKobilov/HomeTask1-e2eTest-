@@ -1,7 +1,13 @@
-import {inputSortDataBaseType, PaginationTypeInputPosts, Post, PostRepository} from "./post-repositoryDB";
+import {Post, PostRepository} from "./post-repositoryDB";
 import {helper, ReturnDistributedDate} from "../Service/helper";
 import {BlogModel, IBlog, IPost, IUser, PostModel} from "../Models/shemaAndModel";
 import {inject, injectable} from "inversify";
+import {
+    inputSortDataBaseType,
+    PaginationTypeInputParamsBlogs,
+    PaginationTypeInputPosts,
+    PaginationTypeUpdateBlog
+} from "../Models/allTypes";
 
 
 export class Blog {
@@ -14,20 +20,6 @@ export class Blog {
     }
 }
 
-export type PaginationTypeInputParamsBlogs = {
-    searchNameTerm: string | null
-    pageNumber: number
-    pageSize: number
-    sortBy: string
-    sortDirection: 1 | -1
-}
-
-export type PaginationTypeUpdateBlog = {
-    idBlog :string
-    nameBlog : string
-    descriptionBlog : string
-    websiteUrlBlog : string
-}
 
 @injectable()
 export class BlogRepository{

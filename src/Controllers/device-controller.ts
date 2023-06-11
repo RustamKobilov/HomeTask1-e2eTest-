@@ -4,18 +4,6 @@ import {Request, Response} from "express";
 import {inject, injectable } from "inversify";
 
 
-export const getPaginationValuesInputUserInformation = (ipAddress: any, userAgent: any): UserInformationType => {
-    return {
-        ipAddress: ipAddress,
-        title: userAgent
-
-    }
-}
-export type UserInformationType = {
-    title: string,
-    ipAddress: string,
-}
-
 @injectable()
 export class DeviceController {
 

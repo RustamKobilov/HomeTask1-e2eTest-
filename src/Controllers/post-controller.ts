@@ -1,14 +1,14 @@
-import {
-    PaginationTypeGetInputCommentByPost,
-    PaginationTypeInputPosts,
-    PaginationTypeInputPostValueForPost,
-    PaginationTypePostInputCommentByPost
-} from "../RepositoryInDB/post-repositoryDB";
 import {CommentService} from "../Service/commentsService";
 import {Request, Response} from "express";
 import {PostModel} from "../Models/shemaAndModel";
 import {inject, injectable } from "inversify";
 import {PostService} from "../Service/postService";
+import {
+    PaginationTypeGetInputCommentByPost,
+    PaginationTypeInputPosts,
+    PaginationTypeInputPostValueForPost,
+    PaginationTypePostInputCommentByPost
+} from "../Models/allTypes";
 
 export const getPaginationValuesPosts = (query: any): PaginationTypeInputPosts => {
     return {

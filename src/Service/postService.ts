@@ -1,14 +1,13 @@
 import {randomUUID} from "crypto";
 import {
-    inputSortDataBaseType, LikesInfoPosts,
-    PaginationTypeInputPosts,
-    PaginationTypeInputPostValueForPost,
+    LikesInfoPosts,
     Post,
     PostRepository,
 } from "../RepositoryInDB/post-repositoryDB";
 import {likeStatus} from "../Models/Enums";
 import {IPost, IReaction, IUser} from "../Models/shemaAndModel";
 import {inject, injectable} from "inversify";
+import {inputSortDataBaseType, PaginationTypeInputPosts, PaginationTypeInputPostValueForPost} from "../Models/allTypes";
 
 
 @injectable()

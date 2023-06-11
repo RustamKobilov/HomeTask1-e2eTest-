@@ -4,8 +4,6 @@ import {User} from "../RepositoryInDB/user-repositoryDB";
 import {JwtService} from "../application/jwtService";
 import mongoose from "mongoose";
 
-
-
 const delay= async(ms:number)=>{
     return new Promise<void>((resolve,reject)=>{
         setTimeout(()=>resolve(),ms)

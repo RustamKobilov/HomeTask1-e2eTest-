@@ -1,14 +1,16 @@
 import {randomUUID} from "crypto";
 import {
     Blog,
-    BlogRepository,
-    PaginationTypeInputParamsBlogs,
-    PaginationTypeUpdateBlog
+    BlogRepository
 } from "../RepositoryInDB/blog-repositoryDB";
-import {ReturnDistributedDate} from "./helper";
-import {inputSortDataBaseType, PaginationTypeInputPosts, Post} from "../RepositoryInDB/post-repositoryDB";
-import { inject, injectable } from "inversify";
+import {ReturnDistributedDate} from "./helper";import { inject, injectable } from "inversify";
 import {IBlog, IPost, IUser} from "../Models/shemaAndModel";
+import {
+    inputSortDataBaseType,
+    PaginationTypeInputParamsBlogs,
+    PaginationTypeInputPosts,
+    PaginationTypeUpdateBlog
+} from "../Models/allTypes";
 
 @injectable()
 export class BlogService {

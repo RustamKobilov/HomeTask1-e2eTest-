@@ -3,21 +3,7 @@ import {app} from "../app";
 import {RecoveryPasswordModel} from "../Models/shemaAndModel";
 import {userRepository} from "../RepositoryInDB/user-repositoryDB";
 import {randomUUID} from "crypto";
-import {JwtService} from "../application/jwtService";
 import mongoose from "mongoose";
-
-
-describe('all test',()=> {
-
-    beforeAll(async () => {
-        /* Connecting to the database. */
-        await mongoose.connect(mongoURI)
-    })
-
-    afterAll(async () => {
-        /* Closing database connection after each test. */
-        await mongoose.connection.close()
-    })
 
 const delay= async(ms:number)=>{
     return new Promise<void>((resolve,reject)=>{
@@ -32,8 +18,18 @@ const BasicAuthorized={
     password:'Basic YWRtaW46cXdlcnR5'
 }
 
+describe('all test',()=> {
 
-const jwtServices = new JwtService()
+    beforeAll(async () => {
+        /* Connecting to the database. */
+        await mongoose.connect(mongoURI)
+    })
+
+    afterAll(async () => {
+        /* Closing database connection after each test. */
+        await mongoose.connection.close()
+    })
+
 describe('recovery password',()=> {
 
 
